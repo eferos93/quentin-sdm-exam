@@ -12,6 +12,7 @@ public class Board {
             for (int j = 0; j < 14; j++){
                 Mark mark = Mark.NONE;
                 Position position = new Position(i,j);
+                System.out.println(position);
                 Cell cell = new Cell(position,mark);
                 _plays.add(cell);
             }
@@ -19,6 +20,11 @@ public class Board {
     }
 
     public Cell cellAt(Position position){
-        return new Cell(new Position(5,7), Mark.NONE);
+        for (Cell c : _plays){
+            if (position.getRow() == c.getPosition().getRow() && position.getColumn() == c.getPosition().getColumn()){
+                return c;
+            }
+        }
+        return null;
     }
 }
