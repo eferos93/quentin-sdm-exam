@@ -12,10 +12,10 @@ public class Cell {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cell cell = (Cell) o;
+    public boolean equals(Object anotherCell) {
+        if (this == anotherCell) return true;
+        if (anotherCell == null || getClass() != anotherCell.getClass()) return false;
+        Cell cell = (Cell) anotherCell;
         return position.equals(cell.position) && mark == cell.mark;
     }
 
