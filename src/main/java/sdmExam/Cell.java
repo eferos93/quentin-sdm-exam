@@ -23,4 +23,6 @@ public class Cell {
     public int hashCode() {
         return Objects.hash(position, mark);
     }
+
+    public Position getPosition() { return this.position; }
 }
