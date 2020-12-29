@@ -11,10 +11,10 @@ public class Position {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Position position = (Position) o;
+    public boolean equals(Object anotherPosition) {
+        if (this == anotherPosition) return true;
+        if (anotherPosition == null || getClass() != anotherPosition.getClass()) return false;
+        Position position = (Position) anotherPosition;
         return row == position.row && column == position.column;
     }
 
