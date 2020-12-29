@@ -10,6 +10,10 @@ public class Position {
         this.column = column;
     }
 
+    public static Position in(int row, int column) {
+        return new Position(row, column);
+    }
+
     @Override
     public boolean equals(Object anotherPosition) {
         if (this == anotherPosition) return true;
