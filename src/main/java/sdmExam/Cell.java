@@ -24,6 +24,8 @@ public class Cell {
         return Objects.hash(position, mark);
     }
 
+    public static Cell addEmptyCell(Position position){return new Cell(position, Mark.NONE);}
+
     public Position getPosition() { return this.position; }
     public Mark getMark() { return mark; }
     public void setMark(Mark mark) {this.mark = mark; }

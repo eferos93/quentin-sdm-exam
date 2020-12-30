@@ -8,11 +8,9 @@ public class Board {
 
     public Board(){
         // Board is 13x13 squares, but we can use edges and corners to mark so it is 14x14 cells
-        for (int i = 0; i < 14; i++){
-            for (int j = 0; j < 14; j++){
-                Mark mark = Mark.NONE;
-                Position position = new Position(i,j);
-                Cell cell = new Cell(position,mark);
+        for (int row = 0; row < 14; row++){
+            for (int column = 0; column < 14; column++){
+                Cell cell = Cell.addEmptyCell(Position.in(row,column));
                 _plays.add(cell);
             }
         }
