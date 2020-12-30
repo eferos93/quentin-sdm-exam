@@ -26,7 +26,9 @@ public class Board {
     }
 
     public void AddMarkAt(Mark mark, Position position) {
-        Cell newCell = cellAt(new Position(5, 7));
-        newCell.setMark(Mark.BLACK);
-    }
+        Cell cell = cellAt(position);
+            if (cell != null && cell.getMark() == Mark.NONE) {
+                cell.setMark(mark);}
+            else{System.out.print("You marked illegal cell");}
+         }
 }
