@@ -24,4 +24,9 @@ public class Board {
         }
         return null;
     }
+
+    public void AddMarkAt(Mark mark, Position position) {
+        Cell newCell = cellAt(new Position(5, 7));
+        newCell.setMark(Mark.BLACK);
+    }
 }

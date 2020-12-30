@@ -25,4 +25,6 @@ public class Cell {
     }
 
     public Position getPosition() { return this.position; }
+    public Mark getMark() { return mark; }
+    public void setMark(Mark mark) {this.mark = mark; }
 }

@@ -17,4 +17,12 @@ public class BoardShould {
     public void cellOutsideofBoard(){
         assertNull(board.cellAt(new Position(14,14)), (String) null);
     }
+
+    @Test
+    public void markedCell(){
+        Position position = new Position(5, 7);
+        Cell cell = board.cellAt(position);
+        board.AddMarkAt(Mark.BLACK, position);
+        assertEquals(cell.getMark(), Mark.BLACK);
+    }
 }
