@@ -21,9 +21,7 @@ public class Board {
 
     public Cell cellAt(Position position){
         for (Cell c : _plays){
-            if (position.getRow() == c.getPosition().getRow() && position.getColumn() == c.getPosition().getColumn()){
-                return c;
-            }
+            if (position.equals(c.getPosition())) return c;
         }
         return null;
     }
