@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardShould {
     private final Board board = new Board();
-    private static final String expected ="You marked illegal cell";
 
     @Test
     public void getTheCorrectCellGivenAPosition() {
