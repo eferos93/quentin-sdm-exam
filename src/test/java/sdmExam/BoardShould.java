@@ -3,6 +3,7 @@ package sdmExam;
 
 import org.junit.jupiter.api.Test;
 
+import javax.crypto.spec.PSource;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,8 +13,9 @@ public class BoardShould {
 
     @Test
     public void getTheCorrectCellGivenAPosition() {
-        Cell cell = new Cell(new Position(5,7), Mark.NONE);
-        assertEquals(board.cellAt(new Position(5,7)).get(), cell);
+        Position position = Position.in(5, 7);
+        Cell cell = Cell.empty(position);
+        assertEquals(board.cellAt(position).get(), cell);
     }
 
     @Test
