@@ -16,10 +16,7 @@ public class Board {
     }
 
     public Cell cellAt(Position position){
-        for (Cell c : cells){
-            if (c.isAt(position)) return c;
-        }
-        return null;
+        return cells.stream().filter(cell -> cell.isAt(position)).findFirst().orElse(null);
     }
 
     public void AddMarkAt(Mark mark, Position position) {
