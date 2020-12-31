@@ -17,13 +17,9 @@ public class Board {
 
     public Cell cellAt(Position position){
         for (Cell c : cells){
-            if (isAt(position, c)) return c;
+            if (c.isAt(position)) return c;
         }
         return null;
-    }
-
-    private boolean isAt(Position position, Cell c) {
-        return position.equals(c.getPosition());
     }
 
     public void AddMarkAt(Mark mark, Position position) {
