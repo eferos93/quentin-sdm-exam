@@ -19,10 +19,12 @@ public class Board {
         return cells.stream().filter(cell -> cell.isAt(position)).findFirst().orElse(null);
     }
 
-    public void AddMarkAt(Mark mark, Position position) {
+    public void addMarkAt(Mark mark, Position position) {
         Cell cell = cellAt(position);
-            if (cell != null && cell.getMark() == Mark.NONE) {
-                cell.setMark(mark);}
-            else{System.out.print("You marked illegal cell");}
-         }
+        if (cell != null && cell.getMark() == Mark.NONE) {
+            cell.setMark(mark);
+        } else {
+            System.out.print("You marked illegal cell");
+        }
+    }
 }
