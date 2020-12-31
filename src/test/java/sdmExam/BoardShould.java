@@ -12,7 +12,6 @@ public class BoardShould {
     @Test
     public void getCorrectCellGivenAPosition() {
         Position position = Position.in(5, 7);
-        Cell cell = Cell.empty(position);
         assertTrue(board.cellAt(position).isPresent());
     }
 
