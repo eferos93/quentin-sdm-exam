@@ -2,9 +2,9 @@ package sdmExam;
 
 
 import org.junit.jupiter.api.Test;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BoardShould {
     private final Board board = new Board();
@@ -18,7 +18,7 @@ public class BoardShould {
 
     @Test
     public void cellOutsideBoard() {
-        assertEquals(board.cellAt(new Position(14,14)), Optional.empty());
+        assertTrue(board.cellAt(Position.in(14, 14)).isEmpty());
     }
 
     @Test
