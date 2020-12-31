@@ -30,7 +30,7 @@ public class Cell {
 
     public Position getPosition() { return this.position; }
     public Mark getMark() { return this.mark; }
-    public void setMark(Mark mark) {this.mark = mark; }
+    public void setMark(Mark mark) { this.mark = mark; }
 
     public boolean isAt(Position position) {
         return position.equals(getPosition());
