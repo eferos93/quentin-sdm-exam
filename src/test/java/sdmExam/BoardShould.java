@@ -12,7 +12,7 @@ public class BoardShould {
     private final Board board = new Board();
 
     @Test
-    public void getTheCorrectCellGivenAPosition() {
+    public void getCorrectCellGivenAPosition() {
         Position position = Position.in(5, 7);
         Cell cell = Cell.empty(position);
         assertEquals(board.cellAt(position).get(), cell);
