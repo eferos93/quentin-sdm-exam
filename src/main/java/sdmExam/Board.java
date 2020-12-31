@@ -2,6 +2,7 @@ package sdmExam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Board {
     private List<Cell> cells = new ArrayList<>();
@@ -15,16 +16,12 @@ public class Board {
         }
     }
 
-    public Cell cellAt(Position position){
-        return cells.stream().filter(cell -> cell.isAt(position)).findFirst().orElse(null);
+    public Optional<Cell> cellAt(Position position){
+        return cells.stream().filter(cell -> cell.isAt(position)).findFirst();
     }
 
     public void addMarkAt(Mark mark, Position position) {
-        Cell cell = cellAt(position);
-        if (cell != null && cell.getMark() == Mark.NONE) {
-            cell.setMark(mark);
-        } else {
-            System.out.print("You marked illegal cell");
-        }
+        //TODO: maybe we need to throw an exception here; we'll see when we will implement the actual game
+        cellAt(position).ifPresent(cell -> cell.setMark(mark));
     }
 }
