@@ -6,12 +6,14 @@ import java.util.Optional;
 
 public class Board {
     private List<Intersection> intersections = new ArrayList<>();
+    private Mark lowerAndUpperEdges = Mark.BLACK;
+    private Mark leftAndRightEdges = Mark.WHITE;
 
     public Board() {
         // Board is 13x13 squares, but we can use edges and corners to mark so it is 14x14 cells
         //TODO: think about a way to model the borders the board
-        for (int row = 0; row < 14; row++) {
-            for (int column = 0; column < 14; column++) {
+        for (int row = 1; row < 14; row++) {
+            for (int column = 1; column < 14; column++) {
                 intersections.add(Intersection.empty(Position.in(row, column)));
             }
         }
