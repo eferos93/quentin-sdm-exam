@@ -2,11 +2,11 @@ package sdmExam;
 
 import java.util.Objects;
 
-public class Cell {
+public class Intersection {
     private Position position;
     private Mark mark;
 
-    public Cell(Position position, Mark mark) {
+    public Intersection(Position position, Mark mark) {
         this.position = position;
         this.mark = mark;
     }
@@ -15,8 +15,8 @@ public class Cell {
     public boolean equals(Object anotherCell) {
         if (this == anotherCell) return true;
         if (anotherCell == null || getClass() != anotherCell.getClass()) return false;
-        Cell cell = (Cell) anotherCell;
-        return position.equals(cell.position) && mark == cell.mark;
+        Intersection intersection = (Intersection) anotherCell;
+        return position.equals(intersection.position) && mark == intersection.mark;
     }
 
     @Override
@@ -24,8 +24,8 @@ public class Cell {
         return Objects.hash(position, mark);
     }
 
-    public static Cell empty(Position position){
-        return new Cell(position, Mark.NONE);
+    public static Intersection empty(Position position){
+        return new Intersection(position, Mark.NONE);
     }
 
     public Position getPosition() { return this.position; }

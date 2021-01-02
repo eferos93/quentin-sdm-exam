@@ -23,9 +23,9 @@ public class BoardShould {
     @Test
     public void markCorrectlyACell() {
         Position position = new Position(5, 7);
-        Cell cell = board.cellAt(position).get();
+        Intersection intersection = board.cellAt(position).get();
         board.addMarkAt(Mark.BLACK, position);
-        assertEquals(cell.getMark(), Mark.BLACK);
+        assertEquals(intersection.getMark(), Mark.BLACK);
     }
 
 }
