@@ -3,7 +3,7 @@ package sdmExam;
 import java.util.Objects;
 
 public class Intersection {
-    private Position position;
+    private final Position position;
     private Mark mark;
 
     public Intersection(Position position, Mark mark) {
