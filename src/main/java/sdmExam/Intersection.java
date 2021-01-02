@@ -37,7 +37,15 @@ public class Intersection {
     }
 
     public boolean isCloseToEdge() {
-        return position.getRow()==1||position.getRow()==13||position.getColumn()==1||position.getColumn()==13;
+        return isCloseToUpperOrLowerEdge() || isCloseToRightOrLeftEdge();
+    }
+
+    public boolean isCloseToRightOrLeftEdge() {
+        return position.getColumn() == 1 || position.getColumn() == 13;
+    }
+
+    public boolean isCloseToUpperOrLowerEdge() {
+        return position.getRow() == 1 || position.getRow() == 13;
     }
 
     //TODO: implement a method that returns true if the color of the intersection matches the color of the adjacent edge
