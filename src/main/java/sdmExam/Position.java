@@ -27,4 +27,7 @@ public class Position {
         return Objects.hash(row, column);
     }
 
+    public int getRow() {
+        return this.row;
+    }
 }
