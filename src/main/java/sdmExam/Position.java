@@ -30,4 +30,8 @@ public class Position {
     public int getRow() {
         return this.row;
     }
+
+    public int getColumn() {
+        return this.column;
+    }
 }
