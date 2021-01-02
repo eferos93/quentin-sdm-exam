@@ -35,4 +35,6 @@ public class Intersection {
     public boolean isAt(Position position) {
         return position.equals(getPosition());
     }
+
+    //TODO: implement a method that returns true if the color of the intersection matches the color of the adjacent edge
 }

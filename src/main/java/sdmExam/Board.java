@@ -10,8 +10,6 @@ public class Board {
     private Mark leftAndRightEdgesColor = Mark.WHITE;
 
     public Board() {
-        // Board is 13x13 squares, but we can use edges and corners to mark so it is 14x14 cells
-        //TODO: think about a way to model the borders the board
         for (int row = 1; row < 14; row++) {
             for (int column = 1; column < 14; column++) {
                 intersections.add(Intersection.empty(Position.in(row, column)));
