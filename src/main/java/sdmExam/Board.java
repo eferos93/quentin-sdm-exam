@@ -6,8 +6,8 @@ import java.util.Optional;
 
 public class Board {
     private List<Intersection> intersections = new ArrayList<>();
-    private Mark lowerAndUpperEdges = Mark.BLACK;
-    private Mark leftAndRightEdges = Mark.WHITE;
+    private Mark lowerAndUpperEdgesColor = Mark.BLACK;
+    private Mark leftAndRightEdgesColor = Mark.WHITE;
 
     public Board() {
         // Board is 13x13 squares, but we can use edges and corners to mark so it is 14x14 cells
@@ -27,5 +27,21 @@ public class Board {
         //TODO: maybe we need to throw an exception if we try to modify and invalid cell;
         // we'll see when we will implement the actual game
         cellAt(position).ifPresent(intersection -> intersection.setMark(mark));
+    }
+
+    public void setLowerAndUpperEdgesColor(Mark mark) {
+        this.lowerAndUpperEdgesColor = mark;
+    }
+
+    public void setLeftAndRightEdgesColor(Mark mark) {
+        this.leftAndRightEdgesColor = mark;
+    }
+
+    public Mark getLowerAndUpperEdgesColor() {
+        return lowerAndUpperEdgesColor;
+    }
+
+    public Mark getLeftAndRightEdgesColor() {
+        return leftAndRightEdgesColor;
     }
 }
