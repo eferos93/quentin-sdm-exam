@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class Board {
-    private List<Intersection> intersections = new ArrayList<>();
+    private final List<Intersection> intersections = new ArrayList<>();
     private Mark lowerAndUpperEdgesColor = Mark.BLACK;
     private Mark leftAndRightEdgesColor = Mark.WHITE;
 
