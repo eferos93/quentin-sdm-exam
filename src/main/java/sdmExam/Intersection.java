@@ -36,5 +36,9 @@ public class Intersection {
         return position.equals(getPosition());
     }
 
+    public boolean isCloseToEdge() {
+        return true;
+    }
+
     //TODO: implement a method that returns true if the color of the intersection matches the color of the adjacent edge
 }
