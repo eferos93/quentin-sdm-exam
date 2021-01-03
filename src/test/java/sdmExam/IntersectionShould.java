@@ -10,19 +10,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class IntersectionShould {
     @Test
     public void beEqualToAnotherIntersectionWithEqualFields() {
-        Intersection firstIntersection = new Intersection(Position.in(3, 3), Mark.WHITE);
-        Intersection secondIntersection = new Intersection(Position.in(3, 3), Mark.WHITE);
+        Intersection firstIntersection = new Intersection(Position.in(3, 3), Stone.WHITE);
+        Intersection secondIntersection = new Intersection(Position.in(3, 3), Stone.WHITE);
         assertEquals(firstIntersection, secondIntersection);
     }
     @Test
     public void closeToEdge() {
-        Intersection firstIntersection = new Intersection(Position.in(1, 1), Mark.WHITE);
+        Intersection firstIntersection = new Intersection(Position.in(1, 1), Stone.WHITE);
         assertTrue(firstIntersection.isCloseToEdge());
     }
     @ParameterizedTest
     @CsvSource({"13, true" })
     public void closeToEdge(int columnPosition, boolean expected ){
-        Intersection firstIntersection = new Intersection(Position.in(2,columnPosition), Mark.WHITE);
+        Intersection firstIntersection = new Intersection(Position.in(2,columnPosition), Stone.WHITE);
         assertTrue(firstIntersection.isCloseToEdge());
     }
 

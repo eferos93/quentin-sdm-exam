@@ -3,12 +3,14 @@ package sdmExam;
 import java.util.Objects;
 
 public class Intersection {
+    public static final int UPPER_AND_LEFT_EDGE_INDEX = 1;
+    public static final int LOWER_AND_RIGHT_EDGE_INDEX = 13;
     private final Position position;
-    private Mark mark;
+    private Stone stone;
 
-    public Intersection(Position position, Mark mark) {
+    public Intersection(Position position, Stone stone) {
         this.position = position;
-        this.mark = mark;
+        this.stone = stone;
     }
 
     @Override
@@ -16,28 +18,28 @@ public class Intersection {
         if (this == anotherCell) return true;
         if (anotherCell == null || getClass() != anotherCell.getClass()) return false;
         Intersection intersection = (Intersection) anotherCell;
-        return position.equals(intersection.position) && mark == intersection.mark;
+        return position.equals(intersection.position) && stone == intersection.stone;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(position, mark);
+        return Objects.hash(position, stone);
     }
 
     public static Intersection empty(Position position) {
-        return new Intersection(position, Mark.NONE);
+        return new Intersection(position, Stone.NONE);
     }
 
     public Position getPosition() {
         return this.position;
     }
 
-    public Mark getMark() {
-        return this.mark;
+    public Stone getStone() {
+        return this.stone;
     }
 
-    public void setMark(Mark mark) {
-        this.mark = mark;
+    public void setStone(Stone stone) {
+        this.stone = stone;
     }
 
     public boolean isAt(Position position) {
@@ -49,14 +51,14 @@ public class Intersection {
     }
 
     public boolean isCloseToRightOrLeftEdge() {
-        return position.getColumn() == 1 || position.getColumn() == 13;
+        return position.getColumn() == UPPER_AND_LEFT_EDGE_INDEX || position.getColumn() == LOWER_AND_RIGHT_EDGE_INDEX;
     }
 
     public boolean isCloseToUpperOrLowerEdge() {
-        return position.getRow() == 1 || position.getRow() == 13;
+        return position.getRow() == UPPER_AND_LEFT_EDGE_INDEX || position.getRow() == LOWER_AND_RIGHT_EDGE_INDEX;
     }
 
     public boolean isOccupied() {
-        return mark != Mark.NONE;
+        return stone != Stone.NONE;
     }
 }

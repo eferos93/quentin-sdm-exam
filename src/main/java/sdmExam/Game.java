@@ -2,9 +2,9 @@ package sdmExam;
 
 public class Game {
     private final Board board = new Board();
-    private Mark lastPlayer = Mark.WHITE;
+    private Stone lastPlay = Stone.WHITE;
 
-    public void play(Mark player, Position position) throws Exception {
+    public void play(Stone player, Position position) throws Exception {
 
         if (isInvalidFirstPlayer(player)) {
             throw new Exception("Black player should play first.");
@@ -14,11 +14,11 @@ public class Game {
             throw new Exception("Position is already occupied.");
         }
 
-        board.addMarkAt(player, position);
-        lastPlayer = player;
+        board.addStoneAt(player, position);
+        lastPlay = player;
     }
 
-    private boolean isInvalidFirstPlayer(Mark player) {
-        return player == lastPlayer;
+    private boolean isInvalidFirstPlayer(Stone player) {
+        return player == lastPlay;
     }
 }

@@ -3,6 +3,8 @@ package sdmExam;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.NoSuchElementException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardShould {
@@ -20,12 +22,12 @@ public class BoardShould {
     }
 
     @Test
-    public void markCorrectlyAnIntersection() throws Exception {
+    public void markCorrectlyAnIntersection() throws NoSuchElementException {
         Position position = new Position(5, 7);
 
         Intersection intersection = board.intersectionAt(position);
-        board.addMarkAt(Mark.BLACK, position);
-        assertEquals(intersection.getMark(), Mark.BLACK);
+        board.addStoneAt(Stone.BLACK, position);
+        assertEquals(intersection.getStone(), Stone.BLACK);
     }
 
 }
