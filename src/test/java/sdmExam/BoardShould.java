@@ -26,4 +26,11 @@ public class BoardShould {
         assertEquals(intersection.getMark(), Mark.BLACK);
     }
 
+    @Test
+    public void edgeColorsAfterPie() {
+        board.pie();
+        assertEquals(board.getLowerAndUpperEdgesColor(), Mark.WHITE);
+        assertEquals(board.getLeftAndRightEdgesColor(), Mark.BLACK);
+    }
+
 }

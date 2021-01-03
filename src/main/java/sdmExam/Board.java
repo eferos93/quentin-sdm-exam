@@ -27,14 +27,15 @@ public class Board {
         intersectionAt(position).ifPresent(intersection -> intersection.setMark(mark));
     }
 
+    public void pie() {
+        setLowerAndUpperEdgesColor(Mark.WHITE);
+        setLeftAndRightEdgesColor(Mark.BLACK);
+    }
+
     public void setLowerAndUpperEdgesColor(Mark mark) {
         this.lowerAndUpperEdgesColor = mark;
     }
     public void setLeftAndRightEdgesColor(Mark mark) { this.leftAndRightEdgesColor = mark; }
-    public Mark getLowerAndUpperEdgesColor() {
-        return lowerAndUpperEdgesColor;
-    }
-    public Mark getLeftAndRightEdgesColor() {
-        return leftAndRightEdgesColor;
-    }
+    public Mark getLowerAndUpperEdgesColor() { return lowerAndUpperEdgesColor; }
+    public Mark getLeftAndRightEdgesColor() { return leftAndRightEdgesColor; }
 }
