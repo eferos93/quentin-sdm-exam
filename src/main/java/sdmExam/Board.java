@@ -45,4 +45,9 @@ public class Board {
     public boolean isOccupied(Position position) throws NoSuchElementException {
         return intersectionAt(position).isOccupied();
     }
+
+    public void pie() {
+        setLowerAndUpperEdgesColor(Stone.WHITE);
+        setLeftAndRightEdgesColor(Stone.BLACK);
+    }
 }

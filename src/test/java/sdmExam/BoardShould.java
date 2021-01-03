@@ -32,8 +32,8 @@ public class BoardShould {
     @Test
     public void edgeColorsAfterPie() {
         board.pie();
-        assertEquals(board.getLowerAndUpperEdgesColor(), Mark.WHITE);
-        assertEquals(board.getLeftAndRightEdgesColor(), Mark.BLACK);
+        assertEquals(board.getLowerAndUpperEdgesColor(), Stone.WHITE);
+        assertEquals(board.getLeftAndRightEdgesColor(), Stone.BLACK);
     }
 
 }
