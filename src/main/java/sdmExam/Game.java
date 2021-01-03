@@ -10,7 +10,7 @@ public class Game {
             throw new Exception("Black player should play first.");
         }
 
-        if (board.isMarked(position)) {
+        if (board.isOccupied(position)) {
             throw new Exception("Position is already occupied.");
         }
 

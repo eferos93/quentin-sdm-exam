@@ -3,7 +3,6 @@ package sdmExam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 public class Board {
     private final List<Intersection> intersections = new ArrayList<>();
@@ -42,7 +41,7 @@ public class Board {
         return leftAndRightEdgesColor;
     }
 
-    public boolean isMarked(Position position) throws NoSuchElementException {
-        return intersectionAt(position).isMarked();
+    public boolean isOccupied(Position position) throws NoSuchElementException {
+        return intersectionAt(position).isOccupied();
     }
 }

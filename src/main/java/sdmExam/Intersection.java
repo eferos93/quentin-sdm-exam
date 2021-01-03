@@ -56,7 +56,7 @@ public class Intersection {
         return position.getRow() == 1 || position.getRow() == 13;
     }
 
-    public boolean isMarked() {
+    public boolean isOccupied() {
         return mark != Mark.NONE;
     }
 }
