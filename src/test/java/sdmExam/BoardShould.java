@@ -24,10 +24,16 @@ public class BoardShould {
     @Test
     public void markCorrectlyAnIntersection() throws NoSuchElementException {
         Position position = new Position(5, 7);
-
         Intersection intersection = board.intersectionAt(position);
         board.addStoneAt(Stone.BLACK, position);
         assertEquals(intersection.getStone(), Stone.BLACK);
+    }
+
+    @Test
+    public void edgeColorsAfterPie() {
+        board.pie();
+        assertEquals(board.getLowerAndUpperEdgesColor(), Mark.WHITE);
+        assertEquals(board.getLeftAndRightEdgesColor(), Mark.BLACK);
     }
 
 }
