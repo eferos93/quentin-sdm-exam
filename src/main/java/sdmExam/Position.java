@@ -3,7 +3,7 @@ package sdmExam;
 import java.util.Objects;
 
 public class Position {
-    private int row, column;
+    private final int row, column;
 
     public Position(int row, int column) {
         this.row = row;
@@ -27,4 +27,11 @@ public class Position {
         return Objects.hash(row, column);
     }
 
+    public int getRow() {
+        return this.row;
+    }
+
+    public int getColumn() {
+        return this.column;
+    }
 }

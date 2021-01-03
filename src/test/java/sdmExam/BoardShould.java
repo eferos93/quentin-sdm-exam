@@ -10,22 +10,22 @@ public class BoardShould {
     private final Board board = new Board();
 
     @Test
-    public void getCorrectCellGivenAPosition() {
+    public void getCorrectIntersectionGivenAPosition() {
         Position position = Position.in(5, 7);
-        assertTrue(board.cellAt(position).isPresent());
+        assertTrue(board.intersectionAt(position).isPresent());
     }
 
     @Test
-    public void cellOutsideBoard() {
-        assertTrue(board.cellAt(Position.in(14, 14)).isEmpty());
+    public void intersectionOutsideBoard() {
+        assertTrue(board.intersectionAt(Position.in(14, 14)).isEmpty());
     }
 
     @Test
-    public void markCorrectlyACell() {
+    public void markCorrectlyAnIntersection() {
         Position position = new Position(5, 7);
-        Cell cell = board.cellAt(position).get();
+        Intersection intersection = board.intersectionAt(position).get();
         board.addMarkAt(Mark.BLACK, position);
-        assertEquals(cell.getMark(), Mark.BLACK);
+        assertEquals(intersection.getMark(), Mark.BLACK);
     }
 
 }
