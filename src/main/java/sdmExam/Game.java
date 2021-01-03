@@ -5,6 +5,7 @@ public class Game {
     private Mark player1 = Mark.BLACK;
     private Mark player2 = Mark.WHITE;
     private boolean firstPlay = true;
+    private Mark lastPlayer;
 
     public Game(){this.board = new Board();}
 
@@ -13,7 +14,10 @@ public class Game {
             throw new Exception();
         }
 
+        if(player == lastPlayer){
+            throw new Exception();
+        }
 
-
+        lastPlayer = player;
     }
 }
