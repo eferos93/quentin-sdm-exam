@@ -17,7 +17,7 @@ public class Game {
         }
 
         if(board.isMarked(position)){
-            throw new Exception();
+            throw new Exception("Position is already occupied.");
         }
 
         board.addMarkAt(player, position);

@@ -47,4 +47,8 @@ public class Intersection {
     public boolean isCloseToUpperOrLowerEdge() {
         return position.getRow() == 1 || position.getRow() == 13;
     }
+
+    public boolean isMarked() {
+        return mark != Mark.NONE;
+    }
 }

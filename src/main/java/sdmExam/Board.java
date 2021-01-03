@@ -17,14 +17,14 @@ public class Board {
         }
     }
 
-    public Optional<Intersection> intersectionAt(Position position) {
-        return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst();
+    public Intersection intersectionAt(Position position) throws Exception{
+        return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow();
     }
 
-    public void addMarkAt(Mark mark, Position position) {
+    public void addMarkAt(Mark mark, Position position) throws Exception{
         //TODO: maybe we need to throw an exception if we try to modify and invalid cell;
         // we'll see when we will implement the actual game
-        intersectionAt(position).ifPresent(intersection -> intersection.setMark(mark));
+        intersectionAt(position).setMark(mark);
     }
 
     public void setLowerAndUpperEdgesColor(Mark mark) {
@@ -43,7 +43,7 @@ public class Board {
         return leftAndRightEdgesColor;
     }
 
-    public boolean isMarked(Position position) {
-        return intersectionAt(position).stream().allMatch(intersection -> intersection.getMark() != Mark.NONE);
+    public boolean isMarked(Position position) throws Exception{
+        return intersectionAt(position).isMarked();
     }
 }

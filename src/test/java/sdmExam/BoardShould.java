@@ -3,8 +3,7 @@ package sdmExam;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardShould {
     private final Board board = new Board();
@@ -12,18 +11,19 @@ public class BoardShould {
     @Test
     public void getCorrectIntersectionGivenAPosition() {
         Position position = Position.in(5, 7);
-        assertTrue(board.intersectionAt(position).isPresent());
+        assertDoesNotThrow(() -> board.intersectionAt(position));
     }
 
     @Test
     public void intersectionOutsideBoard() {
-        assertTrue(board.intersectionAt(Position.in(14, 14)).isEmpty());
+        assertThrows(Exception.class, () -> board.intersectionAt(Position.in(14, 14)));
     }
 
     @Test
-    public void markCorrectlyAnIntersection() {
+    public void markCorrectlyAnIntersection() throws Exception {
         Position position = new Position(5, 7);
-        Intersection intersection = board.intersectionAt(position).get();
+
+        Intersection intersection = board.intersectionAt(position);
         board.addMarkAt(Mark.BLACK, position);
         assertEquals(intersection.getMark(), Mark.BLACK);
     }
