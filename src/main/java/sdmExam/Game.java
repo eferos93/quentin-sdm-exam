@@ -5,7 +5,6 @@ public class Game {
     private Mark player1 = Mark.BLACK;
     private Mark player2 = Mark.WHITE;
 
-    public Game(Board board){this.board = board;}
+    public Game(){this.board = new Board();}
 
-    public Board getBoard() { return board; }
 }

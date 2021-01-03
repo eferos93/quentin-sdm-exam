@@ -1,8 +1,8 @@
 package sdmExam;
 
-public class GameShould {
-    Game game = new Game(new Board());
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+public class GameShould {
 
 
 }
