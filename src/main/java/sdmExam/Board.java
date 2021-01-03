@@ -32,6 +32,8 @@ public class Board {
         setLeftAndRightEdgesColor(Mark.BLACK);
     }
 
+    public boolean isOrthogonallyAdjacent(Intersection intersection){return false;}
+
     public void setLowerAndUpperEdgesColor(Mark mark) {
         this.lowerAndUpperEdgesColor = mark;
     }

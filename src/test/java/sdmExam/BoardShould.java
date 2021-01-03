@@ -3,6 +3,7 @@ package sdmExam;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -24,6 +25,13 @@ public class BoardShould {
         Intersection intersection = board.intersectionAt(Position.in(5,7)).get();
         board.addMarkAt(Mark.BLACK, Position.in(5,7));
         assertEquals(intersection.getMark(), Mark.BLACK);
+    }
+
+    @Test
+    public void NoOrthogonalAdjacencyOfIntersection(){
+        board.addMarkAt(Mark.WHITE, Position.in(7,9));
+        Intersection intersection = board.intersectionAt(Position.in(7,9)).get();
+        assertFalse(board.isOrthogonallyAdjacent(intersection));
     }
 
     @Test
