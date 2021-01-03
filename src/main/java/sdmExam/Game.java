@@ -7,9 +7,5 @@ public class Game {
 
     public Game(Board board){this.board = board;}
 
-    public boolean isIllegal() {
-        return false;
-    }
-
     public Board getBoard() { return board; }
 }
