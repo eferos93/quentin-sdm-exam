@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public class Board {
+    public static final int BOARD_SIZE = 14;
     private final List<Intersection> intersections = new ArrayList<>();
     private Mark lowerAndUpperEdgesColor = Mark.BLACK;
     private Mark leftAndRightEdgesColor = Mark.WHITE;
 
     public Board() {
-        for (int row = 1; row < 14; row++) {
-            for (int column = 1; column < 14; column++) {
+        for (int row = 1; row < BOARD_SIZE; row++) {
+            for (int column = 1; column < BOARD_SIZE; column++) {
                 intersections.add(Intersection.empty(Position.in(row, column)));
             }
         }
