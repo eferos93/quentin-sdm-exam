@@ -30,15 +30,10 @@ public class Board {
     public void setLowerAndUpperEdgesColor(Mark mark) {
         this.lowerAndUpperEdgesColor = mark;
     }
-
-    public void setLeftAndRightEdgesColor(Mark mark) {
-        this.leftAndRightEdgesColor = mark;
-    }
-
+    public void setLeftAndRightEdgesColor(Mark mark) { this.leftAndRightEdgesColor = mark; }
     public Mark getLowerAndUpperEdgesColor() {
         return lowerAndUpperEdgesColor;
     }
-
     public Mark getLeftAndRightEdgesColor() {
         return leftAndRightEdgesColor;
     }
