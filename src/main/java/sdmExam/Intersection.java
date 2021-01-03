@@ -24,13 +24,21 @@ public class Intersection {
         return Objects.hash(position, mark);
     }
 
-    public static Intersection empty(Position position){
+    public static Intersection empty(Position position) {
         return new Intersection(position, Mark.NONE);
     }
 
-    public Position getPosition() { return this.position; }
-    public Mark getMark() { return this.mark; }
-    public void setMark(Mark mark) { this.mark = mark; }
+    public Position getPosition() {
+        return this.position;
+    }
+
+    public Mark getMark() {
+        return this.mark;
+    }
+
+    public void setMark(Mark mark) {
+        this.mark = mark;
+    }
 
     public boolean isAt(Position position) {
         return position.equals(getPosition());

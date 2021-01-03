@@ -2,6 +2,7 @@ package sdmExam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 public class Board {
@@ -17,13 +18,11 @@ public class Board {
         }
     }
 
-    public Intersection intersectionAt(Position position) throws Exception{
+    public Intersection intersectionAt(Position position) throws NoSuchElementException {
         return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow();
     }
 
-    public void addMarkAt(Mark mark, Position position) throws Exception{
-        //TODO: maybe we need to throw an exception if we try to modify and invalid cell;
-        // we'll see when we will implement the actual game
+    public void addMarkAt(Mark mark, Position position) throws NoSuchElementException {
         intersectionAt(position).setMark(mark);
     }
 
@@ -43,7 +42,7 @@ public class Board {
         return leftAndRightEdgesColor;
     }
 
-    public boolean isMarked(Position position) throws Exception{
+    public boolean isMarked(Position position) throws NoSuchElementException {
         return intersectionAt(position).isMarked();
     }
 }

@@ -4,13 +4,13 @@ public class Game {
     private final Board board = new Board();
     private Mark lastPlayer = Mark.WHITE;
 
-    public void play(Mark player, Position position) throws Exception{
+    public void play(Mark player, Position position) throws Exception {
 
-        if(isInvalidFirstPlayer(player)){
+        if (isInvalidFirstPlayer(player)) {
             throw new Exception("Black player should play first.");
         }
 
-        if(board.isMarked(position)){
+        if (board.isMarked(position)) {
             throw new Exception("Position is already occupied.");
         }
 
