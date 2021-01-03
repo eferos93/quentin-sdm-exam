@@ -7,4 +7,7 @@ public class Game {
 
     public Game(){this.board = new Board();}
 
+    public void play(Mark player, Position position) throws Exception{
+        throw new Exception();
+    }
 }
