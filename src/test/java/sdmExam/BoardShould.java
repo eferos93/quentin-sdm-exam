@@ -31,7 +31,7 @@ public class BoardShould {
     public void noOrthogonalAdjacencyOfIntersection(){
         board.addMarkAt(Mark.WHITE, Position.in(7,9));
         Intersection intersection = board.intersectionAt(Position.in(7,9)).get();
-        assertFalse(board.isOrthogonallyAdjacent(intersection));
+        assertFalse(board.existOrthogonallyAdjacent(intersection));
     }
 
     @Test
@@ -39,7 +39,15 @@ public class BoardShould {
         board.addMarkAt(Mark.WHITE, Position.in(3,4));
         board.addMarkAt(Mark.WHITE, Position.in(4,4));
         Intersection intersection = board.intersectionAt(Position.in(3,4)).get();
-        assertTrue(board.isOrthogonallyAdjacent(intersection));
+        assertTrue(board.existOrthogonallyAdjacent(intersection));
+    }
+
+    @Test
+    public void topOrthogonalAdjacencyOfIntersection(){
+        board.addMarkAt(Mark.WHITE, Position.in(12,5));
+        board.addMarkAt(Mark.WHITE, Position.in(13,5));
+        Intersection intersection = board.intersectionAt(Position.in(12,5)).get();
+        assertTrue(board.existOrthogonallyAdjacent(intersection));
     }
 
     @Test
