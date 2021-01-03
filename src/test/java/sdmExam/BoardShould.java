@@ -11,8 +11,7 @@ public class BoardShould {
 
     @Test
     public void getCorrectIntersectionGivenAPosition() {
-        Position position = Position.in(5, 7);
-        assertTrue(board.intersectionAt(position).isPresent());
+        assertTrue(board.intersectionAt(Position.in(5, 7)).isPresent());
     }
 
     @Test
@@ -22,9 +21,8 @@ public class BoardShould {
 
     @Test
     public void markCorrectlyAnIntersection() {
-        Position position = new Position(5, 7);
-        Intersection intersection = board.intersectionAt(position).get();
-        board.addMarkAt(Mark.BLACK, position);
+        Intersection intersection = board.intersectionAt(Position.in(5,7)).get();
+        board.addMarkAt(Mark.BLACK, Position.in(5,7));
         assertEquals(intersection.getMark(), Mark.BLACK);
     }
 
