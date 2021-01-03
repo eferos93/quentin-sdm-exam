@@ -1,5 +1,7 @@
 package sdmExam;
 
+import java.security.spec.ECField;
+
 public class Game {
     private final Board board;
     private Mark player1 = Mark.BLACK;
@@ -14,6 +16,11 @@ public class Game {
             throw new Exception();
         }
 
+        if(board.intersectionAt(position).get().getMark() != Mark.NONE){
+            throw new Exception();
+        }
+
+        board.addMarkAt(player, position);
         lastPlayer = player;
     }
 }
