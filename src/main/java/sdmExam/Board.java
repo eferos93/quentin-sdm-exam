@@ -42,4 +42,8 @@ public class Board {
     public Mark getLeftAndRightEdgesColor() {
         return leftAndRightEdgesColor;
     }
+
+    public boolean isMarked(Position position) {
+        return intersectionAt(position).stream().allMatch(intersection -> intersection.getMark() != Mark.NONE);
+    }
 }
