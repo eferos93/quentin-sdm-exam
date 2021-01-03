@@ -28,10 +28,18 @@ public class BoardShould {
     }
 
     @Test
-    public void NoOrthogonalAdjacencyOfIntersection(){
+    public void noOrthogonalAdjacencyOfIntersection(){
         board.addMarkAt(Mark.WHITE, Position.in(7,9));
         Intersection intersection = board.intersectionAt(Position.in(7,9)).get();
         assertFalse(board.isOrthogonallyAdjacent(intersection));
+    }
+
+    @Test
+    public void rightOrthogonalAdjacencyOfIntersection(){
+        board.addMarkAt(Mark.WHITE, Position.in(3,4));
+        board.addMarkAt(Mark.WHITE, Position.in(4,4));
+        Intersection intersection = board.intersectionAt(Position.in(3,4)).get();
+        assertTrue(board.isOrthogonallyAdjacent(intersection));
     }
 
     @Test
