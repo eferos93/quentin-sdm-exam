@@ -50,17 +50,10 @@ public class Intersection {
 
     public boolean isOrthogonalTo(Intersection otherIntersection) {
         final Position otherIntersectionPosition = otherIntersection.getPosition();
-        return otherIntersectionPosition.getRow() == this.position.getRow() + 1 &&
-                otherIntersectionPosition.getColumn() == this.position.getColumn()
-                ||
-                otherIntersectionPosition.getRow() == this.position.getRow() - 1 &&
-                        otherIntersectionPosition.getColumn() == this.position.getColumn()
-                ||
-                otherIntersectionPosition.getColumn() == this.position.getColumn() + 1 &&
-                        otherIntersectionPosition.getRow() == this.position.getRow()
-                ||
-                otherIntersectionPosition.getColumn() == this.position.getColumn() - 1 &&
-                        otherIntersectionPosition.getRow() == this.position.getRow();
+        return position.isBelowWithRespectTo(otherIntersectionPosition) ||
+                position.isAboveWithRespectTo(otherIntersectionPosition) ||
+                position.isOnTheLeftWithRespectTo(otherIntersectionPosition) ||
+                position.isOnTheRightWithRespectTo(otherIntersectionPosition);
     }
 
     public boolean hasSameColorAs(Intersection otherIntersection) {
