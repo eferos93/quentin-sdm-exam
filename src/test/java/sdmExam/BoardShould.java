@@ -3,28 +3,31 @@ package sdmExam;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.NoSuchElementException;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardShould {
     private final Board board = new Board();
 
     @Test
     public void getCorrectIntersectionGivenAPosition() {
-        assertTrue(board.intersectionAt(Position.in(5, 7)).isPresent());
+        Position position = Position.in(5, 7);
+        assertDoesNotThrow(() -> board.intersectionAt(position));
     }
 
     @Test
     public void intersectionOutsideBoard() {
-        assertTrue(board.intersectionAt(Position.in(14, 14)).isEmpty());
+        assertThrows(Exception.class, () -> board.intersectionAt(Position.in(14, 14)));
     }
 
     @Test
-    public void markCorrectlyAnIntersection() {
-        Intersection intersection = board.intersectionAt(Position.in(5,7)).get();
-        board.addMarkAt(Mark.BLACK, Position.in(5,7));
-        assertEquals(intersection.getMark(), Mark.BLACK);
+    public void markCorrectlyAnIntersection() throws NoSuchElementException {
+        Position position = new Position(5, 7);
+        Intersection intersection = board.intersectionAt(position);
+        board.addStoneAt(Stone.BLACK, position);
+        assertEquals(intersection.getStone(), Stone.BLACK);
     }
 
     @Test
@@ -53,8 +56,8 @@ public class BoardShould {
     @Test
     public void edgeColorsAfterPie() {
         board.pie();
-        assertEquals(board.getLowerAndUpperEdgesColor(), Mark.WHITE);
-        assertEquals(board.getLeftAndRightEdgesColor(), Mark.BLACK);
+        assertEquals(board.getLowerAndUpperEdgesColor(), Stone.WHITE);
+        assertEquals(board.getLeftAndRightEdgesColor(), Stone.BLACK);
     }
 
 }

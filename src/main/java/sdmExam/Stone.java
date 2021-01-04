@@ -1,6 +1,6 @@
 package sdmExam;
 
-public enum Mark {
+public enum Stone {
     WHITE,
     BLACK,
     NONE
