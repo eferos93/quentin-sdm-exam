@@ -40,7 +40,7 @@ public class GameShould {
         assertThrows(Exception.class,
                 () -> {
                     game.play(Stone.BLACK, Position.in(1, 1));
-                    game.play(Stone.WHITE, Position.in(3, 2));
+                    game.play(Stone.WHITE, Position.in(1, 2));
                     game.play(Stone.BLACK, Position.in(2, 2));
                 });
     }

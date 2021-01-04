@@ -56,4 +56,10 @@ public class Board {
         setLowerAndUpperEdgesColor(Stone.WHITE);
         setLeftAndRightEdgesColor(Stone.BLACK);
     }
+
+    public boolean existDiagonallyAdjacent(Intersection intersection){
+        return intersections.stream()
+                .filter(intersection::isDiagonalTo)
+                .anyMatch(intersection::hasSameColorAs);
+    }
 }

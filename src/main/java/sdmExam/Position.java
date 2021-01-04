@@ -54,4 +54,25 @@ public class Position {
         return otherIntersectionPosition.getColumn() == this.column - 1 &&
                 otherIntersectionPosition.getRow() == this.row;
     }
+
+    public boolean isUpRightRespectTo(Position otherIntersectionPosition) {
+        return otherIntersectionPosition.getRow() == this.row -1 &&
+                otherIntersectionPosition.getColumn() == this.column+1;
+    }
+
+    public boolean isDownRightRespectTo(Position otherIntersectionPosition) {
+        return otherIntersectionPosition.getRow() == this.row +1 &&
+                otherIntersectionPosition.getColumn() == this.column+1;
+    }
+
+    public boolean isUpLeftRespectTo(Position otherIntersectionPosition) {
+        return otherIntersectionPosition.getRow() == this.row -1 &&
+                otherIntersectionPosition.getColumn() == this.column-1;
+    }
+
+    public boolean isDownLeftRespectTo(Position otherIntersectionPosition) {
+        return otherIntersectionPosition.getRow() == this.row +1 &&
+                otherIntersectionPosition.getColumn() == this.column-1;
+    }
+
 }
