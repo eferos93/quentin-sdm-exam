@@ -71,6 +71,6 @@ public class Intersection {
     }
 
     public boolean hasSameColorAs(Intersection otherIntersection) {
-         return this.mark == otherIntersection.getMark();
+         return this.stone == otherIntersection.getStone();
     }
 }
