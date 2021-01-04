@@ -5,16 +5,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GameShould {
-
+    private final Game game = new Game();
     @Test
     public void notAllowWhitePlaysFirst(){
-        Game game = new Game();
         assertThrows(Exception.class, () -> game.play(Stone.WHITE, Position.in(4, 5)));
     }
 
     @Test
     public void notAllowPlayerToPlayTwiceInARow(){
-        Game game = new Game();
         assertThrows(Exception.class,
                 () -> {
                     game.play(Stone.BLACK, Position.in(2, 2));
@@ -24,7 +22,6 @@ public class GameShould {
 
     @Test
     public void notAllowStoneInOccupiedIntersection(){
-        Game game = new Game();
         assertThrows(Exception.class,
                 () -> {
                     game.play(Stone.BLACK, Position.in(2, 2));
@@ -34,7 +31,6 @@ public class GameShould {
 
     @Test
     public void notAllowStoneOutsideBoard(){
-        Game game = new Game();
         assertThrows(Exception.class, () -> game.play(Stone.BLACK, Position.in(-5, -5)));
     }
 }
