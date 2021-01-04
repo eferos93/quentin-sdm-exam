@@ -18,9 +18,9 @@ public class Game {
             throw new Exception("Position is already occupied.");
         }
 
-       // if ( position.getColumn()== actualPosition.getColumn()+1 && position.getRow()==actualPosition.getRow()+1)  {
-        //       throw new Exception("A player cannot put a stone diagonally adjacent to another stone of the same colour.");
-     //   }
+        if ( board.existDiagonallyAdjacent(board.intersectionAt(position)))  {
+               throw new Exception("A player cannot put a stone diagonally adjacent to another stone of the same colour.");
+        }
 
         board.addStoneAt(player, position);
         lastPlay = player;
