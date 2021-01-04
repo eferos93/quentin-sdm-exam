@@ -38,6 +38,12 @@ public class Board {
         return lowerAndUpperEdgesColor;
     }
 
+    public boolean existOrthogonallyAdjacent(Intersection intersection){
+        return intersections.stream()
+                .filter(intersection::isOrthogonalTo)
+                .anyMatch(intersection::hasSameColorAs);
+    }
+  
     public Stone getLeftAndRightEdgesColor() {
         return leftAndRightEdgesColor;
     }

@@ -61,4 +61,16 @@ public class Intersection {
     public boolean isOccupied() {
         return stone != Stone.NONE;
     }
+
+    public boolean isOrthogonalTo(Intersection otherIntersection) {
+        final Position otherIntersectionPosition = otherIntersection.getPosition();
+        return position.isBelowWithRespectTo(otherIntersectionPosition) ||
+                position.isAboveWithRespectTo(otherIntersectionPosition) ||
+                position.isOnTheLeftWithRespectTo(otherIntersectionPosition) ||
+                position.isOnTheRightWithRespectTo(otherIntersectionPosition);
+    }
+
+    public boolean hasSameColorAs(Intersection otherIntersection) {
+         return this.stone == otherIntersection.getStone();
+    }
 }

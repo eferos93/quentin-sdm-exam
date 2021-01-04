@@ -3,6 +3,7 @@ package sdmExam;
 
 import org.junit.jupiter.api.Test;
 
+
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,6 +28,29 @@ public class BoardShould {
         Intersection intersection = board.intersectionAt(position);
         board.addStoneAt(Stone.BLACK, position);
         assertEquals(intersection.getStone(), Stone.BLACK);
+    }
+
+    @Test
+    public void noOrthogonalAdjacencyOfIntersection(){
+        board.addStoneAt(Stone.WHITE, Position.in(7,9));
+        Intersection intersection = board.intersectionAt(Position.in(7,9));
+        assertFalse(board.existOrthogonallyAdjacent(intersection));
+    }
+
+    @Test
+    public void rightOrthogonalAdjacencyOfIntersection(){
+        board.addStoneAt(Stone.WHITE, Position.in(3,4));
+        board.addStoneAt(Stone.WHITE, Position.in(4,4));
+        Intersection intersection = board.intersectionAt(Position.in(3,4));
+        assertTrue(board.existOrthogonallyAdjacent(intersection));
+    }
+
+    @Test
+    public void topOrthogonalAdjacencyOfIntersection(){
+        board.addStoneAt(Stone.WHITE, Position.in(12,5));
+        board.addStoneAt(Stone.WHITE, Position.in(13,5));
+        Intersection intersection = board.intersectionAt(Position.in(12,5));
+        assertTrue(board.existOrthogonallyAdjacent(intersection));
     }
 
     @Test
