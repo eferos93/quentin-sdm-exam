@@ -10,7 +10,7 @@ public class Game {
             throw new Exception("Black player should play first.");
         }
 
-        if (lastPlay == player) {
+        if (isARepeatedPlay(player)) {
             throw new Exception("A player cannot play twice in a row.");
         }
 
@@ -22,7 +22,11 @@ public class Game {
         lastPlay = player;
     }
 
+    private boolean isARepeatedPlay(Stone player) {
+        return lastPlay == player;
+    }
+
     private boolean isInvalidFirstPlayer(Stone player) {
-        return lastPlay == Stone.NONE && player == Stone.WHITE;
+        return isARepeatedPlay(Stone.NONE) && player == Stone.WHITE;
     }
 }
