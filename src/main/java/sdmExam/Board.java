@@ -33,32 +33,11 @@ public class Board {
     }
 
     public boolean existOrthogonallyAdjacent(Intersection intersection){
-        return leftOrthogonalAdjacent(intersection).getMark() == intersection.getMark() ||
-                rightOrthogonalAdjacent(intersection).getMark() == intersection.getMark() ||
-                topOrthogonalAdjacent(intersection).getMark() == intersection.getMark() ||
-                bottomOrthogonalAdjacent(intersection).getMark() == intersection.getMark();
+        return intersections.stream()
+                .filter(intersection::isOrthogonalTo)
+                .anyMatch(intersection::hasSameColorAs);
     }
 
-    public Intersection leftOrthogonalAdjacent(Intersection intersection){
-        Position positionOfIntersection = intersection.getPosition();
-        Position positionOfLeftAdjacent = Position.in(positionOfIntersection.getRow() - 1, positionOfIntersection.getColumn());
-        return intersectionAt(positionOfLeftAdjacent).get();
-    }
-    public Intersection rightOrthogonalAdjacent(Intersection intersection){
-        Position positionOfIntersection = intersection.getPosition();
-        Position positionOfRightAdjacent = Position.in(positionOfIntersection.getRow() + 1, positionOfIntersection.getColumn());
-        return intersectionAt(positionOfRightAdjacent).get();
-    }
-    public Intersection topOrthogonalAdjacent(Intersection intersection){
-        Position positionOfIntersection = intersection.getPosition();
-        Position positionOfTopAdjacent = Position.in(positionOfIntersection.getRow(), positionOfIntersection.getColumn() - 1);
-        return intersectionAt(positionOfTopAdjacent).get();
-    }
-    public Intersection bottomOrthogonalAdjacent(Intersection intersection){
-        Position positionOfIntersection = intersection.getPosition();
-        Position positionOfBottomAdjacent = Position.in(positionOfIntersection.getRow(), positionOfIntersection.getColumn() + 1);
-        return intersectionAt(positionOfBottomAdjacent).get();
-    }
 
     public void setLowerAndUpperEdgesColor(Mark mark) {
         this.lowerAndUpperEdgesColor = mark;

@@ -47,4 +47,23 @@ public class Intersection {
     public boolean isCloseToUpperOrLowerEdge() {
         return position.getRow() == 1 || position.getRow() == 13;
     }
+
+    public boolean isOrthogonalTo(Intersection otherIntersection) {
+        final Position otherIntersectionPosition = otherIntersection.getPosition();
+        return otherIntersectionPosition.getRow() == this.position.getRow() + 1 &&
+                otherIntersectionPosition.getColumn() == this.position.getColumn()
+                ||
+                otherIntersectionPosition.getRow() == this.position.getRow() - 1 &&
+                        otherIntersectionPosition.getColumn() == this.position.getColumn()
+                ||
+                otherIntersectionPosition.getColumn() == this.position.getColumn() + 1 &&
+                        otherIntersectionPosition.getRow() == this.position.getRow()
+                ||
+                otherIntersectionPosition.getColumn() == this.position.getColumn() - 1 &&
+                        otherIntersectionPosition.getRow() == this.position.getRow();
+    }
+
+    public boolean hasSameColorAs(Intersection otherIntersection) {
+         return this.mark == otherIntersection.getMark();
+    }
 }
