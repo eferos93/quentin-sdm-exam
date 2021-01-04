@@ -73,4 +73,5 @@ public class Intersection {
     public boolean hasSameColorAs(Intersection otherIntersection) {
          return this.stone == otherIntersection.getStone();
     }
+
 }
