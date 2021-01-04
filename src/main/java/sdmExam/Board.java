@@ -2,40 +2,52 @@ package sdmExam;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 public class Board {
+    public static final int BOARD_SIZE = 14;
     private final List<Intersection> intersections = new ArrayList<>();
-    private Mark lowerAndUpperEdgesColor = Mark.BLACK;
-    private Mark leftAndRightEdgesColor = Mark.WHITE;
+    private Stone lowerAndUpperEdgesColor = Stone.BLACK;
+    private Stone leftAndRightEdgesColor = Stone.WHITE;
 
     public Board() {
-        for (int row = 1; row < 14; row++) {
-            for (int column = 1; column < 14; column++) {
+        for (int row = 1; row < BOARD_SIZE; row++) {
+            for (int column = 1; column < BOARD_SIZE; column++) {
                 intersections.add(Intersection.empty(Position.in(row, column)));
             }
         }
     }
 
-    public Optional<Intersection> intersectionAt(Position position) {
-        return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst();
+    public Intersection intersectionAt(Position position) throws NoSuchElementException {
+        return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow();
     }
 
-    public void addMarkAt(Mark mark, Position position) {
-        //TODO: maybe we need to throw an exception if we try to modify and invalid cell;
-        // we'll see when we will implement the actual game
-        intersectionAt(position).ifPresent(intersection -> intersection.setMark(mark));
+    public void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
+        intersectionAt(position).setStone(stone);
+    }
+
+    public void setLowerAndUpperEdgesColor(Stone color) {
+        this.lowerAndUpperEdgesColor = color;
+    }
+
+    public void setLeftAndRightEdgesColor(Stone color) {
+        this.leftAndRightEdgesColor = color;
+    }
+
+    public Stone getLowerAndUpperEdgesColor() {
+        return lowerAndUpperEdgesColor;
+    }
+
+    public Stone getLeftAndRightEdgesColor() {
+        return leftAndRightEdgesColor;
+    }
+
+    public boolean isOccupied(Position position) throws NoSuchElementException {
+        return intersectionAt(position).isOccupied();
     }
 
     public void pie() {
-        setLowerAndUpperEdgesColor(Mark.WHITE);
-        setLeftAndRightEdgesColor(Mark.BLACK);
+        setLowerAndUpperEdgesColor(Stone.WHITE);
+        setLeftAndRightEdgesColor(Stone.BLACK);
     }
-
-    public void setLowerAndUpperEdgesColor(Mark mark) {
-        this.lowerAndUpperEdgesColor = mark;
-    }
-    public void setLeftAndRightEdgesColor(Mark mark) { this.leftAndRightEdgesColor = mark; }
-    public Mark getLowerAndUpperEdgesColor() { return lowerAndUpperEdgesColor; }
-    public Mark getLeftAndRightEdgesColor() { return leftAndRightEdgesColor; }
 }
