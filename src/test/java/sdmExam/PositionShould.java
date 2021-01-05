@@ -25,6 +25,13 @@ public class PositionShould {
         assertFalse(firstPosition.isBelowWithRespectTo(secondPosition));
     }
 
+    @Test
+    public void stoneLeft(){
+        Position firstPosition = new Position(3, 4);
+        Position secondPosition = new Position (3,5);
+        assertTrue(firstPosition.isOnTheLeftWithRespectTo(secondPosition));
+    }
+
 
 
 }
