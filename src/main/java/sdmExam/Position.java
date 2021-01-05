@@ -36,12 +36,12 @@ public class Position {
     }
 
     public boolean isAboveWithRespectTo(Position otherIntersectionPosition) {
-        return otherIntersectionPosition.getRow() == this.row + 1 &&
+        return otherIntersectionPosition.getRow() == this.row - 1 &&
                 otherIntersectionPosition.getColumn() == this.column;
     }
 
     public boolean isBelowWithRespectTo(Position otherIntersectionPosition) {
-        return otherIntersectionPosition.getRow() == this.row - 1 &&
+        return otherIntersectionPosition.getRow() == this.row + 1 &&
                 otherIntersectionPosition.getColumn() == this.column;
     }
 

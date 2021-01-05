@@ -11,4 +11,6 @@ public class PositionShould {
         Position secondPosition = new Position(3, 3);
         assertEquals(firstPosition, secondPosition);
     }
+
+
 }
