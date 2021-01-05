@@ -70,7 +70,16 @@ public class Intersection {
                 position.isOnTheRightWithRespectTo(otherIntersectionPosition);
     }
 
-    public boolean hasSameColorAs(Intersection otherIntersection) {
-         return this.stone == otherIntersection.getStone();
+    public boolean isDiagonalTo(Intersection otherIntersection) {
+        final Position otherIntersectionPosition = otherIntersection.getPosition();
+        return position.isUpLeftRespectTo(otherIntersectionPosition) ||
+                position.isUpRightRespectTo(otherIntersectionPosition) ||
+                position.isDownLeftRespectTo(otherIntersectionPosition) ||
+                position.isDownRightRespectTo(otherIntersectionPosition);
     }
+
+    public boolean hasStone(Stone stone) {
+         return this.stone == stone;
+    }
+
 }

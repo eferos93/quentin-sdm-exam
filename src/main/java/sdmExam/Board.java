@@ -3,16 +3,17 @@ package sdmExam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 public class Board {
-    public static final int BOARD_SIZE = 14;
+    public static final int BOARD_SIZE = 13;
     private final List<Intersection> intersections = new ArrayList<>();
     private Stone lowerAndUpperEdgesColor = Stone.BLACK;
     private Stone leftAndRightEdgesColor = Stone.WHITE;
 
     public Board() {
-        for (int row = 1; row < BOARD_SIZE; row++) {
-            for (int column = 1; column < BOARD_SIZE; column++) {
+        for (int row = 1; row <= BOARD_SIZE; row++) {
+            for (int column = 1; column <= BOARD_SIZE; column++) {
                 intersections.add(Intersection.empty(Position.in(row, column)));
             }
         }
@@ -38,12 +39,6 @@ public class Board {
         return lowerAndUpperEdgesColor;
     }
 
-    public boolean existOrthogonallyAdjacent(Intersection intersection){
-        return intersections.stream()
-                .filter(intersection::isOrthogonalTo)
-                .anyMatch(intersection::hasSameColorAs);
-    }
-  
     public Stone getLeftAndRightEdgesColor() {
         return leftAndRightEdgesColor;
     }
@@ -55,5 +50,21 @@ public class Board {
     public void pie() {
         setLowerAndUpperEdgesColor(Stone.WHITE);
         setLeftAndRightEdgesColor(Stone.BLACK);
+    }
+
+    public boolean existsOrthogonallyAdjacentWithStone(Intersection intersection, Stone stone) {
+        return intersections.stream()
+                .filter(intersection::isOrthogonalTo)
+                .anyMatch(orthogonalIntersection -> orthogonalIntersection.hasStone(stone));
+    }
+
+    public boolean existsDiagonallyAdjacentWithStone(Intersection intersection, Stone stone) {
+        return intersections.stream()
+                .filter(intersection::isDiagonalTo)
+                .anyMatch(diagonalIntersection -> diagonalIntersection.hasStone(stone));
+    }
+
+    protected Stream<Intersection> stream() {
+        return intersections.stream();
     }
 }
