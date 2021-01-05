@@ -75,4 +75,11 @@ public class Position {
                 otherIntersectionPosition.getColumn() == this.column - 1;
     }
 
+    @Override
+    public String toString() {
+        return "Position{" +
+                "row=" + row +
+                ", column=" + column +
+                '}';
+    }
 }

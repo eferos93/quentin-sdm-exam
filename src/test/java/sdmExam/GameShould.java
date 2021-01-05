@@ -1,8 +1,8 @@
 package sdmExam;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameShould {
     private final Game game = new Game();
@@ -45,4 +45,8 @@ public class GameShould {
                 });
     }
 
+    @Test
+    public void checkIfThereArePossibleLegalMoves() {
+        assertTrue(game.isPlayerAbleToMakeAMove(Stone.BLACK));
+    }
 }
