@@ -2,8 +2,7 @@ package sdmExam;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PositionShould {
     @Test
@@ -18,5 +17,14 @@ public class PositionShould {
         Position secondPosition = new Position (2,2);
         assertTrue(firstPosition.isAboveWithRespectTo(secondPosition));
     }
+
+    @Test
+    public void stoneBelow(){
+        Position firstPosition = new Position(3, 4);
+        Position secondPosition = new Position (2,2);
+        assertFalse(firstPosition.isBelowWithRespectTo(secondPosition));
+    }
+
+
 
 }
