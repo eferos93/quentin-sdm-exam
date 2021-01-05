@@ -18,14 +18,19 @@ public class Game {
             throw new Exception("Position is already occupied.");
         }
 
-        if (board.existsDiagonallyAdjacentWithStone(board.intersectionAt(position), player) &&
-                !board.existsOrthogonallyAdjacentWithStone(board.intersectionAt(position), player)) {
+        if (isIllegalMove(player, position)) {
             throw new Exception("A player cannot put a stone diagonally adjacent to another stone of the same colour" +
                     " without a colour alike orthogonally adjacent.");
         }
 
         board.addStoneAt(player, position);
         lastPlay = player;
+    }
+
+    private boolean isIllegalMove(Stone player, Position position) {
+        final Intersection intersection = board.intersectionAt(position);
+        return board.existsDiagonallyAdjacentWithStone(intersection, player) &&
+                !board.existsOrthogonallyAdjacentWithStone(intersection, player);
     }
 
     private boolean isARepeatedPlay(Stone player) {
