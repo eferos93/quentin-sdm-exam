@@ -31,25 +31,25 @@ public class BoardShould {
     }
 
     @Test
-    public void noOrthogonalAdjacencyOfIntersection(){
-        board.addStoneAt(Stone.WHITE, Position.in(7,9));
-        Intersection intersection = board.intersectionAt(Position.in(7,9));
+    public void noOrthogonalAdjacencyOfIntersection() {
+        board.addStoneAt(Stone.WHITE, Position.in(7, 9));
+        Intersection intersection = board.intersectionAt(Position.in(7, 9));
         assertFalse(board.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
     @Test
-    public void rightOrthogonalAdjacencyOfIntersection(){
-        board.addStoneAt(Stone.WHITE, Position.in(3,4));
-        board.addStoneAt(Stone.WHITE, Position.in(4,4));
-        Intersection intersection = board.intersectionAt(Position.in(3,4));
+    public void rightOrthogonalAdjacencyOfIntersection() {
+        board.addStoneAt(Stone.WHITE, Position.in(3, 4));
+        board.addStoneAt(Stone.WHITE, Position.in(4, 4));
+        Intersection intersection = board.intersectionAt(Position.in(3, 4));
         assertTrue(board.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
     @Test
-    public void topOrthogonalAdjacencyOfIntersection(){
-        board.addStoneAt(Stone.WHITE, Position.in(12,5));
-        board.addStoneAt(Stone.WHITE, Position.in(13,5));
-        Intersection intersection = board.intersectionAt(Position.in(12,5));
+    public void topOrthogonalAdjacencyOfIntersection() {
+        board.addStoneAt(Stone.WHITE, Position.in(12, 5));
+        board.addStoneAt(Stone.WHITE, Position.in(13, 5));
+        Intersection intersection = board.intersectionAt(Position.in(12, 5));
         assertTrue(board.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
@@ -61,25 +61,25 @@ public class BoardShould {
     }
 
     @Test
-    public void noDiagonalAdjacencyOfIntersection(){
-        board.addStoneAt(Stone.WHITE, Position.in(7,9));
-        Intersection intersection = board.intersectionAt(Position.in(7,9));
+    public void noDiagonalAdjacencyOfIntersection() {
+        board.addStoneAt(Stone.WHITE, Position.in(7, 9));
+        Intersection intersection = board.intersectionAt(Position.in(7, 9));
         assertFalse(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
     @Test
-    public void UpRightOrthogonalAdjacencyOfIntersection(){
-        board.addStoneAt(Stone.WHITE, Position.in(3,4));
-        board.addStoneAt(Stone.WHITE, Position.in(2,5));
-        Intersection intersection = board.intersectionAt(Position.in(3,4));
+    public void upRightDiagonalAdjacencyOfIntersection() {
+        board.addStoneAt(Stone.WHITE, Position.in(3, 4));
+        board.addStoneAt(Stone.WHITE, Position.in(2, 5));
+        Intersection intersection = board.intersectionAt(Position.in(3, 4));
         assertTrue(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
     @Test
-    public void downLeftOrthogonalAdjacencyOfIntersection(){
-        board.addStoneAt(Stone.WHITE, Position.in(12,5));
-        board.addStoneAt(Stone.WHITE, Position.in(13,4));
-        Intersection intersection = board.intersectionAt(Position.in(12,5));
+    public void downLeftDiagonalAdjacencyOfIntersection() {
+        board.addStoneAt(Stone.WHITE, Position.in(12, 5));
+        board.addStoneAt(Stone.WHITE, Position.in(13, 4));
+        Intersection intersection = board.intersectionAt(Position.in(12, 5));
         assertTrue(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 

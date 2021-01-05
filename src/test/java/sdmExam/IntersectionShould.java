@@ -15,14 +15,14 @@ public class IntersectionShould {
         assertEquals(firstIntersection, secondIntersection);
     }
     @Test
-    public void closeToEdge() {
+    public void closeToLeftEdge() {
         Intersection firstIntersection = new Intersection(Position.in(1, 1), Stone.WHITE);
         assertTrue(firstIntersection.isCloseToEdge());
     }
-    @ParameterizedTest
-    @CsvSource({"13, true" })
-    public void closeToEdge(int columnPosition, boolean expected ){
-        Intersection firstIntersection = new Intersection(Position.in(2,columnPosition), Stone.WHITE);
+
+    @Test
+    public void closeToRightEdge(){
+        Intersection firstIntersection = new Intersection(Position.in(2, 13), Stone.WHITE);
         assertTrue(firstIntersection.isCloseToEdge());
     }
 
