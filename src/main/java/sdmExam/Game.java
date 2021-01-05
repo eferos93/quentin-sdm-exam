@@ -18,8 +18,10 @@ public class Game {
             throw new Exception("Position is already occupied.");
         }
 
-        if ( board.existDiagonallyAdjacent(board.intersectionAt(position)))  {
-               throw new Exception("A player cannot put a stone diagonally adjacent to another stone of the same colour.");
+        if (board.existsDiagonallyAdjacentWithStone(board.intersectionAt(position), player) &&
+                !board.existsOrthogonallyAdjacentWithStone(board.intersectionAt(position), player)) {
+            throw new Exception("A player cannot put a stone diagonally adjacent to another stone of the same colour" +
+                    " without a colour alike orthogonally adjacent.");
         }
 
         board.addStoneAt(player, position);

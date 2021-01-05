@@ -38,11 +38,6 @@ public class Board {
         return lowerAndUpperEdgesColor;
     }
 
-    public boolean existOrthogonallyAdjacent(Intersection intersection){
-        return intersections.stream()
-                .filter(intersection::isOrthogonalTo)
-                .anyMatch(intersection::hasSameColorAs);
-    }
   
     public Stone getLeftAndRightEdgesColor() {
         return leftAndRightEdgesColor;
@@ -57,9 +52,15 @@ public class Board {
         setLeftAndRightEdgesColor(Stone.BLACK);
     }
 
-    public boolean existDiagonallyAdjacent(Intersection intersection){
+    public boolean existsOrthogonallyAdjacentWithStone(Intersection intersection, Stone stone){
+        return intersections.stream()
+                .filter(intersection::isOrthogonalTo)
+                .anyMatch(orthogonalIntersection -> orthogonalIntersection.hasStone(stone));
+    }
+
+    public boolean existsDiagonallyAdjacentWithStone(Intersection intersection, Stone stone){
         return intersections.stream()
                 .filter(intersection::isDiagonalTo)
-                .anyMatch(intersection::hasSameColorAs);
+                .anyMatch(diagonalIntersection -> diagonalIntersection.hasStone(stone));
     }
 }

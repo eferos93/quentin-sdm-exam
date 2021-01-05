@@ -78,8 +78,8 @@ public class Intersection {
                 position.isDownRightRespectTo(otherIntersectionPosition);
     }
 
-    public boolean hasSameColorAs(Intersection otherIntersection) {
-         return this.stone == otherIntersection.getStone();
+    public boolean hasStone(Stone stone) {
+         return this.stone == stone;
     }
 
 }

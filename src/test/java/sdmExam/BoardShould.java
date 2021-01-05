@@ -34,7 +34,7 @@ public class BoardShould {
     public void noOrthogonalAdjacencyOfIntersection(){
         board.addStoneAt(Stone.WHITE, Position.in(7,9));
         Intersection intersection = board.intersectionAt(Position.in(7,9));
-        assertFalse(board.existOrthogonallyAdjacent(intersection));
+        assertFalse(board.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class BoardShould {
         board.addStoneAt(Stone.WHITE, Position.in(3,4));
         board.addStoneAt(Stone.WHITE, Position.in(4,4));
         Intersection intersection = board.intersectionAt(Position.in(3,4));
-        assertTrue(board.existOrthogonallyAdjacent(intersection));
+        assertTrue(board.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class BoardShould {
         board.addStoneAt(Stone.WHITE, Position.in(12,5));
         board.addStoneAt(Stone.WHITE, Position.in(13,5));
         Intersection intersection = board.intersectionAt(Position.in(12,5));
-        assertTrue(board.existOrthogonallyAdjacent(intersection));
+        assertTrue(board.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class BoardShould {
     public void noDiagonalAdjacencyOfIntersection(){
         board.addStoneAt(Stone.WHITE, Position.in(7,9));
         Intersection intersection = board.intersectionAt(Position.in(7,9));
-        assertFalse(board.existDiagonallyAdjacent(intersection));
+        assertFalse(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
     @Test
@@ -72,7 +72,7 @@ public class BoardShould {
         board.addStoneAt(Stone.WHITE, Position.in(3,4));
         board.addStoneAt(Stone.WHITE, Position.in(2,5));
         Intersection intersection = board.intersectionAt(Position.in(3,4));
-        assertTrue(board.existDiagonallyAdjacent(intersection));
+        assertTrue(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class BoardShould {
         board.addStoneAt(Stone.WHITE, Position.in(12,5));
         board.addStoneAt(Stone.WHITE, Position.in(13,4));
         Intersection intersection = board.intersectionAt(Position.in(12,5));
-        assertTrue(board.existDiagonallyAdjacent(intersection));
+        assertTrue(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
 }
