@@ -45,6 +45,11 @@ public class Game {
                 !board.existsOrthogonallyAdjacentWithStone(intersection, player);
     }
 
+    private boolean isIllegalMove(Stone player, Intersection intersection) {
+        return board.existsDiagonallyAdjacentWithStone(intersection, player) &&
+                !board.existsOrthogonallyAdjacentWithStone(intersection, player);
+    }
+
     private boolean isARepeatedPlay(Stone player) {
         return lastPlay == player;
     }
@@ -56,6 +61,6 @@ public class Game {
     public boolean isPlayerAbleToMakeAMove(Stone player) {
         return board.stream()
                 .filter(intersection -> !intersection.isOccupied())
-                .anyMatch(emptyIntersection -> !isIllegalMove(player, emptyIntersection.getPosition()));
+                .anyMatch(emptyIntersection -> !isIllegalMove(player, emptyIntersection));
     }
 }
