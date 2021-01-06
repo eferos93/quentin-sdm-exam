@@ -80,6 +80,7 @@ public class Intersection {
     }
 
     public static boolean isChain(List<Intersection> intersections){
+        // TODO: This part will be written with FP
         int i = 1;
         boolean check = true;
         while(i < intersections.size() && check){
