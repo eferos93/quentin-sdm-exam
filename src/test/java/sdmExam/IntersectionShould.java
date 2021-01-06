@@ -1,14 +1,10 @@
 package sdmExam;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class IntersectionShould {
     @Test
@@ -30,11 +26,20 @@ public class IntersectionShould {
     }
 
     @Test
-    public void checkExistChain() {
+    public void checkChain(){
         Intersection intersection1 = new Intersection(Position.in(3,4),Stone.BLACK);
         Intersection intersection2 = new Intersection(Position.in(4,4),Stone.BLACK);
         List<Intersection> intersections = Arrays.asList(intersection1, intersection2);
-        assertTrue(Intersection.existChain(intersections));
+        assertTrue(Intersection.isChain(intersections));
+    }
+
+    @Test
+    public void checkNoChain() {
+        Intersection intersection1 = new Intersection(Position.in(5,12),Stone.WHITE);
+        Intersection intersection2 = new Intersection(Position.in(7,7),Stone.WHITE);
+        Intersection intersection3 = new Intersection(Position.in(7,8),Stone.WHITE);
+        List<Intersection> intersections = Arrays.asList(intersection1, intersection2, intersection3);
+        assertFalse(Intersection.isChain(intersections));
     }
 
 }

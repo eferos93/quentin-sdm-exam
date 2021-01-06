@@ -79,8 +79,16 @@ public class Intersection {
                 position.isDownRightRespectTo(otherIntersectionPosition);
     }
 
-    public static boolean existChain(List<Intersection> intersections){
-        return true;
+    public static boolean isChain(List<Intersection> intersections){
+        int i = 1;
+        boolean check = true;
+        while(i < intersections.size() && check){
+            if (!intersections.get(i).isOrthogonalTo(intersections.get(i-1))){
+                check = false;
+            }
+            i++;
+        }
+        return check;
     }
 
     public boolean hasStone(Stone stone) {
