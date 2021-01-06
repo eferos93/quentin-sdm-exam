@@ -92,6 +92,8 @@ public class Intersection {
         return check;
     }
 
+
+
     public boolean hasStone(Stone stone) {
          return this.stone == stone;
     }
