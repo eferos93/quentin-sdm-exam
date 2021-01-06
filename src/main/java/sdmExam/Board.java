@@ -3,6 +3,7 @@ package sdmExam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Board {
@@ -17,6 +18,18 @@ public class Board {
                 intersections.add(Intersection.empty(Position.in(row, column)));
             }
         }
+    }
+
+    private Board(int size) {
+        for (int row = 1; row <= size; row++) {
+            for (int column = 1; column <= size; column++) {
+                intersections.add(Intersection.empty(Position.in(row, column)));
+            }
+        }
+    }
+
+    protected static Board buildTestBoard(int size) {
+        return new Board(size);
     }
 
     public Intersection intersectionAt(Position position) throws NoSuchElementException {

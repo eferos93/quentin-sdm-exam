@@ -1,8 +1,20 @@
 package sdmExam;
 
 public class Game {
-    private final Board board = new Board();
+    private final Board board;
     private Stone lastPlay = Stone.NONE;
+
+    public Game() {
+        board = new Board();
+    }
+
+    private Game(int boardSize) {
+        board = Board.buildTestBoard(boardSize);
+    }
+
+    protected static Game buildTestGame(int boardSize) {
+        return new Game(boardSize);
+    }
 
     public void play(Stone player, Position position) throws Exception {
 
