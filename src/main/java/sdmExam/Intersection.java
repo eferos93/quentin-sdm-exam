@@ -1,5 +1,6 @@
 package sdmExam;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Intersection {
@@ -76,6 +77,10 @@ public class Intersection {
                 position.isUpRightRespectTo(otherIntersectionPosition) ||
                 position.isDownLeftRespectTo(otherIntersectionPosition) ||
                 position.isDownRightRespectTo(otherIntersectionPosition);
+    }
+
+    public static boolean existChain(List<Intersection> intersections){
+        return true;
     }
 
     public boolean hasStone(Stone stone) {
