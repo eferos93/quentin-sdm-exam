@@ -7,6 +7,9 @@ import java.util.stream.Stream;
 public class Board {
     public static final int BOARD_SIZE = 13;
     private final List<Intersection> intersections = new ArrayList<>();
+    //private List<Set<Intersection>> blackChains = new ArrayList<>();
+    //private List<Set<Intersection>> whiteChains = new ArrayList<>();
+    private Map<Stone, List<Set<Intersection>>> chainsContainers = new HashMap<>();
     private Stone lowerAndUpperEdgesColor = Stone.BLACK;
     private Stone leftAndRightEdgesColor = Stone.WHITE;
 
@@ -91,7 +94,10 @@ public class Board {
         Intersection intersection2 = this.intersectionAt(Position.in(12, 5));
         Intersection intersection3 = this.intersectionAt(Position.in(13, 5));
 
-        List<Intersection> intersections = Arrays.asList(intersection1, intersection2, intersection3);
-        return intersections;
+        return Arrays.asList(intersection1, intersection2, intersection3);
+    }
+
+    public boolean stoneWithCompleteChain() {
+        return false;
     }
 }

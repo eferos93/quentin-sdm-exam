@@ -101,4 +101,10 @@ public class BoardShould {
         assertTrue(board.findChains(intersection1).containsAll(intersections) && intersections.containsAll(board.findChains(intersection1)));
     }
 
+    @Test
+    public void provideNoWinner() {
+        board.addStoneAt(Stone.WHITE, Position.in(1, 1));
+        assertFalse(board.stoneWithCompleteChain());
+    }
+
 }
