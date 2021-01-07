@@ -87,21 +87,6 @@ public class BoardShould {
     }
 
     @Test
-    public void detectChain(){
-        board.addStoneAt(Stone.BLACK, Position.in(12, 5));
-        board.addStoneAt(Stone.BLACK, Position.in(13, 5));
-        board.addStoneAt(Stone.BLACK, Position.in(11, 5));
-
-        Intersection intersection1 = board.intersectionAt(Position.in(11, 5));
-        Intersection intersection2 = board.intersectionAt(Position.in(12, 5));
-        Intersection intersection3 = board.intersectionAt(Position.in(13, 5));
-
-        List<Intersection> intersections = Arrays.asList(intersection1, intersection2, intersection3);
-
-        assertTrue(board.findChains(intersection1).containsAll(intersections) && intersections.containsAll(board.findChains(intersection1)));
-    }
-
-    @Test
     public void provideNoWinner() {
         board.addStoneAt(Stone.WHITE, Position.in(1, 1));
         assertFalse(board.stoneWithCompleteChain());

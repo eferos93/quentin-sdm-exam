@@ -82,21 +82,6 @@ public class Board {
         return intersections.stream();
     }
 
-    public List<Intersection> findChains(Intersection intersection) {
-
-        // Here something need to be discussed about the design:
-        // are we gonna store chains or check in every turn?
-
-        // Do we need to check starting from last Stone or do we need
-        // to check the entire board?
-
-        Intersection intersection1 = this.intersectionAt(Position.in(11, 5));
-        Intersection intersection2 = this.intersectionAt(Position.in(12, 5));
-        Intersection intersection3 = this.intersectionAt(Position.in(13, 5));
-
-        return Arrays.asList(intersection1, intersection2, intersection3);
-    }
-
     public boolean stoneWithCompleteChain() {
         return false;
     }
