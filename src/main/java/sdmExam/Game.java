@@ -39,10 +39,10 @@ public class Game {
         lastPlay = player;
     }
 
+    //TODO: maybe rename this method to avoid overloading
     private boolean isIllegalMove(Stone player, Position position) {
         final Intersection intersection = board.intersectionAt(position);
-        return board.existsDiagonallyAdjacentWithStone(intersection, player) &&
-                !board.existsOrthogonallyAdjacentWithStone(intersection, player);
+        return isIllegalMove(player, intersection);
     }
 
     private boolean isIllegalMove(Stone player, Intersection intersection) {
