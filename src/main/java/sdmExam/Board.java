@@ -1,5 +1,6 @@
 package sdmExam;
 
+import java.security.InvalidParameterException;
 import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -82,7 +83,13 @@ public class Board {
         return intersections.stream();
     }
 
-    public boolean stoneWithCompleteChain() {
-        return false;
+    public Stone colorWithCompleteChain(Stone color) throws InvalidParameterException {
+//        if (color == Stone.NONE) {
+//            throw new InvalidParameterException("We need to check chains for Intersections with either white of black stones");
+//        }
+//        chainsContainers.get(color).stream().filter(chain -> {
+//            chain.stream().filter(intersection -> intersection.isCloseToRightEdge() || intersection.isCloseToLeftEdge()).
+//        })
+        return Stone.NONE;
     }
 }

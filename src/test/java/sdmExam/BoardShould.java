@@ -89,7 +89,7 @@ public class BoardShould {
     @Test
     public void provideNoWinner() {
         board.addStoneAt(Stone.WHITE, Position.in(1, 1));
-        assertFalse(board.stoneWithCompleteChain());
+        assertEquals(Stone.NONE, board.colorWithCompleteChain(Stone.WHITE));
     }
 
 }

@@ -54,7 +54,15 @@ public class Intersection {
 
     //TODO: extract two methods out of this
     public boolean isCloseToRightOrLeftEdge() {
-        return position.getColumn() == UPPER_AND_LEFT_EDGE_INDEX || position.getColumn() == LOWER_AND_RIGHT_EDGE_INDEX;
+        return isCloseToLeftEdge() || isCloseToRightEdge();
+    }
+
+    public boolean isCloseToRightEdge() {
+        return position.getColumn() == LOWER_AND_RIGHT_EDGE_INDEX;
+    }
+
+    public boolean isCloseToLeftEdge() {
+        return position.getColumn() == UPPER_AND_LEFT_EDGE_INDEX;
     }
 
     //TODO: extract two methods out of this
