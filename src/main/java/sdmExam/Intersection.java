@@ -47,14 +47,17 @@ public class Intersection {
         return position.equals(getPosition());
     }
 
+    //TODO: do we really need this?
     public boolean isCloseToEdge() {
         return isCloseToUpperOrLowerEdge() || isCloseToRightOrLeftEdge();
     }
 
+    //TODO: extract two methods out of this
     public boolean isCloseToRightOrLeftEdge() {
         return position.getColumn() == UPPER_AND_LEFT_EDGE_INDEX || position.getColumn() == LOWER_AND_RIGHT_EDGE_INDEX;
     }
 
+    //TODO: extract two methods out of this
     public boolean isCloseToUpperOrLowerEdge() {
         return position.getRow() == UPPER_AND_LEFT_EDGE_INDEX || position.getRow() == LOWER_AND_RIGHT_EDGE_INDEX;
     }
