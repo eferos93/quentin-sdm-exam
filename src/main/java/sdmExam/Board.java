@@ -1,15 +1,12 @@
 package sdmExam;
 
-import java.security.InvalidParameterException;
 import java.util.*;
-import java.util.stream.IntStream;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
 public class Board {
     public static final int BOARD_SIZE = 13;
     private final List<Intersection> intersections = new ArrayList<>();
-    //private List<Set<Intersection>> blackChains = new ArrayList<>();
-    //private List<Set<Intersection>> whiteChains = new ArrayList<>();
     private Map<Stone, List<Set<Intersection>>> chainsContainers = new HashMap<>();
     private Stone lowerAndUpperEdgesColor = Stone.BLACK;
     private Stone leftAndRightEdgesColor = Stone.WHITE;
@@ -83,13 +80,31 @@ public class Board {
         return intersections.stream();
     }
 
-    public Stone colorWithCompleteChain(Stone color) throws InvalidParameterException {
-//        if (color == Stone.NONE) {
-//            throw new InvalidParameterException("We need to check chains for Intersections with either white of black stones");
-//        }
-//        chainsContainers.get(color).stream().filter(chain -> {
-//            chain.stream().filter(intersection -> intersection.isCloseToRightEdge() || intersection.isCloseToLeftEdge()).
-//        })
+    protected Stone colorWithCompleteChain() {
+        for (Map.Entry<Stone, List<Set<Intersection>>> entry : chainsContainers.entrySet()) {
+            for (Set<Intersection> chain : entry.getValue()) {
+                AtomicBoolean isCloseToFirstEdgeOfGivenColor = new AtomicBoolean(false);
+                AtomicBoolean isCloseToSecondEdgeOfGivenColor = new AtomicBoolean(false);
+                chain.forEach(intersection -> {
+                    if (isCloseToFirstEdgeOfColor(entry.getKey(), intersection)) {
+                        isCloseToFirstEdgeOfGivenColor.set(true);
+                    } else if (isCloseToSecondEdgeOfColor(entry.getKey(), intersection)) {
+                        isCloseToSecondEdgeOfGivenColor.set(true);
+                    }
+                });
+                if (isCloseToFirstEdgeOfGivenColor.get() && isCloseToSecondEdgeOfGivenColor.get()) {
+                    return entry.getKey();
+                }
+            }
+        }
         return Stone.NONE;
+    }
+
+    private boolean isCloseToSecondEdgeOfColor(Stone color, Intersection intersection) {
+        return false;
+    }
+
+    private boolean isCloseToFirstEdgeOfColor(Stone color, Intersection intersection) {
+        return false;
     }
 }

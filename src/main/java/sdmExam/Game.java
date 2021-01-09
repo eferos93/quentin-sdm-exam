@@ -55,7 +55,7 @@ public class Game {
     }
 
     private boolean isInvalidFirstPlayer(Stone player) {
-        return isARepeatedPlay(Stone.NONE) && player == Stone.WHITE;
+        return lastPlay == Stone.NONE && player == Stone.WHITE;
     }
 
     public boolean isPlayerAbleToMakeAMove(Stone player) {
