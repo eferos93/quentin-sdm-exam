@@ -16,10 +16,10 @@ public class Game {
         return new Game(boardSize);
     }
 
-    public void play(Stone player, Position position) throws OurException {
+    public void play(Stone player, Position position) throws OurException, InvalidFirstPlayerException {
 
         if (isInvalidFirstPlayer(player)) {
-            throw new OurException("Black player should play first");
+            throw new InvalidFirstPlayerException();
         }
 
         if (isARepeatedPlay(player)) {
