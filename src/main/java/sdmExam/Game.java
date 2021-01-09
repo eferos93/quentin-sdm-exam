@@ -27,7 +27,7 @@ public class Game {
         }
 
         if (board.isOccupied(position)) {
-            throw new OurException("Position is already occupied.", position);
+            throw new OurException("Position %s is already occupied.", position);
         }
 
         if (isIllegalMove(player, position)) {
