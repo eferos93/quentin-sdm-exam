@@ -26,4 +26,10 @@ public class IntersectionShould {
         assertTrue(firstIntersection.isCloseToEdge());
     }
 
+    @Test
+    public void orthogonalIntersections(){
+        Intersection firstIntersection = new Intersection(Position.in(8,5), Stone.BLACK);
+        assertTrue(firstIntersection.isOrthogonalTo(new Intersection(Position.in(9,5),Stone.BLACK)));
+    }
+
 }
