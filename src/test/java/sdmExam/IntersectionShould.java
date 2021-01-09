@@ -32,4 +32,10 @@ public class IntersectionShould {
         assertTrue(firstIntersection.isOrthogonalTo(new Intersection(Position.in(9,5),Stone.BLACK)));
     }
 
+    @Test
+    public void diagonalIntersections(){
+        Intersection firstIntersection = new Intersection(Position.in(7,9), Stone.BLACK);
+        assertTrue(firstIntersection.isDiagonalTo(new Intersection(Position.in(6,10),Stone.BLACK)));
+    }
+
 }
