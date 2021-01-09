@@ -16,7 +16,7 @@ public class Game {
         return new Game(boardSize);
     }
 
-    public void play(Stone player, Position position) throws OurException, InvalidFirstPlayerException, RepeatedPlayException, OccupiedPositionException {
+    public void play(Stone player, Position position) throws InvalidFirstPlayerException, RepeatedPlayException, OccupiedPositionException,IllegalMoveException {
 
         if (isInvalidFirstPlayer(player)) {
             throw new InvalidFirstPlayerException();
@@ -31,8 +31,7 @@ public class Game {
         }
 
         if (isIllegalMove(player, position)) {
-            throw new OurException("A player cannot put a stone diagonally adjacent to another stone of the same colour" +
-                    " without a colour alike orthogonally adjacent.", position);
+            throw new IllegalMoveException(position);
         }
 
         board.addStoneAt(player, position);
