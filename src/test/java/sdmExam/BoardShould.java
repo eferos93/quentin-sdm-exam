@@ -86,10 +86,4 @@ public class BoardShould {
         assertTrue(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
-    @Test
-    public void provideNoWinner() {
-        board.addStoneAt(Stone.WHITE, Position.in(1, 1));
-        assertEquals(Stone.NONE, board.colorWithCompleteChain(Stone.WHITE));
-    }
-
 }

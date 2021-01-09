@@ -1,8 +1,8 @@
 package sdmExam;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameShould {
     private final Game game = new Game();
@@ -49,5 +49,11 @@ public class GameShould {
     @Test
     public void checkIfThereArePossibleLegalMoves() {
         assertTrue(game.isPlayerAbleToMakeAMove(Stone.BLACK));
+    }
+
+    @Test
+    public void provideNoWinner() throws Exception {
+        game.play(Stone.BLACK, Position.in(1, 1));
+        assertEquals(Stone.NONE, game.getWinner());
     }
 }

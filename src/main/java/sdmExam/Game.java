@@ -63,4 +63,8 @@ public class Game {
                 .filter(intersection -> !intersection.isOccupied())
                 .anyMatch(emptyIntersection -> !isIllegalMove(player, emptyIntersection));
     }
+
+    public Stone getWinner() {
+        return Stone.NONE;
+    }
 }
