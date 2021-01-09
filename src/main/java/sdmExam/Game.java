@@ -16,7 +16,7 @@ public class Game {
         return new Game(boardSize);
     }
 
-    public void play(Stone player, Position position) throws OurException, InvalidFirstPlayerException, RepeatedPlayException {
+    public void play(Stone player, Position position) throws OurException, InvalidFirstPlayerException, RepeatedPlayException, OccupiedPositionException {
 
         if (isInvalidFirstPlayer(player)) {
             throw new InvalidFirstPlayerException();
@@ -27,7 +27,7 @@ public class Game {
         }
 
         if (board.isOccupied(position)) {
-            throw new OurException("Position %s is already occupied.", position);
+            throw new OccupiedPositionException(position);
         }
 
         if (isIllegalMove(player, position)) {
