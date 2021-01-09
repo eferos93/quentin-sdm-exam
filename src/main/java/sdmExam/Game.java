@@ -23,7 +23,7 @@ public class Game {
         }
 
         if (isARepeatedPlay(player)) {
-            throw new RepeatedPlayException();
+            throw new RepeatedPlayException(getPlayerColour(player));
         }
 
         if (board.isOccupied(position)) {
@@ -31,7 +31,7 @@ public class Game {
         }
 
         if (isIllegalMove(player, position)) {
-            throw new IllegalMoveException(position);
+            throw new IllegalMoveException(getPlayerColour(player), position);
         }
 
         board.addStoneAt(player, position);
@@ -61,5 +61,15 @@ public class Game {
         return board.stream()
                 .filter(intersection -> !intersection.isOccupied())
                 .anyMatch(emptyIntersection -> !isIllegalMove(player, emptyIntersection));
+    }
+
+    private String getPlayerColour(Stone player){
+        String player_colour;
+        if(player == Stone.BLACK){
+            player_colour = "BLACK";
+        }else{
+            player_colour = "WHITE";
+        }
+        return player_colour;
     }
 }
