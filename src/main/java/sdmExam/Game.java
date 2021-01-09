@@ -63,4 +63,6 @@ public class Game {
                 .filter(intersection -> !intersection.isOccupied())
                 .anyMatch(emptyIntersection -> !isIllegalMove(player, emptyIntersection));
     }
+
+    public Board getBoard() { return board;}
 }
