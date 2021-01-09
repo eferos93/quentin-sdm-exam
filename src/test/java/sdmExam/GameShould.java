@@ -47,11 +47,11 @@ public class GameShould {
 
     @Test
     public void checkIfThereArePossibleLegalMoves() {
-        Game testGame = Game.buildTestGame(2);
-        Board testBoard = testGame.getBoard();
+        Board testBoard = Board.buildTestBoard(2);
         testBoard.addStoneAt(Stone.WHITE,Position.in(1,1));
         testBoard.addStoneAt(Stone.WHITE,Position.in(2,2));
         testBoard.addStoneAt(Stone.BLACK,Position.in(1,2));
+        Game testGame = Game.buildTestGame(testBoard);
         assertFalse(testGame.isPlayerAbleToMakeAMove(Stone.BLACK));
     }
 }
