@@ -16,14 +16,14 @@ public class Game {
         return new Game(boardSize);
     }
 
-    public void play(Stone player, Position position) throws OurException, InvalidFirstPlayerException {
+    public void play(Stone player, Position position) throws OurException, InvalidFirstPlayerException, RepeatedPlayException {
 
         if (isInvalidFirstPlayer(player)) {
             throw new InvalidFirstPlayerException();
         }
 
         if (isARepeatedPlay(player)) {
-            throw new OurException("A player cannot play twice in a row.");
+            throw new RepeatedPlayException();
         }
 
         if (board.isOccupied(position)) {
