@@ -1,11 +1,8 @@
 package sdmExam;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class IntersectionShould {
     @Test
@@ -24,6 +21,24 @@ public class IntersectionShould {
     public void closeToRightEdge(){
         Intersection firstIntersection = new Intersection(Position.in(2, 13), Stone.WHITE);
         assertTrue(firstIntersection.isCloseToEdge());
+    }
+
+    @Test
+    public void orthogonalIntersections(){
+        Intersection firstIntersection = new Intersection(Position.in(8,5), Stone.BLACK);
+        assertTrue(firstIntersection.isOrthogonalTo(new Intersection(Position.in(9,5),Stone.BLACK)));
+    }
+
+    @Test
+    public void diagonalIntersections(){
+        Intersection firstIntersection = new Intersection(Position.in(7,9), Stone.BLACK);
+        assertTrue(firstIntersection.isDiagonalTo(new Intersection(Position.in(6,10),Stone.BLACK)));
+    }
+
+    @Test
+    public void nonOrthogonalIntersections(){
+        Intersection firstIntersection = new Intersection(Position.in(4,4), Stone.WHITE);
+        assertFalse(firstIntersection.isOrthogonalTo(new Intersection(Position.in(7,3),Stone.WHITE)));
     }
 
 }

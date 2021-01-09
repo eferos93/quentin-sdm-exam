@@ -1,8 +1,8 @@
 package sdmExam;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameShould {
     private final Game game = new Game();
@@ -45,9 +45,13 @@ public class GameShould {
                 });
     }
 
-    //TODO: maybe try to implment a test where there are no possible moves for the player?
     @Test
     public void checkIfThereArePossibleLegalMoves() {
-        assertTrue(game.isPlayerAbleToMakeAMove(Stone.BLACK));
+        Board testBoard = Board.buildTestBoard(2);
+        testBoard.addStoneAt(Stone.WHITE,Position.in(1,1));
+        testBoard.addStoneAt(Stone.WHITE,Position.in(2,2));
+        testBoard.addStoneAt(Stone.BLACK,Position.in(1,2));
+        Game testGame = Game.buildTestGame(testBoard);
+        assertFalse(testGame.isPlayerAbleToMakeAMove(Stone.BLACK));
     }
 }

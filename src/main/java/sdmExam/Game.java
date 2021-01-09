@@ -8,13 +8,9 @@ public class Game {
         board = new Board();
     }
 
-    private Game(int boardSize) {
-        board = Board.buildTestBoard(boardSize);
-    }
+    private Game(Board board) { this.board = board;  }
 
-    protected static Game buildTestGame(int boardSize) {
-        return new Game(boardSize);
-    }
+    protected static Game buildTestGame(Board board) { return new Game(board); }
 
     public void play(Stone player, Position position) throws InvalidFirstPlayerException, RepeatedPlayException, OccupiedPositionException,IllegalMoveException {
 
