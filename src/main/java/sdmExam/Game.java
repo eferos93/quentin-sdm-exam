@@ -16,23 +16,23 @@ public class Game {
         return new Game(boardSize);
     }
 
-    public void play(Stone player, Position position) throws Exception {
+    public void play(Stone player, Position position) throws OurException {
 
         if (isInvalidFirstPlayer(player)) {
-            throw new Exception("Black player should play first.");
+            throw new OurException("Black player should play first");
         }
 
         if (isARepeatedPlay(player)) {
-            throw new Exception("A player cannot play twice in a row.");
+            throw new OurException("A player cannot play twice in a row.");
         }
 
         if (board.isOccupied(position)) {
-            throw new Exception("Position " + position + " is already occupied.");
+            throw new OurException("Position is already occupied.", position);
         }
 
         if (isIllegalMove(player, position)) {
-            throw new Exception("A player cannot put a stone diagonally adjacent to another stone of the same colour" +
-                    " without a colour alike orthogonally adjacent.\n" + position);
+            throw new OurException("A player cannot put a stone diagonally adjacent to another stone of the same colour" +
+                    " without a colour alike orthogonally adjacent.", position);
         }
 
         board.addStoneAt(player, position);
