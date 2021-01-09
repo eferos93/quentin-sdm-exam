@@ -1,8 +1,8 @@
 package sdmExam;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class IntersectionShould {
     @Test
@@ -33,6 +33,12 @@ public class IntersectionShould {
     public void diagonalIntersections(){
         Intersection firstIntersection = new Intersection(Position.in(7,9), Stone.BLACK);
         assertTrue(firstIntersection.isDiagonalTo(new Intersection(Position.in(6,10),Stone.BLACK)));
+    }
+
+    @Test
+    public void nonOrthogonalIntersections(){
+        Intersection firstIntersection = new Intersection(Position.in(4,4), Stone.WHITE);
+        assertFalse(firstIntersection.isOrthogonalTo(new Intersection(Position.in(7,3),Stone.WHITE)));
     }
 
 }
