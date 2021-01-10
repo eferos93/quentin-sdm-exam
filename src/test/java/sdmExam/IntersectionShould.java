@@ -25,21 +25,4 @@ public class IntersectionShould {
         assertTrue(firstIntersection.isCloseToEdge());
     }
 
-    @Test
-    public void checkChain(){
-        Intersection intersection1 = new Intersection(Position.in(3,4),Stone.BLACK);
-        Intersection intersection2 = new Intersection(Position.in(4,4),Stone.BLACK);
-        List<Intersection> intersections = Arrays.asList(intersection1, intersection2);
-        assertTrue(Intersection.isChain(intersections));
-    }
-
-    @Test
-    public void checkNoChain() {
-        Intersection intersection1 = new Intersection(Position.in(5,12),Stone.WHITE);
-        Intersection intersection2 = new Intersection(Position.in(7,7),Stone.WHITE);
-        Intersection intersection3 = new Intersection(Position.in(7,8),Stone.WHITE);
-        List<Intersection> intersections = Arrays.asList(intersection1, intersection2, intersection3);
-        assertFalse(Intersection.isChain(intersections));
-    }
-
 }

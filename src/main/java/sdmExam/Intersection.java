@@ -1,6 +1,5 @@
 package sdmExam;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Intersection {
@@ -71,7 +70,7 @@ public class Intersection {
     }
 
     public boolean isOccupied() {
-        return stone != Stone.NONE;
+        return !hasStone(Stone.NONE);
     }
 
     public boolean isOrthogonalTo(Intersection otherIntersection) {
@@ -90,23 +89,7 @@ public class Intersection {
                 position.isDownRightRespectTo(otherIntersectionPosition);
     }
 
-    public static boolean isChain(List<Intersection> intersections){
-        // TODO: This part will be written with FP
-        int i = 1;
-        boolean check = true;
-        while(i < intersections.size() && check){
-            if (!intersections.get(i).isOrthogonalTo(intersections.get(i-1))){
-                check = false;
-            }
-            i++;
-        }
-        return check;
-    }
-
-
-
     public boolean hasStone(Stone stone) {
          return this.stone == stone;
     }
-
 }
