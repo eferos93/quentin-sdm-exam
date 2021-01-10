@@ -15,15 +15,16 @@ public class Board {
     public Board() {
         for (int row = 0; row <= BOARD_SIZE; row++) {
             for (int column = 0; column <= BOARD_SIZE; column++) {
-                if (isACorner(Position.in(row, column))) {
+                final Position position = Position.in(row, column);
+                if (isACorner(position)) {
                     continue;
                 }
                 if (row == 0 || row == BOARD_SIZE) {
-                    edges.add(new Intersection(Position.in(row, column), Stone.BLACK));
+                    edges.add(new Intersection(position, Stone.BLACK));
                 } else if (column == 0 || column == BOARD_SIZE) {
-                    edges.add(new Intersection(Position.in(row, column), Stone.WHITE));
+                    edges.add(new Intersection(position, Stone.WHITE));
                 } else {
-                    intersections.add(Intersection.empty(Position.in(row, column)));
+                    intersections.add(Intersection.empty(position));
                 }
             }
         }
