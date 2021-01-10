@@ -15,7 +15,7 @@ public class Board {
     public Board() {
         for (int row = 0; row <= BOARD_SIZE; row++) {
             for (int column = 0; column <= BOARD_SIZE; column++) {
-                if (row == 0 && column == 0 || row == 0 && column == BOARD_SIZE || row == BOARD_SIZE && column == 0 || row == BOARD_SIZE && column == BOARD_SIZE) {
+                if (isACorner(row, column)) {
                     continue;
                 }
                 if (row == 0 || row == BOARD_SIZE) {
@@ -27,6 +27,11 @@ public class Board {
                 }
             }
         }
+    }
+
+    private boolean isACorner(int row, int column) {
+        return (row == 0 && column == 0) || (row == 0 && column == BOARD_SIZE)
+                || (row == BOARD_SIZE && column == 0) || (row == BOARD_SIZE && column == BOARD_SIZE);
     }
 
     private Board(int size) {
