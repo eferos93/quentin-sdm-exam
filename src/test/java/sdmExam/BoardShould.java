@@ -1,15 +1,13 @@
 package sdmExam;
 
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
-
-
-import java.util.Arrays;
-import java.util.List;
+import org.junit.jupiter.params.provider.MethodSource;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,11 +56,20 @@ public class BoardShould {
         assertTrue(board.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
-    @Test
-    public void edgeColorsAfterPie() {
+    private static Stream<Arguments> provideInputAndExpectedValue() {
+        return Stream.of(
+                Arguments.of(Position.in(0, 1), Stone.WHITE),
+                Arguments.of(Position.in(Board.BOARD_SIZE, 1), Stone.WHITE),
+                Arguments.of(Position.in(1, 0), Stone.BLACK),
+                Arguments.of(Position.in(1, Board.BOARD_SIZE), Stone.BLACK)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideInputAndExpectedValue")
+    public void edgeColorsAfterPie(Position position, Stone expected) {
         board.pie();
-        assertEquals(board.getLowerAndUpperEdgesColor(), Stone.WHITE);
-        assertEquals(board.getLeftAndRightEdgesColor(), Stone.BLACK);
+        assertEquals(board.edgeColorAt(position), expected);
     }
 
     @Test

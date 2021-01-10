@@ -9,8 +9,6 @@ public class Board {
     private final List<Intersection> intersections = new ArrayList<>();
     private final List<Intersection> edges = new ArrayList<>();
     private Map<Stone, List<Set<Intersection>>> chainsContainers = new HashMap<>();
-    private Stone lowerAndUpperEdgesColor = Stone.BLACK;
-    private Stone leftAndRightEdgesColor = Stone.WHITE;
 
     public Board() {
         for (int row = 0; row <= BOARD_SIZE; row++) {
@@ -63,29 +61,18 @@ public class Board {
         intersectionAt(position).setStone(stone);
     }
 
-    public void setLowerAndUpperEdgesColor(Stone color) {
-        this.lowerAndUpperEdgesColor = color;
-    }
-
-    public void setLeftAndRightEdgesColor(Stone color) {
-        this.leftAndRightEdgesColor = color;
-    }
-
-    public Stone getLowerAndUpperEdgesColor() {
-        return lowerAndUpperEdgesColor;
-    }
-
-    public Stone getLeftAndRightEdgesColor() {
-        return leftAndRightEdgesColor;
-    }
-
     public boolean isOccupied(Position position) throws NoSuchElementException {
         return intersectionAt(position).isOccupied();
     }
 
     public void pie() {
-        setLowerAndUpperEdgesColor(Stone.WHITE);
-        setLeftAndRightEdgesColor(Stone.BLACK);
+        edges.forEach(edgePart -> {
+            if (edgePart.hasStone(Stone.BLACK)) {
+                edgePart.setStone(Stone.WHITE);
+            } else {
+                edgePart.setStone(Stone.BLACK);
+            }
+        });
     }
 
     public boolean existsOrthogonallyAdjacentWithStone(Intersection intersection, Stone stone) {
