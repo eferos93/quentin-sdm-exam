@@ -5,16 +5,26 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Stream;
 
 public class Board {
-    public static final int BOARD_SIZE = 13;
+    public static final int BOARD_SIZE = 14;
     private final List<Intersection> intersections = new ArrayList<>();
+    private final List<Intersection> edges = new ArrayList<>();
     private Map<Stone, List<Set<Intersection>>> chainsContainers = new HashMap<>();
     private Stone lowerAndUpperEdgesColor = Stone.BLACK;
     private Stone leftAndRightEdgesColor = Stone.WHITE;
 
     public Board() {
-        for (int row = 1; row <= BOARD_SIZE; row++) {
-            for (int column = 1; column <= BOARD_SIZE; column++) {
-                intersections.add(Intersection.empty(Position.in(row, column)));
+        for (int row = 0; row <= BOARD_SIZE; row++) {
+            for (int column = 0; column <= BOARD_SIZE; column++) {
+                if (row == 0 && column == 0 || row == 0 && column == BOARD_SIZE || row == BOARD_SIZE && column == 0 || row == BOARD_SIZE && column == BOARD_SIZE) {
+                    continue;
+                }
+                if (row == 0 || row == BOARD_SIZE) {
+                    edges.add(new Intersection(Position.in(row, column), Stone.BLACK));
+                } else if (column == 0 || column == BOARD_SIZE) {
+                    edges.add(new Intersection(Position.in(row, column), Stone.WHITE));
+                } else {
+                    intersections.add(Intersection.empty(Position.in(row, column)));
+                }
             }
         }
     }
