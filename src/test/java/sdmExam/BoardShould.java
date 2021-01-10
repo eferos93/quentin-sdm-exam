@@ -3,6 +3,8 @@ package sdmExam;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 
 import java.util.Arrays;
@@ -89,5 +91,11 @@ public class BoardShould {
     @Test
     public void getCorrectEdgeColor() {
         assertEquals(Stone.BLACK, board.edgeColorAt(Position.in(0, 1)));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"0, 0", "1, 1", "14, 14", "5, 7"})
+    public void throwExceptionInCaseOfWrongEdgeCoordinates(int row, int column) {
+        assertThrows(NoSuchElementException.class, () -> board.edgeColorAt(Position.in(row, column)));
     }
 }
