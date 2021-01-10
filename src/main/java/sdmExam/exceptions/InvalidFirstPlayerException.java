@@ -1,4 +1,4 @@
-package sdmExam;
+package sdmExam.exceptions;
 
 public class InvalidFirstPlayerException extends Exception{
 

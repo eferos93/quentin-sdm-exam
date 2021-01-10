@@ -1,4 +1,6 @@
-package sdmExam;
+package sdmExam.exceptions;
+
+import sdmExam.Position;
 
 public class OccupiedPositionException extends Exception {
 

@@ -1,5 +1,7 @@
 package sdmExam;
 
+import sdmExam.exceptions.*;
+
 public class Game {
     private final Board board;
     private Stone lastPlay = Stone.NONE;
@@ -12,14 +14,14 @@ public class Game {
 
     protected static Game buildTestGame(Board board) { return new Game(board); }
 
-    public void play(Stone player, Position position) throws InvalidFirstPlayerException, RepeatedPlayException, OccupiedPositionException,IllegalMoveException {
+    public void play(Stone player, Position position) throws Exception {
 
         if (isInvalidFirstPlayer(player)) {
             throw new InvalidFirstPlayerException();
         }
 
         if (isARepeatedPlay(player)) {
-            throw new RepeatedPlayException(getPlayerColour(player));
+            throw new RepeatedPlayException();
         }
 
         if (board.isOccupied(position)) {
@@ -27,7 +29,7 @@ public class Game {
         }
 
         if (isIllegalMove(player, position)) {
-            throw new IllegalMoveException(getPlayerColour(player), position);
+            throw new IllegalMoveException(position);
         }
 
         board.addStoneAt(player, position);
@@ -58,9 +60,4 @@ public class Game {
                 .filter(intersection -> !intersection.isOccupied())
                 .anyMatch(emptyIntersection -> !isIllegalMove(player, emptyIntersection));
     }
-
-    private String getPlayerColour(Stone player){
-        if(player == Stone.BLACK)return "BLACK";
-        else return "WHITE";
-           }
 }
