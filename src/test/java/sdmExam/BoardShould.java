@@ -86,4 +86,8 @@ public class BoardShould {
         assertTrue(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
+    @Test
+    public void getCorrectEdgeColor() {
+        assertEquals(Stone.BLACK, board.edgeColorAt(Position.in(0, 1)));
+    }
 }

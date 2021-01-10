@@ -122,4 +122,12 @@ public class Board {
     private boolean isCloseToFirstEdgeOfColor(Stone color, Intersection intersection) {
         return false;
     }
+
+    public Stone edgeColorAt(Position position) throws NoSuchElementException {
+        return edges.stream()
+                .filter(edgeElement -> edgeElement.isAt(position))
+                .findFirst()
+                .map(Intersection::getStone)
+                .orElseThrow();
+    }
 }
