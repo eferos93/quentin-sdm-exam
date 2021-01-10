@@ -19,9 +19,9 @@ public class Board {
                 if (isACorner(position)) {
                     continue;
                 }
-                if (row == 0 || row == BOARD_SIZE) {
+                if (isPartOfLowerOrUpperEdge(position)) {
                     edges.add(new Intersection(position, Stone.BLACK));
-                } else if (column == 0 || column == BOARD_SIZE) {
+                } else if (isPartOfLeftOrRightEdge(position)) {
                     edges.add(new Intersection(position, Stone.WHITE));
                 } else {
                     intersections.add(Intersection.empty(position));
@@ -30,9 +30,17 @@ public class Board {
         }
     }
 
+    private boolean isPartOfLeftOrRightEdge(Position position) {
+        return position.getColumn() == 0 || position.getColumn() == BOARD_SIZE;
+    }
+
+    private boolean isPartOfLowerOrUpperEdge(Position position) {
+        return position.getRow() == 0 || position.getRow() == BOARD_SIZE;
+    }
+
     private boolean isACorner(Position position) {
-        return (position.getRow() == 0 || position.getRow() == BOARD_SIZE)
-                && (position.getColumn() == 0 || position.getColumn() == BOARD_SIZE);
+        return (isPartOfLowerOrUpperEdge(position))
+                && (isPartOfLeftOrRightEdge(position));
     }
 
     private Board(int size) {
