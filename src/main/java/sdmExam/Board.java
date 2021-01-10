@@ -15,7 +15,7 @@ public class Board {
     public Board() {
         for (int row = 0; row <= BOARD_SIZE; row++) {
             for (int column = 0; column <= BOARD_SIZE; column++) {
-                if (isACorner(row, column)) {
+                if (isACorner(Position.in(row, column))) {
                     continue;
                 }
                 if (row == 0 || row == BOARD_SIZE) {
@@ -29,8 +29,9 @@ public class Board {
         }
     }
 
-    private boolean isACorner(int row, int column) {
-        return (row == 0 || row == BOARD_SIZE) && (column == 0 || column == BOARD_SIZE);
+    private boolean isACorner(Position position) {
+        return (position.getRow() == 0 || position.getRow() == BOARD_SIZE)
+                && (position.getColumn() == 0 || position.getColumn() == BOARD_SIZE);
     }
 
     private Board(int size) {
