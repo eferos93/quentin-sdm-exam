@@ -60,12 +60,7 @@ public class Game {
     }
 
     private String getPlayerColour(Stone player){
-        String player_colour;
-        if(player == Stone.BLACK){
-            player_colour = "BLACK";
-        }else{
-            player_colour = "WHITE";
-        }
-        return player_colour;
-    }
+        if(player == Stone.BLACK)return "BLACK";
+        else return "WHITE";
+           }
 }
