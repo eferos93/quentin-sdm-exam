@@ -1,7 +1,6 @@
 package sdmExam;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -106,25 +105,16 @@ public class Board {
         return intersections.stream();
     }
 
-    //TODO: refactor
     protected Stone colorWithCompleteChain() {
-        for (Map.Entry<Stone, List<Set<Intersection>>> entry : chainsContainers.entrySet()) {
-            for (Set<Intersection> chain : entry.getValue()) {
-                AtomicBoolean isCloseToFirstEdgeOfGivenColor = new AtomicBoolean(false);
-                AtomicBoolean isCloseToSecondEdgeOfGivenColor = new AtomicBoolean(false);
-                chain.forEach(intersection -> {
-                    if (isCloseToFirstEdgeOfSameColor(intersection)) {
-                        isCloseToFirstEdgeOfGivenColor.set(true);
-                    } else if (isCloseToSecondEdgeOfSameColor(intersection)) {
-                        isCloseToSecondEdgeOfGivenColor.set(true);
-                    }
-                });
-                if (isCloseToFirstEdgeOfGivenColor.get() && isCloseToSecondEdgeOfGivenColor.get()) {
-                    return entry.getKey();
-                }
-            }
-        }
-        return Stone.NONE;
+        return chainsContainers.entrySet().stream()
+                .filter(entry -> entry.getValue().stream()
+                        .anyMatch(chain -> chain.stream()
+                                .anyMatch(this::isCloseToFirstEdgeOfSameColor)
+                                && chain.stream()
+                                .anyMatch(this::isCloseToSecondEdgeOfSameColor)))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(Stone.NONE);
     }
 
     private boolean isCloseToSecondEdgeOfSameColor(Intersection intersection) {
