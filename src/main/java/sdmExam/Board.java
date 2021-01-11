@@ -90,7 +90,18 @@ public class Board {
     }
 
     public boolean findIntersectionInRegions(ArrayList<ArrayList<Intersection>> regions, Intersection intersection) {
-        return true;
+        boolean intersection_not_found = true;
+        int i = 0;
+
+        if(regions.isEmpty()) return true;
+
+        while(i < regions.size() && intersection_not_found){
+            if(regions.get(i).contains(intersection))
+                intersection_not_found = false;
+            i++;
+        }
+
+        return intersection_not_found;
     }
 
     protected Stream<Intersection> stream() {

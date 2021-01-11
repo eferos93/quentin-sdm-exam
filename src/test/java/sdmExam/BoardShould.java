@@ -107,17 +107,48 @@ public class BoardShould {
     @Test
     public void intersectionAlreadyInsideRegion() {
         ArrayList<ArrayList<Intersection>> regions = new ArrayList<>();
-        ArrayList<Intersection> region = new ArrayList<>();
+        ArrayList<Intersection> region1 = new ArrayList<>();
+        ArrayList<Intersection> region2 = new ArrayList<>();
         Intersection intersection1 = board.intersectionAt(Position.in(1, 1));
         Intersection intersection2 = board.intersectionAt(Position.in(1, 2));
         Intersection intersection3 = board.intersectionAt(Position.in(1, 3));
+        Intersection intersection4 = board.intersectionAt(Position.in(2, 1));
+        Intersection intersection5 = board.intersectionAt(Position.in(2, 2));
+        Intersection intersection6 = board.intersectionAt(Position.in(2, 3));
 
-        region.add(intersection1);
-        region.add(intersection2);
-        region.add(intersection3);
-        regions.add(region);
+        region1.add(intersection1);
+        region1.add(intersection2);
+        region1.add(intersection3);
+        region2.add(intersection4);
+        region2.add(intersection5);
+        region2.add(intersection6);
+        regions.add(region1);
+        regions.add(region2);
 
-        assertTrue(board.findIntersectionInRegions(regions, intersection2));
+        assertFalse(board.findIntersectionInRegions(regions, intersection2));
+    }
+
+    @Test
+    public void intersectionNotAlreadyInsideRegion() {
+        ArrayList<ArrayList<Intersection>> regions = new ArrayList<>();
+        ArrayList<Intersection> region1 = new ArrayList<>();
+        ArrayList<Intersection> region2 = new ArrayList<>();
+        Intersection intersection1 = board.intersectionAt(Position.in(1, 1));
+        Intersection intersection2 = board.intersectionAt(Position.in(1, 2));
+        Intersection intersection3 = board.intersectionAt(Position.in(1, 3));
+        Intersection intersection4 = board.intersectionAt(Position.in(2, 1));
+        Intersection intersection5 = board.intersectionAt(Position.in(2, 2));
+        Intersection intersection6 = board.intersectionAt(Position.in(2, 3));
+
+        region1.add(intersection1);
+        region1.add(intersection2);
+        region1.add(intersection3);
+        region2.add(intersection4);
+        region2.add(intersection6);
+        regions.add(region1);
+        regions.add(region2);
+
+        assertTrue(board.findIntersectionInRegions(regions, intersection5));
     }
 
 }
