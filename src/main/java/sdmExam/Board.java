@@ -133,9 +133,9 @@ public class Board {
                     edgePart -> edgePart.getPosition().isAboveWithRespectTo(intersection.getPosition()));
     }
 
-    private Boolean isCloseToColorAlikeEdgeFromSide(Intersection intersection, Predicate<Intersection> condition) {
+    private Boolean isCloseToColorAlikeEdgeFromSide(Intersection intersection, Predicate<Intersection> side) {
         return edges.stream()
-                .filter(condition)
+                .filter(side)
                 .findFirst()
                 .map(foundEdgePart -> foundEdgePart.hasStone(intersection.getStone()))
                 .orElse(false);
