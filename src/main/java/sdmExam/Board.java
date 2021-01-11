@@ -62,11 +62,15 @@ public class Board {
     public void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
         Intersection intersection = intersectionAt(position);
         intersection.setStone(stone);
-        List<Set<Intersection>> chainsOfGivenColor = chainsContainers.get(stone);
+        updateChains(intersection);
+    }
+
+    private void updateChains(Intersection updatedIntersection) {
+        List<Set<Intersection>> chainsOfGivenColor = chainsContainers.get(updatedIntersection.getStone());
         List<Set<Intersection>> oldChains = chainsOfGivenColor.stream()
-                .filter(chain -> chain.stream().anyMatch(intersection::isOrthogonalTo)).collect(Collectors.toList());
+                .filter(chain -> chain.stream().anyMatch(updatedIntersection::isOrthogonalTo)).collect(Collectors.toList());
         Set<Intersection> newChain = oldChains.stream().flatMap(Collection::stream).collect(Collectors.toSet());
-        newChain.add(intersection);
+        newChain.add(updatedIntersection);
         chainsOfGivenColor.removeAll(oldChains);
         chainsOfGivenColor.add(newChain);
     }
