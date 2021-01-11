@@ -151,4 +151,24 @@ public class BoardShould {
         assertTrue(board.findIntersectionInRegions(regions, intersection5));
     }
 
+    @Test
+    public void extendRegion() {
+        for(int row = 2; row < Board.BOARD_SIZE -1; row++){
+            for(int col = 1; col < Board.BOARD_SIZE -1; col++){
+                board.addStoneAt(Stone.BLACK, Position.in(row, col));
+            }
+        }
+
+        ArrayList<Intersection> region1 = new ArrayList<>();
+        ArrayList<Intersection> region2 = new ArrayList<>();
+
+        for(int col = 1; col < Board.BOARD_SIZE; col++){
+            Intersection intersection = new Intersection(Position.in(1, col), Stone.NONE);
+            region1.add(intersection);
+        }
+
+        board.DFS(0, region2);
+        assertEquals(region1, region2);
+    }
+
 }

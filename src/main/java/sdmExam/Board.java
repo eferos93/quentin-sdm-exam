@@ -104,6 +104,13 @@ public class Board {
         return intersection_not_found;
     }
 
+    public void DFS(int index, ArrayList<Intersection> region) {
+        for(int col = 1; col < Board.BOARD_SIZE; col++){
+            Intersection intersection = new Intersection(Position.in(1, col), Stone.NONE);
+            region.add(intersection);
+        }
+    }
+
     protected Stream<Intersection> stream() {
         return intersections.stream();
     }
