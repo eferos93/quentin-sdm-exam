@@ -82,4 +82,17 @@ public class Position {
                 ", column=" + column +
                 '}';
     }
+
+    protected boolean isPartOfLowerOrUpperEdge(int boardSize) {
+        return this.row == 0 || this.row == boardSize;
+    }
+
+    protected boolean isACorner(int boardSize) {
+        return isPartOfLowerOrUpperEdge(boardSize)
+                && isPartOfLeftOrRightEdge(boardSize);
+    }
+
+    protected boolean isPartOfLeftOrRightEdge(int boardSize) {
+        return this.column == 0 || this.column == boardSize;
+    }
 }

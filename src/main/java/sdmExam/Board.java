@@ -23,12 +23,12 @@ public class Board {
         for (int row = 0; row <= boardSize; row++) {
             for (int column = 0; column <= boardSize; column++) {
                 final Position position = Position.in(row, column);
-                if (isACorner(position)) {
+                if (position.isACorner(boardSize)) {
                     continue;
                 }
-                if (isPartOfLowerOrUpperEdge(position)) {
+                if (position.isPartOfLowerOrUpperEdge(boardSize)) {
                     edges.add(new Intersection(position, Stone.BLACK));
-                } else if (isPartOfLeftOrRightEdge(position)) {
+                } else if (position.isPartOfLeftOrRightEdge(boardSize)) {
                     edges.add(new Intersection(position, Stone.WHITE));
                 } else {
                     intersections.add(Intersection.empty(position));
@@ -39,19 +39,6 @@ public class Board {
 
     protected static Board buildTestBoard(int size) {
         return new Board(size);
-    }
-
-    private boolean isPartOfLeftOrRightEdge(Position position) {
-        return position.getColumn() == 0 || position.getColumn() == boardSize;
-    }
-
-    private boolean isPartOfLowerOrUpperEdge(Position position) {
-        return position.getRow() == 0 || position.getRow() == boardSize;
-    }
-
-    private boolean isACorner(Position position) {
-        return (isPartOfLowerOrUpperEdge(position))
-                && (isPartOfLeftOrRightEdge(position));
     }
 
     public Intersection intersectionAt(Position position) throws NoSuchElementException {
