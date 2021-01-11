@@ -68,7 +68,8 @@ public class Board {
     private void updateChains(Intersection updatedIntersection) {
         List<Set<Intersection>> chainsOfGivenColor = chainsContainers.get(updatedIntersection.getStone());
         List<Set<Intersection>> oldChains = chainsOfGivenColor.stream()
-                .filter(chain -> chain.stream().anyMatch(updatedIntersection::isOrthogonalTo)).collect(Collectors.toList());
+                .filter(chain -> chain.stream().anyMatch(updatedIntersection::isOrthogonalTo))
+                .collect(Collectors.toList());
         Set<Intersection> newChain = oldChains.stream().flatMap(Collection::stream).collect(Collectors.toSet());
         newChain.add(updatedIntersection);
         chainsOfGivenColor.removeAll(oldChains);
@@ -105,6 +106,7 @@ public class Board {
         return intersections.stream();
     }
 
+    //TODO: refactor
     protected Stone colorWithCompleteChain() {
         for (Map.Entry<Stone, List<Set<Intersection>>> entry : chainsContainers.entrySet()) {
             for (Set<Intersection> chain : entry.getValue()) {
