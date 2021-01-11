@@ -140,12 +140,4 @@ public class Board {
                 .map(foundEdgePart -> foundEdgePart.hasStone(intersection.getStone()))
                 .orElse(false);
     }
-
-    public Stone edgeColorAt(Position position) throws NoSuchElementException {
-        return edges.stream()
-                .filter(edgeElement -> edgeElement.isAt(position))
-                .findFirst()
-                .map(Intersection::getStone)
-                .orElseThrow();
-    }
 }
