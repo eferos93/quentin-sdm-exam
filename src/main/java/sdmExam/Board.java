@@ -2,17 +2,26 @@ package sdmExam;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Board {
-    public static final int BOARD_SIZE = 14;
+    private final static int DEFAULT_PLAYABLE_BOARD_SIZE = 13;
+    private final int boardSize;
     private final List<Intersection> intersections = new ArrayList<>();
     private final List<Intersection> edges = new ArrayList<>();
-    private Map<Stone, List<Set<Intersection>>> chainsContainers = new HashMap<>();
+    private Map<Stone, Optional<List<Set<Intersection>>>> chainsContainers = new HashMap<>();
 
     public Board() {
-        for (int row = 0; row <= BOARD_SIZE; row++) {
-            for (int column = 0; column <= BOARD_SIZE; column++) {
+        this(DEFAULT_PLAYABLE_BOARD_SIZE);
+    }
+
+    private Board(int playableBoardSize) {
+        this.boardSize = playableBoardSize + 1;
+        chainsContainers.put(Stone.BLACK, Optional.empty());
+        chainsContainers.put(Stone.WHITE, Optional.empty());
+        for (int row = 0; row <= boardSize; row++) {
+            for (int column = 0; column <= boardSize; column++) {
                 final Position position = Position.in(row, column);
                 if (isACorner(position)) {
                     continue;
@@ -28,12 +37,16 @@ public class Board {
         }
     }
 
+    protected static Board buildTestBoard(int size) {
+        return new Board(size);
+    }
+
     private boolean isPartOfLeftOrRightEdge(Position position) {
-        return position.getColumn() == 0 || position.getColumn() == BOARD_SIZE;
+        return position.getColumn() == 0 || position.getColumn() == boardSize;
     }
 
     private boolean isPartOfLowerOrUpperEdge(Position position) {
-        return position.getRow() == 0 || position.getRow() == BOARD_SIZE;
+        return position.getRow() == 0 || position.getRow() == boardSize;
     }
 
     private boolean isACorner(Position position) {
@@ -41,24 +54,27 @@ public class Board {
                 && (isPartOfLeftOrRightEdge(position));
     }
 
-    private Board(int size) {
-        for (int row = 1; row <= size; row++) {
-            for (int column = 1; column <= size; column++) {
-                intersections.add(Intersection.empty(Position.in(row, column)));
-            }
-        }
-    }
-
-    protected static Board buildTestBoard(int size) {
-        return new Board(size);
-    }
-
     public Intersection intersectionAt(Position position) throws NoSuchElementException {
         return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow();
     }
 
     public void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
-        intersectionAt(position).setStone(stone);
+        Intersection intersection = intersectionAt(position);
+        intersection.setStone(stone);
+        chainsContainers.get(stone).ifPresentOrElse(chainsOfGivenColor -> {
+            List<Set<Intersection>> oldChains = chainsOfGivenColor.stream()
+                    .filter(chain -> chain.stream().anyMatch(intersection::isOrthogonalTo)).collect(Collectors.toList());
+            Set<Intersection> newChain = oldChains.stream().flatMap(Collection::stream).collect(Collectors.toSet());
+            newChain.add(intersection);
+            chainsOfGivenColor.removeAll(oldChains);
+            chainsOfGivenColor.add(newChain);
+        }, () -> {
+            List<Set<Intersection>> listOfChains = new ArrayList<>();
+            Set<Intersection> newChain = new HashSet<>();
+            newChain.add(intersection);
+            listOfChains.add(newChain);
+            chainsContainers.put(stone, Optional.of(listOfChains));
+        });
     }
 
     public boolean isOccupied(Position position) throws NoSuchElementException {
@@ -92,14 +108,14 @@ public class Board {
     }
 
     protected Stone colorWithCompleteChain() {
-        for (Map.Entry<Stone, List<Set<Intersection>>> entry : chainsContainers.entrySet()) {
-            for (Set<Intersection> chain : entry.getValue()) {
+        for (Map.Entry<Stone, Optional<List<Set<Intersection>>>> entry : chainsContainers.entrySet()) {
+            for (Set<Intersection> chain : entry.getValue().get()) {
                 AtomicBoolean isCloseToFirstEdgeOfGivenColor = new AtomicBoolean(false);
                 AtomicBoolean isCloseToSecondEdgeOfGivenColor = new AtomicBoolean(false);
                 chain.forEach(intersection -> {
-                    if (isCloseToFirstEdgeOfColor(entry.getKey(), intersection)) {
+                    if (isCloseToFirstEdgeOfSameColor(intersection)) {
                         isCloseToFirstEdgeOfGivenColor.set(true);
-                    } else if (isCloseToSecondEdgeOfColor(entry.getKey(), intersection)) {
+                    } else if (isCloseToSecondEdgeOfSameColor(intersection)) {
                         isCloseToSecondEdgeOfGivenColor.set(true);
                     }
                 });
@@ -111,12 +127,32 @@ public class Board {
         return Stone.NONE;
     }
 
-    private boolean isCloseToSecondEdgeOfColor(Stone color, Intersection intersection) {
-        return false;
+    private boolean isCloseToSecondEdgeOfSameColor(Intersection intersection) {
+        return edges.stream()
+                .filter(edgePart -> edgePart.getPosition().isOnTheRightWithRespectTo(intersection.getPosition()))
+                .findFirst()
+                .map(foundEdgePart -> foundEdgePart.hasStone(intersection.getStone()))
+                .orElse(false)
+                ||
+                edges.stream()
+                .filter(edgePart -> edgePart.getPosition().isBelowWithRespectTo(intersection.getPosition()))
+                .findFirst()
+                .map(foundEdgePart -> foundEdgePart.hasStone(intersection.getStone()))
+                .orElse(false);
     }
 
-    private boolean isCloseToFirstEdgeOfColor(Stone color, Intersection intersection) {
-        return false;
+    private boolean isCloseToFirstEdgeOfSameColor(Intersection intersection) {
+        return edges.stream()
+                .filter(edgePart -> edgePart.getPosition().isOnTheLeftWithRespectTo(intersection.getPosition()))
+                .findFirst()
+                .map(foundEdgePart -> foundEdgePart.hasStone(intersection.getStone()))
+                .orElse(false)
+                ||
+                edges.stream()
+                .filter(edgePart -> edgePart.getPosition().isAboveWithRespectTo(intersection.getPosition()))
+                .findFirst()
+                .map(foundEdgePart -> foundEdgePart.hasStone(intersection.getStone()))
+                .orElse(false);
     }
 
     public Stone edgeColorAt(Position position) throws NoSuchElementException {

@@ -65,6 +65,10 @@ public class Game {
     }
 
     public Stone getWinner() {
-        return Stone.NONE;
+        return board.colorWithCompleteChain();
+    }
+
+    public void applyPieRule() {
+        board.pie();
     }
 }

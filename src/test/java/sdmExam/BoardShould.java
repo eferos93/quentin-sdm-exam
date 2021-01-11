@@ -59,9 +59,9 @@ public class BoardShould {
     private static Stream<Arguments> provideInputAndExpectedValue() {
         return Stream.of(
                 Arguments.of(Position.in(0, 1), Stone.WHITE),
-                Arguments.of(Position.in(Board.BOARD_SIZE, 1), Stone.WHITE),
+                Arguments.of(Position.in(14, 1), Stone.WHITE),
                 Arguments.of(Position.in(1, 0), Stone.BLACK),
-                Arguments.of(Position.in(1, Board.BOARD_SIZE), Stone.BLACK)
+                Arguments.of(Position.in(1, 14), Stone.BLACK)
         );
     }
 
