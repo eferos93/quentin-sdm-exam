@@ -11,7 +11,7 @@ public class Board {
     private final int boardSize;
     private final List<Intersection> intersections = new ArrayList<>();
     private final List<Intersection> edges = new ArrayList<>();
-    private Map<Stone, Optional<List<Set<Intersection>>>> chainsContainers = new HashMap<>();
+    private Map<Stone, List<Set<Intersection>>> chainsContainers = new HashMap<>();
 
     public Board() {
         this(DEFAULT_PLAYABLE_BOARD_SIZE);
@@ -19,8 +19,8 @@ public class Board {
 
     private Board(int playableBoardSize) {
         this.boardSize = playableBoardSize + 1;
-        chainsContainers.put(Stone.BLACK, Optional.empty());
-        chainsContainers.put(Stone.WHITE, Optional.empty());
+        chainsContainers.put(Stone.BLACK, new ArrayList<>());
+        chainsContainers.put(Stone.WHITE, new ArrayList<>());
         for (int row = 0; row <= boardSize; row++) {
             for (int column = 0; column <= boardSize; column++) {
                 final Position position = Position.in(row, column);
@@ -62,20 +62,13 @@ public class Board {
     public void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
         Intersection intersection = intersectionAt(position);
         intersection.setStone(stone);
-        chainsContainers.get(stone).ifPresentOrElse(chainsOfGivenColor -> {
-            List<Set<Intersection>> oldChains = chainsOfGivenColor.stream()
-                    .filter(chain -> chain.stream().anyMatch(intersection::isOrthogonalTo)).collect(Collectors.toList());
-            Set<Intersection> newChain = oldChains.stream().flatMap(Collection::stream).collect(Collectors.toSet());
-            newChain.add(intersection);
-            chainsOfGivenColor.removeAll(oldChains);
-            chainsOfGivenColor.add(newChain);
-        }, () -> {
-            List<Set<Intersection>> listOfChains = new ArrayList<>();
-            Set<Intersection> newChain = new HashSet<>();
-            newChain.add(intersection);
-            listOfChains.add(newChain);
-            chainsContainers.put(stone, Optional.of(listOfChains));
-        });
+        List<Set<Intersection>> chainsOfGivenColor = chainsContainers.get(stone);
+        List<Set<Intersection>> oldChains = chainsOfGivenColor.stream()
+                .filter(chain -> chain.stream().anyMatch(intersection::isOrthogonalTo)).collect(Collectors.toList());
+        Set<Intersection> newChain = oldChains.stream().flatMap(Collection::stream).collect(Collectors.toSet());
+        newChain.add(intersection);
+        chainsOfGivenColor.removeAll(oldChains);
+        chainsOfGivenColor.add(newChain);
     }
 
     public boolean isOccupied(Position position) throws NoSuchElementException {
@@ -109,8 +102,8 @@ public class Board {
     }
 
     protected Stone colorWithCompleteChain() {
-        for (Map.Entry<Stone, Optional<List<Set<Intersection>>>> entry : chainsContainers.entrySet()) {
-            for (Set<Intersection> chain : entry.getValue().get()) {
+        for (Map.Entry<Stone, List<Set<Intersection>>> entry : chainsContainers.entrySet()) {
+            for (Set<Intersection> chain : entry.getValue()) {
                 AtomicBoolean isCloseToFirstEdgeOfGivenColor = new AtomicBoolean(false);
                 AtomicBoolean isCloseToSecondEdgeOfGivenColor = new AtomicBoolean(false);
                 chain.forEach(intersection -> {
