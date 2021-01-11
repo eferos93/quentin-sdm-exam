@@ -1,5 +1,7 @@
 package sdmExam;
 
+import sdmExam.exceptions.*;
+
 public class Game {
     private final Board board;
     private Stone lastPlay = Stone.NONE;
@@ -15,20 +17,19 @@ public class Game {
     public void play(Stone player, Position position) throws Exception {
 
         if (isInvalidFirstPlayer(player)) {
-            throw new Exception("Black player should play first.");
+            throw new InvalidFirstPlayerException();
         }
 
         if (isARepeatedPlay(player)) {
-            throw new Exception("A player cannot play twice in a row.");
+            throw new RepeatedPlayException();
         }
 
         if (board.isOccupied(position)) {
-            throw new Exception("Position " + position + " is already occupied.");
+            throw new OccupiedPositionException(position);
         }
 
         if (isIllegalMove(player, position)) {
-            throw new Exception("A player cannot put a stone diagonally adjacent to another stone of the same colour" +
-                    " without a colour alike orthogonally adjacent.\n" + position);
+            throw new IllegalMoveException(position);
         }
 
         board.addStoneAt(player, position);
@@ -59,5 +60,4 @@ public class Game {
                 .filter(intersection -> !intersection.isOccupied())
                 .anyMatch(emptyIntersection -> !isIllegalMove(player, emptyIntersection));
     }
-
 }
