@@ -117,4 +117,18 @@ public class GameShould {
         customGame.play(Stone.BLACK, Position.in(3,2));
         assertEquals(customGame.getWinner(), Stone.BLACK);
     }
+
+    @Test
+    public void provideNoWinnerWithPieRule() throws Exception {
+        Game customGame = Game.buildTestGame(4);
+        customGame.play(Stone.BLACK, Position.in(1,2));
+        customGame.applyPieRule();
+        customGame.play(Stone.WHITE, Position.in(1,3));
+        customGame.play(Stone.BLACK, Position.in(2,2));
+        customGame.play(Stone.WHITE, Position.in(1,4));
+        customGame.play(Stone.BLACK, Position.in(3,2));
+        customGame.play(Stone.WHITE, Position.in(2,4));
+        customGame.play(Stone.BLACK, Position.in(4,2));
+        assertEquals(customGame.getWinner(), Stone.NONE);
+    }
 }
