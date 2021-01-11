@@ -89,6 +89,10 @@ public class Board {
         return regions;
     }
 
+    public boolean findIntersectionInRegions(ArrayList<ArrayList<Intersection>> regions, Intersection intersection) {
+        return true;
+    }
+
     protected Stream<Intersection> stream() {
         return intersections.stream();
     }

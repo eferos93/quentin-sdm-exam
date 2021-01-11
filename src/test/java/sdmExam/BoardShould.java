@@ -104,4 +104,20 @@ public class BoardShould {
         assertEquals(regions_expected, board.findRegions());
     }
 
+    @Test
+    public void intersectionAlreadyInsideRegion() {
+        ArrayList<ArrayList<Intersection>> regions = new ArrayList<>();
+        ArrayList<Intersection> region = new ArrayList<>();
+        Intersection intersection1 = board.intersectionAt(Position.in(1, 1));
+        Intersection intersection2 = board.intersectionAt(Position.in(1, 2));
+        Intersection intersection3 = board.intersectionAt(Position.in(1, 3));
+
+        region.add(intersection1);
+        region.add(intersection2);
+        region.add(intersection3);
+        regions.add(region);
+
+        assertTrue(board.findIntersectionInRegions(regions, intersection2));
+    }
+
 }
