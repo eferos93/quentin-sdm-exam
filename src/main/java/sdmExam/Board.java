@@ -105,9 +105,38 @@ public class Board {
     }
 
     public void DFS(int index, ArrayList<Intersection> region) {
-        for(int col = 1; col < Board.BOARD_SIZE; col++){
-            Intersection intersection = new Intersection(Position.in(1, col), Stone.NONE);
-            region.add(intersection);
+        boolean go_left = true, go_right = true,
+                go_up = true, go_down = true;
+
+        if (region.contains(intersections.get(index)) ||
+                intersections.get(index).isOccupied()) return;
+
+        region.add(intersections.get(index));
+
+        if(index%BOARD_SIZE == 1) go_left = false;
+        if(index%BOARD_SIZE == 0 && index != 0) go_right = false;
+        if(index == BOARD_SIZE*BOARD_SIZE) go_right = false;
+        if(index == 0) go_left = false;
+
+        if(index/BOARD_SIZE == 0) go_up = false;
+        if(index/BOARD_SIZE == BOARD_SIZE) go_down = false;
+
+        if(go_left && go_right){
+            DFS(index + 1, region); //go right
+            DFS(index - 1, region); // go left
+        }else if(go_left && !go_right){
+            DFS(index - 1, region); //go right
+        }else if(go_right && !go_left){
+            DFS(index + 1, region); // go left
+        }
+
+        if(go_up && go_down){
+            DFS(index + BOARD_SIZE, region); //go up
+            DFS(index - BOARD_SIZE, region); // go down
+        }else if(go_up && !go_down){
+            DFS(index - BOARD_SIZE, region); // go down
+        }else if(go_down && !go_up){
+            DFS(index + BOARD_SIZE, region); //go up
         }
     }
 

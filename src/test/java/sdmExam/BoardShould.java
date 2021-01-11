@@ -153,8 +153,8 @@ public class BoardShould {
 
     @Test
     public void extendRegion() {
-        for(int row = 2; row < Board.BOARD_SIZE -1; row++){
-            for(int col = 1; col < Board.BOARD_SIZE -1; col++){
+        for(int row = 2; row <= Board.BOARD_SIZE; row++){
+            for(int col = 1; col <= Board.BOARD_SIZE; col++){
                 board.addStoneAt(Stone.BLACK, Position.in(row, col));
             }
         }
@@ -162,7 +162,7 @@ public class BoardShould {
         ArrayList<Intersection> region1 = new ArrayList<>();
         ArrayList<Intersection> region2 = new ArrayList<>();
 
-        for(int col = 1; col < Board.BOARD_SIZE; col++){
+        for(int col = 1; col <= Board.BOARD_SIZE; col++){
             Intersection intersection = new Intersection(Position.in(1, col), Stone.NONE);
             region1.add(intersection);
         }
