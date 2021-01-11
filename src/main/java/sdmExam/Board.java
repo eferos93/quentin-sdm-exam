@@ -2,6 +2,7 @@ package sdmExam;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -128,28 +129,24 @@ public class Board {
     }
 
     private boolean isCloseToSecondEdgeOfSameColor(Intersection intersection) {
-        return edges.stream()
-                .filter(edgePart -> edgePart.getPosition().isOnTheRightWithRespectTo(intersection.getPosition()))
-                .findFirst()
-                .map(foundEdgePart -> foundEdgePart.hasStone(intersection.getStone()))
-                .orElse(false)
+        return isCloseToColorAlikeEdgeFromSide(intersection,
+                edgePart -> edgePart.getPosition().isOnTheRightWithRespectTo(intersection.getPosition()))
                 ||
-                edges.stream()
-                .filter(edgePart -> edgePart.getPosition().isBelowWithRespectTo(intersection.getPosition()))
-                .findFirst()
-                .map(foundEdgePart -> foundEdgePart.hasStone(intersection.getStone()))
-                .orElse(false);
+                isCloseToColorAlikeEdgeFromSide(intersection,
+                        edgePart -> edgePart.getPosition().isBelowWithRespectTo(intersection.getPosition()));
     }
 
     private boolean isCloseToFirstEdgeOfSameColor(Intersection intersection) {
-        return edges.stream()
-                .filter(edgePart -> edgePart.getPosition().isOnTheLeftWithRespectTo(intersection.getPosition()))
-                .findFirst()
-                .map(foundEdgePart -> foundEdgePart.hasStone(intersection.getStone()))
-                .orElse(false)
+        return isCloseToColorAlikeEdgeFromSide(intersection,
+                edgePart -> edgePart.getPosition().isOnTheLeftWithRespectTo(intersection.getPosition()))
                 ||
-                edges.stream()
-                .filter(edgePart -> edgePart.getPosition().isAboveWithRespectTo(intersection.getPosition()))
+                isCloseToColorAlikeEdgeFromSide(intersection,
+                    edgePart -> edgePart.getPosition().isAboveWithRespectTo(intersection.getPosition()));
+    }
+
+    private Boolean isCloseToColorAlikeEdgeFromSide(Intersection intersection, Predicate<Intersection> condition) {
+        return edges.stream()
+                .filter(condition)
                 .findFirst()
                 .map(foundEdgePart -> foundEdgePart.hasStone(intersection.getStone()))
                 .orElse(false);
