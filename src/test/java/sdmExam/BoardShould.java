@@ -4,6 +4,7 @@ package sdmExam;
 import org.junit.jupiter.api.Test;
 
 
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -80,6 +81,27 @@ public class BoardShould {
         board.addStoneAt(Stone.WHITE, Position.in(13, 4));
         Intersection intersection = board.intersectionAt(Position.in(12, 5));
         assertTrue(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
+    }
+
+    @Test
+    public void correctnessOfRegions() {
+
+        for(int row = 2; row < Board.BOARD_SIZE -1; row++){
+            for(int col = 1; col < Board.BOARD_SIZE -1; col++){
+                board.addStoneAt(Stone.BLACK, Position.in(row, col));
+            }
+        }
+
+        ArrayList<ArrayList<Intersection>> regions_expected = new ArrayList<>();
+        ArrayList<Intersection> region = new ArrayList<>();
+
+        for(int col = 1; col < Board.BOARD_SIZE; col++){
+            Intersection intersection = new Intersection(Position.in(1, col), Stone.NONE);
+            region.add(intersection);
+        }
+
+        regions_expected.add(region);
+        assertEquals(regions_expected, board.findRegions());
     }
 
 }

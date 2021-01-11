@@ -76,6 +76,19 @@ public class Board {
                 .anyMatch(diagonalIntersection -> diagonalIntersection.hasStone(stone));
     }
 
+    public ArrayList<ArrayList<Intersection>> findRegions() {
+        ArrayList<ArrayList<Intersection>> regions = new ArrayList<>();
+        ArrayList<Intersection> region = new ArrayList<>();
+
+        for(int col = 1; col < BOARD_SIZE; col++){
+            Intersection intersection = new Intersection(Position.in(1, col), Stone.NONE);
+            region.add(intersection);
+        }
+
+        regions.add(region);
+        return regions;
+    }
+
     protected Stream<Intersection> stream() {
         return intersections.stream();
     }
