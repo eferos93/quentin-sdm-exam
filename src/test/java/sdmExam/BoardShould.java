@@ -86,21 +86,21 @@ public class BoardShould {
     @Test
     public void correctnessOfRegions() {
 
-        for(int row = 2; row < Board.BOARD_SIZE -1; row++){
-            for(int col = 1; col < Board.BOARD_SIZE -1; col++){
+        for(int row = 2; row <= Board.BOARD_SIZE; row++){
+            for(int col = 1; col <= Board.BOARD_SIZE; col++){
                 board.addStoneAt(Stone.BLACK, Position.in(row, col));
             }
         }
 
         ArrayList<ArrayList<Intersection>> regions_expected = new ArrayList<>();
-        ArrayList<Intersection> region = new ArrayList<>();
+        ArrayList<Intersection> region_expected = new ArrayList<>();
 
-        for(int col = 1; col < Board.BOARD_SIZE; col++){
+        for(int col = 1; col <= Board.BOARD_SIZE; col++){
             Intersection intersection = new Intersection(Position.in(1, col), Stone.NONE);
-            region.add(intersection);
+            region_expected.add(intersection);
         }
 
-        regions_expected.add(region);
+        regions_expected.add(region_expected);
         assertEquals(regions_expected, board.findRegions());
     }
 

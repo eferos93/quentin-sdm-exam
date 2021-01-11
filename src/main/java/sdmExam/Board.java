@@ -78,14 +78,18 @@ public class Board {
 
     public ArrayList<ArrayList<Intersection>> findRegions() {
         ArrayList<ArrayList<Intersection>> regions = new ArrayList<>();
-        ArrayList<Intersection> region = new ArrayList<>();
 
-        for(int col = 1; col < BOARD_SIZE; col++){
-            Intersection intersection = new Intersection(Position.in(1, col), Stone.NONE);
-            region.add(intersection);
+        int h = intersections.size();
+        if (h == 0)
+            return regions;
+
+        for (int i = 0; i < h; i++) {
+            if (!intersections.get(i).isOccupied() && findIntersectionInRegions(regions, intersections.get(i))) {
+                ArrayList<Intersection> region = new ArrayList<>();
+                DFS(i, region);
+                regions.add(region);
+            }
         }
-
-        regions.add(region);
         return regions;
     }
 
@@ -113,10 +117,9 @@ public class Board {
 
         region.add(intersections.get(index));
 
-        if(index%BOARD_SIZE == 1) go_left = false;
-        if(index%BOARD_SIZE == 0 && index != 0) go_right = false;
-        if(index == BOARD_SIZE*BOARD_SIZE) go_right = false;
-        if(index == 0) go_left = false;
+        if(index%BOARD_SIZE == 1 || index == 0) go_left = false;
+        if((index%BOARD_SIZE == 0 && index != 0) ||
+                index == BOARD_SIZE*BOARD_SIZE) go_right = false;
 
         if(index/BOARD_SIZE == 0) go_up = false;
         if(index/BOARD_SIZE == BOARD_SIZE) go_down = false;
