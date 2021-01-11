@@ -171,4 +171,29 @@ public class BoardShould {
         assertEquals(region1, region2);
     }
 
+    @Test
+    public void correctnessOfTerritories() {
+
+        for(int row = 2; row <= Board.BOARD_SIZE; row++){
+            for(int col = 1; col <= Board.BOARD_SIZE; col++){
+                if(row == 3){
+                    board.addStoneAt(Stone.NONE, Position.in(row, col));
+                }else{
+                    board.addStoneAt(Stone.BLACK, Position.in(row, col));
+                }
+            }
+        }
+
+        ArrayList<ArrayList<Intersection>> territories_expected = new ArrayList<>();
+        ArrayList<Intersection> territory_expected = new ArrayList<>();
+
+        for(int col = 1; col <= Board.BOARD_SIZE; col++){
+            Intersection intersection = new Intersection(Position.in(3, col), Stone.NONE);
+            territory_expected.add(intersection);
+        }
+
+        territories_expected.add(territory_expected);
+        assertEquals(territories_expected, board.findTerritories());
+    }
+
 }
