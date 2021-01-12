@@ -12,4 +12,8 @@ public class Edge {
     public boolean isAboveWithRespectTo(Position boardPosition) {
         return this.position == boardPosition.getRow() - 1;
     }
+
+    public boolean isBelowWithRespectTo(Position boardPosition) {
+        return this.position == boardPosition.getRow() + 1;
+    }
 }
