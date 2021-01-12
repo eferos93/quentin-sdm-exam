@@ -20,4 +20,8 @@ public class Edge {
     public boolean isOnTheLeftWithRespectTo(Position boardPosition) {
         return this.position == boardPosition.getColumn() - 1;
     }
+
+    public boolean isOnTheRightWithRespect(Position boardPosition) {
+        return this.position == boardPosition.getColumn() + 1;
+    }
 }

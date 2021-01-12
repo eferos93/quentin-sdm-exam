@@ -22,4 +22,10 @@ public class EdgeShould {
         Edge edge = new Edge(Stone.WHITE, 0);
         assertTrue(edge.isOnTheLeftWithRespectTo(Position.in(13, 1)));
     }
+
+    @Test
+    public void returnTrueIfOnTheRightToAGivenPosition() {
+        Edge edge = new Edge(Stone.WHITE, 14);
+        assertTrue(edge.isOnTheRightWithRespect(Position.in(1, 13)));
+    }
 }
