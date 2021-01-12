@@ -66,6 +66,30 @@ public class BoardShould {
     }
 
     @TestFactory
+    Stream<DynamicTest> checkOrthogonalAdjacent() {
+        board.addStoneAt(Stone.WHITE, Position.in(7, 9));
+        board.addStoneAt(Stone.WHITE, Position.in(3, 4));
+        board.addStoneAt(Stone.WHITE, Position.in(4, 4));
+        board.addStoneAt(Stone.WHITE, Position.in(12, 5));
+        board.addStoneAt(Stone.WHITE, Position.in(13, 5));
+
+        Intersection firstIntersection = board.intersectionAt(Position.in(7, 9));
+        Intersection secondIntersection = board.intersectionAt(Position.in(3, 4));
+        Intersection thirdIntersection = board.intersectionAt(Position.in(12, 5));
+
+        List<Intersection> inputList = Arrays.asList(firstIntersection, secondIntersection, thirdIntersection);
+        List<Boolean> outputList = Arrays.asList(false, true, true);
+
+        return inputList.stream()
+                .map(intersection -> DynamicTest.dynamicTest("Checking Orthogonal Adjacent of "+ intersection,
+                        () -> {
+                            int id = inputList.indexOf(intersection);
+                            assertEquals(outputList.get(id),board.existsOrthogonallyAdjacentWithStone(intersection,Stone.WHITE));
+                        }));
+    }
+
+
+    @TestFactory
     Stream<DynamicTest> checkDiagonalAdjacent() {
         board.addStoneAt(Stone.WHITE, Position.in(7, 9));
         board.addStoneAt(Stone.WHITE, Position.in(3, 4));
