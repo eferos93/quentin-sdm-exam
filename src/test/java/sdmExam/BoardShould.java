@@ -1,10 +1,16 @@
 package sdmExam;
 
 
+import org.junit.jupiter.api.DynamicContainer;
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -80,6 +86,29 @@ public class BoardShould {
         board.addStoneAt(Stone.WHITE, Position.in(13, 4));
         Intersection intersection = board.intersectionAt(Position.in(12, 5));
         assertTrue(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
+    }
+
+    @TestFactory
+    Stream<DynamicTest> checkDiagonalAdjacent() {
+        board.addStoneAt(Stone.WHITE, Position.in(7, 9));
+        board.addStoneAt(Stone.WHITE, Position.in(3, 4));
+        board.addStoneAt(Stone.WHITE, Position.in(2, 5));
+        board.addStoneAt(Stone.WHITE, Position.in(12, 5));
+        board.addStoneAt(Stone.WHITE, Position.in(13, 4));
+
+        Intersection firstIntersection = board.intersectionAt(Position.in(7, 9));
+        Intersection secondIntersection = board.intersectionAt(Position.in(3, 4));
+        Intersection thirdIntersection = board.intersectionAt(Position.in(12, 5));
+
+        List<Intersection> inputList = Arrays.asList(firstIntersection, secondIntersection, thirdIntersection);
+        List<Boolean> outputList = Arrays.asList(false, true, true);
+
+        return inputList.stream()
+                .map(intersection -> DynamicTest.dynamicTest("Checking Diagonal Adjacent of "+ intersection,
+                        () -> {
+                        int id = inputList.indexOf(intersection);
+                        assertEquals(outputList.get(id),board.existsDiagonallyAdjacentWithStone(intersection,Stone.WHITE));
+                        }));
     }
 
 }
