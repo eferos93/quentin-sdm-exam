@@ -6,6 +6,8 @@ import org.junit.jupiter.api.TestFactory;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,22 +30,21 @@ public class IntersectionShould {
         assertTrue(firstIntersection.isCloseToEdge());
     }
 
-    @Test
-    public void orthogonalIntersections(){
-        Intersection firstIntersection = new Intersection(Position.in(8,5), Stone.BLACK);
-        assertTrue(firstIntersection.isOrthogonalTo(new Intersection(Position.in(9,5),Stone.BLACK)));
-    }
+    @TestFactory
+    Stream<DynamicTest> checkEdges() {
+        Intersection firstIntersection = new Intersection(Position.in(1, 1), Stone.WHITE);
+        Intersection secondIntersection = new Intersection(Position.in(2, 13), Stone.WHITE);
+        Intersection thirdIntersection = new Intersection(Position.in(2, 13), Stone.WHITE);
 
-    @Test
-    public void diagonalIntersections(){
-        Intersection firstIntersection = new Intersection(Position.in(7,9), Stone.BLACK);
-        assertTrue(firstIntersection.isDiagonalTo(new Intersection(Position.in(6,10),Stone.BLACK)));
-    }
+        List<Intersection> inputList = Arrays.asList(firstIntersection, secondIntersection, thirdIntersection);
+        List<Boolean> outputList = Arrays.asList(true, true, false);
 
-    @Test
-    public void nonOrthogonalIntersections(){
-        Intersection firstIntersection = new Intersection(Position.in(4,4), Stone.WHITE);
-        assertFalse(firstIntersection.isOrthogonalTo(new Intersection(Position.in(7,3),Stone.WHITE)));
+        return inputList.stream()
+                .map(intersection -> DynamicTest.dynamicTest("Checking Intersection" + intersection,
+                        () -> {
+                        int id = inputList.indexOf(intersection);
+                        assertEquals(outputList.get(id), intersection.isCloseToEdge());
+                }));
     }
 
     @TestFactory
