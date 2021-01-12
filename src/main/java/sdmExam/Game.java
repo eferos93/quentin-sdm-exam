@@ -59,8 +59,7 @@ public class Game {
     }
 
     public boolean isPlayerAbleToMakeAMove(Stone player) {
-        return board.stream()
-                .filter(intersection -> !intersection.isOccupied())
+        return board.getEmptyIntersections()
                 .anyMatch(emptyIntersection -> !isIllegalMove(player, emptyIntersection));
     }
 

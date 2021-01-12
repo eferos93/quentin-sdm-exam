@@ -88,10 +88,6 @@ public class Board {
                 .anyMatch(diagonalIntersection -> diagonalIntersection.hasStone(stone));
     }
 
-    protected Stream<Intersection> stream() {
-        return intersections.stream();
-    }
-
     protected Stone colorWithCompleteChain() {
         return chainsContainers.entrySet().stream()
                 .filter(entry -> entry.getValue().stream()
@@ -126,5 +122,9 @@ public class Board {
                 .findFirst()
                 .map(foundEdgePart -> foundEdgePart.hasStone(intersection.getStone()))
                 .orElse(false);
+    }
+
+    protected Stream<Intersection> getEmptyIntersections() {
+        return intersections.stream().filter(intersection -> !intersection.isOccupied());
     }
 }
