@@ -91,10 +91,8 @@ public class Board {
     protected Stone colorWithCompleteChain() {
         return chainsContainers.entrySet().stream()
                 .filter(entry -> entry.getValue().stream()
-                        .anyMatch(chain -> chain.stream()
-                                .anyMatch(this::isCloseToFirstEdgeOfSameColor)
-                                && chain.stream()
-                                .anyMatch(this::isCloseToSecondEdgeOfSameColor)))
+                        .anyMatch(chain -> chain.stream().anyMatch(this::isCloseToFirstEdgeOfSameColor)
+                                && chain.stream().anyMatch(this::isCloseToSecondEdgeOfSameColor)))
                 .map(Map.Entry::getKey)
                 .findFirst()
                 .orElse(Stone.NONE);
