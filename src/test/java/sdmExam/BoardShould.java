@@ -72,4 +72,14 @@ public class BoardShould {
         Intersection intersection = board.intersectionAt(Position.in(12, 5));
         assertTrue(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
+
+    @Test
+    public void applyPieRuleCorrectly() {
+        board.pie();
+        assertTrue(board.getEnumSet().stream()
+                .filter(edge -> edge.name().equals("LEFT"))
+                .map(edge -> edge.hasColor(Stone.BLACK))
+                .findFirst()
+                .orElse(false));
+    }
 }

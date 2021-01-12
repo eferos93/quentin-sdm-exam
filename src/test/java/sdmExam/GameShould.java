@@ -102,18 +102,18 @@ public class GameShould {
         customGame.applyPieRule();
         customGame.play(Stone.WHITE, Position.in(1,2));
         customGame.play(Stone.BLACK, Position.in(4,4));
-        assertEquals(customGame.getWinner(), Stone.NONE);
+        assertEquals(Stone.NONE, customGame.getWinner());
         customGame.play(Stone.WHITE, Position.in(1,3));
         customGame.play(Stone.BLACK, Position.in(2,1));
         customGame.play(Stone.WHITE, Position.in(1,4));
         customGame.play(Stone.BLACK, Position.in(3,4));
         customGame.play(Stone.WHITE, Position.in(2,4));
-        assertEquals(customGame.getWinner(), Stone.NONE);
+        assertEquals(Stone.NONE, customGame.getWinner());
         customGame.play(Stone.BLACK, Position.in(3,1));
         customGame.play(Stone.WHITE, Position.in(2,3));
         customGame.play(Stone.BLACK, Position.in(3,3));
         customGame.play(Stone.WHITE, Position.in(2,2));
-        assertEquals(customGame.getWinner(), Stone.NONE);
+        assertEquals(Stone.NONE, customGame.getWinner());
         customGame.play(Stone.BLACK, Position.in(3,2));
         assertEquals(customGame.getWinner(), Stone.BLACK);
     }
@@ -129,6 +129,6 @@ public class GameShould {
         customGame.play(Stone.BLACK, Position.in(3,2));
         customGame.play(Stone.WHITE, Position.in(2,4));
         customGame.play(Stone.BLACK, Position.in(4,2));
-        assertEquals(customGame.getWinner(), Stone.NONE);
+        assertEquals(Stone.NONE, customGame.getWinner());
     }
 }
