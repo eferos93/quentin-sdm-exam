@@ -1,6 +1,11 @@
 package sdmExam;
 
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,4 +46,20 @@ public class IntersectionShould {
         assertFalse(firstIntersection.isOrthogonalTo(new Intersection(Position.in(7,3),Stone.WHITE)));
     }
 
+    @TestFactory
+    Collection<DynamicTest> adjacencyCheck() {
+        Intersection firstIntersection = new Intersection(Position.in(8,5), Stone.BLACK);
+        Intersection secondIntersection = new Intersection(Position.in(7,9), Stone.BLACK);
+        Intersection thirdIntersection = new Intersection(Position.in(7,9), Stone.BLACK);
+
+        return Arrays.asList(
+                DynamicTest.dynamicTest("Orthogonal Intersections",
+                        () -> assertTrue(firstIntersection.isOrthogonalTo(new Intersection(Position.in(9,5),Stone.BLACK)))),
+                DynamicTest.dynamicTest("Diagonal Intersections",
+                        () -> assertTrue(secondIntersection.isDiagonalTo(new Intersection(Position.in(6,10),Stone.BLACK)))),
+                DynamicTest.dynamicTest("Non Orthogonal Intersections",
+                        () -> assertFalse(thirdIntersection.isOrthogonalTo(new Intersection(Position.in(7,3),Stone.WHITE))))
+        );
+    }
 }
+
