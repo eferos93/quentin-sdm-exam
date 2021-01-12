@@ -82,4 +82,11 @@ public class Intersection {
          return this.stone == stone;
     }
 
+    @Override
+    public String toString() {
+        return "Intersection{" +
+                "position=" + position +
+                ", stone=" + stone +
+                '}';
+    }
 }
