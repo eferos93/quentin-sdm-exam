@@ -3,8 +3,6 @@ package sdmExam;
 import java.util.Objects;
 
 public class Intersection {
-    public static final int UPPER_AND_LEFT_EDGE_INDEX = 1;
-    public static final int LOWER_AND_RIGHT_EDGE_INDEX = 13;
     private final Position position;
     private Stone stone;
 
@@ -44,29 +42,6 @@ public class Intersection {
 
     public boolean isAt(Position position) {
         return position.equals(getPosition());
-    }
-
-    //TODO: do we really need this?
-    public boolean isCloseToEdge() {
-        return isCloseToUpperOrLowerEdge() || isCloseToRightOrLeftEdge();
-    }
-
-    //TODO: extract two methods out of this
-    public boolean isCloseToRightOrLeftEdge() {
-        return isCloseToLeftEdge() || isCloseToRightEdge();
-    }
-
-    public boolean isCloseToRightEdge() {
-        return position.getColumn() == LOWER_AND_RIGHT_EDGE_INDEX;
-    }
-
-    public boolean isCloseToLeftEdge() {
-        return position.getColumn() == UPPER_AND_LEFT_EDGE_INDEX;
-    }
-
-    //TODO: extract two methods out of this
-    public boolean isCloseToUpperOrLowerEdge() {
-        return position.getRow() == UPPER_AND_LEFT_EDGE_INDEX || position.getRow() == LOWER_AND_RIGHT_EDGE_INDEX;
     }
 
     public boolean isOccupied() {
