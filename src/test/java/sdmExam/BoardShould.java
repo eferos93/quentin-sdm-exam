@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BoardShould {
     private final Board board = new Board();
 
+    //TODO Below tests can be parameterized
     @Test
     public void getCorrectIntersectionGivenAPosition() {
         Position position = Position.in(5, 7);

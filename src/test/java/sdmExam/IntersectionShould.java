@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class IntersectionShould {
+    //TODO Below test can be parameterized
     @Test
     public void beEqualToAnotherIntersectionWithEqualFields() {
         Intersection firstIntersection = new Intersection(Position.in(3, 3), Stone.WHITE);
@@ -36,6 +37,7 @@ public class IntersectionShould {
                 }));
     }
 
+    //TODO Below test can be written with streams (by using object function tuples)
     @TestFactory
     Collection<DynamicTest> adjacencyCheck() {
         Intersection firstIntersection = new Intersection(Position.in(8,5), Stone.BLACK);

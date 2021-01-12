@@ -10,6 +10,7 @@ import java.util.Collection;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PositionShould {
+    //TODO Below test can be parameterized
     @Test
     public void beEqualToAnotherPositionWithSameCoordinates() {
         Position firstPosition = new Position(3, 3);
