@@ -65,29 +65,6 @@ public class BoardShould {
         assertEquals(board.getLeftAndRightEdgesColor(), Stone.BLACK);
     }
 
-    @Test
-    public void noDiagonalAdjacencyOfIntersection() {
-        board.addStoneAt(Stone.WHITE, Position.in(7, 9));
-        Intersection intersection = board.intersectionAt(Position.in(7, 9));
-        assertFalse(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
-    }
-
-    @Test
-    public void upRightDiagonalAdjacencyOfIntersection() {
-        board.addStoneAt(Stone.WHITE, Position.in(3, 4));
-        board.addStoneAt(Stone.WHITE, Position.in(2, 5));
-        Intersection intersection = board.intersectionAt(Position.in(3, 4));
-        assertTrue(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
-    }
-
-    @Test
-    public void downLeftDiagonalAdjacencyOfIntersection() {
-        board.addStoneAt(Stone.WHITE, Position.in(12, 5));
-        board.addStoneAt(Stone.WHITE, Position.in(13, 4));
-        Intersection intersection = board.intersectionAt(Position.in(12, 5));
-        assertTrue(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
-    }
-
     @TestFactory
     Stream<DynamicTest> checkDiagonalAdjacent() {
         board.addStoneAt(Stone.WHITE, Position.in(7, 9));
