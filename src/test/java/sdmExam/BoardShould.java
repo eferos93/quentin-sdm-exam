@@ -36,29 +36,6 @@ public class BoardShould {
     }
 
     @Test
-    public void noOrthogonalAdjacencyOfIntersection() {
-        board.addStoneAt(Stone.WHITE, Position.in(7, 9));
-        Intersection intersection = board.intersectionAt(Position.in(7, 9));
-        assertFalse(board.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
-    }
-
-    @Test
-    public void rightOrthogonalAdjacencyOfIntersection() {
-        board.addStoneAt(Stone.WHITE, Position.in(3, 4));
-        board.addStoneAt(Stone.WHITE, Position.in(4, 4));
-        Intersection intersection = board.intersectionAt(Position.in(3, 4));
-        assertTrue(board.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
-    }
-
-    @Test
-    public void topOrthogonalAdjacencyOfIntersection() {
-        board.addStoneAt(Stone.WHITE, Position.in(12, 5));
-        board.addStoneAt(Stone.WHITE, Position.in(13, 5));
-        Intersection intersection = board.intersectionAt(Position.in(12, 5));
-        assertTrue(board.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
-    }
-
-    @Test
     public void edgeColorsAfterPie() {
         board.pie();
         assertEquals(board.getLowerAndUpperEdgesColor(), Stone.WHITE);
