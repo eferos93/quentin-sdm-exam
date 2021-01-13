@@ -86,7 +86,12 @@ public class Board {
         }
 
         territories.add(territory);
+
         return territories;
+    }
+
+    public boolean isTerritory(ArrayList<Intersection> region) {
+        return true;
     }
 
     public ArrayList<ArrayList<Intersection>> findRegions() {
@@ -128,14 +133,13 @@ public class Board {
         if (region.contains(intersections.get(index)) ||
                 intersections.get(index).isOccupied()) return;
 
+        if(notExistLeftIntersection(index)) go_left = false;
+        if(notExistRightIntersection(index)) go_right = false;
+
+        if(notExistUpIntersection(index)) go_up = false;
+        if(notExistDownIntersection(index)) go_down = false;
+
         region.add(intersections.get(index));
-
-        if(index%BOARD_SIZE == 1 || index == 0) go_left = false;
-        if((index%BOARD_SIZE == 0 && index != 0) ||
-                index == BOARD_SIZE*BOARD_SIZE) go_right = false;
-
-        if(index/BOARD_SIZE == 0) go_up = false;
-        if(index/BOARD_SIZE == BOARD_SIZE) go_down = false;
 
         if(go_left && go_right){
             DFS(index + 1, region); //go right
@@ -156,8 +160,24 @@ public class Board {
         }
     }
 
+    private boolean notExistDownIntersection(int index) {
+        return index/BOARD_SIZE == BOARD_SIZE;
+    }
+
+    private boolean notExistUpIntersection(int index) {
+        return index/BOARD_SIZE == 0;
+    }
+
+    private boolean notExistLeftIntersection(int index) {
+        return index%BOARD_SIZE == 1 || index == 0;
+    }
+
+    private boolean notExistRightIntersection(int index) {
+        return (index%BOARD_SIZE == 0 && index != 0) ||
+                index == BOARD_SIZE*BOARD_SIZE;
+    }
+
     protected Stream<Intersection> stream() {
         return intersections.stream();
     }
-
 }

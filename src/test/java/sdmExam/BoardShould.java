@@ -196,4 +196,25 @@ public class BoardShould {
         assertEquals(territories_expected, board.findTerritories());
     }
 
+    @Test
+    public void checkIfRegionStoneHasNotNoneOrthogonalAdjacency() {
+        for(int row = 2; row <= Board.BOARD_SIZE; row++){
+            for(int col = 1; col <= Board.BOARD_SIZE; col++){
+                if(row == 3){
+                    board.addStoneAt(Stone.NONE, Position.in(row, col));
+                }else{
+                    board.addStoneAt(Stone.BLACK, Position.in(row, col));
+                }
+            }
+        }
+
+        ArrayList<Intersection> territory_expected = new ArrayList<>();
+
+        for(int col = 1; col <= Board.BOARD_SIZE; col++){
+            Intersection intersection = new Intersection(Position.in(3, col), Stone.NONE);
+            territory_expected.add(intersection);
+        }
+
+        assertTrue(board.isTerritory(territory_expected));
+    }
 }
