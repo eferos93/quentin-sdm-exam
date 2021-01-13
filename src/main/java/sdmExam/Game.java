@@ -9,10 +9,9 @@ public class Game {
     public Game() {
         board = new Board();
     }
-
     private Game(Board board) { this.board = board;  }
-
     private Game(int boardSize) { this.board = Board.buildTestBoard(boardSize); }
+
     protected static Game buildTestGame(Board board) { return new Game(board); }
     protected static Game buildTestGame(int boardSize) { return new Game(boardSize); }
 
