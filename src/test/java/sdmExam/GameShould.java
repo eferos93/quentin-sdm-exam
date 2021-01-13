@@ -45,10 +45,14 @@ public class GameShould {
                 });
     }
 
-    //TODO: maybe try to implement a test where there are no possible moves for the player?
     @Test
     public void checkIfThereArePossibleLegalMoves() {
-        assertTrue(game.isPlayerAbleToMakeAMove(Stone.BLACK));
+        Board testBoard = Board.buildTestBoard(2);
+        testBoard.addStoneAt(Stone.WHITE,Position.in(1,1));
+        testBoard.addStoneAt(Stone.WHITE,Position.in(2,2));
+        testBoard.addStoneAt(Stone.BLACK,Position.in(1,2));
+        Game testGame = Game.buildTestGame(testBoard);
+        assertFalse(testGame.isPlayerAbleToMakeAMove(Stone.BLACK));
     }
 
     @Test

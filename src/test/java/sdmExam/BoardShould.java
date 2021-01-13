@@ -21,9 +21,8 @@ public class BoardShould {
 
     @Test
     public void markCorrectlyAnIntersection() throws NoSuchElementException {
-        Position position = new Position(5, 7);
-        Intersection intersection = board.intersectionAt(position);
-        board.addStoneAt(Stone.BLACK, position);
+        Intersection intersection = board.intersectionAt(Position.in(5,7));
+        board.addStoneAt(Stone.BLACK, Position.in(5,7));
         assertEquals(intersection.getStone(), Stone.BLACK);
     }
 

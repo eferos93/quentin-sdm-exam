@@ -2,7 +2,7 @@ package sdmExam;
 
 import java.util.Objects;
 
-public class Position {
+public class Position extends Throwable {
     private final int row, column;
 
     public Position(int row, int column) {
