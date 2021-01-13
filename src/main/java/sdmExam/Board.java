@@ -24,12 +24,12 @@ public class Board {
     private Board(int boardSize) {
         this.BOARD_SIZE = boardSize;
         this.BOTTOM_AND_RIGHT_EDGE_INDEX = boardSize + 1;
-        chainsContainers.put(Stone.BLACK, new ArrayList<>());
-        chainsContainers.put(Stone.WHITE, new ArrayList<>());
-        edges.forEach(edge -> edge.initialiseEdge(BOTTOM_AND_RIGHT_EDGE_INDEX));
+        this.chainsContainers.put(Stone.BLACK, new ArrayList<>());
+        this.chainsContainers.put(Stone.WHITE, new ArrayList<>());
+        this.edges.forEach(edge -> edge.initialiseEdge(BOTTOM_AND_RIGHT_EDGE_INDEX));
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
             for (int column = 1; column <= this.BOARD_SIZE; column++) {
-                intersections.add(Intersection.empty(Position.in(row, column)));
+                this.intersections.add(Intersection.empty(Position.in(row, column)));
             }
         }
     }
@@ -116,4 +116,5 @@ public class Board {
     protected Stream<Intersection> getEmptyIntersections() {
         return intersections.stream().filter(intersection -> !intersection.isOccupied());
     }
+
 }
