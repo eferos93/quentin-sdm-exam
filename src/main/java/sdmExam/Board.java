@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 public class Board {
     private final static int DEFAULT_BOARD_SIZE = 13;
     private final int TOP_AND_LEFT_EDGE_INDEX = 0;
-    private final int BOTTOM_AND_RIGHT_INDEX;
+    private final int BOTTOM_AND_RIGHT_EDGE_INDEX;
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
     private final Set<Edge> edges = EnumSet.of(Edge.DOWN, Edge.UP, Edge.LEFT, Edge.RIGHT);
@@ -23,7 +23,7 @@ public class Board {
 
     private Board(int boardSize) {
         this.BOARD_SIZE = boardSize;
-        this.BOTTOM_AND_RIGHT_INDEX = boardSize + 1;
+        this.BOTTOM_AND_RIGHT_EDGE_INDEX = boardSize + 1;
         chainsContainers.put(Stone.BLACK, new ArrayList<>());
         chainsContainers.put(Stone.WHITE, new ArrayList<>());
         edges.forEach(edge -> {
@@ -103,7 +103,7 @@ public class Board {
     private boolean isCloseToSecondEdgeOfSameColor(Intersection intersection) {
         return edges.stream()
                 .anyMatch(edge ->
-                        edge.isAdjacentTo(intersection.getPosition(), BOTTOM_AND_RIGHT_INDEX)
+                        edge.isAdjacentTo(intersection.getPosition(), BOTTOM_AND_RIGHT_EDGE_INDEX)
                                 && edge.hasColor(intersection.getStone()));
     }
 
