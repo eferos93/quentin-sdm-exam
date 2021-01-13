@@ -91,7 +91,34 @@ public class Board {
     }
 
     public boolean isTerritory(ArrayList<Intersection> region) {
-        return true;
+        int index, i = 0, number_adjacency = 0;
+        boolean adjacency = true;
+        while(i < region.size() && adjacency){
+
+            index = intersections.indexOf(region.get(i));
+
+            if(!notExistLeftIntersection(index))
+                if(!region.contains(intersections.get(index - 1)))
+                    number_adjacency++;
+
+            if(!notExistRightIntersection(index))
+                if(!region.contains(intersections.get(index + 1)))
+                    number_adjacency++;
+
+            if(!notExistDownIntersection(index))
+                if(!region.contains(intersections.get(index - BOARD_SIZE)))
+                    number_adjacency++;
+
+            if(!notExistUpIntersection(index))
+                if(!region.contains(intersections.get(index + BOARD_SIZE)))
+                    number_adjacency++;
+
+            if(number_adjacency < 2) adjacency = false;
+
+            i++;
+        }
+
+        return adjacency;
     }
 
     public ArrayList<ArrayList<Intersection>> findRegions() {
