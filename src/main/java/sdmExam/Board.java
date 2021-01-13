@@ -88,33 +88,26 @@ public class Board {
     protected Stone colorWithCompleteChain() {
         return chainsContainers.entrySet().stream()
                 .filter(entry -> entry.getValue().stream()
-                        .anyMatch(chain -> chain.stream().anyMatch(this::isCloseToFirstEdgeOfSameColor)
-                                && chain.stream().anyMatch(this::isCloseToSecondEdgeOfSameColor)))
+                        .anyMatch(chain -> chain.stream()
+                                .anyMatch(intersection -> isCloseToGivenEdge(intersection, TOP_AND_LEFT_EDGE_INDEX))
+                                && chain.stream()
+                                .anyMatch(intersection -> isCloseToGivenEdge(intersection, BOTTOM_AND_RIGHT_EDGE_INDEX))
+                        )
+                )
                 .map(Map.Entry::getKey)
                 .findFirst()
                 .orElse(Stone.NONE);
     }
 
-    private boolean isCloseToSecondEdgeOfSameColor(Intersection intersection) {
+    private boolean isCloseToGivenEdge(Intersection intersection, int edgeIndex) {
         return edges.stream()
-                .anyMatch(edge ->
-                        edge.isAdjacentTo(intersection.getPosition())
-                                && edge.hasColor(intersection.getStone())
-                                && edge.getEdgeIndex() == BOTTOM_AND_RIGHT_EDGE_INDEX
-                );
-    }
-
-    private boolean isCloseToFirstEdgeOfSameColor(Intersection intersection) {
-        return edges.stream()
-                .anyMatch(edge ->
-                        edge.isAdjacentTo(intersection.getPosition())
-                                && edge.hasColor(intersection.getStone())
-                                && edge.getEdgeIndex() == TOP_AND_LEFT_EDGE_INDEX
+                .anyMatch(edge -> edge.hasColor(intersection.getStone())
+                        && edge.getEdgeIndex() == edgeIndex
+                        && edge.isAdjacentTo(intersection.getPosition())
                 );
     }
 
     protected Stream<Intersection> getEmptyIntersections() {
         return intersections.stream().filter(intersection -> !intersection.isOccupied());
     }
-
 }
