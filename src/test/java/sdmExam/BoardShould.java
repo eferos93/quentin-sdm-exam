@@ -242,4 +242,18 @@ public class BoardShould {
 
         assertTrue(board.isTerritory(territory_expected));
     }
+
+    @Test
+    public void verifyOrthogonalAdjacencyList() {
+        ArrayList<Intersection> expected_list = new ArrayList<>();
+
+        Intersection intersection1 = board.intersectionAt(Position.in(1, 1));
+        Intersection intersection2 = board.intersectionAt(Position.in(1, 2));
+        Intersection intersection3 = board.intersectionAt(Position.in(2, 1));
+
+        expected_list.add(intersection2);
+        expected_list.add(intersection3);
+
+        assertEquals(expected_list, board.getOrthogonalAdjacencyIntersections(intersection1));
+    }
 }

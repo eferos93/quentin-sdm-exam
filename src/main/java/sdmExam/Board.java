@@ -77,6 +77,10 @@ public class Board {
                 .anyMatch(diagonalIntersection -> diagonalIntersection.hasStone(stone));
     }
 
+    public List<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection) {
+        return intersections.stream().filter(i -> i.isOrthogonalTo(intersection)).collect(Collectors.toList());
+    }
+
     public ArrayList<ArrayList<Intersection>> findTerritories() {
         ArrayList<ArrayList<Intersection>> regions = findRegions();
         regions.removeIf(region -> !isTerritory(region));
@@ -203,16 +207,16 @@ public class Board {
     }
 
     private boolean notExistUpIntersection(int index) {
-        return index/BOARD_SIZE == 0;
+        return index/BOARD_SIZE == 0 && index + BOARD_SIZE != 0;
     }
 
     private boolean notExistLeftIntersection(int index) {
-        return index%BOARD_SIZE == 1 || index == 0;
+        return (index%BOARD_SIZE == 1 || index == 0) && index - 1 != 0;
     }
 
     private boolean notExistRightIntersection(int index) {
-        return (index%BOARD_SIZE == 0 && index != 0) ||
-                index == BOARD_SIZE*BOARD_SIZE;
+        return ((index%BOARD_SIZE == 0 && index != 0) ||
+                index == BOARD_SIZE*BOARD_SIZE);
     }
 
     protected Stream<Intersection> stream() {
