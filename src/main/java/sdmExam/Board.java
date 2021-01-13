@@ -5,12 +5,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Board {
-    private final static int DEFAULT_BOARD_SIZE = 13;
+    private static final int DEFAULT_BOARD_SIZE = 13;
     private final int TOP_AND_LEFT_EDGE_INDEX = 0;
     private final int BOTTOM_AND_RIGHT_EDGE_INDEX;
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
-    private final Set<Edge> edges = EnumSet.of(Edge.DOWN, Edge.UP, Edge.LEFT, Edge.RIGHT);
+    private final Set<Edge> edges = EnumSet.of(Edge.BOTTOM, Edge.TOP, Edge.LEFT, Edge.RIGHT);
     private final Map<Stone, List<Set<Intersection>>> chainsContainers = new HashMap<>();
 
     public Set<Edge> getEnumSet() {
@@ -26,12 +26,7 @@ public class Board {
         this.BOTTOM_AND_RIGHT_EDGE_INDEX = boardSize + 1;
         chainsContainers.put(Stone.BLACK, new ArrayList<>());
         chainsContainers.put(Stone.WHITE, new ArrayList<>());
-        edges.forEach(edge -> {
-            switch (edge) {
-                case UP, DOWN -> edge.setColor(Stone.BLACK);
-                case LEFT, RIGHT -> edge.setColor(Stone.WHITE);
-            }
-        });
+        edges.forEach(edge -> edge.initialiseEdge(BOTTOM_AND_RIGHT_EDGE_INDEX));
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
             for (int column = 1; column <= this.BOARD_SIZE; column++) {
                 intersections.add(Intersection.empty(Position.in(row, column)));
@@ -103,15 +98,19 @@ public class Board {
     private boolean isCloseToSecondEdgeOfSameColor(Intersection intersection) {
         return edges.stream()
                 .anyMatch(edge ->
-                        edge.isAdjacentTo(intersection.getPosition(), BOTTOM_AND_RIGHT_EDGE_INDEX)
-                                && edge.hasColor(intersection.getStone()));
+                        edge.isAdjacentTo(intersection.getPosition())
+                                && edge.hasColor(intersection.getStone())
+                                && edge.getEdgeIndex() == BOTTOM_AND_RIGHT_EDGE_INDEX
+                );
     }
 
     private boolean isCloseToFirstEdgeOfSameColor(Intersection intersection) {
         return edges.stream()
                 .anyMatch(edge ->
-                        edge.isAdjacentTo(intersection.getPosition(), TOP_AND_LEFT_EDGE_INDEX)
-                                && edge.hasColor(intersection.getStone()));
+                        edge.isAdjacentTo(intersection.getPosition())
+                                && edge.hasColor(intersection.getStone())
+                                && edge.getEdgeIndex() == TOP_AND_LEFT_EDGE_INDEX
+                );
     }
 
     protected Stream<Intersection> getEmptyIntersections() {
