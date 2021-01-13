@@ -3,6 +3,7 @@ package sdmExam;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Board {
@@ -77,17 +78,9 @@ public class Board {
     }
 
     public ArrayList<ArrayList<Intersection>> findTerritories() {
-        ArrayList<ArrayList<Intersection>> territories = new ArrayList<>();
-        ArrayList<Intersection> territory = new ArrayList<>();
-
-        for(int col = 1; col <= Board.BOARD_SIZE; col++){
-            Intersection intersection = new Intersection(Position.in(3, col), Stone.NONE);
-            territory.add(intersection);
-        }
-
-        territories.add(territory);
-
-        return territories;
+        ArrayList<ArrayList<Intersection>> regions = findRegions();
+        regions.removeIf(region -> !isTerritory(region));
+        return regions;
     }
 
     public boolean isTerritory(ArrayList<Intersection> region) {
@@ -157,8 +150,17 @@ public class Board {
         boolean go_left = true, go_right = true,
                 go_up = true, go_down = true;
 
+        System.out.print("Index: " + index + " ");
+
         if (region.contains(intersections.get(index)) ||
-                intersections.get(index).isOccupied()) return;
+                intersections.get(index).isOccupied()) {
+            System.out.println("intersection is not accectable");
+            return;
+        }
+
+        System.out.print(intersections.get(index).getPosition().toString());
+        System.out.println(" " + intersections.get(index).getStone());
+        region.add(intersections.get(index));
 
         if(notExistLeftIntersection(index)) go_left = false;
         if(notExistRightIntersection(index)) go_right = false;
@@ -166,15 +168,22 @@ public class Board {
         if(notExistUpIntersection(index)) go_up = false;
         if(notExistDownIntersection(index)) go_down = false;
 
-        region.add(intersections.get(index));
+        System.out.print("L:" + go_left + " ");
+        System.out.print("R:" + go_right + " ");
+        System.out.print("U:" + go_up + " ");
+        System.out.println("D:" + go_down);
 
         if(go_left && go_right){
+            System.out.println("going right " + (index + 1) +" and ...");
             DFS(index + 1, region); //go right
+            System.out.println("... going left " + (index - 1));
             DFS(index - 1, region); // go left
         }else if(go_left && !go_right){
-            DFS(index - 1, region); //go right
+            System.out.println("going left " + (index - 1));
+            DFS(index - 1, region); //go left
         }else if(go_right && !go_left){
-            DFS(index + 1, region); // go left
+            System.out.println("going right " + (index + 1));
+            DFS(index + 1, region); // go right
         }
 
         if(go_up && go_down){
@@ -185,6 +194,8 @@ public class Board {
         }else if(go_down && !go_up){
             DFS(index + BOARD_SIZE, region); //go up
         }
+
+        System.out.println("ONE REGION REACHED");
     }
 
     private boolean notExistDownIntersection(int index) {

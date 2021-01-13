@@ -84,7 +84,7 @@ public class BoardShould {
     }
 
     @Test
-    public void correctnessOfRegions() {
+    public void correctnessOfRegions1() {
 
         for(int row = 2; row <= Board.BOARD_SIZE; row++){
             for(int col = 1; col <= Board.BOARD_SIZE; col++){
@@ -97,6 +97,31 @@ public class BoardShould {
 
         for(int col = 1; col <= Board.BOARD_SIZE; col++){
             Intersection intersection = new Intersection(Position.in(1, col), Stone.NONE);
+            region_expected.add(intersection);
+        }
+
+        regions_expected.add(region_expected);
+        assertEquals(regions_expected, board.findRegions());
+    }
+
+    @Test
+    public void correctnessOfRegions2() {
+
+        for(int row = 1; row <= Board.BOARD_SIZE; row++){
+            for(int col = 1; col <= Board.BOARD_SIZE; col++){
+                if(row == 2){
+                    board.addStoneAt(Stone.NONE, Position.in(row, col));
+                }else{
+                    board.addStoneAt(Stone.BLACK, Position.in(row, col));
+                }
+            }
+        }
+
+        ArrayList<ArrayList<Intersection>> regions_expected = new ArrayList<>();
+        ArrayList<Intersection> region_expected = new ArrayList<>();
+
+        for(int col = 1; col <= Board.BOARD_SIZE; col++){
+            Intersection intersection = new Intersection(Position.in(2, col), Stone.NONE);
             region_expected.add(intersection);
         }
 
@@ -174,9 +199,9 @@ public class BoardShould {
     @Test
     public void correctnessOfTerritories() {
 
-        for(int row = 2; row <= Board.BOARD_SIZE; row++){
+        for(int row = 1; row <= Board.BOARD_SIZE; row++){
             for(int col = 1; col <= Board.BOARD_SIZE; col++){
-                if(row == 3){
+                if(row == 2){
                     board.addStoneAt(Stone.NONE, Position.in(row, col));
                 }else{
                     board.addStoneAt(Stone.BLACK, Position.in(row, col));
@@ -188,7 +213,7 @@ public class BoardShould {
         ArrayList<Intersection> territory_expected = new ArrayList<>();
 
         for(int col = 1; col <= Board.BOARD_SIZE; col++){
-            Intersection intersection = new Intersection(Position.in(3, col), Stone.NONE);
+            Intersection intersection = new Intersection(Position.in(2, col), Stone.NONE);
             territory_expected.add(intersection);
         }
 
@@ -198,9 +223,9 @@ public class BoardShould {
 
     @Test
     public void checkIfRegionStoneHasNotNoneOrthogonalAdjacency() {
-        for(int row = 2; row <= Board.BOARD_SIZE; row++){
+        for(int row = 1; row <= Board.BOARD_SIZE; row++){
             for(int col = 1; col <= Board.BOARD_SIZE; col++){
-                if(row == 3){
+                if(row == 2){
                     board.addStoneAt(Stone.NONE, Position.in(row, col));
                 }else{
                     board.addStoneAt(Stone.BLACK, Position.in(row, col));
@@ -211,7 +236,7 @@ public class BoardShould {
         ArrayList<Intersection> territory_expected = new ArrayList<>();
 
         for(int col = 1; col <= Board.BOARD_SIZE; col++){
-            Intersection intersection = new Intersection(Position.in(3, col), Stone.NONE);
+            Intersection intersection = new Intersection(Position.in(2, col), Stone.NONE);
             territory_expected.add(intersection);
         }
 
