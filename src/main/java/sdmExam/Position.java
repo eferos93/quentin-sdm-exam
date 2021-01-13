@@ -2,7 +2,7 @@ package sdmExam;
 
 import java.util.Objects;
 
-public class Position extends Throwable {
+public class Position {
     private final int row, column;
 
     public Position(int row, int column) {
@@ -81,18 +81,5 @@ public class Position extends Throwable {
                 "row=" + row +
                 ", column=" + column +
                 '}';
-    }
-
-    protected boolean isPartOfLowerOrUpperEdge(int boardSize) {
-        return this.row == 0 || this.row == boardSize;
-    }
-
-    protected boolean isACorner(int boardSize) {
-        return isPartOfLowerOrUpperEdge(boardSize)
-                && isPartOfLeftOrRightEdge(boardSize);
-    }
-
-    protected boolean isPartOfLeftOrRightEdge(int boardSize) {
-        return this.column == 0 || this.column == boardSize;
     }
 }
