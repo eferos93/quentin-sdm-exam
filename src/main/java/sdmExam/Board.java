@@ -11,7 +11,8 @@ public class Board {
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
     private final Set<Edge> edges = EnumSet.of(Edge.BOTTOM, Edge.TOP, Edge.LEFT, Edge.RIGHT);
-    private final Map<Stone, List<Set<Intersection>>> chainsContainers = new HashMap<>();
+//    private final Map<Stone, List<Set<Intersection>>> chainsContainers = new HashMap<>();
+    private final Map<Stone, Chain> chainsContainer = new HashMap<>();
 
     public Set<Edge> getEnumSet() {
         return edges;
@@ -24,8 +25,8 @@ public class Board {
     private Board(int boardSize) {
         this.BOARD_SIZE = boardSize;
         this.BOTTOM_AND_RIGHT_EDGE_INDEX = boardSize + 1;
-        this.chainsContainers.put(Stone.BLACK, new ArrayList<>());
-        this.chainsContainers.put(Stone.WHITE, new ArrayList<>());
+        this.chainsContainer.put(Stone.BLACK, new Chain());
+        this.chainsContainer.put(Stone.WHITE, new Chain());
         this.edges.forEach(edge -> edge.initialiseEdge(BOTTOM_AND_RIGHT_EDGE_INDEX));
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
             for (int column = 1; column <= this.BOARD_SIZE; column++) {
@@ -49,14 +50,15 @@ public class Board {
     }
 
     private void updateChains(Intersection updatedIntersection) {
-        List<Set<Intersection>> chainsOfGivenColor = chainsContainers.get(updatedIntersection.getStone());
-        List<Set<Intersection>> oldChains = chainsOfGivenColor.stream()
-                .filter(chain -> chain.stream().anyMatch(updatedIntersection::isOrthogonalTo))
-                .collect(Collectors.toList());
-        Set<Intersection> newChain = oldChains.stream().flatMap(Collection::stream).collect(Collectors.toSet());
-        newChain.add(updatedIntersection);
-        chainsOfGivenColor.removeAll(oldChains);
-        chainsOfGivenColor.add(newChain);
+        chainsContainer.get(updatedIntersection.getStone()).updateChain(updatedIntersection);
+//        List<Set<Intersection>> chainsOfGivenColor = chainsContainer.get(updatedIntersection.getStone());
+//        List<Set<Intersection>> oldChains = chainsOfGivenColor.stream()
+//                .filter(chain -> chain.stream().anyMatch(updatedIntersection::isOrthogonalTo))
+//                .collect(Collectors.toList());
+//        Set<Intersection> newChain = oldChains.stream().flatMap(Collection::stream).collect(Collectors.toSet());
+//        newChain.add(updatedIntersection);
+//        chainsOfGivenColor.removeAll(oldChains);
+//        chainsOfGivenColor.add(newChain);
     }
 
     public boolean isOccupied(Position position) throws NoSuchElementException {
@@ -85,18 +87,27 @@ public class Board {
                 .anyMatch(diagonalIntersection -> diagonalIntersection.hasStone(stone));
     }
 
+    private List<Edge> getEdgesOfColor(Stone color) {
+        return edges.stream().filter(edge -> edge.hasColor(color)).collect(Collectors.toList());
+    }
+
     protected Stone colorWithCompleteChain() {
-        return chainsContainers.entrySet().stream()
-                .filter(entry -> entry.getValue().stream()
-                        .anyMatch(chain -> chain.stream()
-                                .anyMatch(intersection -> isCloseToGivenEdge(intersection, TOP_AND_LEFT_EDGE_INDEX))
-                                && chain.stream()
-                                .anyMatch(intersection -> isCloseToGivenEdge(intersection, BOTTOM_AND_RIGHT_EDGE_INDEX))
-                        )
-                )
+        return chainsContainer.entrySet().stream()
+                .filter(entry -> entry.getValue().hasACompleteChain(getEdgesOfColor(entry.getKey())))
                 .map(Map.Entry::getKey)
                 .findFirst()
                 .orElse(Stone.NONE);
+//        return chainsContainers.entrySet().stream()
+//                .filter(entry -> entry.getValue().stream()
+//                        .anyMatch(chain -> chain.stream()
+//                                .anyMatch(intersection -> isCloseToGivenEdge(intersection, TOP_AND_LEFT_EDGE_INDEX))
+//                                && chain.stream()
+//                                .anyMatch(intersection -> isCloseToGivenEdge(intersection, BOTTOM_AND_RIGHT_EDGE_INDEX))
+//                        )
+//                )
+//                .map(Map.Entry::getKey)
+//                .findFirst()
+//                .orElse(Stone.NONE);
     }
 
     private boolean isCloseToGivenEdge(Intersection intersection, int edgeIndex) {
