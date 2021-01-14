@@ -1,6 +1,9 @@
 package sdmExam;
 
+import java.util.EnumSet;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 public class Intersection {
     private final Position position;
