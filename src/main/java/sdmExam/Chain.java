@@ -4,21 +4,15 @@ import org.jgrapht.Graph;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
-
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Chain {
-    private Graph<Intersection, DefaultEdge> chains;
-    private ConnectivityInspector<Intersection, DefaultEdge> connectivityInspector;
+    private final Graph<Intersection, DefaultEdge> chains;
 
     public Chain() {
         chains = new SimpleGraph<>(DefaultEdge.class);
-        //connectivityInspector = new ConnectivityInspector<>(chains);
     }
 
     protected void updateChain(Intersection newIntersection) {
