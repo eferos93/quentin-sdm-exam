@@ -25,12 +25,6 @@ public class BoardShould {
         assertDoesNotThrow(() -> board.intersectionAt(position));
     }
 
-    public static Stream<Arguments> providePositionForIntersectionOutsideBoard(){
-        return Stream.of(
-                Arguments.of(Position.in(14,14),Stone.NONE),
-                Arguments.of(Position.in(0,0)),
-                Arguments.of(Position.in(-1,16),Stone.NONE));
-    }
 
     @ParameterizedTest
     @MethodSource({"providePositionForIntersectionOutsideBoard"})
@@ -38,12 +32,11 @@ public class BoardShould {
         assertThrows(Exception.class, () -> board.intersectionAt(position));
     }
 
-
-    public static Stream<Arguments> provideIntersectionForMarkCorrectlyAnIntersection(){
+    public static Stream<Arguments> providePositionForIntersectionOutsideBoard(){
         return Stream.of(
-                Arguments.of(board.intersectionAt(Position.in(5,7)),Stone.BLACK),
-                Arguments.of(board.intersectionAt(Position.in(4,3)),Stone.WHITE),
-                Arguments.of(board.intersectionAt(Position.in(9,6)),Stone.WHITE)
+                Arguments.of(Position.in(14,14)),
+                Arguments.of(Position.in(0,0)),
+                Arguments.of(Position.in(-1,16))
         );
     }
 
@@ -54,6 +47,14 @@ public class BoardShould {
         board.addStoneAt(Stone.WHITE, Position.in(4,3));
         board.addStoneAt(Stone.WHITE, Position.in(9,6));
         assertEquals(intersection.getStone(), stone);
+    }
+
+    public static Stream<Arguments> provideIntersectionForMarkCorrectlyAnIntersection(){
+        return Stream.of(
+                Arguments.of(board.intersectionAt(Position.in(5,7)),Stone.BLACK),
+                Arguments.of(board.intersectionAt(Position.in(4,3)),Stone.WHITE),
+                Arguments.of(board.intersectionAt(Position.in(9,6)),Stone.WHITE)
+        );
     }
 
     @Test
