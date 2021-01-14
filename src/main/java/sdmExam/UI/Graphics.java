@@ -4,6 +4,7 @@ import sdmExam.Board;
 import sdmExam.Position;
 
 public class Graphics {
+    private static int i,j;
     Board board = new Board();
 
     public static void printTitle() { System.out.println(Message.TITLE); }
@@ -16,4 +17,12 @@ public class Graphics {
     }
 
 
+    public static void PrintBoard() {
+        for( i = 0; i < 13; i++){
+            System.out.print("\n");
+            for( j = 0; j < 13; j++)
+                System.out.print("[]");
+        }
+
+    }
 }
