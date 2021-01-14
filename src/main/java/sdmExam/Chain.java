@@ -5,7 +5,6 @@ import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 public class Chain {
@@ -23,8 +22,7 @@ public class Chain {
     }
 
     protected boolean hasACompleteChain(List<Edge> boardEdges) {
-        List<Set<Intersection>> sets = new ConnectivityInspector<>(chains).connectedSets();
-        return sets.stream()
+        return new ConnectivityInspector<>(chains).connectedSets().stream()
                 .anyMatch(chain ->
                     chain.stream().map(Intersection::getPosition).anyMatch(position -> boardEdges.get(0).isAdjacentTo(position))
                     &&
