@@ -18,13 +18,19 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BoardShould {
     private final static Board board = new Board();
 
-    //TODO Below tests can be parameterized
-    @Test
-    public void getCorrectIntersectionGivenAPosition() {
-        Position position = Position.in(5, 7);
+    @ParameterizedTest
+    @MethodSource({"providePositionForGetCorrectIntersectionGivenAPosition"})
+    public void getCorrectIntersectionGivenAPosition(Position position) {
         assertDoesNotThrow(() -> board.intersectionAt(position));
     }
 
+    public static Stream<Arguments> providePositionForGetCorrectIntersectionGivenAPosition(){
+        return Stream.of(
+                Arguments.of(Position.in(1,1)),
+                Arguments.of(Position.in(7,2)),
+                Arguments.of(Position.in(13,13))
+        );
+    }
 
     @ParameterizedTest
     @MethodSource({"providePositionForIntersectionOutsideBoard"})
