@@ -51,7 +51,7 @@ public enum Edge {
     abstract public boolean isAdjacentTo(Position position);
 
     protected int getEdgeIndex() {
-        return edgeIndex;
+        return this.edgeIndex;
     }
 
     protected void setEdgeIndex(int edgeIndex) {
