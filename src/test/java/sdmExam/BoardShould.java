@@ -2,7 +2,6 @@ package sdmExam;
 
 import org.junit.jupiter.api.Test;
 
-import javax.swing.*;
 import java.util.NoSuchElementException;
 import static sdmExam.Position.in;
 

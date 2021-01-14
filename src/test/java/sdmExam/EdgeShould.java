@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EdgeShould {
-    private Board board = new Board();
+    private final Board board = new Board();
     @Test
     public void returnTrueIfAboveToaGivenPosition() {
         Edge edge = Edge.TOP;
