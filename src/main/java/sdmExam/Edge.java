@@ -6,11 +6,19 @@ public enum Edge {
         public boolean isAdjacentTo(Position position) {
             return  getEdgeIndex() == position.getColumn();
         }
+        @Override
+        protected void initialiseEdge(int edgeIndex) {
+            this.setColor(Stone.WHITE); this.setEdgeIndex(1);
+        }
     },
     RIGHT {
         @Override
         public boolean isAdjacentTo(Position position) {
             return getEdgeIndex() == position.getColumn();
+        }
+        @Override
+        protected void initialiseEdge(int edgeIndex) {
+            this.setColor(Stone.WHITE); this.setEdgeIndex(edgeIndex);
         }
     },
     BOTTOM {
@@ -18,13 +26,20 @@ public enum Edge {
         public boolean isAdjacentTo(Position position) {
             return getEdgeIndex() == position.getRow();
         }
+        @Override
+        protected void initialiseEdge(int edgeIndex) {
+            this.setColor(Stone.BLACK); this.setEdgeIndex(edgeIndex);
+        }
     },
     TOP {
         @Override
         public boolean isAdjacentTo(Position position) {
             return getEdgeIndex() == position.getRow();
         }
-
+        @Override
+        protected void initialiseEdge(int edgeIndex) {
+            this.setColor(Stone.BLACK); this.setEdgeIndex(1);
+        }
     };
 
     private Stone color;
@@ -46,14 +61,7 @@ public enum Edge {
         return this.color == color;
     }
 
-    protected void initialiseEdge(int edgeIndex) {
-        switch (this) {
-            case TOP -> {this.setColor(Stone.BLACK); this.setEdgeIndex(1);}
-            case BOTTOM -> {this.setColor(Stone.BLACK); this.setEdgeIndex(edgeIndex);}
-            case LEFT -> {this.setColor(Stone.WHITE); this.setEdgeIndex(1);}
-            case RIGHT -> {this.setColor(Stone.WHITE); this.setEdgeIndex(edgeIndex);}
-        }
-    }
+    abstract protected void initialiseEdge(int edgeIndex);
 
     abstract public boolean isAdjacentTo(Position position);
 }
