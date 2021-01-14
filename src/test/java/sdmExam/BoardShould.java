@@ -24,7 +24,7 @@ public class BoardShould {
         assertDoesNotThrow(() -> board.intersectionAt(position));
     }
 
-    public static Stream<Arguments> providePositionForGetCorrectIntersectionGivenAPosition(){
+    private static Stream<Arguments> providePositionForGetCorrectIntersectionGivenAPosition(){
         return Stream.of(
                 Arguments.of(Position.in(1,1)),
                 Arguments.of(Position.in(7,2)),
@@ -38,7 +38,7 @@ public class BoardShould {
         assertThrows(Exception.class, () -> board.intersectionAt(position));
     }
 
-    public static Stream<Arguments> providePositionForIntersectionOutsideBoard(){
+    private static Stream<Arguments> providePositionForIntersectionOutsideBoard(){
         return Stream.of(
                 Arguments.of(Position.in(14,14)),
                 Arguments.of(Position.in(0,0)),
@@ -55,7 +55,7 @@ public class BoardShould {
         assertEquals(intersection.getStone(), stone);
     }
 
-    public static Stream<Arguments> provideIntersectionForMarkCorrectlyAnIntersection(){
+    private static Stream<Arguments> provideIntersectionForMarkCorrectlyAnIntersection(){
         return Stream.of(
                 Arguments.of(board.intersectionAt(Position.in(5,7)),Stone.BLACK),
                 Arguments.of(board.intersectionAt(Position.in(4,3)),Stone.WHITE),
