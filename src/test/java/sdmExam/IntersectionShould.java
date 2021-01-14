@@ -1,8 +1,10 @@
 package sdmExam;
 
 import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,12 +14,22 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class IntersectionShould {
-    //TODO Below test can be parameterized
-    @Test
-    public void beEqualToAnotherIntersectionWithEqualFields() {
-        Intersection firstIntersection = new Intersection(Position.in(3, 3), Stone.WHITE);
-        Intersection secondIntersection = new Intersection(Position.in(3, 3), Stone.WHITE);
-        assertEquals(firstIntersection, secondIntersection);
+
+    @ParameterizedTest
+    @MethodSource("provideIntersection")
+    public void beEqualToAnotherIntersectionWithEqualFields(Intersection inputIntersection, Intersection expectedIntersection) {
+        assertEquals(inputIntersection, expectedIntersection);
+    }
+
+    private static Stream<Arguments> provideIntersection(){
+        return Stream.of(
+                Arguments.of(new Intersection(Position.in(3, 3), Stone.WHITE)
+                        ,new Intersection(Position.in(3, 3), Stone.WHITE)),
+                Arguments.of(new Intersection(Position.in(13, 13), Stone.BLACK)
+                        ,new Intersection(Position.in(13, 13), Stone.BLACK)),
+                Arguments.of(new Intersection(Position.in(5, 12), Stone.WHITE)
+                        ,new Intersection(Position.in(5, 12), Stone.WHITE))
+        );
     }
 
     @TestFactory
