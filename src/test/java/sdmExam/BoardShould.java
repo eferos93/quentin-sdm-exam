@@ -1,10 +1,11 @@
 package sdmExam;
 
-
-import org.junit.jupiter.api.DynamicContainer;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 
 import java.util.Arrays;
@@ -15,7 +16,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardShould {
-    private final Board board = new Board();
+    private final static Board board = new Board();
 
     //TODO Below tests can be parameterized
     @Test
@@ -29,11 +30,22 @@ public class BoardShould {
         assertThrows(Exception.class, () -> board.intersectionAt(Position.in(14, 14)));
     }
 
-    @Test
-    public void markCorrectlyAnIntersection() throws NoSuchElementException {
-        Intersection intersection = board.intersectionAt(Position.in(5,7));
+    @ParameterizedTest
+    @MethodSource({"provideIntersectionAddStoneAt"})
+    public void markCorrectlyAnIntersection(Intersection input, Stone expected) throws NoSuchElementException {
         board.addStoneAt(Stone.BLACK, Position.in(5,7));
-        assertEquals(intersection.getStone(), Stone.BLACK);
+        board.addStoneAt(Stone.WHITE, Position.in(4,3));
+        board.addStoneAt(Stone.WHITE, Position.in(9,6));
+        assertEquals(input.getStone(), expected);
+    }
+
+
+    public static Stream<Arguments> provideIntersectionAddStoneAt(){
+        return Stream.of(
+                Arguments.of(board.intersectionAt(Position.in(5,7)),Stone.BLACK),
+                Arguments.of(board.intersectionAt(Position.in(4,3)),Stone.WHITE),
+                Arguments.of(board.intersectionAt(Position.in(9,6)),Stone.WHITE)
+        );
     }
 
     @Test
