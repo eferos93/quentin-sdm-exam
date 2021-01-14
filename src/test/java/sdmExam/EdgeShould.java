@@ -1,6 +1,8 @@
 package sdmExam;
 
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EdgeShould {
@@ -8,6 +10,7 @@ public class EdgeShould {
     @Test
     public void returnTrueIfAboveToaGivenPosition() {
         Edge edge = Edge.TOP;
+        assertEquals(1, edge.getEdgeIndex());
         assertTrue(edge.isAdjacentTo(Position.in(1, 4)));
     }
 

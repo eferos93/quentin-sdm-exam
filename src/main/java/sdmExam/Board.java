@@ -20,10 +20,11 @@ public class Board {
     }
 
     private Board(int boardSize) {
-        this.BOARD_SIZE = boardSize;
+        this.BOARD_SIZE =  boardSize;
         this.chainsContainer.put(Stone.BLACK, new Chain());
         this.chainsContainer.put(Stone.WHITE, new Chain());
-        this.edges.forEach(edge -> edge.initialiseEdge(boardSize));
+        Edge.setBoardSize(boardSize);
+        this.edges.forEach(Edge::initialiseEdge);
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
             for (int column = 1; column <= this.BOARD_SIZE; column++) {
                 this.intersections.add(Intersection.empty(Position.in(row, column)));

@@ -7,7 +7,7 @@ public enum Edge {
             return  getEdgeIndex() == position.getColumn();
         }
         @Override
-        protected void initialiseEdge(int edgeIndex) {
+        protected void initialiseEdge() {
             this.setColor(Stone.WHITE); this.setEdgeIndex(1);
         }
     },
@@ -17,8 +17,8 @@ public enum Edge {
             return getEdgeIndex() == position.getColumn();
         }
         @Override
-        protected void initialiseEdge(int edgeIndex) {
-            this.setColor(Stone.WHITE); this.setEdgeIndex(edgeIndex);
+        protected void initialiseEdge() {
+            this.setColor(Stone.WHITE); this.setEdgeIndex(Edge.boardSize);
         }
     },
     BOTTOM {
@@ -27,8 +27,8 @@ public enum Edge {
             return getEdgeIndex() == position.getRow();
         }
         @Override
-        protected void initialiseEdge(int edgeIndex) {
-            this.setColor(Stone.BLACK); this.setEdgeIndex(edgeIndex);
+        protected void initialiseEdge() {
+            this.setColor(Stone.BLACK); this.setEdgeIndex(Edge.boardSize);
         }
     },
     TOP {
@@ -37,20 +37,29 @@ public enum Edge {
             return getEdgeIndex() == position.getRow();
         }
         @Override
-        protected void initialiseEdge(int edgeIndex) {
+        protected void initialiseEdge() {
             this.setColor(Stone.BLACK); this.setEdgeIndex(1);
         }
     };
 
     private Stone color;
     private int edgeIndex;
+    private static int boardSize;
+
+    abstract protected void initialiseEdge();
+
+    abstract public boolean isAdjacentTo(Position position);
 
     protected int getEdgeIndex() {
-        return this.edgeIndex;
+        return edgeIndex;
     }
 
     protected void setEdgeIndex(int edgeIndex) {
         this.edgeIndex = edgeIndex;
+    }
+
+    protected static void setBoardSize(int boardSize) {
+        Edge.boardSize = boardSize;
     }
 
     protected void setColor(Stone color) {
@@ -60,8 +69,4 @@ public enum Edge {
     protected boolean hasColor(Stone color) {
         return this.color == color;
     }
-
-    abstract protected void initialiseEdge(int edgeIndex);
-
-    abstract public boolean isAdjacentTo(Position position);
 }
