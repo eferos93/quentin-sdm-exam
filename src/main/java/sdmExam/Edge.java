@@ -4,25 +4,25 @@ public enum Edge {
     LEFT {
         @Override
         public boolean isAdjacentTo(Position position) {
-            return  getEdgeIndex() == position.getColumn() - 1;
+            return  getEdgeIndex() == position.getColumn();
         }
     },
     RIGHT {
         @Override
         public boolean isAdjacentTo(Position position) {
-            return getEdgeIndex() == position.getColumn() + 1;
+            return getEdgeIndex() == position.getColumn();
         }
     },
     BOTTOM {
         @Override
         public boolean isAdjacentTo(Position position) {
-            return getEdgeIndex() == position.getRow() + 1;
+            return getEdgeIndex() == position.getRow();
         }
     },
     TOP {
         @Override
         public boolean isAdjacentTo(Position position) {
-            return getEdgeIndex() == position.getRow() - 1;
+            return getEdgeIndex() == position.getRow();
         }
 
     };
@@ -48,9 +48,9 @@ public enum Edge {
 
     protected void initialiseEdge(int edgeIndex) {
         switch (this) {
-            case TOP -> {this.setColor(Stone.BLACK); this.setEdgeIndex(0);}
+            case TOP -> {this.setColor(Stone.BLACK); this.setEdgeIndex(1);}
             case BOTTOM -> {this.setColor(Stone.BLACK); this.setEdgeIndex(edgeIndex);}
-            case LEFT -> {this.setColor(Stone.WHITE); this.setEdgeIndex(0);}
+            case LEFT -> {this.setColor(Stone.WHITE); this.setEdgeIndex(1);}
             case RIGHT -> {this.setColor(Stone.WHITE); this.setEdgeIndex(edgeIndex);}
         }
     }

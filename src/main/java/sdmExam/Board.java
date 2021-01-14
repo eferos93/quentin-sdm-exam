@@ -23,7 +23,7 @@ public class Board {
         this.BOARD_SIZE = boardSize;
         this.chainsContainer.put(Stone.BLACK, new Chain());
         this.chainsContainer.put(Stone.WHITE, new Chain());
-        this.edges.forEach(edge -> edge.initialiseEdge(boardSize + 1));
+        this.edges.forEach(edge -> edge.initialiseEdge(boardSize));
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
             for (int column = 1; column <= this.BOARD_SIZE; column++) {
                 this.intersections.add(Intersection.empty(Position.in(row, column)));
