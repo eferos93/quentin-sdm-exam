@@ -6,8 +6,6 @@ import java.util.stream.Stream;
 
 public class Board {
     private static final int DEFAULT_BOARD_SIZE = 13;
-    private final int TOP_AND_LEFT_EDGE_INDEX = 0;
-    private final int BOTTOM_AND_RIGHT_EDGE_INDEX;
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
     private final Set<Edge> edges = EnumSet.of(Edge.BOTTOM, Edge.TOP, Edge.LEFT, Edge.RIGHT);
@@ -23,10 +21,9 @@ public class Board {
 
     private Board(int boardSize) {
         this.BOARD_SIZE = boardSize;
-        this.BOTTOM_AND_RIGHT_EDGE_INDEX = boardSize + 1;
         this.chainsContainer.put(Stone.BLACK, new Chain());
         this.chainsContainer.put(Stone.WHITE, new Chain());
-        this.edges.forEach(edge -> edge.initialiseEdge(BOTTOM_AND_RIGHT_EDGE_INDEX));
+        this.edges.forEach(edge -> edge.initialiseEdge(boardSize + 1));
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
             for (int column = 1; column <= this.BOARD_SIZE; column++) {
                 this.intersections.add(Intersection.empty(Position.in(row, column)));
