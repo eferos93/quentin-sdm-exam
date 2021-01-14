@@ -1,9 +1,6 @@
 package sdmExam;
 
-
 import org.junit.jupiter.api.Test;
-
-
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,13 +50,6 @@ public class BoardShould {
     }
 
     @Test
-    public void edgeColorsAfterPie() {
-        board.pie();
-        assertEquals(board.getLowerAndUpperEdgesColor(), Stone.WHITE);
-        assertEquals(board.getLeftAndRightEdgesColor(), Stone.BLACK);
-    }
-
-    @Test
     public void noDiagonalAdjacencyOfIntersection() {
         board.addStoneAt(Stone.WHITE, Position.in(7, 9));
         Intersection intersection = board.intersectionAt(Position.in(7, 9));
@@ -82,4 +72,13 @@ public class BoardShould {
         assertTrue(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
     }
 
+    @Test
+    public void applyPieRuleCorrectly() {
+        board.pie();
+        assertTrue(board.getEnumSet().stream()
+                .filter(edge -> edge.name().equals("LEFT"))
+                .map(edge -> edge.hasColor(Stone.BLACK))
+                .findFirst()
+                .orElse(false));
+    }
 }
