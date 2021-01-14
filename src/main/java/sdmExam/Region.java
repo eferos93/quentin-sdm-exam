@@ -4,8 +4,10 @@ import org.jgrapht.Graph;
 import org.jgrapht.generate.GridGraphGenerator;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.traverse.DepthFirstIterator;
 import org.jgrapht.util.SupplierUtil;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -41,5 +43,17 @@ public class Region {
 
         GridGraphGenerator<Intersection, DefaultEdge> generator = new GridGraphGenerator<>(board_size, board_size);
         generator.generateGraph(graph, null);
+    }
+
+    public void printRegion() {
+
+        Iterator<Intersection> iter = new DepthFirstIterator<>(this.graph);
+        while (iter.hasNext()) {
+            Intersection vertex = iter.next();
+            System.out
+                    .println(
+                            "Vertex " + vertex.getPosition().toString() + " is connected to: "
+                                    + this.graph.edgesOf(vertex).toString());
+        }
     }
 }

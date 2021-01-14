@@ -1,10 +1,13 @@
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import sdmExam.Intersection;
 import sdmExam.Position;
 import sdmExam.Region;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,5 +49,37 @@ public class RegionShould {
         region.createGraph(intersections);
 
         assertEquals(expected_region, region);
+    }
+
+    private static final PrintStream STDOUT = System.out;
+    private static final String GRAPH_2_PER_2 = """
+       Vertex Position{row=1, column=1} is connected to: [(Position{row=1, column=1} : Position{row=1, column=2}), (Position{row=1, column=1} : Position{row=2, column=1})]
+       Vertex Position{row=2, column=1} is connected to: [(Position{row=1, column=1} : Position{row=2, column=1}), (Position{row=2, column=1} : Position{row=2, column=2})]
+       Vertex Position{row=2, column=2} is connected to: [(Position{row=1, column=2} : Position{row=2, column=2}), (Position{row=2, column=1} : Position{row=2, column=2})]
+       Vertex Position{row=1, column=2} is connected to: [(Position{row=1, column=1} : Position{row=1, column=2}), (Position{row=1, column=2} : Position{row=2, column=2})]
+       """;
+
+    @Test
+    void correctlyPrintRegion() {
+        List<Intersection> intersections = new ArrayList<>();
+        for (int row = 1; row <= 2; row++) {
+            for (int column = 1; column <= 2; column++) {
+                intersections.add(Intersection.empty(Position.in(row, column)));
+            }
+        }
+
+        ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(fakeStandardOutput));
+
+        Region region = Region.getRegion();
+        region.createGraph(intersections);
+        region.printRegion();
+
+        assertEquals(GRAPH_2_PER_2, fakeStandardOutput.toString());
+    }
+
+    @AfterAll
+    public static void resetStandardOut() {
+        System.setOut(STDOUT);
     }
 }
