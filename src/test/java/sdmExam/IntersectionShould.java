@@ -17,8 +17,8 @@ public class IntersectionShould {
 
     @ParameterizedTest
     @MethodSource("provideIntersection")
-    public void beEqualToAnotherIntersectionWithEqualFields(Intersection inputIntersection, Intersection expectedIntersection) {
-        assertEquals(inputIntersection, expectedIntersection);
+    public void beEqualToAnotherIntersectionWithEqualFields(Intersection firstIntersection, Intersection secondIntersection) {
+        assertEquals(firstIntersection, secondIntersection);
     }
 
     private static Stream<Arguments> provideIntersection(){

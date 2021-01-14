@@ -1,21 +1,32 @@
 package sdmExam;
 
 import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PositionShould {
-    //TODO Below test can be parameterized
-    @Test
-    public void beEqualToAnotherPositionWithSameCoordinates() {
-        Position firstPosition = new Position(3, 3);
-        Position secondPosition = new Position(3, 3);
+
+    @ParameterizedTest
+    @MethodSource("providePosition")
+    public void beEqualToAnotherPositionWithSameCoordinates(Position firstPosition, Position secondPosition) {
         assertEquals(firstPosition, secondPosition);
+    }
+
+    private static Stream<Arguments> providePosition(){
+        return Stream.of(
+                Arguments.of(Position.in(3,3),Position.in(3,3)),
+                Arguments.of(Position.in(13,13),Position.in(13,13)),
+                Arguments.of(Position.in(1,1),Position.in(1,1))
+        );
+
     }
 
     @TestFactory
