@@ -9,7 +9,10 @@ public class Board {
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
     private final Set<Edge> edges = EnumSet.of(Edge.BOTTOM, Edge.TOP, Edge.LEFT, Edge.RIGHT);
-    private final Map<Stone, Chain> chainsContainer = new HashMap<>();
+    private final Map<Stone, Chain> chainsContainer = new HashMap<>() {{
+        put(Stone.BLACK, new Chain());
+        put(Stone.WHITE, new Chain());
+    }};
 
     public Set<Edge> getEnumSet() {
         return edges;
@@ -21,8 +24,6 @@ public class Board {
 
     private Board(int boardSize) {
         this.BOARD_SIZE =  boardSize;
-        this.chainsContainer.put(Stone.BLACK, new Chain());
-        this.chainsContainer.put(Stone.WHITE, new Chain());
         Edge.setBoardSize(boardSize);
         this.edges.forEach(Edge::initialiseEdge);
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
