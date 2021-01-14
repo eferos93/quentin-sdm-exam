@@ -22,12 +22,6 @@ public class Chain {
                 .forEach(orthogonalIntersection -> chains.addEdge(orthogonalIntersection, newIntersection));
     }
 
-    public Optional<Edge> getAdjacentEdge(Intersection intersection, Set<Edge> edges) {
-        return edges.stream()
-                .filter(edge -> edge.isAdjacentTo(intersection.getPosition()))
-                .findFirst();
-    }
-
     protected boolean hasACompleteChain(List<Edge> boardEdges) {
         List<Set<Intersection>> sets = new ConnectivityInspector<>(chains).connectedSets();
         return sets.stream()
