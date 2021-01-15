@@ -6,6 +6,7 @@ public enum Edge {
         public boolean isAdjacentTo(Position position) {
             return  getEdgeIndex() == position.getColumn();
         }
+
         @Override
         protected void initialiseEdge() {
             this.setColor(Stone.WHITE); this.setEdgeIndex(1);
@@ -16,6 +17,7 @@ public enum Edge {
         public boolean isAdjacentTo(Position position) {
             return getEdgeIndex() == position.getColumn();
         }
+
         @Override
         protected void initialiseEdge() {
             this.setColor(Stone.WHITE); this.setEdgeIndex(Edge.boardSize);
@@ -26,6 +28,7 @@ public enum Edge {
         public boolean isAdjacentTo(Position position) {
             return getEdgeIndex() == position.getRow();
         }
+
         @Override
         protected void initialiseEdge() {
             this.setColor(Stone.BLACK); this.setEdgeIndex(Edge.boardSize);
@@ -36,6 +39,7 @@ public enum Edge {
         public boolean isAdjacentTo(Position position) {
             return getEdgeIndex() == position.getRow();
         }
+
         @Override
         protected void initialiseEdge() {
             this.setColor(Stone.BLACK); this.setEdgeIndex(1);
@@ -48,7 +52,7 @@ public enum Edge {
 
     abstract protected void initialiseEdge();
 
-    abstract public boolean isAdjacentTo(Position position);
+    abstract protected boolean isAdjacentTo(Position position);
 
     protected int getEdgeIndex() {
         return this.edgeIndex;
