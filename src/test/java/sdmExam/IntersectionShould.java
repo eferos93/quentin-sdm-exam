@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class IntersectionShould {
 
@@ -30,23 +30,6 @@ public class IntersectionShould {
                 Arguments.of(new Intersection(Position.in(5, 12), Stone.WHITE)
                         ,new Intersection(Position.in(5, 12), Stone.WHITE))
         );
-    }
-
-    @TestFactory
-    Stream<DynamicTest> checkEdges() {
-        Intersection firstIntersection = new Intersection(Position.in(1, 1), Stone.WHITE);
-        Intersection secondIntersection = new Intersection(Position.in(2, 13), Stone.WHITE);
-        Intersection thirdIntersection = new Intersection(Position.in(2, 13), Stone.WHITE);
-
-        List<Intersection> inputList = Arrays.asList(firstIntersection, secondIntersection, thirdIntersection);
-        List<Boolean> outputList = Arrays.asList(true, true, false);
-
-        return inputList.stream()
-                .map(intersection -> DynamicTest.dynamicTest("Checking Intersection" + intersection,
-                        () -> {
-                        int id = inputList.indexOf(intersection);
-                        assertEquals(outputList.get(id), intersection.isCloseToEdge());
-                }));
     }
 
     //TODO Below test can be written with streams (by using object function tuples)
