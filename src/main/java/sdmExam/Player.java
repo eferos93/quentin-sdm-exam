@@ -18,10 +18,6 @@ public class Player {
     }
 
     public void changeSide() {
-        if (color == Stone.BLACK) {
-            color = Stone.WHITE;
-        } else {
-            color = Stone.BLACK;
-        }
+        color = color.getOppositeColor();
     }
 }

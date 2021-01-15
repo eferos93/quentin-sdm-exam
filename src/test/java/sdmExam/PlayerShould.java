@@ -1,9 +1,6 @@
 package sdmExam;
 
 import org.junit.jupiter.api.Test;
-
-import javax.swing.plaf.metal.MetalBorders;
-
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
