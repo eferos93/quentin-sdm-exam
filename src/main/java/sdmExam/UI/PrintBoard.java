@@ -21,13 +21,18 @@ public class PrintBoard {
     };
     public static void getCellValue(Stone stone) {System.out.print( CellValue.get(stone));}
 
-    private static void PrintColumn(Board board, int column) {
-        IntStream.range(1, board.BOARD_SIZE).forEach(x ->getCellValue(board.intersectionAt(new Position(x, column)).getStone()));
+    private static void PrintRow(Board board, int row) {
+        System.out.print(row+"\t");
+        IntStream.range(1, board.BOARD_SIZE).forEach(x ->getCellValue(board.intersectionAt(new Position(x, row)).getStone()));
         System.out.print("\n");
     }
 
-    public static void PrintColumn(Board board) {
-        IntStream.iterate(board.BOARD_SIZE , x -> --x).limit(board.BOARD_SIZE).forEach(y -> PrintColumn(board, y));
+    public static void PrintBoard(Board board) {
+        IntStream.iterate(board.BOARD_SIZE , x -> --x).limit(board.BOARD_SIZE).forEach(y -> PrintRow(board, y));
+        System.out.print("     1  2  3  4  5  6  7  8  9  10 11 12");
+        System.out.print("\n");
+
+
     }
 }
 
