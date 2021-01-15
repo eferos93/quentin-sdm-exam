@@ -56,4 +56,12 @@ public enum Edge {
     }
 
     abstract public boolean isAdjacentTo(Position position);
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "color=" + color +
+                ", edgeIndex=" + edgeIndex +
+                '}';
+    }
 }

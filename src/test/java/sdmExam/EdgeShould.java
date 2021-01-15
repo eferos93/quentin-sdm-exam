@@ -4,30 +4,29 @@ import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
 import java.util.Arrays;
-import java.util.Collection;
-
+import java.util.List;
+import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EdgeShould {
     private final Board board = new Board();
 
     @TestFactory
-    Collection<DynamicTest> checkEdges() {
+    Stream<DynamicTest> checkEdges() {
 
-        Edge edgeTop = Edge.TOP;
-        Edge edgeBottom = Edge.BOTTOM;
-        Edge edgeLeft = Edge.LEFT;
-        Edge edgeRight = Edge.RIGHT;
+        Position firstPosition = Position.in(1, 4);
+        Position secondPosition = Position.in(13, 4);
+        Position thirdPosition = Position.in(13, 1);
+        Position fourthPosition = Position.in(1, 13);
 
-        return Arrays.asList(
-                DynamicTest.dynamicTest("Return True If Above the Given Position",
-                        () -> assertTrue(edgeTop.isAdjacentTo(Position.in(1, 4)))),
-                DynamicTest.dynamicTest("Return True If Below the Given Position",
-                        () -> assertTrue(edgeBottom.isAdjacentTo(Position.in(13, 4)))),
-                DynamicTest.dynamicTest("Return True If Left the Given Position",
-                        () -> assertTrue(edgeLeft.isAdjacentTo(Position.in(13, 1)))),
-                DynamicTest.dynamicTest("Return True If Right the Given Position",
-                        () -> assertTrue(edgeRight.isAdjacentTo(Position.in(1, 13))))
-        );
+        List<Edge> edgesList = Arrays.asList(Edge.TOP,Edge.BOTTOM,Edge.LEFT,Edge.RIGHT);
+        List<Position> positionList = Arrays.asList(firstPosition,secondPosition,thirdPosition,fourthPosition);
+
+        return edgesList.stream()
+                .map(edge -> DynamicTest.dynamicTest("Checking Edge "+ edge,
+                        () -> {
+                            int id = edgesList.indexOf(edge);
+                            assertTrue(edge.isAdjacentTo(positionList.get(id)));
+                        }));
     }
 }
