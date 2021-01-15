@@ -4,8 +4,10 @@ import sdmExam.Board;
 import sdmExam.Position;
 import sdmExam.Stone;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class PrintBoard {
     private static int i, j;
@@ -17,20 +19,18 @@ public class PrintBoard {
         put(Stone.NONE, "[ ]");
         }
     };
-    public static String getCellValue(Stone stone) {
-        return CellValue.get(stone);
+    public static void getCellValue(Stone stone) {System.out.print( CellValue.get(stone));}
+
+    private static void PrintColumn(Board board, int column) {
+        IntStream.range(1, board.BOARD_SIZE).forEach(x ->getCellValue(board.intersectionAt(new Position(x, column)).getStone()));
+        System.out.print("\n");
     }
 
-
-    public static void Print(Board board) {
-        for (i = 0; i < 13; i++) {
-            System.out.print("\n");
-            for (j = 0; j < 13; j++) {
-                System.out.print("[]");
+    public static void PrintColumn(Board board) {
+            for (j = 1; j < board.BOARD_SIZE; j++) {
+                PrintColumn(board,j);
             }
-
-        }
-
     }
-
 }
+
+
