@@ -8,11 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Chain {
-    private final Graph<Intersection, DefaultEdge> chains;
-
-    public Chain() {
-        chains = new SimpleGraph<>(DefaultEdge.class);
-    }
+    private final Graph<Intersection, DefaultEdge> chains = new SimpleGraph<>(DefaultEdge.class);
 
     protected void updateChain(Intersection newIntersection) {
         chains.addVertex(newIntersection);
