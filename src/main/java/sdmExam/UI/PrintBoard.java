@@ -10,11 +10,13 @@ import java.util.Map;
 public class PrintBoard {
     private static int i, j;
 
-    private static final Map<Stone, String> CellValue = new HashMap<>() {{
+    private static final Map<Stone, String> CellValue = new HashMap<>() {
+        {
         put(Stone.BLACK, "[B]");
         put(Stone.WHITE, "[W]");
         put(Stone.NONE, "[ ]");
-    }};
+        }
+    };
     public static String getCellValue(Stone stone) {
         return CellValue.get(stone);
     }
