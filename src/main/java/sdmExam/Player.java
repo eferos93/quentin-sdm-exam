@@ -16,4 +16,12 @@ public class Player {
     public String getName() {
         return name;
     }
+
+    public void changeSide() {
+        if (color == Stone.BLACK) {
+            color = Stone.WHITE;
+        } else {
+            color = Stone.BLACK;
+        }
+    }
 }

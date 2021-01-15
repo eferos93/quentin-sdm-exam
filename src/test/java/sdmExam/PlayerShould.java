@@ -2,6 +2,8 @@ package sdmExam;
 
 import org.junit.jupiter.api.Test;
 
+import javax.swing.plaf.metal.MetalBorders;
+
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,5 +21,12 @@ public class PlayerShould {
                 () -> assertEquals(Stone.WHITE, player.getColor()),
                 () -> assertEquals("Eros", player.getName())
         );
+    }
+
+    @Test
+    public void changeSideCorrectly() {
+        Player player = new Player(Stone.WHITE, "Eros");
+        player.changeSide();
+        assertEquals(Stone.BLACK, player.getColor());
     }
 }
