@@ -27,12 +27,10 @@ public class PrintBoard {
         System.out.print("\n");
     }
 
-    public static void PrintBoard(Board board) {
+    public static void Print(Board board) {
         IntStream.iterate(board.BOARD_SIZE , x -> --x).limit(board.BOARD_SIZE).forEach(y -> PrintRow(board, y));
-        System.out.print("     1  2  3  4  5  6  7  8  9  10 11 12");
+        IntStream.range(0, board.BOARD_SIZE).forEach(i -> System.out.print(i + "  "));
         System.out.print("\n");
-
-
     }
 }
 
