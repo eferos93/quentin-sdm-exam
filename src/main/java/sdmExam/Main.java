@@ -1,6 +1,7 @@
 package sdmExam;
 
 import sdmExam.UI.Graphics;
+import sdmExam.UI.PrintBoard;
 
 import java.util.Scanner;
 
@@ -9,14 +10,17 @@ public class Main {
 
     public static void main(String[] args) {
         int x;
+        Game game = new Game();
+        Board board = new Board();
+
         Graphics.printTitle();
         Graphics.Instructions();
         Graphics.BlackPlayerPlayFirst();
-        Graphics.PrintBoard();
+        PrintBoard.Print(board);
         Graphics.ChooseCoordinateX();
         x=scanner.nextInt();
         Graphics.ChooseCoordinateY();
-        Graphics.SetCoordinates(x,scanner.nextInt());
+        Graphics.SetCoordinates(board,x,scanner.nextInt());
 
     }
 
