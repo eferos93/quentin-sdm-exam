@@ -7,9 +7,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
@@ -63,12 +63,6 @@ public class BoardShould {
         );
     }
 
-    @Test
-    public void edgeColorsAfterPie() {
-        board.pie();
-        assertEquals(board.getLowerAndUpperEdgesColor(), Stone.WHITE);
-        assertEquals(board.getLeftAndRightEdgesColor(), Stone.BLACK);
-    }
 
     @TestFactory
     Stream<DynamicTest> checkOrthogonalAdjacent() {
@@ -117,4 +111,13 @@ public class BoardShould {
                         }));
     }
 
+    @Test
+    public void applyPieRuleCorrectly() {
+        board.pie();
+        assertTrue(board.getEnumSet().stream()
+                .filter(edge -> edge.name().equals("LEFT"))
+                .map(edge -> edge.hasColor(Stone.BLACK))
+                .findFirst()
+                .orElse(false));
+    }
 }
