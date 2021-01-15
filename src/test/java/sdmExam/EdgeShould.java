@@ -1,7 +1,6 @@
 package sdmExam;
 
 import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 
 import java.util.Arrays;
@@ -10,7 +9,7 @@ import java.util.Collection;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EdgeShould {
-    private Board board = new Board();
+    private final Board board = new Board();
 
     @TestFactory
     Collection<DynamicTest> checkEdges() {
