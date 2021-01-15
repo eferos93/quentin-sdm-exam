@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Board {
-    private static final int DEFAULT_BOARD_SIZE = 13;
+    protected static final int DEFAULT_BOARD_SIZE = 13;
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
     private final Set<Edge> edges = EnumSet.of(Edge.BOTTOM, Edge.TOP, Edge.LEFT, Edge.RIGHT);
@@ -13,10 +13,6 @@ public class Board {
         put(Stone.BLACK, new Chain());
         put(Stone.WHITE, new Chain());
     }};
-
-    public Set<Edge> getEnumSet() {
-        return edges;
-    }
 
     public Board() {
         this(DEFAULT_BOARD_SIZE);
@@ -53,16 +49,6 @@ public class Board {
 
     public boolean isOccupied(Position position) throws NoSuchElementException {
         return intersectionAt(position).isOccupied();
-    }
-
-    public void pie() {
-        edges.forEach(edgePart -> {
-            if (edgePart.hasColor(Stone.BLACK)) {
-                edgePart.setColor(Stone.WHITE);
-            } else {
-                edgePart.setColor(Stone.BLACK);
-            }
-        });
     }
 
     public boolean existsOrthogonallyAdjacentWithStone(Intersection intersection, Stone stone) {

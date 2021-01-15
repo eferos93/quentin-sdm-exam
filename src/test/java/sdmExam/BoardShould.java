@@ -75,16 +75,6 @@ public class BoardShould {
     }
 
     @Test
-    public void applyPieRuleCorrectly() {
-        board.pie();
-        assertTrue(board.getEnumSet().stream()
-                .filter(edge -> edge.name().equals("LEFT"))
-                .map(edge -> edge.hasColor(Stone.BLACK))
-                .findFirst()
-                .orElse(false));
-    }
-
-    @Test
     public void updateTheChainsCorrectly() {
         Board customBoard = Board.buildTestBoard(3);
         customBoard.addStoneAt(Stone.BLACK, in(1, 1));
