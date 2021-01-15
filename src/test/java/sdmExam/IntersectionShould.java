@@ -75,22 +75,5 @@ public class IntersectionShould {
                             assertEquals(outputList.get(id),intersection.isDiagonalTo(parameterList.get(id)));
                         }));
     }
-
-    //TODO Below test can be written with streams (by using object function tuples)
-    @TestFactory
-    Collection<DynamicTest> adjacencyCheck() {
-        Intersection firstIntersection = new Intersection(Position.in(8,5), Stone.BLACK);
-        Intersection secondIntersection = new Intersection(Position.in(7,9), Stone.BLACK);
-        Intersection thirdIntersection = new Intersection(Position.in(7,9), Stone.BLACK);
-
-        return Arrays.asList(
-                DynamicTest.dynamicTest("Orthogonal Intersections",
-                        () -> assertTrue(firstIntersection.isOrthogonalTo(new Intersection(Position.in(9,5),Stone.BLACK)))),
-                DynamicTest.dynamicTest("Diagonal Intersections",
-                        () -> assertTrue(secondIntersection.isDiagonalTo(new Intersection(Position.in(6,10),Stone.BLACK)))),
-                DynamicTest.dynamicTest("Non Orthogonal Intersections",
-                        () -> assertFalse(thirdIntersection.isOrthogonalTo(new Intersection(Position.in(7,3),Stone.WHITE))))
-        );
-    }
 }
 
