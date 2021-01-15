@@ -9,8 +9,6 @@ import java.util.Scanner;
 
 public class Graphics {
     private static int coordinateX;
-    private static Board board=new Board();
-
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void printTitle() {System.out.println(Message.TITLE);}
@@ -18,18 +16,12 @@ public class Graphics {
     public static void Instructions() {System.out.println(Message.INSTRUCTIONS);}
 
     public static void BlackPlayerPlayFirst() {System.out.println(Message.BLACKPLAYFIRST);}
-
-
-    public static void Set(Stone stone) {
+    public static void Set(Stone stone, Board board, Game game) throws  Exception  {
         System.out.println(Message.CHOOSE_X);
         coordinateX=scanner.nextInt();
         System.out.println(Message.CHOOSE_Y);
-        SetCoordinates(board,stone,coordinateX,scanner.nextInt());
-    }
-
-    public static void SetCoordinates(Board board,Stone stone,int x, int y) {
-        Position position = new Position(x, y);
-        board.addStoneAt(stone, position);
+        game.play(stone,new Position(coordinateX,scanner.nextInt()));
+        board.addStoneAt(stone,new Position(coordinateX,scanner.nextInt()));
         PrintBoard.Print(board);
     }
 
