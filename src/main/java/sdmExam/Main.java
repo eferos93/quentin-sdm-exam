@@ -16,7 +16,7 @@ public class Main {
         Graphics.printTitle();
         Graphics.Instructions();
         Graphics.BlackPlayerPlayFirst();
-        PrintBoard.Print(board);
+        PrintBoard.PrintColumn(board);
         Graphics.ChooseCoordinateX();
         x=scanner.nextInt();
         Graphics.ChooseCoordinateY();

@@ -27,9 +27,7 @@ public class PrintBoard {
     }
 
     public static void PrintColumn(Board board) {
-            for (j = 1; j < board.BOARD_SIZE; j++) {
-                PrintColumn(board,j);
-            }
+        IntStream.iterate(board.BOARD_SIZE , x -> --x).limit(board.BOARD_SIZE).forEach(y -> PrintColumn(board, y));
     }
 }
 
