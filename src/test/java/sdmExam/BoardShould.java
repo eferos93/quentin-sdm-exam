@@ -5,7 +5,10 @@ import org.junit.jupiter.api.Test;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -95,5 +98,33 @@ public class BoardShould {
         expected_list.add(intersection3);
 
         assertEquals(expected_list, board.getOrthogonalAdjacencyIntersections(intersection1));
+    }
+
+    @Test
+    public void verifyColoredOrthogonalAdjacencyList() {
+        List<Optional<Intersection>> expected_list;
+        ArrayList<Intersection> list = new ArrayList<>();
+        ArrayList<Intersection> intersections = new ArrayList<>();
+
+        // TODO: make it general
+        Intersection intersection1 = board.intersectionAt(Position.in(1, 1));
+        Intersection intersection2 = board.intersectionAt(Position.in(1, 2));
+        Intersection intersection3 = board.intersectionAt(Position.in(2, 1));
+
+        intersection1.setStone(Stone.NONE);
+        intersection2.setStone(Stone.BLACK);
+        intersection3.setStone(Stone.WHITE);
+
+        list.add(intersection2);
+        list.add(intersection3);
+
+        // Board::getColoredIntersections returns a List<Optional<Intersection>>
+        expected_list = list.stream().map(Optional::of).collect(Collectors.toList());
+
+        intersections.add(intersection1);
+        intersections.add(intersection2);
+        intersections.add(intersection3);
+
+        assertEquals(expected_list, board.getColoredIntersections(intersections));
     }
 }

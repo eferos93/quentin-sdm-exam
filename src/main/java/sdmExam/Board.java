@@ -1,25 +1,30 @@
 package sdmExam;
 
-import org.jgrapht.Graph;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Board {
     public static final int BOARD_SIZE = 13;
     private final List<Intersection> intersections = new ArrayList<>();
+    private final Region region = Region.getRegion();
     private Stone lowerAndUpperEdgesColor = Stone.BLACK;
     private Stone leftAndRightEdgesColor = Stone.WHITE;
 
     public Board() {
+        List<Intersection> tmp = new ArrayList<>();
         for (int row = 1; row <= BOARD_SIZE; row++) {
             for (int column = 1; column <= BOARD_SIZE; column++) {
                 intersections.add(Intersection.empty(Position.in(row, column)));
+                tmp.add(Intersection.empty(Position.in(row, column)));
             }
         }
+
+        region.createGraph(tmp);
     }
 
     private Board(int size) {
@@ -39,7 +44,10 @@ public class Board {
     }
 
     public void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
-        intersectionAt(position).setStone(stone);
+        Intersection intersection = intersectionAt(position);
+        intersection.setStone(stone);
+        Intersection graphIntersection = region.getGraph().vertexSet().stream().filter(i -> i.isAt(position)).findFirst().get();
+        region.removeVertex(graphIntersection); // we are sure that it is present
     }
 
     public void setLowerAndUpperEdgesColor(Stone color) {
@@ -81,6 +89,10 @@ public class Board {
 
     public List<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection) {
         return intersections.stream().filter(i -> i.isOrthogonalTo(intersection)).collect(Collectors.toList());
+    }
+
+    public List<Optional<Intersection>> getColoredIntersections(List<Intersection> intersections) {
+        return intersections.stream().filter(Intersection::isOccupied).map(Optional::of).collect(Collectors.toList());
     }
 
     protected Stream<Intersection> stream() {
