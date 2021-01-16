@@ -53,14 +53,16 @@ public class Board {
 
     public boolean existsOrthogonallyAdjacentWithStone(Intersection intersection, Stone stone) {
         return intersections.stream()
-                .filter(intersection::isOrthogonalTo)
-                .anyMatch(orthogonalIntersection -> orthogonalIntersection.hasStone(stone));
+                .anyMatch(otherIntersection ->
+                        otherIntersection.isOrthogonalTo(intersection) && otherIntersection.hasStone(stone)
+                );
     }
 
     public boolean existsDiagonallyAdjacentWithStone(Intersection intersection, Stone stone) {
         return intersections.stream()
-                .filter(intersection::isDiagonalTo)
-                .anyMatch(diagonalIntersection -> diagonalIntersection.hasStone(stone));
+                .anyMatch(otherIntersection ->
+                        otherIntersection.isDiagonalTo(intersection) && otherIntersection.hasStone(stone)
+                );
     }
 
     private List<Edge> getEdgesOfColor(Stone color) {
