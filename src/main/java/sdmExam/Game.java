@@ -7,15 +7,13 @@ public class Game {
     private Stone lastPlay = Stone.NONE;
     private final Player playerOne, playerTwo;
 
-    public Game() {
-        this(new Board());
-    }
-
     private Game(Board board) {
         this.board = board;
         playerOne = new Player(Stone.BLACK, "player1");
         playerTwo = new Player(Stone.WHITE, "player2");
     }
+
+    public Game() { this(new Board()); }
 
     private Game(int boardSize) { this(Board.buildTestBoard(boardSize)); }
 
