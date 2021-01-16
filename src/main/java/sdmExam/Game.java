@@ -1,34 +1,55 @@
 package sdmExam;
 
+import sdmExam.exceptions.*;
+import java.util.stream.Stream;
+
 public class Game {
-    private final Board board = new Board();
+    private final Board board;
     private Stone lastPlay = Stone.NONE;
+    private final Player playerOne, playerTwo;
 
-    public void play(Stone player, Position position) throws Exception {
+    private Game(Board board) {
+        this.board = board;
+        playerOne = new Player(Stone.BLACK, "player1");
+        playerTwo = new Player(Stone.WHITE, "player2");
+    }
 
-        if (isInvalidFirstPlayer(player)) {
-            throw new Exception("Black player should play first.");
+    public Game() { this(new Board()); }
+
+    private Game(int boardSize) { this(Board.buildTestBoard(boardSize)); }
+
+    protected static Game buildTestGame(Board board) { return new Game(board); }
+    protected static Game buildTestGame(int boardSize) { return new Game(boardSize); }
+
+    public void makeMove(Stone color, Position position) throws Exception {
+
+        if (isInvalidFirstPlayer(color)) {
+            throw new InvalidFirstPlayerException();
         }
 
-        if (isARepeatedPlay(player)) {
-            throw new Exception("A player cannot play twice in a row.");
+        if (isARepeatedPlay(color)) {
+            throw new RepeatedPlayException();
         }
 
         if (board.isOccupied(position)) {
-            throw new Exception("Position " + position + " is already occupied.");
+            throw new OccupiedPositionException(position);
         }
 
-        if (isIllegalMove(player, position)) {
-            throw new Exception("A player cannot put a stone diagonally adjacent to another stone of the same colour" +
-                    " without a colour alike orthogonally adjacent.\n" + position);
+        if (isIllegalMove(color, position)) {
+            throw new IllegalMoveException(position);
         }
 
-        board.addStoneAt(player, position);
-        lastPlay = player;
+        board.addStoneAt(color, position);
+        lastPlay = color;
     }
 
+    //TODO: maybe rename this method to avoid overloading
     private boolean isIllegalMove(Stone player, Position position) {
         final Intersection intersection = board.intersectionAt(position);
+        return isIllegalMove(player, intersection);
+    }
+
+    private boolean isIllegalMove(Stone player, Intersection intersection) {
         return board.existsDiagonallyAdjacentWithStone(intersection, player) &&
                 !board.existsOrthogonallyAdjacentWithStone(intersection, player);
     }
@@ -38,12 +59,19 @@ public class Game {
     }
 
     private boolean isInvalidFirstPlayer(Stone player) {
-        return isARepeatedPlay(Stone.NONE) && player == Stone.WHITE;
+        return lastPlay == Stone.NONE && player == Stone.WHITE;
     }
 
     public boolean isPlayerAbleToMakeAMove(Stone player) {
-        return board.stream()
-                .filter(intersection -> !intersection.isOccupied())
-                .anyMatch(emptyIntersection -> !isIllegalMove(player, emptyIntersection.getPosition()));
+        return board.getEmptyIntersections()
+                .anyMatch(emptyIntersection -> !isIllegalMove(player, emptyIntersection));
+    }
+
+    public Stone getWinner() {
+        return board.colorWithCompleteChain();
+    }
+
+    public void applyPieRule() {
+        Stream.of(playerOne, playerTwo).forEach(Player::changeSide);
     }
 }

@@ -1,22 +1,36 @@
 package sdmExam;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Board {
-    public static final int BOARD_SIZE = 13;
+    protected static final int DEFAULT_BOARD_SIZE = 13;
+    private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
-    private Stone lowerAndUpperEdgesColor = Stone.BLACK;
-    private Stone leftAndRightEdgesColor = Stone.WHITE;
+    private final Set<Edge> edges = EnumSet.of(Edge.BOTTOM, Edge.TOP, Edge.LEFT, Edge.RIGHT);
+    private final Map<Stone, Chain> chainsContainer = new HashMap<>() {{
+        put(Stone.BLACK, new Chain());
+        put(Stone.WHITE, new Chain());
+    }};
 
     public Board() {
-        for (int row = 1; row <= BOARD_SIZE; row++) {
-            for (int column = 1; column <= BOARD_SIZE; column++) {
-                intersections.add(Intersection.empty(Position.in(row, column)));
+        this(DEFAULT_BOARD_SIZE);
+    }
+
+    private Board(int boardSize) {
+        this.BOARD_SIZE =  boardSize;
+        Edge.setBoardSize(boardSize);
+        this.edges.forEach(Edge::initialiseEdge);
+        for (int row = 1; row <= this.BOARD_SIZE; row++) {
+            for (int column = 1; column <= this.BOARD_SIZE; column++) {
+                this.intersections.add(Intersection.empty(Position.in(row, column)));
             }
         }
+    }
+
+    protected static Board buildTestBoard(int size) {
+        return new Board(size);
     }
 
     public Intersection intersectionAt(Position position) throws NoSuchElementException {
@@ -24,47 +38,46 @@ public class Board {
     }
 
     public void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
-        intersectionAt(position).setStone(stone);
+        Intersection intersection = intersectionAt(position);
+        intersection.setStone(stone);
+        updateChains(intersection);
     }
 
-    public void setLowerAndUpperEdgesColor(Stone color) {
-        this.lowerAndUpperEdgesColor = color;
-    }
-
-    public void setLeftAndRightEdgesColor(Stone color) {
-        this.leftAndRightEdgesColor = color;
-    }
-
-    public Stone getLowerAndUpperEdgesColor() {
-        return lowerAndUpperEdgesColor;
-    }
-
-    public Stone getLeftAndRightEdgesColor() {
-        return leftAndRightEdgesColor;
+    private void updateChains(Intersection updatedIntersection) {
+        chainsContainer.get(updatedIntersection.getStone()).updateChain(updatedIntersection);
     }
 
     public boolean isOccupied(Position position) throws NoSuchElementException {
         return intersectionAt(position).isOccupied();
     }
 
-    public void pie() {
-        setLowerAndUpperEdgesColor(Stone.WHITE);
-        setLeftAndRightEdgesColor(Stone.BLACK);
-    }
-
     public boolean existsOrthogonallyAdjacentWithStone(Intersection intersection, Stone stone) {
         return intersections.stream()
-                .filter(intersection::isOrthogonalTo)
-                .anyMatch(orthogonalIntersection -> orthogonalIntersection.hasStone(stone));
+                .anyMatch(otherIntersection ->
+                        otherIntersection.isOrthogonalTo(intersection) && otherIntersection.hasStone(stone)
+                );
     }
 
     public boolean existsDiagonallyAdjacentWithStone(Intersection intersection, Stone stone) {
         return intersections.stream()
-                .filter(intersection::isDiagonalTo)
-                .anyMatch(diagonalIntersection -> diagonalIntersection.hasStone(stone));
+                .anyMatch(otherIntersection ->
+                        otherIntersection.isDiagonalTo(intersection) && otherIntersection.hasStone(stone)
+                );
     }
 
-    protected Stream<Intersection> stream() {
-        return intersections.stream();
+    private List<Edge> getEdgesOfColor(Stone color) {
+        return edges.stream().filter(edge -> edge.hasColor(color)).collect(Collectors.toList());
+    }
+
+    protected Stone colorWithCompleteChain() {
+        return chainsContainer.entrySet().stream()
+                .filter(entry -> entry.getValue().hasACompleteChain(getEdgesOfColor(entry.getKey())))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(Stone.NONE);
+    }
+
+    protected Stream<Intersection> getEmptyIntersections() {
+        return intersections.stream().filter(intersection -> !intersection.isOccupied());
     }
 }
