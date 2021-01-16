@@ -1,28 +1,33 @@
 package sdmExam;
 
 import sdmExam.exceptions.*;
+import java.util.stream.Stream;
 
 public class Game {
     private final Board board;
     private Stone lastPlay = Stone.NONE;
+    private final Player playerOne, playerTwo;
 
-    public Game() {
-        board = new Board();
+    private Game(Board board) {
+        this.board = board;
+        playerOne = new Player(Stone.BLACK, "player1");
+        playerTwo = new Player(Stone.WHITE, "player2");
     }
 
-    private Game(Board board) { this.board = board;  }
+    public Game() { this(new Board()); }
 
-    private Game(int boardSize) { this.board = Board.buildTestBoard(boardSize); }
+    private Game(int boardSize) { this(Board.buildTestBoard(boardSize)); }
+
     protected static Game buildTestGame(Board board) { return new Game(board); }
     protected static Game buildTestGame(int boardSize) { return new Game(boardSize); }
 
-    public void play(Stone player, Position position) throws Exception {
+    public void makeMove(Stone color, Position position) throws Exception {
 
-        if (isInvalidFirstPlayer(player)) {
+        if (isInvalidFirstPlayer(color)) {
             throw new InvalidFirstPlayerException();
         }
 
-        if (isARepeatedPlay(player)) {
+        if (isARepeatedPlay(color)) {
             throw new RepeatedPlayException();
         }
 
@@ -30,12 +35,12 @@ public class Game {
             throw new OccupiedPositionException(position);
         }
 
-        if (isIllegalMove(player, position)) {
+        if (isIllegalMove(color, position)) {
             throw new IllegalMoveException(position);
         }
 
-        board.addStoneAt(player, position);
-        lastPlay = player;
+        board.addStoneAt(color, position);
+        lastPlay = color;
     }
 
     //TODO: maybe rename this method to avoid overloading
@@ -67,6 +72,6 @@ public class Game {
     }
 
     public void applyPieRule() {
-        board.pie();
+        Stream.of(playerOne, playerTwo).forEach(Player::changeSide);
     }
 }

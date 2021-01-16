@@ -20,11 +20,11 @@ public class PositionShould {
         assertEquals(firstPosition, secondPosition);
     }
 
-    private static Stream<Arguments> providePosition(){
+    private static Stream<Arguments> providePosition() {
         return Stream.of(
-                Arguments.of(Position.in(3,3),Position.in(3,3)),
-                Arguments.of(Position.in(13,13),Position.in(13,13)),
-                Arguments.of(Position.in(1,1),Position.in(1,1))
+                Arguments.of(Position.in(3, 3), Position.in(3, 3)),
+                Arguments.of(Position.in(13, 13), Position.in(13, 13)),
+                Arguments.of(Position.in(1, 1), Position.in(1, 1))
         );
 
     }
@@ -39,15 +39,15 @@ public class PositionShould {
 
         return Arrays.asList(
                 DynamicTest.dynamicTest("Above Position",
-                        () -> assertTrue(firstPosition.isAboveWithRespectTo(Position.in(2,2)))),
+                        () -> assertTrue(firstPosition.isAboveWithRespectTo(Position.in(2, 2)))),
                 DynamicTest.dynamicTest("Not Below Position",
-                        () -> assertFalse(secondPosition.isBelowWithRespectTo(Position.in(2,2)))),
+                        () -> assertFalse(secondPosition.isBelowWithRespectTo(Position.in(2, 2)))),
                 DynamicTest.dynamicTest("Left Position",
-                        () -> assertTrue(thirdPosition.isOnTheLeftWithRespectTo(Position.in(3,5)))),
+                        () -> assertTrue(thirdPosition.isOnTheLeftWithRespectTo(Position.in(3, 5)))),
                 DynamicTest.dynamicTest("Up Right Position",
-                        () -> assertTrue(fourthPosition.isUpRightRespectTo(Position.in(6,5)))),
+                        () -> assertTrue(fourthPosition.isUpRightRespectTo(Position.in(6, 5)))),
                 DynamicTest.dynamicTest("Down Left Position",
-                        () -> assertTrue(fifthPosition.isDownLeftRespectTo(Position.in(6,13))))
+                        () -> assertTrue(fifthPosition.isDownLeftRespectTo(Position.in(6, 13))))
         );
 
     }
