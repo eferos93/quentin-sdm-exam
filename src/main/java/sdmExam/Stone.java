@@ -3,5 +3,13 @@ package sdmExam;
 public enum Stone {
     WHITE,
     BLACK,
-    NONE
+    NONE;
+
+    public Stone getOppositeColor() {
+        return switch (this) {
+            case BLACK -> WHITE;
+            case WHITE -> BLACK;
+            case NONE -> NONE;
+        };
+    }
 }
