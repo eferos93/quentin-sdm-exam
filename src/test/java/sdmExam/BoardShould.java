@@ -7,17 +7,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import static sdmExam.Position.in;
-
 import java.util.*;
+
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static sdmExam.Position.in;
 
 public class BoardShould {
     private final static Board board = new Board();
@@ -30,9 +26,9 @@ public class BoardShould {
 
     private static Stream<Arguments> providePositionForGetCorrectIntersectionGivenAPosition() {
         return Stream.of(
-                Arguments.of(Position.in(1, 1)),
-                Arguments.of(Position.in(7, 2)),
-                Arguments.of(Position.in(13, 13))
+                Arguments.of(in(1, 1)),
+                Arguments.of(in(7, 2)),
+                Arguments.of(in(13, 13))
         );
     }
 
@@ -44,41 +40,41 @@ public class BoardShould {
 
     private static Stream<Arguments> providePositionForIntersectionOutsideBoard() {
         return Stream.of(
-                Arguments.of(Position.in(14, 14)),
-                Arguments.of(Position.in(0, 0)),
-                Arguments.of(Position.in(-1, 16))
+                Arguments.of(in(14, 14)),
+                Arguments.of(in(0, 0)),
+                Arguments.of(in(-1, 16))
         );
     }
 
     @ParameterizedTest
     @MethodSource({"provideIntersectionForMarkCorrectlyAnIntersection"})
     public void markCorrectlyAnIntersection(Intersection intersection, Stone stone) throws NoSuchElementException {
-        board.addStoneAt(Stone.BLACK, Position.in(5, 7));
-        board.addStoneAt(Stone.WHITE, Position.in(4, 3));
-        board.addStoneAt(Stone.WHITE, Position.in(9, 6));
+        board.addStoneAt(Stone.BLACK, in(5, 7));
+        board.addStoneAt(Stone.WHITE, in(4, 3));
+        board.addStoneAt(Stone.WHITE, in(9, 6));
         assertEquals(intersection.getStone(), stone);
     }
 
     private static Stream<Arguments> provideIntersectionForMarkCorrectlyAnIntersection() {
         return Stream.of(
-                Arguments.of(board.intersectionAt(Position.in(5, 7)), Stone.BLACK),
-                Arguments.of(board.intersectionAt(Position.in(4, 3)), Stone.WHITE),
-                Arguments.of(board.intersectionAt(Position.in(9, 6)), Stone.WHITE)
+                Arguments.of(board.intersectionAt(in(5, 7)), Stone.BLACK),
+                Arguments.of(board.intersectionAt(in(4, 3)), Stone.WHITE),
+                Arguments.of(board.intersectionAt(in(9, 6)), Stone.WHITE)
         );
     }
 
 
     @TestFactory
     Stream<DynamicTest> checkOrthogonalAdjacent() {
-        board.addStoneAt(Stone.WHITE, Position.in(7, 9));
-        board.addStoneAt(Stone.WHITE, Position.in(3, 4));
-        board.addStoneAt(Stone.WHITE, Position.in(4, 4));
-        board.addStoneAt(Stone.WHITE, Position.in(12, 5));
-        board.addStoneAt(Stone.WHITE, Position.in(13, 5));
+        board.addStoneAt(Stone.WHITE, in(7, 9));
+        board.addStoneAt(Stone.WHITE, in(3, 4));
+        board.addStoneAt(Stone.WHITE, in(4, 4));
+        board.addStoneAt(Stone.WHITE, in(12, 5));
+        board.addStoneAt(Stone.WHITE, in(13, 5));
 
-        Intersection firstIntersection = board.intersectionAt(Position.in(7, 9));
-        Intersection secondIntersection = board.intersectionAt(Position.in(3, 4));
-        Intersection thirdIntersection = board.intersectionAt(Position.in(12, 5));
+        Intersection firstIntersection = board.intersectionAt(in(7, 9));
+        Intersection secondIntersection = board.intersectionAt(in(3, 4));
+        Intersection thirdIntersection = board.intersectionAt(in(12, 5));
 
         List<Intersection> inputList = Arrays.asList(firstIntersection, secondIntersection, thirdIntersection);
         List<Boolean> outputList = Arrays.asList(false, true, true);
@@ -95,15 +91,15 @@ public class BoardShould {
 
     @TestFactory
     Stream<DynamicTest> checkDiagonalAdjacent() {
-        board.addStoneAt(Stone.WHITE, Position.in(7, 9));
-        board.addStoneAt(Stone.WHITE, Position.in(3, 4));
-        board.addStoneAt(Stone.WHITE, Position.in(2, 5));
-        board.addStoneAt(Stone.WHITE, Position.in(12, 5));
-        board.addStoneAt(Stone.WHITE, Position.in(13, 4));
+        board.addStoneAt(Stone.WHITE, in(7, 9));
+        board.addStoneAt(Stone.WHITE, in(3, 4));
+        board.addStoneAt(Stone.WHITE, in(2, 5));
+        board.addStoneAt(Stone.WHITE, in(12, 5));
+        board.addStoneAt(Stone.WHITE, in(13, 4));
 
-        Intersection firstIntersection = board.intersectionAt(Position.in(7, 9));
-        Intersection secondIntersection = board.intersectionAt(Position.in(3, 4));
-        Intersection thirdIntersection = board.intersectionAt(Position.in(12, 5));
+        Intersection firstIntersection = board.intersectionAt(in(7, 9));
+        Intersection secondIntersection = board.intersectionAt(in(3, 4));
+        Intersection thirdIntersection = board.intersectionAt(in(12, 5));
 
         List<Intersection> inputList = Arrays.asList(firstIntersection, secondIntersection, thirdIntersection);
         List<Boolean> outputList = Arrays.asList(false, true, true);
@@ -134,9 +130,9 @@ public class BoardShould {
         ArrayList<Intersection> intersections = new ArrayList<>();
 
         // TODO: make it general
-        Intersection intersection1 = board.intersectionAt(Position.in(1, 1));
-        Intersection intersection2 = board.intersectionAt(Position.in(1, 2));
-        Intersection intersection3 = board.intersectionAt(Position.in(2, 1));
+        Intersection intersection1 = board.intersectionAt(in(1, 1));
+        Intersection intersection2 = board.intersectionAt(in(1, 2));
+        Intersection intersection3 = board.intersectionAt(in(2, 1));
 
         intersection1.setStone(Stone.NONE);
         intersection2.setStone(Stone.BLACK);
@@ -164,14 +160,14 @@ public class BoardShould {
         for (int row = 1; row <= 13; row++) {
             for (int column = 1; column <= 13; column++) {
                 if(row != 1 || column > 4)
-                    expected_intersections.add(Intersection.empty(Position.in(row, column)));
+                    expected_intersections.add(Intersection.empty(in(row, column)));
             }
         }
 
-        board.addStoneAt(Stone.BLACK, Position.in(1, 1));
-        board.addStoneAt(Stone.BLACK, Position.in(1, 2));
-        board.addStoneAt(Stone.BLACK, Position.in(1, 3));
-        board.addStoneAt(Stone.BLACK, Position.in(1, 4));
+        board.addStoneAt(Stone.BLACK, in(1, 1));
+        board.addStoneAt(Stone.BLACK, in(1, 2));
+        board.addStoneAt(Stone.BLACK, in(1, 3));
+        board.addStoneAt(Stone.BLACK, in(1, 4));
 
         List<Intersection> board_intersections =
                 new ArrayList<>(board.getRegion().getGraph().vertexSet());
@@ -186,9 +182,9 @@ public class BoardShould {
 
         // TODO: refactor to avoid hardcoded
         for(int row = 1; row <= 13; row++){
-            board.addStoneAt(Stone.WHITE, Position.in(row, 6));
-            board.addStoneAt(Stone.WHITE, Position.in(row, 8));
-            territory.add(board.intersectionAt(Position.in(row, 7)));
+            board.addStoneAt(Stone.WHITE, in(row, 6));
+            board.addStoneAt(Stone.WHITE, in(row, 8));
+            territory.add(board.intersectionAt(in(row, 7)));
         }
         expected_territories.add(territory);
 

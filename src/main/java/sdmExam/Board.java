@@ -1,5 +1,7 @@
 package sdmExam;
 
+import com.sun.net.httpserver.Filter;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -23,16 +25,24 @@ public class Board {
         this.BOARD_SIZE =  boardSize;
         Edge.setBoardSize(boardSize);
         this.edges.forEach(Edge::initialiseEdge);
+        List<Intersection> tmp = new ArrayList<>();
+
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
             for (int column = 1; column <= this.BOARD_SIZE; column++) {
                 this.intersections.add(Intersection.empty(Position.in(row, column)));
                 tmp.add(Intersection.empty(Position.in(row, column)));
             }
         }
+
+        region.createGraph(tmp);
     }
 
     protected static Board buildTestBoard(int size) {
         return new Board(size);
+    }
+
+    public Region getRegion() {
+        return this.region;
     }
 
     public Intersection intersectionAt(Position position) throws NoSuchElementException {
@@ -86,5 +96,27 @@ public class Board {
 
     protected Stream<Intersection> getEmptyIntersections() {
         return intersections.stream().filter(intersection -> !intersection.isOccupied());
+    }
+
+    public List<Optional<Intersection>> getColoredIntersections(List<Intersection> intersections) {
+        return intersections.stream().filter(Intersection::isOccupied).map(Optional::of).collect(Collectors.toList());
+    }
+
+    public List<List<Intersection>> getTerritories() {
+        List<List<Intersection>> regions = region.getConnectedComponents();
+        List<List<Intersection>> territories = new ArrayList<>();
+
+        // cannot remove from regions (ConcurrenctModidification not allowed)
+        regions.forEach(i -> {
+            if(i.stream().allMatch(j -> getColoredIntersections(getOrthogonalAdjacencyIntersections(j)).size() >= 2)){
+                territories.add(i);
+            }
+        });
+
+        return territories;
+    }
+
+    public List<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection) {
+        return intersections.stream().filter(i -> i.isOrthogonalTo(intersection)).collect(Collectors.toList());
     }
 }
