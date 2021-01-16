@@ -31,11 +31,11 @@ public class PositionShould {
 
     @TestFactory
     Collection<DynamicTest> checkPositions() {
-        Position firstPosition = new Position(1, 2);
-        Position secondPosition = new Position(3, 4);
-        Position thirdPosition = new Position(3, 4);
-        Position fourthPosition = new Position(5, 6);
-        Position fifthPosition = new Position(7, 12);
+        Position firstPosition = Position.in(1, 2);
+        Position secondPosition = Position.in(3, 4);
+        Position thirdPosition = Position.in(3, 4);
+        Position fourthPosition = Position.in(5, 6);
+        Position fifthPosition = Position.in(7, 12);
 
         return Arrays.asList(
                 DynamicTest.dynamicTest("Above Position",
