@@ -81,8 +81,8 @@ public class BoardShould {
         return inputList.stream()
                 .map(intersection -> DynamicTest.dynamicTest("Checking Orthogonal Adjacent of "+ intersection,
                         () -> {
-                            int id = inputList.indexOf(intersection);
-                            assertEquals(outputList.get(id),board.existsOrthogonallyAdjacentWithStone(intersection,Stone.WHITE));
+                            int index = inputList.indexOf(intersection);
+                            assertEquals(outputList.get(index),board.existsOrthogonallyAdjacentWithStone(intersection,Stone.WHITE));
                         }));
     }
 
@@ -105,8 +105,8 @@ public class BoardShould {
         return inputList.stream()
                 .map(intersection -> DynamicTest.dynamicTest("Checking Diagonal Adjacent of "+ intersection,
                         () -> {
-                        int id = inputList.indexOf(intersection);
-                        assertEquals(outputList.get(id),board.existsDiagonallyAdjacentWithStone(intersection,Stone.WHITE));
+                        int index = inputList.indexOf(intersection);
+                        assertEquals(outputList.get(index),board.existsDiagonallyAdjacentWithStone(intersection,Stone.WHITE));
                         }));
     }
 

@@ -25,8 +25,8 @@ public class EdgeShould {
         return edgesList.stream()
                 .map(edge -> DynamicTest.dynamicTest("Checking Edge "+ edge,
                         () -> {
-                            int id = edgesList.indexOf(edge);
-                            assertTrue(edge.isAdjacentTo(positionList.get(id)));
+                            int index = edgesList.indexOf(edge);
+                            assertTrue(edge.isAdjacentTo(positionList.get(index)));
                         }));
     }
 }

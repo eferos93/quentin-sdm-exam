@@ -49,8 +49,8 @@ public class IntersectionShould {
         return inputList.stream()
                 .map(intersection -> DynamicTest.dynamicTest("Checking Orthogonal Adjacent of "+ intersection,
                         () -> {
-                            int id = inputList.indexOf(intersection);
-                            assertEquals(outputList.get(id),intersection.isOrthogonalTo(parameterList.get(id)));
+                            int index = inputList.indexOf(intersection);
+                            assertEquals(outputList.get(index),intersection.isOrthogonalTo(parameterList.get(index)));
                         }));
     }
 
@@ -71,8 +71,8 @@ public class IntersectionShould {
         return inputList.stream()
                 .map(intersection -> DynamicTest.dynamicTest("Checking Diagonal Adjacent of "+ intersection,
                         () -> {
-                            int id = inputList.indexOf(intersection);
-                            assertEquals(outputList.get(id),intersection.isDiagonalTo(parameterList.get(id)));
+                            int index = inputList.indexOf(intersection);
+                            assertEquals(outputList.get(index),intersection.isDiagonalTo(parameterList.get(index)));
                         }));
     }
 }
