@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 public class Board {
-    public static final int BOARD_SIZE = 13;
+    public static final int BOARD_SIZE = 14;
     private final List<Intersection> intersections = new ArrayList<>();
     private Stone lowerAndUpperEdgesColor = Stone.BLACK;
     private Stone leftAndRightEdgesColor = Stone.WHITE;

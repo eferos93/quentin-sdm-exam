@@ -23,15 +23,19 @@ public class PrintBoard {
 
     private static void PrintRow(Board board, int row) {
         System.out.print(row+"\t");
-        IntStream.range(1, board.BOARD_SIZE).forEach(x ->getCellValue(board.intersectionAt(new Position(x, row)).getStone()));
+        IntStream.range(1, board.BOARD_SIZE+1).forEach(x ->getCellValue(board.intersectionAt(new Position(x, row)).getStone()));
         System.out.print("\n");
     }
+    private static String padLeft(String s) { return String.format("%" + 3 + "s", s); }
 
     public static void Print(Board board) {
         IntStream.iterate(board.BOARD_SIZE , x -> --x).limit(board.BOARD_SIZE).forEach(y -> PrintRow(board, y));
-        IntStream.range(0, board.BOARD_SIZE).forEach(i -> System.out.print(i + "  "));
+        System.out.print("\t");
+        IntStream.range(0, board.BOARD_SIZE).forEach(i -> System.out.print(padLeft(i + " ")));
         System.out.print("\n");
     }
+
+
 }
 
 
