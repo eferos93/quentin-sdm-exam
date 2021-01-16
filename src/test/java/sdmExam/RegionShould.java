@@ -52,12 +52,10 @@ public class RegionShould {
     }
 
     private static final PrintStream STDOUT = System.out;
-    private static final String GRAPH_2_PER_2 = """
-       Vertex Position{row=1, column=1} is connected to: [(Position{row=1, column=1} : Position{row=1, column=2}), (Position{row=1, column=1} : Position{row=2, column=1})]
-       Vertex Position{row=2, column=1} is connected to: [(Position{row=1, column=1} : Position{row=2, column=1}), (Position{row=2, column=1} : Position{row=2, column=2})]
-       Vertex Position{row=2, column=2} is connected to: [(Position{row=1, column=2} : Position{row=2, column=2}), (Position{row=2, column=1} : Position{row=2, column=2})]
-       Vertex Position{row=1, column=2} is connected to: [(Position{row=1, column=1} : Position{row=1, column=2}), (Position{row=1, column=2} : Position{row=2, column=2})]
-       """;
+    private static final String GRAPH_2_PER_2 = "Vertex Position{row=1, column=1} is connected to: [(Intersection{position=Position{row=1, column=1}, stone=NONE} : Intersection{position=Position{row=1, column=2}, stone=NONE}), (Intersection{position=Position{row=1, column=1}, stone=NONE} : Intersection{position=Position{row=2, column=1}, stone=NONE})]\n" +
+"Vertex Position{row=2, column=1} is connected to: [(Intersection{position=Position{row=1, column=1}, stone=NONE} : Intersection{position=Position{row=2, column=1}, stone=NONE}), (Intersection{position=Position{row=2, column=1}, stone=NONE} : Intersection{position=Position{row=2, column=2}, stone=NONE})]\n" +
+"Vertex Position{row=2, column=2} is connected to: [(Intersection{position=Position{row=1, column=2}, stone=NONE} : Intersection{position=Position{row=2, column=2}, stone=NONE}), (Intersection{position=Position{row=2, column=1}, stone=NONE} : Intersection{position=Position{row=2, column=2}, stone=NONE})]\n" +
+"Vertex Position{row=1, column=2} is connected to: [(Intersection{position=Position{row=1, column=1}, stone=NONE} : Intersection{position=Position{row=1, column=2}, stone=NONE}), (Intersection{position=Position{row=1, column=2}, stone=NONE} : Intersection{position=Position{row=2, column=2}, stone=NONE})]\n";
 
     @Test
     void correctlyPrintRegion() {

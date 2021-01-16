@@ -12,7 +12,9 @@ public class Game {
 
     private Game(Board board) { this.board = board;  }
 
+    private Game(int boardSize) { this.board = Board.buildTestBoard(boardSize); }
     protected static Game buildTestGame(Board board) { return new Game(board); }
+    protected static Game buildTestGame(int boardSize) { return new Game(boardSize); }
 
     public void play(Stone player, Position position) throws Exception {
 
@@ -36,10 +38,10 @@ public class Game {
         lastPlay = player;
     }
 
+    //TODO: maybe rename this method to avoid overloading
     private boolean isIllegalMove(Stone player, Position position) {
         final Intersection intersection = board.intersectionAt(position);
-        return board.existsDiagonallyAdjacentWithStone(intersection, player) &&
-                !board.existsOrthogonallyAdjacentWithStone(intersection, player);
+        return isIllegalMove(player, intersection);
     }
 
     private boolean isIllegalMove(Stone player, Intersection intersection) {
@@ -52,12 +54,19 @@ public class Game {
     }
 
     private boolean isInvalidFirstPlayer(Stone player) {
-        return isARepeatedPlay(Stone.NONE) && player == Stone.WHITE;
+        return lastPlay == Stone.NONE && player == Stone.WHITE;
     }
 
     public boolean isPlayerAbleToMakeAMove(Stone player) {
-        return board.stream()
-                .filter(intersection -> !intersection.isOccupied())
+        return board.getEmptyIntersections()
                 .anyMatch(emptyIntersection -> !isIllegalMove(player, emptyIntersection));
+    }
+
+    public Stone getWinner() {
+        return board.colorWithCompleteChain();
+    }
+
+    public void applyPieRule() {
+        board.pie();
     }
 }

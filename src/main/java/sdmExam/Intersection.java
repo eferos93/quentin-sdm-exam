@@ -3,8 +3,6 @@ package sdmExam;
 import java.util.Objects;
 
 public class Intersection {
-    public static final int UPPER_AND_LEFT_EDGE_INDEX = 1;
-    public static final int LOWER_AND_RIGHT_EDGE_INDEX = 13;
     private final Position position;
     private Stone stone;
 
@@ -46,20 +44,8 @@ public class Intersection {
         return position.equals(getPosition());
     }
 
-    public boolean isCloseToEdge() {
-        return isCloseToUpperOrLowerEdge() || isCloseToRightOrLeftEdge();
-    }
-
-    public boolean isCloseToRightOrLeftEdge() {
-        return position.getColumn() == UPPER_AND_LEFT_EDGE_INDEX || position.getColumn() == LOWER_AND_RIGHT_EDGE_INDEX;
-    }
-
-    public boolean isCloseToUpperOrLowerEdge() {
-        return position.getRow() == UPPER_AND_LEFT_EDGE_INDEX || position.getRow() == LOWER_AND_RIGHT_EDGE_INDEX;
-    }
-
     public boolean isOccupied() {
-        return stone != Stone.NONE;
+        return !hasStone(Stone.NONE);
     }
 
     public boolean isOrthogonalTo(Intersection otherIntersection) {
@@ -84,6 +70,10 @@ public class Intersection {
 
     @Override
     public String toString() {
-        return position.toString();
+        return "Intersection{" +
+                "position=" + position +
+                ", stone=" + stone +
+                '}';
     }
+
 }

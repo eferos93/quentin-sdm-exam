@@ -1,36 +1,35 @@
 package sdmExam;
 
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Board {
-    public static final int BOARD_SIZE = 13;
+    private static final int DEFAULT_BOARD_SIZE = 13;
+    private final int TOP_AND_LEFT_EDGE_INDEX = 0;
+    private final int BOTTOM_AND_RIGHT_EDGE_INDEX;
+    private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
-    private final Region region = Region.getRegion();
-    private Stone lowerAndUpperEdgesColor = Stone.BLACK;
-    private Stone leftAndRightEdgesColor = Stone.WHITE;
+    private final Set<Edge> edges = EnumSet.of(Edge.BOTTOM, Edge.TOP, Edge.LEFT, Edge.RIGHT);
+    private final Map<Stone, List<Set<Intersection>>> chainsContainers = new HashMap<>();
 
-    public Board() {
-        List<Intersection> tmp = new ArrayList<>();
-        for (int row = 1; row <= BOARD_SIZE; row++) {
-            for (int column = 1; column <= BOARD_SIZE; column++) {
-                intersections.add(Intersection.empty(Position.in(row, column)));
-                tmp.add(Intersection.empty(Position.in(row, column)));
-            }
-        }
-
-        region.createGraph(tmp);
+    public Set<Edge> getEnumSet() {
+        return edges;
     }
 
-    private Board(int size) {
-        for (int row = 1; row <= size; row++) {
-            for (int column = 1; column <= size; column++) {
-                intersections.add(Intersection.empty(Position.in(row, column)));
+    public Board() {
+        this(DEFAULT_BOARD_SIZE);
+    }
+
+    private Board(int boardSize) {
+        this.BOARD_SIZE = boardSize;
+        this.BOTTOM_AND_RIGHT_EDGE_INDEX = boardSize + 1;
+        this.chainsContainers.put(Stone.BLACK, new ArrayList<>());
+        this.chainsContainers.put(Stone.WHITE, new ArrayList<>());
+        this.edges.forEach(edge -> edge.initialiseEdge(BOTTOM_AND_RIGHT_EDGE_INDEX));
+        for (int row = 1; row <= this.BOARD_SIZE; row++) {
+            for (int column = 1; column <= this.BOARD_SIZE; column++) {
+                this.intersections.add(Intersection.empty(Position.in(row, column)));
             }
         }
     }
@@ -46,28 +45,18 @@ public class Board {
     public void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
         Intersection intersection = intersectionAt(position);
         intersection.setStone(stone);
-        Intersection graphIntersection = region.getGraph().vertexSet().stream().filter(i -> i.isAt(position)).findFirst().get();
-        region.removeVertex(graphIntersection); // we are sure that it is present
+        updateChains(intersection);
     }
 
-    public void setLowerAndUpperEdgesColor(Stone color) {
-        this.lowerAndUpperEdgesColor = color;
-    }
-
-    public void setLeftAndRightEdgesColor(Stone color) {
-        this.leftAndRightEdgesColor = color;
-    }
-
-    public Stone getLowerAndUpperEdgesColor() {
-        return lowerAndUpperEdgesColor;
-    }
-
-    public Stone getLeftAndRightEdgesColor() {
-        return leftAndRightEdgesColor;
-    }
-
-    public Region getRegion() {
-        return this.region;
+    private void updateChains(Intersection updatedIntersection) {
+        List<Set<Intersection>> chainsOfGivenColor = chainsContainers.get(updatedIntersection.getStone());
+        List<Set<Intersection>> oldChains = chainsOfGivenColor.stream()
+                .filter(chain -> chain.stream().anyMatch(updatedIntersection::isOrthogonalTo))
+                .collect(Collectors.toList());
+        Set<Intersection> newChain = oldChains.stream().flatMap(Collection::stream).collect(Collectors.toSet());
+        newChain.add(updatedIntersection);
+        chainsOfGivenColor.removeAll(oldChains);
+        chainsOfGivenColor.add(newChain);
     }
 
     public boolean isOccupied(Position position) throws NoSuchElementException {
@@ -75,8 +64,13 @@ public class Board {
     }
 
     public void pie() {
-        setLowerAndUpperEdgesColor(Stone.WHITE);
-        setLeftAndRightEdgesColor(Stone.BLACK);
+        edges.forEach(edgePart -> {
+            if (edgePart.hasColor(Stone.BLACK)) {
+                edgePart.setColor(Stone.WHITE);
+            } else {
+                edgePart.setColor(Stone.BLACK);
+            }
+        });
     }
 
     public boolean existsOrthogonallyAdjacentWithStone(Intersection intersection, Stone stone) {
@@ -91,29 +85,29 @@ public class Board {
                 .anyMatch(diagonalIntersection -> diagonalIntersection.hasStone(stone));
     }
 
-    public List<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection) {
-        return intersections.stream().filter(i -> i.isOrthogonalTo(intersection)).collect(Collectors.toList());
+    protected Stone colorWithCompleteChain() {
+        return chainsContainers.entrySet().stream()
+                .filter(entry -> entry.getValue().stream()
+                        .anyMatch(chain -> chain.stream()
+                                .anyMatch(intersection -> isCloseToGivenEdge(intersection, TOP_AND_LEFT_EDGE_INDEX))
+                                && chain.stream()
+                                .anyMatch(intersection -> isCloseToGivenEdge(intersection, BOTTOM_AND_RIGHT_EDGE_INDEX))
+                        )
+                )
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(Stone.NONE);
     }
 
-    public List<Optional<Intersection>> getColoredIntersections(List<Intersection> intersections) {
-        return intersections.stream().filter(Intersection::isOccupied).map(Optional::of).collect(Collectors.toList());
+    private boolean isCloseToGivenEdge(Intersection intersection, int edgeIndex) {
+        return edges.stream()
+                .anyMatch(edge -> edge.hasColor(intersection.getStone())
+                        && edge.getEdgeIndex() == edgeIndex
+                        && edge.isAdjacentTo(intersection.getPosition())
+                );
     }
 
-    public List<List<Intersection>> getTerritories() {
-        List<List<Intersection>> regions = region.getConnectedComponents();
-        List<List<Intersection>> territories = new ArrayList<>();
-
-        // cannot remove from regions (ConcurrenctModidification not allowed)
-        regions.forEach(i -> {
-            if(i.stream().allMatch(j -> getColoredIntersections(getOrthogonalAdjacencyIntersections(j)).size() >= 2)){
-                territories.add(i);
-            }
-        });
-
-        return territories;
-    }
-
-    protected Stream<Intersection> stream() {
-        return intersections.stream();
+    protected Stream<Intersection> getEmptyIntersections() {
+        return intersections.stream().filter(intersection -> !intersection.isOccupied());
     }
 }
