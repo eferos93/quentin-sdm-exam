@@ -1,12 +1,14 @@
 package sdmExam;
 
 import org.jgrapht.Graph;
+import org.jgrapht.alg.connectivity.BiconnectivityInspector;
 import org.jgrapht.generate.GridGraphGenerator;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.traverse.DepthFirstIterator;
 import org.jgrapht.util.SupplierUtil;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Supplier;
@@ -47,6 +49,22 @@ public class Region {
 
     public void removeVertex(Intersection intersection) {
         graph.removeVertex(intersection);
+    }
+
+    public List<List<Intersection>> getConnectedComponents() {
+        BiconnectivityInspector<Intersection, DefaultEdge> biconnectivityInspector = new BiconnectivityInspector<>(graph);
+        List<Intersection> emptyIntersections = new ArrayList<>(graph.vertexSet());
+        List<List<Intersection>> regions = new ArrayList<>();
+
+        // TODO: try to use BiconnectivityInspector::getConnectedComponents
+        emptyIntersections.forEach(i -> {
+            if(regions.stream().noneMatch(j -> j.contains(i))) {
+                List<Intersection> region = new ArrayList<>(biconnectivityInspector.getConnectedComponent(i).vertexSet());
+                regions.add(region);
+            }
+        });
+
+        return regions;
     }
 
     public void printRegion() {

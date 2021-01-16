@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RegionShould {
 
@@ -100,6 +101,51 @@ public class RegionShould {
         region.removeVertex(intersection4);
 
         assertEquals(expected_region, region);
+    }
+
+    @Test
+    public void provideConnectedComponents() {
+        List<Intersection> intersections = new ArrayList<>();
+        List<Intersection> intersectionsToDelete = new ArrayList<>();
+        List<Intersection> expected_region1 = new ArrayList<>();
+        List<Intersection> expected_region2 = new ArrayList<>();
+
+        // TODO: less hardcoded
+        for(int row = 1; row <= 3; row++){
+            for(int column = 1; column <= 3; column++){
+                Intersection intersection = Intersection.empty(Position.in(row, column));
+                intersections.add(intersection);
+                if(column == 2) {
+                    intersectionsToDelete.add(intersection);
+                }else if (column == 1){
+                    expected_region1.add(intersection);
+                }else{
+                    expected_region2.add(intersection);
+                }
+            }
+        }
+
+        Region region = Region.getRegion();
+        region.createGraph(intersections);
+
+        region.removeVertex(intersectionsToDelete.get(0));
+        region.removeVertex(intersectionsToDelete.get(1));
+        region.removeVertex(intersectionsToDelete.get(2));
+
+        /*call Region::getConnectedComponents()*/
+        List<List<Intersection>> actualRegions = region.getConnectedComponents();
+        boolean matchRegion1, matchRegion2;
+
+        // TODO: refactor to make the comparison more readable
+
+        /*compare first region with expected first region*/
+        matchRegion1 = actualRegions.get(0).containsAll(expected_region1) &&
+                expected_region1.containsAll(actualRegions.get(0));
+        /*compare second region with expected second region*/
+        matchRegion2 = actualRegions.get(1).containsAll(expected_region2) &&
+                expected_region2.containsAll(actualRegions.get(1));
+
+        assertTrue(matchRegion1 && matchRegion2);
     }
 
     @AfterAll
