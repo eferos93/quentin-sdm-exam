@@ -10,6 +10,7 @@ public class Board {
     private final int BOTTOM_AND_RIGHT_EDGE_INDEX;
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
+    private final Region region = Region.getRegion();
     private final Set<Edge> edges = EnumSet.of(Edge.BOTTOM, Edge.TOP, Edge.LEFT, Edge.RIGHT);
     private final Map<Stone, List<Set<Intersection>>> chainsContainers = new HashMap<>();
 
@@ -27,15 +28,24 @@ public class Board {
         this.chainsContainers.put(Stone.BLACK, new ArrayList<>());
         this.chainsContainers.put(Stone.WHITE, new ArrayList<>());
         this.edges.forEach(edge -> edge.initialiseEdge(BOTTOM_AND_RIGHT_EDGE_INDEX));
+
+        List<Intersection> tmp = new ArrayList<>();
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
             for (int column = 1; column <= this.BOARD_SIZE; column++) {
                 this.intersections.add(Intersection.empty(Position.in(row, column)));
+                tmp.add(Intersection.empty(Position.in(row, column)));
             }
         }
+
+        region.createGraph(tmp);
     }
 
     protected static Board buildTestBoard(int size) {
         return new Board(size);
+    }
+
+    public Region getRegion() {
+        return this.region;
     }
 
     public Intersection intersectionAt(Position position) throws NoSuchElementException {
@@ -46,6 +56,11 @@ public class Board {
         Intersection intersection = intersectionAt(position);
         intersection.setStone(stone);
         updateChains(intersection);
+
+        if(region.getGraph().vertexSet().stream().anyMatch(i -> i.isAt(position))){
+            Intersection graphIntersection = region.getGraph().vertexSet().stream().filter(i -> i.isAt(position)).findFirst().get();
+            region.removeVertex(graphIntersection); // we are sure that it is present
+        }
     }
 
     private void updateChains(Intersection updatedIntersection) {
@@ -105,6 +120,28 @@ public class Board {
                         && edge.getEdgeIndex() == edgeIndex
                         && edge.isAdjacentTo(intersection.getPosition())
                 );
+    }
+
+    public List<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection) {
+        return intersections.stream().filter(i -> i.isOrthogonalTo(intersection)).collect(Collectors.toList());
+    }
+
+    public List<Optional<Intersection>> getColoredIntersections(List<Intersection> intersections) {
+        return intersections.stream().filter(Intersection::isOccupied).map(Optional::of).collect(Collectors.toList());
+    }
+
+    public List<List<Intersection>> getTerritories() {
+        List<List<Intersection>> regions = region.getConnectedComponents();
+        List<List<Intersection>> territories = new ArrayList<>();
+
+        // cannot remove from regions (ConcurrenctModidification not allowed)
+        regions.forEach(i -> {
+            if(i.stream().allMatch(j -> getColoredIntersections(getOrthogonalAdjacencyIntersections(j)).size() >= 2)){
+                territories.add(i);
+            }
+        });
+
+        return territories;
     }
 
     protected Stream<Intersection> getEmptyIntersections() {
