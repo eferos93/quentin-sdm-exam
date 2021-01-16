@@ -73,4 +73,12 @@ public enum Edge {
     protected boolean hasColor(Stone color) {
         return this.color == color;
     }
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "color=" + color +
+                ", edgeIndex=" + edgeIndex +
+                '}';
+    }
 }
