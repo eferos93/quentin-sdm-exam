@@ -99,6 +99,20 @@ public class Board {
         return intersections.stream().filter(Intersection::isOccupied).map(Optional::of).collect(Collectors.toList());
     }
 
+    public List<List<Intersection>> getTerritories() {
+        List<List<Intersection>> regions = region.getConnectedComponents();
+        List<List<Intersection>> territories = new ArrayList<>();
+
+        // cannot remove from regions (ConcurrenctModidification not allowed)
+        regions.forEach(i -> {
+            if(i.stream().allMatch(j -> getColoredIntersections(getOrthogonalAdjacencyIntersections(j)).size() >= 2)){
+                territories.add(i);
+            }
+        });
+
+        return territories;
+    }
+
     protected Stream<Intersection> stream() {
         return intersections.stream();
     }
