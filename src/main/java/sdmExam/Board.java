@@ -66,6 +66,10 @@ public class Board {
         return leftAndRightEdgesColor;
     }
 
+    public Region getRegion() {
+        return this.region;
+    }
+
     public boolean isOccupied(Position position) throws NoSuchElementException {
         return intersectionAt(position).isOccupied();
     }

@@ -127,4 +127,28 @@ public class BoardShould {
 
         assertEquals(expected_list, board.getColoredIntersections(intersections));
     }
+
+    @Test
+    public void modifyGridGraphAfterAddStone() {
+
+        List<Intersection> expected_intersections = new ArrayList<>();
+
+        // TODO: less hardcoded
+        for (int row = 1; row <= Board.BOARD_SIZE; row++) {
+            for (int column = 1; column <= Board.BOARD_SIZE; column++) {
+                if(row != 1 || column > 4)
+                    expected_intersections.add(Intersection.empty(Position.in(row, column)));
+            }
+        }
+
+        board.addStoneAt(Stone.BLACK, Position.in(1, 1));
+        board.addStoneAt(Stone.BLACK, Position.in(1, 2));
+        board.addStoneAt(Stone.BLACK, Position.in(1, 3));
+        board.addStoneAt(Stone.BLACK, Position.in(1, 4));
+
+        List<Intersection> board_intersections =
+                new ArrayList<>(board.getRegion().getGraph().vertexSet());
+
+        assertEquals(expected_intersections, board_intersections);
+    }
 }
