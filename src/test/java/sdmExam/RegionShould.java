@@ -1,10 +1,9 @@
+package sdmExam;
+
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
-import sdmExam.Intersection;
-import sdmExam.Position;
-import sdmExam.Region;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -76,6 +75,31 @@ public class RegionShould {
         region.printRegion();
 
         assertEquals(GRAPH_2_PER_2, fakeStandardOutput.toString());
+    }
+
+    @Test
+    public void dropNodeAccordingAddedStone() {
+
+        Intersection intersection1 = new Intersection(Position.in(1, 1), Stone.BLACK);
+        Intersection intersection2 = new Intersection(Position.in(1, 2), Stone.BLACK);
+        Intersection intersection3 = new Intersection(Position.in(2, 1), Stone.BLACK);
+        Intersection intersection4 = new Intersection(Position.in(2, 2), Stone.BLACK);
+
+        List<Intersection> intersections = new ArrayList<>();
+        intersections.add(intersection1);
+        intersections.add(intersection2);
+        intersections.add(intersection3);
+        intersections.add(intersection4);
+
+        Region expected_region = Region.getRegion();
+        expected_region.createGraph(intersections);
+        expected_region.getGraph().removeVertex(intersection4);
+
+        Region region = Region.getRegion();
+        region.createGraph(intersections);
+        region.removeVertex(intersection4);
+
+        assertEquals(expected_region, region);
     }
 
     @AfterAll

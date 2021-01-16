@@ -45,13 +45,16 @@ public class Region {
         generator.generateGraph(graph, null);
     }
 
+    public void removeVertex(Intersection intersection) {
+        graph.removeVertex(intersection);
+    }
+
     public void printRegion() {
 
         Iterator<Intersection> iter = new DepthFirstIterator<>(this.graph);
         while (iter.hasNext()) {
             Intersection vertex = iter.next();
-            System.out
-                    .println(
+            System.out.println(
                             "Vertex " + vertex.getPosition().toString() + " is connected to: "
                                     + this.graph.edgesOf(vertex).toString());
         }
