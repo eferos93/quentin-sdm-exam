@@ -1,10 +1,8 @@
 package sdmExam;
 
 import org.junit.jupiter.api.Test;
-
 import java.util.NoSuchElementException;
 import static sdmExam.Position.in;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BoardShould {
@@ -83,8 +81,4 @@ public class BoardShould {
         customBoard.addStoneAt(Stone.BLACK, in(3, 2));
         assertEquals(Stone.BLACK, customBoard.colorWithCompleteChain());
     }
-
-
-
-
 }
