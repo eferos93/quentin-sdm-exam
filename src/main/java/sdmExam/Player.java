@@ -2,7 +2,7 @@ package sdmExam;
 
 public class Player {
     private Stone color;
-    private String name;
+    private final String name;
 
     public Player(Stone color, String name) {
         this.color = color;

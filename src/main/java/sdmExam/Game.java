@@ -1,6 +1,7 @@
 package sdmExam;
 
 import sdmExam.exceptions.*;
+import java.util.stream.Stream;
 
 public class Game {
     private final Board board;
@@ -71,7 +72,6 @@ public class Game {
     }
 
     public void applyPieRule() {
-        playerOne.changeSide();
-        playerTwo.changeSide();
+        Stream.of(playerOne, playerTwo).forEach(Player::changeSide);
     }
 }
