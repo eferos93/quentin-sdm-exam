@@ -126,10 +126,15 @@ public class BoardShould {
     @Test
     public void getCorrectTerritories() {
         Board customBoard = Board.buildTestBoard(4);
-        //System.out.println(customBoard.getRegionsContainer());
         customBoard.addStoneAt(Stone.BLACK, in(1, 2));
         customBoard.addStoneAt(Stone.WHITE, in(2, 1));
-        assertEquals(customBoard.getTerritories().size(), 1);
+        List<Set<Intersection>> territories = customBoard.getTerritories();
+        assertEquals(territories.size(), 1);
+        assertTrue(territories.stream()
+                .anyMatch(territory -> territory.stream()
+                        .allMatch(intersection -> intersection.getPosition().equals(in(1, 1)))
+                )
+        );
     }
 
 //    @Test

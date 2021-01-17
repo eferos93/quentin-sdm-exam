@@ -52,10 +52,6 @@ public class Board {
         regionsContainer.updateRegionContainer(intersection);
         intersection.setStone(stone);
         updateChains(intersection);
-//        if(regionsContainer.getGraph().vertexSet().stream().anyMatch(i -> i.isAt(position))){
-//            Intersection graphIntersection = regionsContainer.getGraph().vertexSet().stream().filter(i -> i.isAt(position)).findFirst().get();
-//            regionsContainer.removeVertex(graphIntersection); // we are sure that it is present
-//        }
     }
 
     private void updateChains(Intersection updatedIntersection) {
@@ -117,7 +113,7 @@ public class Board {
     private boolean isOrthogonalToAtLeastTwoStones(Intersection intersection) {
         return intersections.stream()
                 .filter(intersection::isOrthogonalTo)
-                .filter(orthogonalIntersection -> !orthogonalIntersection.isOccupied())
+                .filter(Intersection::isOccupied)
                 .count() >= 2;
     }
 
