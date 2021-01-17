@@ -1,7 +1,6 @@
 package sdmExam;
 
 import sdmExam.UI.Graphics;
-import sdmExam.UI.PrintBoard;
 
 import java.util.Scanner;
 
@@ -14,7 +13,6 @@ public class Main {
         Graphics.printTitle();
         Graphics.Instructions();
         Graphics.BlackPlayerPlayFirst();
-        PrintBoard.Print(board);
         Graphics.FillEdges(board);
         Graphics.Set(Stone.BLACK,board, game);
         Graphics.Pie();
