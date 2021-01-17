@@ -169,6 +169,7 @@ public class BoardShould {
         assertEquals(expectedTerritory,territoryToBeFilled);
     }
 
+    @Test
     public void fillingTerritoryWithDifferentNumberOfStone(){
         Board customBoard = new Board();
         IntStream.range(1, 6).forEach(y -> customBoard.addStoneAt(Stone.WHITE, in(7,y)));
