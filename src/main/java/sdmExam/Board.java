@@ -49,9 +49,9 @@ public class Board {
 
     public void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
         Intersection intersection = intersectionAt(position);
+        regionsContainer.updateRegionContainer(intersection);
         intersection.setStone(stone);
         updateChains(intersection);
-        regionsContainer.updateRegionContainer(intersection);
 //        if(regionsContainer.getGraph().vertexSet().stream().anyMatch(i -> i.isAt(position))){
 //            Intersection graphIntersection = regionsContainer.getGraph().vertexSet().stream().filter(i -> i.isAt(position)).findFirst().get();
 //            regionsContainer.removeVertex(graphIntersection); // we are sure that it is present
@@ -96,26 +96,34 @@ public class Board {
         return intersections.stream().filter(intersection -> !intersection.isOccupied());
     }
 
-    public List<Optional<Intersection>> getColoredIntersections(List<Intersection> intersections) {
-        return intersections.stream().filter(Intersection::isOccupied).map(Optional::of).collect(Collectors.toList());
-    }
-
     //TODO: don't know if it's useful to get the territories or just act on them
     public List<Set<Intersection>> getTerritories() {
-        List<Set<Intersection>> regions = regionsContainer.getRegions();
-        List<Set<Intersection>> territories = new ArrayList<>();
+        return regionsContainer.getRegions().stream()
+                .filter(region -> region.stream().allMatch(this::isOrthogonalToAtLeastTwoStones))
+                .collect(Collectors.toList());
+//        List<Set<Intersection>> regions = regionsContainer.getRegions();
+//        List<Set<Intersection>> territories = new ArrayList<>();
+//
+//        // cannot remove from regions (ConcurrenctModidification not allowed)
+//        regions.forEach(i -> {
+//            if(i.stream().allMatch(j -> getColoredIntersections(getOrthogonalAdjacencyIntersections(j)).size() >= 2)){
+//                territories.add(i);
+//            }
+//        });
+//
+//        return territories;
+    }
 
-        // cannot remove from regions (ConcurrenctModidification not allowed)
-        regions.forEach(i -> {
-            if(i.stream().allMatch(j -> getColoredIntersections(getOrthogonalAdjacencyIntersections(j)).size() >= 2)){
-                territories.add(i);
-            }
-        });
-
-        return territories;
+    private boolean isOrthogonalToAtLeastTwoStones(Intersection intersection) {
+        return intersections.stream()
+                .filter(intersection::isOrthogonalTo)
+                .filter(orthogonalIntersection -> !orthogonalIntersection.isOccupied())
+                .count() >= 2;
     }
 
     public List<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection) {
-        return intersections.stream().filter(i -> i.isOrthogonalTo(intersection)).collect(Collectors.toList());
+        return intersections.stream()
+                .filter(otherIntersection -> otherIntersection.isOrthogonalTo(intersection))
+                .collect(Collectors.toList());
     }
 }

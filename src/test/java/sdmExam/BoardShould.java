@@ -124,31 +124,12 @@ public class BoardShould {
     }
 
     @Test
-    public void verifyColoredOrthogonalAdjacencyList() {
-        List<Optional<Intersection>> expected_list;
-        ArrayList<Intersection> list = new ArrayList<>();
-        ArrayList<Intersection> intersections = new ArrayList<>();
-
-        // TODO: make it general
-        Intersection intersection1 = board.intersectionAt(in(1, 1));
-        Intersection intersection2 = board.intersectionAt(in(1, 2));
-        Intersection intersection3 = board.intersectionAt(in(2, 1));
-
-        intersection1.setStone(Stone.NONE);
-        intersection2.setStone(Stone.BLACK);
-        intersection3.setStone(Stone.WHITE);
-
-        list.add(intersection2);
-        list.add(intersection3);
-
-        // Board::getColoredIntersections returns a List<Optional<Intersection>>
-        expected_list = list.stream().map(Optional::of).collect(Collectors.toList());
-
-        intersections.add(intersection1);
-        intersections.add(intersection2);
-        intersections.add(intersection3);
-
-        assertEquals(expected_list, board.getColoredIntersections(intersections));
+    public void getCorrectTerritories() {
+        Board customBoard = Board.buildTestBoard(4);
+        //System.out.println(customBoard.getRegionsContainer());
+        customBoard.addStoneAt(Stone.BLACK, in(1, 2));
+        customBoard.addStoneAt(Stone.WHITE, in(2, 1));
+        assertEquals(customBoard.getTerritories().size(), 1);
     }
 
 //    @Test
