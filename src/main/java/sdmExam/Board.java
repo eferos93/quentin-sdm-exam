@@ -8,7 +8,7 @@ public class Board {
     protected static final int DEFAULT_BOARD_SIZE = 13;
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
-    private final Region region = Region.getRegion();
+    private final Region region = Region.getRegions();
     private final Set<Edge> edges = EnumSet.of(Edge.BOTTOM, Edge.TOP, Edge.LEFT, Edge.RIGHT);
     private final Map<Stone, Chain> chainsContainer = new HashMap<>() {{
         put(Stone.BLACK, new Chain());
@@ -32,7 +32,7 @@ public class Board {
             }
         }
 
-        region.createGraph(tmp);
+        region.createGraph(tmp, boardSize);
     }
 
     protected static Board buildTestBoard(int size) {

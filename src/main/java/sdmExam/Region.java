@@ -16,20 +16,20 @@ import java.util.function.Supplier;
 import static java.lang.Math.sqrt;
 
 public class Region {
-    private static final Region region = new Region();
+    private static final Region regions = new Region();
     private Graph<Intersection, DefaultEdge> graph;
 
     private Region(){}
 
-    public static Region getRegion(){
-        return region;
+    public static Region getRegions(){
+        return regions;
     }
 
     public Graph<Intersection, DefaultEdge> getGraph() {
         return this.graph;
     }
 
-    public void createGraph(List<Intersection> emptyIntersections) {
+    public void createGraph(List<Intersection> emptyIntersections, int boardSize) {
 
         Supplier<Intersection> vertexSupplier = new Supplier<>() {
             private int index = 0;
@@ -40,7 +40,6 @@ public class Region {
             }
         };
 
-        int boardSize = (int) sqrt(emptyIntersections.size());
         graph = new SimpleGraph<>(vertexSupplier, SupplierUtil.createDefaultEdgeSupplier(), false);
 
         new GridGraphGenerator<Intersection, DefaultEdge>(boardSize, boardSize).generateGraph(graph, null);

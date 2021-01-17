@@ -25,7 +25,7 @@ public class RegionShould {
             }
         }
 
-        Region expected_region = Region.getRegion();
+        Region expected_region = Region.getRegions();
         Graph<Intersection, DefaultEdge> graph = expected_region.getGraph();
 
         graph.addVertex(intersections.get(0));
@@ -45,8 +45,8 @@ public class RegionShould {
         graph.addEdge(intersections.get(3), intersections.get(1));
         graph.addEdge(intersections.get(3), intersections.get(2));
 
-        Region region = Region.getRegion();
-        region.createGraph(intersections);
+        Region region = Region.getRegions();
+        region.createGraph(intersections, 2);
 
         assertEquals(expected_region, region);
     }
@@ -69,8 +69,8 @@ public class RegionShould {
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
 
-        Region region = Region.getRegion();
-        region.createGraph(intersections);
+        Region region = Region.getRegions();
+        region.createGraph(intersections, 2);
         region.printRegion();
 
         assertEquals(GRAPH_2_PER_2, fakeStandardOutput.toString());
@@ -90,12 +90,12 @@ public class RegionShould {
         intersections.add(intersection3);
         intersections.add(intersection4);
 
-        Region expected_region = Region.getRegion();
-        expected_region.createGraph(intersections);
+        Region expected_region = Region.getRegions();
+        expected_region.createGraph(intersections, 2);
         expected_region.getGraph().removeVertex(intersection4);
 
-        Region region = Region.getRegion();
-        region.createGraph(intersections);
+        Region region = Region.getRegions();
+        region.createGraph(intersections, 2);
         region.removeVertex(intersection4);
 
         assertEquals(expected_region, region);
@@ -123,8 +123,8 @@ public class RegionShould {
             }
         }
 
-        Region region = Region.getRegion();
-        region.createGraph(intersections);
+        Region region = Region.getRegions();
+        region.createGraph(intersections, 3);
 
         region.removeVertex(intersectionsToDelete.get(0));
         region.removeVertex(intersectionsToDelete.get(1));
