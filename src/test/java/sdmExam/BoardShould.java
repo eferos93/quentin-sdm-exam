@@ -6,7 +6,9 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
 import java.util.*;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -151,4 +153,18 @@ public class BoardShould {
                 .allMatch(expectedTerritory::containsAll)
         );
     }
+
+    @Test
+    public void fillingTerritory(){
+        Board customBoard = new Board();
+        IntStream.range(1, 13).forEach(y -> customBoard.addStoneAt(Stone.WHITE, in(7,y)));
+        IntStream.range(1, 13).forEach(y -> customBoard.addStoneAt(Stone.BLACK, in(9,y)));
+        List<Intersection> expectedTerritory = new ArrayList<>();
+        IntStream.range(1, 13).forEach(y -> expectedTerritory.add(customBoard.intersectionAt(in(8,y))));
+        IntStream.range(1, 13).forEach(y -> customBoard.addStoneAt(Stone.WHITE,in(8,y)));
+        List<Intersection> territoryToBeFilled = new ArrayList<>();
+        customBoard.fillTerritory(territoryToBeFilled, Stone.BLACK);
+        assertEquals(expectedTerritory,territoryToBeFilled);
+    }
+
 }

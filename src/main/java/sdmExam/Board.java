@@ -2,7 +2,10 @@ package sdmExam;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import static sdmExam.Position.in;
 
 public class Board {
     protected static final int DEFAULT_BOARD_SIZE = 13;
@@ -26,7 +29,7 @@ public class Board {
 
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
             for (int column = 1; column <= this.BOARD_SIZE; column++) {
-                this.intersections.add(Intersection.empty(Position.in(row, column)));
+                this.intersections.add(Intersection.empty(in(row, column)));
             }
         }
 
@@ -104,5 +107,10 @@ public class Board {
         return intersections.stream()
                 .filter(otherIntersection -> otherIntersection.isOrthogonalTo(intersection))
                 .collect(Collectors.toList());
+    }
+
+    public void fillTerritory(List<Intersection> territory, Stone lastplay){
+        IntStream.range(1, 13).forEach(y -> territory.add(intersectionAt(in(8,y))));
+        IntStream.range(1, 13).forEach(y -> addStoneAt(Stone.WHITE,in(8,y)));
     }
 }
