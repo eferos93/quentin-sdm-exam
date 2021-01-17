@@ -5,9 +5,7 @@ import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.generate.GridGraphGenerator;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
-import org.jgrapht.traverse.DepthFirstIterator;
 import org.jgrapht.util.SupplierUtil;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -47,29 +45,23 @@ public class Region {
 
     public List<Set<Intersection>> getConnectedComponents() {
         return new ConnectivityInspector<>(graph).connectedSets();
-//        BiconnectivityInspector<Intersection, DefaultEdge> biconnectivityInspector = new BiconnectivityInspector<>(graph);
-//        List<Intersection> emptyIntersections = new ArrayList<>(graph.vertexSet());
-//        List<List<Intersection>> regions = new ArrayList<>();
-//
-//        // TODO: try to use BiconnectivityInspector::getConnectedComponents
-//        emptyIntersections.forEach(i -> {
-//            if(regions.stream().noneMatch(j -> j.contains(i))) {
-//                List<Intersection> region = new ArrayList<>(biconnectivityInspector.getConnectedComponent(i).vertexSet());
-//                regions.add(region);
-//            }
-//        });
-//
-//        return regions;
     }
 
-    public void printRegion() {
+//    public void printRegion() {
+//
+//        Iterator<Intersection> iter = new DepthFirstIterator<>(this.graph);
+//        while (iter.hasNext()) {
+//            Intersection vertex = iter.next();
+//            System.out.println(
+//                            "Vertex " + vertex.getPosition().toString() + " is connected to: "
+//                                    + this.graph.edgesOf(vertex).toString());
+//        }
+//    }
 
-        Iterator<Intersection> iter = new DepthFirstIterator<>(this.graph);
-        while (iter.hasNext()) {
-            Intersection vertex = iter.next();
-            System.out.println(
-                            "Vertex " + vertex.getPosition().toString() + " is connected to: "
-                                    + this.graph.edgesOf(vertex).toString());
-        }
+    @Override
+    public String toString() {
+        return "Region{" +
+                "graph=" + graph +
+                '}';
     }
 }

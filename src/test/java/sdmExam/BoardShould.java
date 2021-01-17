@@ -170,7 +170,7 @@ public class BoardShould {
         board.addStoneAt(Stone.BLACK, in(1, 4));
 
         List<Intersection> board_intersections =
-                new ArrayList<>(board.getRegion().getGraph().vertexSet());
+                new ArrayList<>(board.getRegionsContainer().getGraph().vertexSet());
 
         assertEquals(expected_intersections, board_intersections);
     }

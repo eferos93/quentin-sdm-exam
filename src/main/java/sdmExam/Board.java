@@ -8,7 +8,7 @@ public class Board {
     protected static final int DEFAULT_BOARD_SIZE = 13;
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
-    private final Region region = Region.getRegions();
+    private final Region regionsContainer = Region.getRegions();
     private final Set<Edge> edges = EnumSet.of(Edge.BOTTOM, Edge.TOP, Edge.LEFT, Edge.RIGHT);
     private final Map<Stone, Chain> chainsContainer = new HashMap<>() {{
         put(Stone.BLACK, new Chain());
@@ -32,15 +32,15 @@ public class Board {
             }
         }
 
-        region.createGraph(tmp, boardSize);
+        regionsContainer.createGraph(tmp, boardSize);
     }
 
     protected static Board buildTestBoard(int size) {
         return new Board(size);
     }
 
-    public Region getRegion() {
-        return this.region;
+    public Region getRegionsContainer() {
+        return this.regionsContainer;
     }
 
     public Intersection intersectionAt(Position position) throws NoSuchElementException {
@@ -52,9 +52,9 @@ public class Board {
         intersection.setStone(stone);
         updateChains(intersection);
 
-        if(region.getGraph().vertexSet().stream().anyMatch(i -> i.isAt(position))){
-            Intersection graphIntersection = region.getGraph().vertexSet().stream().filter(i -> i.isAt(position)).findFirst().get();
-            region.removeVertex(graphIntersection); // we are sure that it is present
+        if(regionsContainer.getGraph().vertexSet().stream().anyMatch(i -> i.isAt(position))){
+            Intersection graphIntersection = regionsContainer.getGraph().vertexSet().stream().filter(i -> i.isAt(position)).findFirst().get();
+            regionsContainer.removeVertex(graphIntersection); // we are sure that it is present
         }
     }
 
@@ -100,8 +100,9 @@ public class Board {
         return intersections.stream().filter(Intersection::isOccupied).map(Optional::of).collect(Collectors.toList());
     }
 
+    //TODO: don't know if it's useful to get the territories or just act on them
     public List<Set<Intersection>> getTerritories() {
-        List<Set<Intersection>> regions = region.getConnectedComponents();
+        List<Set<Intersection>> regions = regionsContainer.getConnectedComponents();
         List<Set<Intersection>> territories = new ArrayList<>();
 
         // cannot remove from regions (ConcurrenctModidification not allowed)
