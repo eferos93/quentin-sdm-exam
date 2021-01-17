@@ -16,7 +16,7 @@ public class Region {
 
     private Region(){}
 
-    public static Region getRegions(){
+    public static Region getRegionsContainer(){
         return regions;
     }
 
@@ -39,24 +39,13 @@ public class Region {
         new GridGraphGenerator<Intersection, DefaultEdge>(boardSize, boardSize).generateGraph(graph, null);
     }
 
-    public void removeVertex(Intersection intersection) {
+    public void updateRegionContainer(Intersection intersection) {
         graph.removeVertex(intersection);
     }
 
-    public List<Set<Intersection>> getConnectedComponents() {
+    public List<Set<Intersection>> getRegions() {
         return new ConnectivityInspector<>(graph).connectedSets();
     }
-
-//    public void printRegion() {
-//
-//        Iterator<Intersection> iter = new DepthFirstIterator<>(this.graph);
-//        while (iter.hasNext()) {
-//            Intersection vertex = iter.next();
-//            System.out.println(
-//                            "Vertex " + vertex.getPosition().toString() + " is connected to: "
-//                                    + this.graph.edgesOf(vertex).toString());
-//        }
-//    }
 
     @Override
     public String toString() {

@@ -8,7 +8,7 @@ public class Board {
     protected static final int DEFAULT_BOARD_SIZE = 13;
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
-    private final Region regionsContainer = Region.getRegions();
+    private final Region regionsContainer = Region.getRegionsContainer();
     private final Set<Edge> edges = EnumSet.of(Edge.BOTTOM, Edge.TOP, Edge.LEFT, Edge.RIGHT);
     private final Map<Stone, Chain> chainsContainer = new HashMap<>() {{
         put(Stone.BLACK, new Chain());
@@ -23,16 +23,16 @@ public class Board {
         this.BOARD_SIZE =  boardSize;
         Edge.setBoardSize(boardSize);
         this.edges.forEach(Edge::initialiseEdge);
-        List<Intersection> tmp = new ArrayList<>();
+        //List<Intersection> tmp = new ArrayList<>();
 
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
             for (int column = 1; column <= this.BOARD_SIZE; column++) {
                 this.intersections.add(Intersection.empty(Position.in(row, column)));
-                tmp.add(Intersection.empty(Position.in(row, column)));
+                //tmp.add(Intersection.empty(Position.in(row, column)));
             }
         }
 
-        regionsContainer.createGraph(tmp, boardSize);
+        regionsContainer.createGraph(this.intersections, boardSize);
     }
 
     protected static Board buildTestBoard(int size) {
@@ -51,11 +51,11 @@ public class Board {
         Intersection intersection = intersectionAt(position);
         intersection.setStone(stone);
         updateChains(intersection);
-
-        if(regionsContainer.getGraph().vertexSet().stream().anyMatch(i -> i.isAt(position))){
-            Intersection graphIntersection = regionsContainer.getGraph().vertexSet().stream().filter(i -> i.isAt(position)).findFirst().get();
-            regionsContainer.removeVertex(graphIntersection); // we are sure that it is present
-        }
+        regionsContainer.updateRegionContainer(intersection);
+//        if(regionsContainer.getGraph().vertexSet().stream().anyMatch(i -> i.isAt(position))){
+//            Intersection graphIntersection = regionsContainer.getGraph().vertexSet().stream().filter(i -> i.isAt(position)).findFirst().get();
+//            regionsContainer.removeVertex(graphIntersection); // we are sure that it is present
+//        }
     }
 
     private void updateChains(Intersection updatedIntersection) {
@@ -102,7 +102,7 @@ public class Board {
 
     //TODO: don't know if it's useful to get the territories or just act on them
     public List<Set<Intersection>> getTerritories() {
-        List<Set<Intersection>> regions = regionsContainer.getConnectedComponents();
+        List<Set<Intersection>> regions = regionsContainer.getRegions();
         List<Set<Intersection>> territories = new ArrayList<>();
 
         // cannot remove from regions (ConcurrenctModidification not allowed)
