@@ -8,7 +8,7 @@ public class Board {
     protected static final int DEFAULT_BOARD_SIZE = 13;
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
-    private final Region regionsContainer = Region.getRegionsContainer();
+    private final RegionContainer regionsContainer = RegionContainer.getRegionsContainer();
     private final Set<Edge> edges = EnumSet.of(Edge.BOTTOM, Edge.TOP, Edge.LEFT, Edge.RIGHT);
     private final Map<Stone, Chain> chainsContainer = new HashMap<>() {{
         put(Stone.BLACK, new Chain());
@@ -23,12 +23,10 @@ public class Board {
         this.BOARD_SIZE =  boardSize;
         Edge.setBoardSize(boardSize);
         this.edges.forEach(Edge::initialiseEdge);
-        //List<Intersection> tmp = new ArrayList<>();
 
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
             for (int column = 1; column <= this.BOARD_SIZE; column++) {
                 this.intersections.add(Intersection.empty(Position.in(row, column)));
-                //tmp.add(Intersection.empty(Position.in(row, column)));
             }
         }
 
@@ -39,7 +37,7 @@ public class Board {
         return new Board(size);
     }
 
-    public Region getRegionsContainer() {
+    public RegionContainer getRegionsContainer() {
         return this.regionsContainer;
     }
 
@@ -97,17 +95,6 @@ public class Board {
         return regionsContainer.getRegions().stream()
                 .filter(region -> region.stream().allMatch(this::isOrthogonalToAtLeastTwoStones))
                 .collect(Collectors.toList());
-//        List<Set<Intersection>> regions = regionsContainer.getRegions();
-//        List<Set<Intersection>> territories = new ArrayList<>();
-//
-//        // cannot remove from regions (ConcurrenctModidification not allowed)
-//        regions.forEach(i -> {
-//            if(i.stream().allMatch(j -> getColoredIntersections(getOrthogonalAdjacencyIntersections(j)).size() >= 2)){
-//                territories.add(i);
-//            }
-//        });
-//
-//        return territories;
     }
 
     private boolean isOrthogonalToAtLeastTwoStones(Intersection intersection) {

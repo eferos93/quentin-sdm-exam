@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public class Region {
-    private static final Region regions = new Region();
+public class RegionContainer {
+    private static final RegionContainer regionContainer = new RegionContainer();
     private Graph<Intersection, DefaultEdge> graph;
 
-    private Region(){}
+    private RegionContainer(){}
 
-    public static Region getRegionsContainer(){
-        return regions;
+    public static RegionContainer getRegionsContainer(){
+        return regionContainer;
     }
 
     public Graph<Intersection, DefaultEdge> getGraph() {
