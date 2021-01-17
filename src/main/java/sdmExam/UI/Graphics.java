@@ -18,11 +18,12 @@ public class Graphics {
 
     public static void BlackPlayerPlayFirst() {System.out.println(Message.BLACKPLAYFIRST);}
     public static void FillEdges(Board board){
-        IntStream.range(1,15).forEach(y-> board.addStoneAt(Stone.WHITE,new Position(1,y)));
-        IntStream.range(1,15).forEach(y-> board.addStoneAt(Stone.WHITE,new Position(14,y)));
-        IntStream.range(2,14).forEach(x-> board.addStoneAt(Stone.BLACK,new Position(x,1)));
-        IntStream.range(2,14).forEach(x-> board.addStoneAt(Stone.BLACK,new Position(x,14)));
+        IntStream.range(2,15).forEach(y-> board.addStoneAt(Stone.WHITE,new Position(1,y)));
+        IntStream.range(2,15).forEach(y-> board.addStoneAt(Stone.WHITE,new Position(15,y)));
+        IntStream.range(2,15).forEach(x-> board.addStoneAt(Stone.BLACK,new Position(x,1)));
+        IntStream.range(2,15).forEach(x-> board.addStoneAt(Stone.BLACK,new Position(x,15)));
         PrintBoard.Print(board);
+
     }
     public static void Set(Stone stone, Board board, Game game) throws  Exception  {
         System.out.println(Message.CHOOSE_X);
