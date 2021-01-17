@@ -2,7 +2,6 @@ package sdmExam;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static sdmExam.Position.in;
@@ -110,10 +109,42 @@ public class Board {
     }
 
     public void fillTerritory(List<Intersection> territory, Stone lastplay){
-        IntStream.range(1, 13).forEach(y -> territory.add(intersectionAt(in(8,y))));
-        if(lastplay == Stone.BLACK)
-        IntStream.range(1, 13).forEach(y -> addStoneAt(Stone.WHITE,in(8,y)));
-        else if(lastplay == Stone.WHITE)
-            IntStream.range(1, 13).forEach(y -> addStoneAt(Stone.BLACK,in(8,y)));
+
+        int i;
+        int j;
+
+        List<Intersection> neutralList = new ArrayList<>();
+        List<Intersection> listAdj;
+
+        for(i=0; i<territory.size(); i++) {
+            listAdj = getOrthogonalAdjacencyIntersections(territory.get(i));
+            for(j=0;j<getOrthogonalAdjacencyIntersections(territory.get(i)).size();j++){
+                neutralList.add(listAdj.get(j));
+            }
+            listAdj.clear();
+        }
+        int counterBlackStone = 0;
+        int counterWhiteStone = 0;
+        for(i=0;i<neutralList.size();i++){
+            if(neutralList.get(i).getStone()== Stone.BLACK)
+                counterBlackStone++;
+            else if(neutralList.get(i).getStone() == Stone.WHITE)
+                counterWhiteStone++;
+        }
+        if(counterBlackStone>counterWhiteStone) {
+            for (i = 0; i < territory.size(); i++) {
+                territory.get(i).setStone(Stone.BLACK);
+            }
+        }else if(counterWhiteStone>counterBlackStone){
+            for (i = 0; i < territory.size(); i++)
+                territory.get(i).setStone(Stone.WHITE);
+        }else {
+            if (lastplay == Stone.BLACK)
+                territory.get(i).setStone(Stone.WHITE);
+            else //it means that lasPlay was performed by White
+                territory.get(i).setStone(Stone.BLACK);
+        }
+
     }
+
 }

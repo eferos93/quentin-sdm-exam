@@ -155,16 +155,38 @@ public class BoardShould {
     }
 
     @Test
-    public void fillingTerritoryWithEqualNumberOfStone(){
-        Board customBoard = new Board();
-        IntStream.range(1, 13).forEach(y -> customBoard.addStoneAt(Stone.WHITE, in(7,y)));
-        IntStream.range(1, 13).forEach(y -> customBoard.addStoneAt(Stone.BLACK, in(9,y)));
+    public void fillingTerritoryWithEqualNumberOfStoneOfTheSameColor(){
+        Board customBoardEq = new Board();
+        IntStream.range(1, 13).forEach(y -> customBoardEq.addStoneAt(Stone.WHITE, in(7,y)));
+        IntStream.range(1, 13).forEach(y -> customBoardEq.addStoneAt(Stone.BLACK, in(9,y)));
         List<Intersection> expectedTerritory = new ArrayList<>();
-        IntStream.range(1, 13).forEach(y -> expectedTerritory.add(customBoard.intersectionAt(in(8,y))));
-        IntStream.range(1, 13).forEach(y -> customBoard.addStoneAt(Stone.WHITE,in(8,y)));
+        IntStream.range(1, 13).forEach(y -> expectedTerritory.add(customBoardEq.intersectionAt(in(8,y))));
+        IntStream.range(1, 13).forEach(y -> customBoardEq.addStoneAt(Stone.WHITE,in(8,y)));
         List<Intersection> territoryToBeFilled = new ArrayList<>();
-        customBoard.fillTerritory(territoryToBeFilled, Stone.BLACK);
+        IntStream.range(1, 13).forEach(y -> territoryToBeFilled.add(customBoardEq.intersectionAt(in(8,y))));
+        Stone lastPlay = Stone.BLACK;
+        customBoardEq.fillTerritory(territoryToBeFilled, lastPlay);
         assertEquals(expectedTerritory,territoryToBeFilled);
     }
+
+    public void fillingTerritoryWithDifferentNumberOfStone(){
+        Board customBoard = new Board();
+        IntStream.range(1, 6).forEach(y -> customBoard.addStoneAt(Stone.WHITE, in(7,y)));
+        IntStream.range(6, 13).forEach(y -> customBoard.addStoneAt(Stone.BLACK, in(9,y)));
+        IntStream.range(1, 4).forEach(y -> customBoard.addStoneAt(Stone.WHITE, in(7,y)));
+        IntStream.range(4, 13).forEach(y -> customBoard.addStoneAt(Stone.BLACK, in(9,y)));
+
+        List<Intersection> expectedTerritory = new ArrayList<>();
+        IntStream.range(1, 13).forEach(y -> expectedTerritory.add(customBoard.intersectionAt(in(8,y))));
+        //Since i have more black stones i'm expecting to fill with black stones the territory
+        IntStream.range(1, 13).forEach(y -> customBoard.addStoneAt(Stone.BLACK,in(8,y)));
+
+        List<Intersection> territoryToBeFilled = new ArrayList<>();
+        IntStream.range(1, 13).forEach(y -> territoryToBeFilled.add(customBoard.intersectionAt(in(8,y))));
+        Stone lastPlay = Stone.BLACK;
+        customBoard.fillTerritory(territoryToBeFilled, lastPlay);
+        assertEquals(expectedTerritory,territoryToBeFilled);
+    }
+
 
 }
