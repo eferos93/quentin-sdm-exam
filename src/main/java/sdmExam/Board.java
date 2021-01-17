@@ -2,6 +2,7 @@ package sdmExam;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static sdmExam.Position.in;
@@ -110,6 +111,7 @@ public class Board {
 
     public void fillTerritory(List<Intersection> territory, Stone lastplay){
 
+
         int i;
         int j;
 
@@ -132,17 +134,14 @@ public class Board {
                 counterWhiteStone++;
         }
         if(counterBlackStone>counterWhiteStone) {
-            for (i = 0; i < territory.size(); i++) {
-                territory.get(i).setStone(Stone.BLACK);
-            }
+            IntStream.range(1, territory.size()).forEach(index -> territory.get(index).setStone(Stone.BLACK));
         }else if(counterWhiteStone>counterBlackStone){
-            for (i = 0; i < territory.size(); i++)
-                territory.get(i).setStone(Stone.WHITE);
+            IntStream.range(1, territory.size()).forEach(index -> territory.get(index).setStone(Stone.WHITE));
         }else {
             if (lastplay == Stone.BLACK)
-                territory.get(i).setStone(Stone.WHITE);
+                IntStream.range(1, territory.size()).forEach(index -> territory.get(index).setStone(Stone.WHITE));
             else //it means that lasPlay was performed by White
-                territory.get(i).setStone(Stone.BLACK);
+                IntStream.range(1, territory.size()).forEach(index -> territory.get(index).setStone(Stone.BLACK));
         }
 
     }
