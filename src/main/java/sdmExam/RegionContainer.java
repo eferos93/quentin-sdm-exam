@@ -14,9 +14,9 @@ public class RegionContainer {
     private static final RegionContainer regionContainer = new RegionContainer();
     private Graph<Intersection, DefaultEdge> graph;
 
-    private RegionContainer(){}
+    private RegionContainer() {}
 
-    public static RegionContainer getRegionsContainer(){
+    protected static RegionContainer getRegionsContainer(){
         return regionContainer;
     }
 
@@ -24,7 +24,7 @@ public class RegionContainer {
         return this.graph;
     }
 
-    public void createGraph(List<Intersection> emptyIntersections, int boardSize) {
+    protected void createGraph(List<Intersection> emptyIntersections, int boardSize) {
 
         Supplier<Intersection> vertexSupplier = new Supplier<>() {
             private int index = 0;
@@ -39,11 +39,11 @@ public class RegionContainer {
         new GridGraphGenerator<Intersection, DefaultEdge>(boardSize, boardSize).generateGraph(graph, null);
     }
 
-    public void updateRegionContainer(Intersection intersection) {
+    protected void updateRegionContainer(Intersection intersection) {
         graph.removeVertex(intersection);
     }
 
-    public List<Set<Intersection>> getRegions() {
+    protected List<Set<Intersection>> getRegions() {
         return new ConnectivityInspector<>(graph).connectedSets();
     }
 

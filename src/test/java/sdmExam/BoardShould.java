@@ -140,7 +140,6 @@ public class BoardShould {
         Board customBoard = Board.buildTestBoard(boardSize);
         Set<Intersection> expectedTerritory = new HashSet<>();
 
-        // TODO: refactor to avoid hardcoded
         for (int row = 1; row <= boardSize; row++) {
             customBoard.addStoneAt(Stone.WHITE, in(row, 6));
             customBoard.addStoneAt(Stone.WHITE, in(row, 8));

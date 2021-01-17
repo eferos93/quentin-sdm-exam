@@ -1,56 +1,40 @@
 package sdmExam;
 
 import org.jgrapht.Graph;
+import org.jgrapht.alg.connectivity.ConnectivityInspector;
+import org.jgrapht.generate.GridGraphGenerator;
 import org.jgrapht.graph.DefaultEdge;
-import org.junit.jupiter.api.AfterAll;
+import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.util.SupplierUtil;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RegionShould {
 
-//    @Test
-//    public void initialize2x2GridRegion(){
-//
-//        List<Intersection> intersections = new ArrayList<>();
-//        for (int row = 1; row <= 2; row++) {
-//            for (int column = 1; column <= 2; column++) {
-//                intersections.add(Intersection.empty(Position.in(row, column)));
-//            }
-//        }
-//
-//        Region expected_region = Region.getRegions();
-//        Graph<Intersection, DefaultEdge> graph = expected_region.getGraph();
-//
-//        graph.addVertex(intersections.get(0));
-//        graph.addVertex(intersections.get(1));
-//        graph.addVertex(intersections.get(2));
-//        graph.addVertex(intersections.get(3));
-//
-//        graph.addEdge(intersections.get(0), intersections.get(1));
-//        graph.addEdge(intersections.get(0), intersections.get(2));
-//
-//        graph.addEdge(intersections.get(1), intersections.get(0));
-//        graph.addEdge(intersections.get(1), intersections.get(3));
-//
-//        graph.addEdge(intersections.get(2), intersections.get(0));
-//        graph.addEdge(intersections.get(2), intersections.get(3));
-//
-//        graph.addEdge(intersections.get(3), intersections.get(1));
-//        graph.addEdge(intersections.get(3), intersections.get(2));
-//
-//        Region region = Region.getRegions();
-//        region.createGraph(intersections, 2);
-//
-//        assertEquals(expected_region, region);
-//    }
+    @Test
+    public void initialize2x2GridRegion(){
+
+        int boardSize = 2;
+        Board customBoard = Board.buildTestBoard(boardSize);
+        List<Intersection> emptyIntersections = customBoard.getEmptyIntersections().collect(Collectors.toList());
+        Graph<Intersection, DefaultEdge> graph = new SimpleGraph<>(new Supplier<>() {
+            private int index = 0;
+
+            @Override
+            public Intersection get() {
+                return emptyIntersections.get(index++);
+            }
+        }, SupplierUtil.createDefaultEdgeSupplier(), false);
+
+        new GridGraphGenerator<Intersection, DefaultEdge>(boardSize, boardSize).generateGraph(graph, null);
+
+        RegionContainer region = RegionContainer.getRegionsContainer();
+        assertEquals(new ConnectivityInspector<>(graph).connectedSets(), region.getRegions());
+    }
 //
 //    private static final PrintStream STDOUT = System.out;
 //    private static final String GRAPH_2_PER_2 = "Vertex Position{row=1, column=1} is connected to: [(Intersection{position=Position{row=1, column=1}, stone=NONE} : Intersection{position=Position{row=1, column=2}, stone=NONE}), (Intersection{position=Position{row=1, column=1}, stone=NONE} : Intersection{position=Position{row=2, column=1}, stone=NONE})]\n" +
