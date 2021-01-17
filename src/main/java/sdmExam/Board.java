@@ -35,8 +35,9 @@ public class Board {
         return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow();
     }
 
-    public void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
+    public Stone addStoneAt(Stone stone, Position position) throws NoSuchElementException {
         intersectionAt(position).setStone(stone);
+        return stone;
     }
 
     public void setLowerAndUpperEdgesColor(Stone color) {

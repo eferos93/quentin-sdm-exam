@@ -6,6 +6,7 @@ import sdmExam.Position;
 import sdmExam.Stone;
 
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Graphics {
     private static int coordinateX;
@@ -16,6 +17,13 @@ public class Graphics {
     public static void Instructions() {System.out.println(Message.INSTRUCTIONS);}
 
     public static void BlackPlayerPlayFirst() {System.out.println(Message.BLACKPLAYFIRST);}
+    public static void FillEdges(Board board){
+        IntStream.range(1,15).forEach(y-> board.addStoneAt(Stone.WHITE,new Position(1,y)));
+        IntStream.range(1,15).forEach(y-> board.addStoneAt(Stone.WHITE,new Position(14,y)));
+        IntStream.range(2,14).forEach(x-> board.addStoneAt(Stone.BLACK,new Position(x,1)));
+        IntStream.range(2,14).forEach(x-> board.addStoneAt(Stone.BLACK,new Position(x,14)));
+        PrintBoard.Print(board);
+    }
     public static void Set(Stone stone, Board board, Game game) throws  Exception  {
         System.out.println(Message.CHOOSE_X);
         coordinateX=scanner.nextInt();
@@ -29,5 +37,6 @@ public class Graphics {
 
     public static void ApplyPie() {
         //We badly understood PieRule that must change
+
     }
 }

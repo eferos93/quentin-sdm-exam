@@ -4,7 +4,6 @@ import sdmExam.Board;
 import sdmExam.Position;
 import sdmExam.Stone;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -26,6 +25,7 @@ public class PrintBoard {
         IntStream.range(1, board.BOARD_SIZE+1).forEach(x ->getCellValue(board.intersectionAt(new Position(x, row)).getStone()));
         System.out.print("\n");
     }
+
     private static String padLeft(String s) { return String.format("%" + 3 + "s", s); }
 
     public static void Print(Board board) {
@@ -34,6 +34,10 @@ public class PrintBoard {
         IntStream.range(0, board.BOARD_SIZE).forEach(i -> System.out.print(padLeft(i + " ")));
         System.out.print("\n");
     }
+
+    //public static void setCellValue(Stone stone) {System.out.print( CellValue.replace(stone, "[]","[B]"));}
+
+
 
 
 }

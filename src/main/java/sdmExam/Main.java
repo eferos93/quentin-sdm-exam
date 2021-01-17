@@ -15,11 +15,13 @@ public class Main {
         Graphics.Instructions();
         Graphics.BlackPlayerPlayFirst();
         PrintBoard.Print(board);
+        Graphics.FillEdges(board);
         Graphics.Set(Stone.BLACK,board, game);
         Graphics.Pie();
         if(scanner.nextInt()==1)
             Graphics.ApplyPie();
         else{Graphics.Set(Stone.WHITE,board,game);}
+
     }
 
 }
