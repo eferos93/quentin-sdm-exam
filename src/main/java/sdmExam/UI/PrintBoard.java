@@ -29,16 +29,13 @@ public class PrintBoard {
     private static String padLeft(String s) { return String.format("%" + 3 + "s", s); }
 
     public static void Print(Board board) {
+        IntStream.iterate(3*board.BOARD_SIZE, x -> x).limit(board.BOARD_SIZE).forEach(y -> System.out.print("-"));
+        System.out.println("\n");
         IntStream.iterate(board.BOARD_SIZE , x -> --x).limit(board.BOARD_SIZE).forEach(y -> PrintRow(board, y));
         System.out.print("\t");
         IntStream.range(0, board.BOARD_SIZE).forEach(i -> System.out.print(padLeft(i + " ")));
         System.out.print("\n");
     }
-
-    //public static void setCellValue(Stone stone) {System.out.print( CellValue.replace(stone, "[]","[B]"));}
-
-
-
 
 }
 
