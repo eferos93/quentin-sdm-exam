@@ -155,7 +155,7 @@ public class BoardShould {
     }
 
     @Test
-    public void fillingTerritory(){
+    public void fillingTerritoryWithEqualNumberOfStone(){
         Board customBoard = new Board();
         IntStream.range(1, 13).forEach(y -> customBoard.addStoneAt(Stone.WHITE, in(7,y)));
         IntStream.range(1, 13).forEach(y -> customBoard.addStoneAt(Stone.BLACK, in(9,y)));

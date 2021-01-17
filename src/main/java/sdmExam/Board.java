@@ -111,6 +111,9 @@ public class Board {
 
     public void fillTerritory(List<Intersection> territory, Stone lastplay){
         IntStream.range(1, 13).forEach(y -> territory.add(intersectionAt(in(8,y))));
+        if(lastplay == Stone.BLACK)
         IntStream.range(1, 13).forEach(y -> addStoneAt(Stone.WHITE,in(8,y)));
+        else if(lastplay == Stone.WHITE)
+            IntStream.range(1, 13).forEach(y -> addStoneAt(Stone.BLACK,in(8,y)));
     }
 }
