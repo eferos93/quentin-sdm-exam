@@ -17,7 +17,7 @@ import static java.lang.Math.sqrt;
 
 public class Region {
     private static final Region region = new Region();
-    private Graph<Intersection, DefaultEdge> graph  = new SimpleGraph<>(DefaultEdge.class);
+    private Graph<Intersection, DefaultEdge> graph;
 
     private Region(){}
 
@@ -31,7 +31,7 @@ public class Region {
 
     public void createGraph(List<Intersection> emptyIntersections) {
 
-        Supplier<Intersection> v_supplier = new Supplier<>() {
+        Supplier<Intersection> vertexSupplier = new Supplier<>() {
             private int index = 0;
 
             @Override
@@ -40,11 +40,10 @@ public class Region {
             }
         };
 
-        int board_size = (int) sqrt(emptyIntersections.size());
-        graph = new SimpleGraph<>(v_supplier, SupplierUtil.createDefaultEdgeSupplier(), false);
+        int boardSize = (int) sqrt(emptyIntersections.size());
+        graph = new SimpleGraph<>(vertexSupplier, SupplierUtil.createDefaultEdgeSupplier(), false);
 
-        GridGraphGenerator<Intersection, DefaultEdge> generator = new GridGraphGenerator<>(board_size, board_size);
-        generator.generateGraph(graph, null);
+        new GridGraphGenerator<Intersection, DefaultEdge>(boardSize, boardSize).generateGraph(graph, null);
     }
 
     public void removeVertex(Intersection intersection) {
