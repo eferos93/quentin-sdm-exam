@@ -126,7 +126,7 @@ public class BoardShould {
         customBoard.addStoneAt(Stone.BLACK, in(1, 2));
         customBoard.addStoneAt(Stone.WHITE, in(2, 1));
         List<Set<Intersection>> territories = customBoard.getTerritories();
-        assertEquals(territories.size(), 1);
+        assertEquals(1, territories.size());
         assertTrue(territories.stream()
                 .anyMatch(territory -> territory.stream()
                         .allMatch(intersection -> intersection.getPosition().equals(in(1, 1)))
@@ -134,45 +134,22 @@ public class BoardShould {
         );
     }
 
-//    @Test
-//    public void modifyGridGraphAfterAddStone() {
-//
-//        List<Intersection> expected_intersections = new ArrayList<>();
-//
-//        // TODO: less hardcoded
-//        for (int row = 1; row <= 13; row++) {
-//            for (int column = 1; column <= 13; column++) {
-//                if(row != 1 || column > 4)
-//                    expected_intersections.add(Intersection.empty(in(row, column)));
-//            }
-//        }
-//
-//        board.addStoneAt(Stone.BLACK, in(1, 1));
-//        board.addStoneAt(Stone.BLACK, in(1, 2));
-//        board.addStoneAt(Stone.BLACK, in(1, 3));
-//        board.addStoneAt(Stone.BLACK, in(1, 4));
-//
-//        List<Intersection> board_intersections =
-//                new ArrayList<>(board.getRegionsContainer().getGraph().vertexSet());
-//
-//        assertEquals(expected_intersections, board_intersections);
-//    }
+    @Test
+    public void provideTerritories() {
+        int boardSize = 9;
+        Board customBoard = Board.buildTestBoard(boardSize);
+        Set<Intersection> expectedTerritory = new HashSet<>();
 
-//    @Test
-//    public void provideTerritories() {
-//        List<List<Intersection>> expected_territories = new ArrayList<>();
-//        List<Intersection> territory = new ArrayList<>();
-//
-//        // TODO: refactor to avoid hardcoded
-//        for(int row = 1; row <= 13; row++){
-//            board.addStoneAt(Stone.WHITE, in(row, 6));
-//            board.addStoneAt(Stone.WHITE, in(row, 8));
-//            territory.add(board.intersectionAt(in(row, 7)));
-//        }
-//        expected_territories.add(territory);
-//
-//        // TODO: refactor assertion, need to perform it with list of lists
-//        assertTrue(expected_territories.get(0).containsAll(board.getTerritories().get(0)) &&
-//                board.getTerritories().get(0).containsAll(expected_territories.get(0)));
-//    }
+        // TODO: refactor to avoid hardcoded
+        for (int row = 1; row <= boardSize; row++) {
+            customBoard.addStoneAt(Stone.WHITE, in(row, 6));
+            customBoard.addStoneAt(Stone.WHITE, in(row, 8));
+            expectedTerritory.add(customBoard.intersectionAt(in(row, 7)));
+        }
+
+        List<Set<Intersection>> territories = customBoard.getTerritories();
+        assertTrue(territories.stream()
+                .allMatch(expectedTerritory::containsAll)
+        );
+    }
 }

@@ -37,10 +37,6 @@ public class Board {
         return new Board(size);
     }
 
-    public RegionContainer getRegionsContainer() {
-        return this.regionsContainer;
-    }
-
     public Intersection intersectionAt(Position position) throws NoSuchElementException {
         return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow();
     }
