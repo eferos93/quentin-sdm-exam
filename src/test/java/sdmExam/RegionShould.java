@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -131,7 +132,7 @@ public class RegionShould {
         region.removeVertex(intersectionsToDelete.get(2));
 
         /*call Region::getConnectedComponents()*/
-        List<List<Intersection>> actualRegions = region.getConnectedComponents();
+        List<Set<Intersection>> actualRegions = region.getConnectedComponents();
         boolean matchRegion1, matchRegion2;
 
         // TODO: refactor to make the comparison more readable

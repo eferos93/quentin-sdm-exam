@@ -100,9 +100,9 @@ public class Board {
         return intersections.stream().filter(Intersection::isOccupied).map(Optional::of).collect(Collectors.toList());
     }
 
-    public List<List<Intersection>> getTerritories() {
-        List<List<Intersection>> regions = region.getConnectedComponents();
-        List<List<Intersection>> territories = new ArrayList<>();
+    public List<Set<Intersection>> getTerritories() {
+        List<Set<Intersection>> regions = region.getConnectedComponents();
+        List<Set<Intersection>> territories = new ArrayList<>();
 
         // cannot remove from regions (ConcurrenctModidification not allowed)
         regions.forEach(i -> {
