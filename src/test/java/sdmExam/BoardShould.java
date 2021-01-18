@@ -142,10 +142,10 @@ public class BoardShould {
         Board customBoard = Board.buildTestBoard(boardSize);
         Set<Intersection> expectedTerritory = new HashSet<>();
 
-        for (int row = 1; row <= boardSize; row++) {
-            customBoard.addStoneAt(Stone.WHITE, in(row, 6));
-            customBoard.addStoneAt(Stone.WHITE, in(row, 8));
-            expectedTerritory.add(customBoard.intersectionAt(in(row, 7)));
+        for (int column = 1; column <= boardSize; column++) {
+            customBoard.addStoneAt(Stone.WHITE, in(6, column));
+            customBoard.addStoneAt(Stone.WHITE, in(8, column));
+            expectedTerritory.add(new Intersection(in(7, column), Stone.NONE));
         }
 
         List<Set<Intersection>> territories = customBoard.getTerritories();
@@ -170,24 +170,25 @@ public class BoardShould {
     }
 
     @Test
-    public void fillTerritoryWithDifferentNumberOfStone(){
-        Board customBoard = new Board();
-        IntStream.range(1, 6).forEach(column -> customBoard.addStoneAt(Stone.WHITE, in(7,column)));
-        IntStream.range(6, 13).forEach(column -> customBoard.addStoneAt(Stone.BLACK, in(7,column)));
-        IntStream.range(1, 4).forEach(column -> customBoard.addStoneAt(Stone.WHITE, in(9,column)));
-        IntStream.range(4, 13).forEach(column -> customBoard.addStoneAt(Stone.BLACK, in(9,column)));
+    public void fillTerritoryWithDifferentNumberOfStone() {
+        int boardSize = 13;
+        Board customBoard = Board.buildTestBoard(boardSize);
+        IntStream.rangeClosed(1, 6)
+                .forEach(column -> customBoard.addStoneAt(Stone.WHITE, in(7, column)));
+        IntStream.rangeClosed(7, boardSize)
+                .forEach(column -> customBoard.addStoneAt(Stone.BLACK, in(7, column)));
+        IntStream.rangeClosed(1, 4)
+                .forEach(column -> customBoard.addStoneAt(Stone.WHITE, in(9, column)));
+        IntStream.rangeClosed(5, boardSize)
+                .forEach(column -> customBoard.addStoneAt(Stone.BLACK, in(9, column)));
 
-        Set<Intersection> expectedTerritory = new HashSet<>();
-        IntStream.range(1, 13).forEach(column -> expectedTerritory.add(customBoard.intersectionAt(in(8,column))));
-        //Since we have more black stones i'm expecting to fill with black stones the territory
-        IntStream.range(1, 13).forEach(column -> customBoard.addStoneAt(Stone.BLACK,in(8,column)));
-
-        Set<Intersection> territoryToBeFilled = new HashSet<>();
-        IntStream.range(1, 13).forEach(column -> territoryToBeFilled.add(customBoard.intersectionAt(in(8,column))));
         Stone lastPlay = Stone.BLACK;
-        customBoard.fillTerritory(territoryToBeFilled, lastPlay);
-        assertTrue(() -> territoryToBeFilled.containsAll(expectedTerritory));
+
+        customBoard.fillTerritory(customBoard.getTerritories().get(0), lastPlay);
+        assertTrue(IntStream.rangeClosed(1, boardSize)
+                .allMatch(column -> customBoard.intersectionAt(in(8, column))
+                        .hasStone(Stone.BLACK)
+                )
+        );
     }
-
-
 }

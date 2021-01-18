@@ -25,13 +25,11 @@ public class Board {
         this.BOARD_SIZE =  boardSize;
         Edge.setBoardSize(boardSize);
         this.edges.forEach(Edge::initialiseEdge);
-
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
             for (int column = 1; column <= this.BOARD_SIZE; column++) {
                 this.intersections.add(Intersection.empty(in(row, column)));
             }
         }
-
         regionsContainer.createGraph(this.intersections, boardSize);
     }
 
@@ -109,9 +107,9 @@ public class Board {
     }
 
     public Stone getStoneToFillTerritory(Set<Intersection> territory, Stone lastPlay){
-        Set<Intersection> intersectionsSurroundingTerritory = territory.stream().
-                flatMap(intersection -> getOrthogonalAdjacencyIntersections(intersection).stream()).
-                filter(Intersection::isOccupied)
+        Set<Intersection> intersectionsSurroundingTerritory = territory.stream()
+                .flatMap(intersection -> getOrthogonalAdjacencyIntersections(intersection).stream())
+                .filter(Intersection::isOccupied)
                 .collect(Collectors.toSet());
 
         long countOfWhiteStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.WHITE);
@@ -128,12 +126,13 @@ public class Board {
     }
 
     private long countIntersectionsOfColor(Set<Intersection> intersections, Stone color) {
-        return intersections.stream().
-                filter(intersection -> intersection.hasStone(color)).count();
+        return intersections.stream()
+                .filter(intersection -> intersection.hasStone(color))
+                .count();
     }
 
     public void fillTerritory(Set<Intersection> territory, Stone lastPlay){
         Stone territoryStoneColor = getStoneToFillTerritory(territory, lastPlay);
-        territory.forEach(intersection -> this.addStoneAt(territoryStoneColor,intersection.getPosition()));
+        territory.forEach(intersection -> this.addStoneAt(territoryStoneColor, intersection.getPosition()));
     }
 }
