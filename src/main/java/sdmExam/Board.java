@@ -129,6 +129,6 @@ public class Board {
             territoryStoneColor = lastPlay.getColor().getOppositeColor();
         }
 
-        territory.forEach(intersection -> intersection.setStone(territoryStoneColor));
+        territory.forEach(intersection -> this.addStoneAt(territoryStoneColor,intersection.getPosition()));
     }
 }
