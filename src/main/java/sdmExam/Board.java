@@ -123,7 +123,6 @@ public class Board {
 
         Stone territoryStoneColor;
 
-        // TODO: refactor if-else statement
         if(countOfWhiteStones != countOfBlackStones) {
             territoryStoneColor = (countOfWhiteStones < countOfBlackStones) ? Stone.BLACK : Stone.WHITE;
         }else{
