@@ -108,21 +108,21 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
-    public Stone getStoneToFillTerritory(Set<Intersection> territory, Player lastPlay){
-        Set<Intersection> intersectionsAdjToTerritory = territory.stream().
+    public Stone getStoneToFillTerritory(Set<Intersection> territory, Stone lastPlay){
+        Set<Intersection> intersectionsSurroundingTerritory = territory.stream().
                 flatMap(intersection -> getOrthogonalAdjacencyIntersections(intersection).stream()).
                 filter(Intersection::isOccupied)
                 .collect(Collectors.toSet());
 
-        long countOfWhiteStones = countIntersectionsOfColor(intersectionsAdjToTerritory, Stone.WHITE);
-        long countOfBlackStones = countIntersectionsOfColor(intersectionsAdjToTerritory, Stone.BLACK);
+        long countOfWhiteStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.WHITE);
+        long countOfBlackStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.BLACK);
 
         Stone stone;
 
         if(countOfWhiteStones != countOfBlackStones) {
             stone = (countOfWhiteStones < countOfBlackStones) ? Stone.BLACK : Stone.WHITE;
         }else{
-            stone = lastPlay.getColor().getOppositeColor();
+            stone = lastPlay.getOppositeColor();
         }
         return stone;
     }
@@ -132,7 +132,7 @@ public class Board {
                 filter(intersection -> intersection.hasStone(color)).count();
     }
 
-    public void fillTerritory(Set<Intersection> territory, Player lastPlay){
+    public void fillTerritory(Set<Intersection> territory, Stone lastPlay){
         Stone territoryStoneColor = getStoneToFillTerritory(territory, lastPlay);
         territory.forEach(intersection -> this.addStoneAt(territoryStoneColor,intersection.getPosition()));
     }

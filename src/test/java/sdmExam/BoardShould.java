@@ -164,7 +164,7 @@ public class BoardShould {
         IntStream.range(1, 13).forEach(column -> customBoard.addStoneAt(Stone.WHITE,in(8,column)));
         Set<Intersection> territoryToBeFilled = new HashSet<>();
         IntStream.range(1, 13).forEach(column -> territoryToBeFilled.add(customBoard.intersectionAt(in(8,column))));
-        Player lastPlay = new Player(Stone.BLACK ,"Pietro");
+        Stone lastPlay = Stone.BLACK;
         customBoard.fillTerritory(territoryToBeFilled, lastPlay);
         assertTrue(() -> territoryToBeFilled.containsAll(expectedTerritory));
     }
@@ -184,7 +184,7 @@ public class BoardShould {
 
         Set<Intersection> territoryToBeFilled = new HashSet<>();
         IntStream.range(1, 13).forEach(column -> territoryToBeFilled.add(customBoard.intersectionAt(in(8,column))));
-        Player lastPlay = new Player(Stone.BLACK ,"Alex");
+        Stone lastPlay = Stone.BLACK;
         customBoard.fillTerritory(territoryToBeFilled, lastPlay);
         assertTrue(() -> territoryToBeFilled.containsAll(expectedTerritory));
     }
