@@ -20,10 +20,6 @@ public class RegionContainer {
         return regionContainer;
     }
 
-    public Graph<Intersection, DefaultEdge> getGraph() {
-        return this.graph;
-    }
-
     protected void createGraph(List<Intersection> emptyIntersections, int boardSize) {
 
         Supplier<Intersection> vertexSupplier = new Supplier<>() {

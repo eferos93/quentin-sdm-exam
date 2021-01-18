@@ -112,14 +112,14 @@ public class Board {
         List<Intersection> intersectionsAdjToTerritory;
 
         intersectionsAdjToTerritory = territory.stream().
-                flatMap(i -> getOrthogonalAdjacencyIntersections(i).stream()).
+                flatMap(intersection -> getOrthogonalAdjacencyIntersections(intersection).stream()).
                 filter(Intersection::isOccupied).
                 distinct().collect(Collectors.toList());
 
         int countOfWhiteStones = (int) intersectionsAdjToTerritory.stream().
-                filter(i -> i.getStone().equals(Stone.WHITE)).count();
+                filter(intersection -> intersection.hasStone(Stone.WHITE)).count();
         int countOfBlackStones = (int) intersectionsAdjToTerritory.stream().
-                filter(i -> i.getStone().equals(Stone.BLACK)).count();
+                filter(intersection -> intersection.hasStone(Stone.BLACK)).count();
 
         Stone territoryStoneColor;
 
@@ -129,8 +129,6 @@ public class Board {
             territoryStoneColor = lastPlay.getColor().getOppositeColor();
         }
 
-        territory.forEach(i -> i.setStone(territoryStoneColor));
-
+        territory.forEach(intersection -> intersection.setStone(territoryStoneColor));
     }
-
 }
