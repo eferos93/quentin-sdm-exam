@@ -122,4 +122,23 @@ public class GameShould {
         customGame.makeMove(Stone.BLACK, in(3, 2));
         assertEquals(Stone.BLACK, customGame.getWinner());
     }
+
+    @Test
+    public void modifyBoardAccordingTwoTerritoriesInSamePlay() throws Exception {
+        Game customGame = Game.buildTestGame(5);
+        customGame.makeMove(Stone.BLACK, in(2, 5));
+        customGame.makeMove(Stone.WHITE, in(2, 3));
+        customGame.makeMove(Stone.BLACK, in(2, 4));
+        customGame.makeMove(Stone.WHITE, in(2, 2));
+        customGame.makeMove(Stone.BLACK, in(4, 2));
+        customGame.makeMove(Stone.WHITE, in(2, 1));
+        customGame.makeMove(Stone.BLACK, in(4, 1));
+        customGame.makeMove(Stone.WHITE, in(3, 1));
+        customGame.makeMove(Stone.BLACK, in(5, 4));
+        customGame.makeMove(Stone.WHITE, in(4, 3));
+        customGame.makeMove(Stone.BLACK, in(5, 5));
+        customGame.makeMove(Stone.WHITE, in(4, 4));
+        customGame.makeMove(Stone.BLACK, in(3, 4));
+        assertEquals(Stone.NONE, customGame.getWinner());
+    }
 }
