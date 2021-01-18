@@ -184,7 +184,7 @@ public class BoardShould {
 
         List<Intersection> territoryToBeFilled = new ArrayList<>();
         IntStream.range(1, 13).forEach(y -> territoryToBeFilled.add(customBoard.intersectionAt(in(8,y))));
-        Player lastPlay = new Player(Stone.BLACK ,"Player2");
+        Player lastPlay = new Player(Stone.BLACK ,"Alex");
         customBoard.fillTerritory(territoryToBeFilled, lastPlay);
         assertEquals(expectedTerritory,territoryToBeFilled);
     }

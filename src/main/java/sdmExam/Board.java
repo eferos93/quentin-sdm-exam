@@ -109,7 +109,7 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
-    public void fillTerritory(List<Intersection> territory, Player lastplay){
+    public void fillTerritory(List<Intersection> territory, Player lastPlay){
 
 
         int i;
@@ -138,7 +138,7 @@ public class Board {
         }else if(counterWhiteStone>counterBlackStone){
             IntStream.range(1, territory.size()).forEach(index -> territory.get(index).setStone(Stone.WHITE));
         }else {
-            if (lastplay.getColor() == Stone.BLACK)
+            if (lastPlay.getColor() == Stone.BLACK)
                 IntStream.range(1, territory.size()).forEach(index -> territory.get(index).setStone(Stone.WHITE));
             else //it means that lasPlay was performed by White
                 IntStream.range(1, territory.size()).forEach(index -> territory.get(index).setStone(Stone.BLACK));
