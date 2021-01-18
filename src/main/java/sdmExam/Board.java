@@ -2,7 +2,6 @@ package sdmExam;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static sdmExam.Position.in;
@@ -110,39 +109,28 @@ public class Board {
     }
 
     public void fillTerritory(List<Intersection> territory, Player lastPlay){
+        List<Intersection> intersectionsAdjToTerritory;
 
+        intersectionsAdjToTerritory = territory.stream().
+                flatMap(i -> getOrthogonalAdjacencyIntersections(i).stream()).
+                filter(Intersection::isOccupied).
+                distinct().collect(Collectors.toList());
 
-        int i;
-        int j;
+        int countOfWhiteStones = (int) intersectionsAdjToTerritory.stream().
+                filter(i -> i.getStone().equals(Stone.WHITE)).count();
+        int countOfBlackStones = (int) intersectionsAdjToTerritory.stream().
+                filter(i -> i.getStone().equals(Stone.BLACK)).count();
 
-        List<Intersection> neutralList = new ArrayList<>();
-        List<Intersection> listAdj;
+        Stone territoryStoneColor;
 
-        for(i=0; i<territory.size(); i++) {
-            listAdj = getOrthogonalAdjacencyIntersections(territory.get(i));
-            for(j=0;j<getOrthogonalAdjacencyIntersections(territory.get(i)).size();j++){
-                neutralList.add(listAdj.get(j));
-            }
-            listAdj.clear();
+        // TODO: refactor if-else statement
+        if(countOfWhiteStones != countOfBlackStones) {
+            territoryStoneColor = (countOfWhiteStones < countOfBlackStones) ? Stone.BLACK : Stone.WHITE;
+        }else{
+            territoryStoneColor = lastPlay.getColor().getOppositeColor();
         }
-        int counterBlackStone = 0;
-        int counterWhiteStone = 0;
-        for(i=0;i<neutralList.size();i++){
-            if(neutralList.get(i).getStone()== Stone.BLACK)
-                counterBlackStone++;
-            else if(neutralList.get(i).getStone() == Stone.WHITE)
-                counterWhiteStone++;
-        }
-        if(counterBlackStone>counterWhiteStone) {
-            IntStream.range(1, territory.size()).forEach(index -> territory.get(index).setStone(Stone.BLACK));
-        }else if(counterWhiteStone>counterBlackStone){
-            IntStream.range(1, territory.size()).forEach(index -> territory.get(index).setStone(Stone.WHITE));
-        }else {
-            if (lastPlay.getColor() == Stone.BLACK)
-                IntStream.range(1, territory.size()).forEach(index -> territory.get(index).setStone(Stone.WHITE));
-            else //it means that lasPlay was performed by White
-                IntStream.range(1, territory.size()).forEach(index -> territory.get(index).setStone(Stone.BLACK));
-        }
+
+        territory.forEach(i -> i.setStone(territoryStoneColor));
 
     }
 
