@@ -142,11 +142,12 @@ public class BoardShould {
         Board customBoard = Board.buildTestBoard(boardSize);
         Set<Intersection> expectedTerritory = new HashSet<>();
 
-        for (int column = 1; column <= boardSize; column++) {
-            customBoard.addStoneAt(Stone.WHITE, in(6, column));
-            customBoard.addStoneAt(Stone.WHITE, in(8, column));
-            expectedTerritory.add(new Intersection(in(7, column), Stone.NONE));
-        }
+        IntStream.rangeClosed(1, boardSize)
+                .forEach(column -> {
+                    customBoard.addStoneAt(Stone.WHITE, in(6, column));
+                    customBoard.addStoneAt(Stone.WHITE, in(8, column));
+                    expectedTerritory.add(new Intersection(in(7, column), Stone.NONE));
+                });
 
         List<Set<Intersection>> territories = customBoard.getTerritories();
         assertTrue(territories.stream()
@@ -157,16 +158,16 @@ public class BoardShould {
     @Test
     public void fillTerritoryWithEqualNumberOfStoneOfTheSameColor(){
         Board customBoard = new Board();
-        IntStream.range(1, 13).forEach(column -> customBoard.addStoneAt(Stone.WHITE, in(7,column)));
-        IntStream.range(1, 13).forEach(column -> customBoard.addStoneAt(Stone.BLACK, in(9,column)));
-        Set<Intersection> expectedTerritory = new HashSet<>();
-        IntStream.range(1, 13).forEach(column -> expectedTerritory.add(customBoard.intersectionAt(in(8,column))));
-        IntStream.range(1, 13).forEach(column -> customBoard.addStoneAt(Stone.WHITE,in(8,column)));
-        Set<Intersection> territoryToBeFilled = new HashSet<>();
-        IntStream.range(1, 13).forEach(column -> territoryToBeFilled.add(customBoard.intersectionAt(in(8,column))));
-        Stone lastPlay = Stone.BLACK;
-        customBoard.fillTerritory(territoryToBeFilled, lastPlay);
-        assertTrue(() -> territoryToBeFilled.containsAll(expectedTerritory));
+        IntStream.rangeClosed(1, 13).forEach(column -> {
+            customBoard.addStoneAt(Stone.WHITE, in(7,column));
+            customBoard.addStoneAt(Stone.BLACK, in(9,column));
+        });
+        customBoard.fillTerritory(customBoard.getTerritories().get(0), Stone.BLACK);
+        assertTrue(IntStream.rangeClosed(1, 13)
+                .allMatch(column -> customBoard.intersectionAt(in(8, column))
+                        .hasStone(Stone.WHITE)
+                )
+        );
     }
 
     @Test
