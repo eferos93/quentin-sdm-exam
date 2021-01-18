@@ -155,38 +155,38 @@ public class BoardShould {
     }
 
     @Test
-    public void fillingTerritoryWithEqualNumberOfStoneOfTheSameColor(){
+    public void fillTerritoryWithEqualNumberOfStoneOfTheSameColor(){
         Board customBoard = new Board();
-        IntStream.range(1, 13).forEach(y -> customBoard.addStoneAt(Stone.WHITE, in(7,y)));
-        IntStream.range(1, 13).forEach(y -> customBoard.addStoneAt(Stone.BLACK, in(9,y)));
-        List<Intersection> expectedTerritory = new ArrayList<>();
-        IntStream.range(1, 13).forEach(y -> expectedTerritory.add(customBoard.intersectionAt(in(8,y))));
-        IntStream.range(1, 13).forEach(y -> customBoard.addStoneAt(Stone.WHITE,in(8,y)));
-        List<Intersection> territoryToBeFilled = new ArrayList<>();
-        IntStream.range(1, 13).forEach(y -> territoryToBeFilled.add(customBoard.intersectionAt(in(8,y))));
-        Player lastPlay = new Player(Stone.BLACK ,"Player2");
+        IntStream.range(1, 13).forEach(column -> customBoard.addStoneAt(Stone.WHITE, in(7,column)));
+        IntStream.range(1, 13).forEach(column -> customBoard.addStoneAt(Stone.BLACK, in(9,column)));
+        Set<Intersection> expectedTerritory = new HashSet<>();
+        IntStream.range(1, 13).forEach(column -> expectedTerritory.add(customBoard.intersectionAt(in(8,column))));
+        IntStream.range(1, 13).forEach(column -> customBoard.addStoneAt(Stone.WHITE,in(8,column)));
+        Set<Intersection> territoryToBeFilled = new HashSet<>();
+        IntStream.range(1, 13).forEach(column -> territoryToBeFilled.add(customBoard.intersectionAt(in(8,column))));
+        Player lastPlay = new Player(Stone.BLACK ,"Pietro");
         customBoard.fillTerritory(territoryToBeFilled, lastPlay);
-        assertEquals(expectedTerritory,territoryToBeFilled);
+        assertTrue(() -> territoryToBeFilled.containsAll(expectedTerritory));
     }
 
     @Test
-    public void fillingTerritoryWithDifferentNumberOfStone(){
+    public void fillTerritoryWithDifferentNumberOfStone(){
         Board customBoard = new Board();
-        IntStream.range(1, 6).forEach(y -> customBoard.addStoneAt(Stone.WHITE, in(7,y)));
-        IntStream.range(6, 13).forEach(y -> customBoard.addStoneAt(Stone.BLACK, in(7,y)));
-        IntStream.range(1, 4).forEach(y -> customBoard.addStoneAt(Stone.WHITE, in(9,y)));
-        IntStream.range(4, 13).forEach(y -> customBoard.addStoneAt(Stone.BLACK, in(9,y)));
+        IntStream.range(1, 6).forEach(column -> customBoard.addStoneAt(Stone.WHITE, in(7,column)));
+        IntStream.range(6, 13).forEach(column -> customBoard.addStoneAt(Stone.BLACK, in(7,column)));
+        IntStream.range(1, 4).forEach(column -> customBoard.addStoneAt(Stone.WHITE, in(9,column)));
+        IntStream.range(4, 13).forEach(column -> customBoard.addStoneAt(Stone.BLACK, in(9,column)));
 
-        List<Intersection> expectedTerritory = new ArrayList<>();
-        IntStream.range(1, 13).forEach(y -> expectedTerritory.add(customBoard.intersectionAt(in(8,y))));
-        //Since i have more black stones i'm expecting to fill with black stones the territory
-        IntStream.range(1, 13).forEach(y -> customBoard.addStoneAt(Stone.BLACK,in(8,y)));
+        Set<Intersection> expectedTerritory = new HashSet<>();
+        IntStream.range(1, 13).forEach(column -> expectedTerritory.add(customBoard.intersectionAt(in(8,column))));
+        //Since we have more black stones i'm expecting to fill with black stones the territory
+        IntStream.range(1, 13).forEach(column -> customBoard.addStoneAt(Stone.BLACK,in(8,column)));
 
-        List<Intersection> territoryToBeFilled = new ArrayList<>();
-        IntStream.range(1, 13).forEach(y -> territoryToBeFilled.add(customBoard.intersectionAt(in(8,y))));
+        Set<Intersection> territoryToBeFilled = new HashSet<>();
+        IntStream.range(1, 13).forEach(column -> territoryToBeFilled.add(customBoard.intersectionAt(in(8,column))));
         Player lastPlay = new Player(Stone.BLACK ,"Alex");
         customBoard.fillTerritory(territoryToBeFilled, lastPlay);
-        assertEquals(expectedTerritory,territoryToBeFilled);
+        assertTrue(() -> territoryToBeFilled.containsAll(expectedTerritory));
     }
 
 
