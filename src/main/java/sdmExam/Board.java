@@ -22,7 +22,7 @@ public class Board {
     }
 
     private Board(int boardSize) {
-        this.BOARD_SIZE =  boardSize;
+        this.BOARD_SIZE = boardSize;
         Edge.setBoardSize(boardSize);
         this.edges.forEach(Edge::initialiseEdge);
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
@@ -106,7 +106,7 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
-    public Stone getStoneToFillTerritory(Set<Intersection> territory, Stone lastPlay){
+    public Stone getStoneToFillTerritory(Set<Intersection> territory, Stone lastPlay) {
         Set<Intersection> intersectionsSurroundingTerritory = territory.stream()
                 .flatMap(intersection -> getOrthogonalAdjacencyIntersections(intersection).stream())
                 .filter(Intersection::isOccupied)
@@ -117,9 +117,9 @@ public class Board {
 
         Stone stone;
 
-        if(countOfWhiteStones != countOfBlackStones) {
+        if (countOfWhiteStones != countOfBlackStones) {
             stone = (countOfWhiteStones < countOfBlackStones) ? Stone.BLACK : Stone.WHITE;
-        }else{
+        } else {
             stone = lastPlay.getOppositeColor();
         }
         return stone;
@@ -131,7 +131,7 @@ public class Board {
                 .count();
     }
 
-    public void fillTerritory(Set<Intersection> territory, Stone lastPlay){
+    public void fillTerritory(Set<Intersection> territory, Stone lastPlay) {
         Stone territoryStoneColor = getStoneToFillTerritory(territory, lastPlay);
         territory.forEach(intersection -> this.addStoneAt(territoryStoneColor, intersection.getPosition()));
     }

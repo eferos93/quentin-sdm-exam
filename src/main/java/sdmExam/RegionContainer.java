@@ -6,6 +6,7 @@ import org.jgrapht.generate.GridGraphGenerator;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.util.SupplierUtil;
+
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -16,7 +17,7 @@ public class RegionContainer {
 
     private RegionContainer() {}
 
-    protected static RegionContainer getRegionsContainer(){
+    protected static RegionContainer getRegionsContainer() {
         return regionContainer;
     }
 

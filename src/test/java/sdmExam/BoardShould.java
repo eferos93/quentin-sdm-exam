@@ -156,11 +156,11 @@ public class BoardShould {
     }
 
     @Test
-    public void fillTerritoryWithEqualNumberOfStoneOfTheSameColor(){
+    public void fillTerritoryWithEqualNumberOfStoneOfTheSameColor() {
         Board customBoard = new Board();
         IntStream.rangeClosed(1, 13).forEach(column -> {
-            customBoard.addStoneAt(Stone.WHITE, in(7,column));
-            customBoard.addStoneAt(Stone.BLACK, in(9,column));
+            customBoard.addStoneAt(Stone.WHITE, in(7, column));
+            customBoard.addStoneAt(Stone.BLACK, in(9, column));
         });
         customBoard.fillTerritory(customBoard.getTerritories().get(0), Stone.BLACK);
         assertTrue(IntStream.rangeClosed(1, 13)
