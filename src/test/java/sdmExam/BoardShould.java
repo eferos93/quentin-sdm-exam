@@ -173,8 +173,8 @@ public class BoardShould {
     public void fillingTerritoryWithDifferentNumberOfStone(){
         Board customBoard = new Board();
         IntStream.range(1, 6).forEach(y -> customBoard.addStoneAt(Stone.WHITE, in(7,y)));
-        IntStream.range(6, 13).forEach(y -> customBoard.addStoneAt(Stone.BLACK, in(9,y)));
-        IntStream.range(1, 4).forEach(y -> customBoard.addStoneAt(Stone.WHITE, in(7,y)));
+        IntStream.range(6, 13).forEach(y -> customBoard.addStoneAt(Stone.BLACK, in(7,y)));
+        IntStream.range(1, 4).forEach(y -> customBoard.addStoneAt(Stone.WHITE, in(9,y)));
         IntStream.range(4, 13).forEach(y -> customBoard.addStoneAt(Stone.BLACK, in(9,y)));
 
         List<Intersection> expectedTerritory = new ArrayList<>();
