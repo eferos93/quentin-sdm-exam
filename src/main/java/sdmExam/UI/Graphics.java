@@ -36,8 +36,5 @@ public class Graphics {
 
     public static void Pie() {System.out.println(Message.PIE);}
 
-    public static void ApplyPie() {
-        //We badly understood PieRule that must change
-
-    }
+    public static void ApplyPie(Board board) { board.pie();}
 }

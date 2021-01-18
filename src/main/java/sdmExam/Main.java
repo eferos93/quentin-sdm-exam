@@ -17,7 +17,7 @@ public class Main {
         Graphics.Set(Stone.BLACK,board, game);
         Graphics.Pie();
         if(scanner.nextInt()==1)
-            Graphics.ApplyPie();
+            Graphics.ApplyPie(board);
         else{Graphics.Set(Stone.WHITE,board,game);}
 
     }
