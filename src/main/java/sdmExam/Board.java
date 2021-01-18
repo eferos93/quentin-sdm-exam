@@ -114,10 +114,8 @@ public class Board {
                 filter(Intersection::isOccupied)
                 .collect(Collectors.toSet());
 
-        int countOfWhiteStones = (int) intersectionsAdjToTerritory.stream().
-                filter(intersection -> intersection.hasStone(Stone.WHITE)).count();
-        int countOfBlackStones = (int) intersectionsAdjToTerritory.stream().
-                filter(intersection -> intersection.hasStone(Stone.BLACK)).count();
+        long countOfWhiteStones = countIntersectionsOfColor(intersectionsAdjToTerritory, Stone.WHITE);
+        long countOfBlackStones = countIntersectionsOfColor(intersectionsAdjToTerritory, Stone.BLACK);
 
         Stone stone;
 
@@ -127,6 +125,11 @@ public class Board {
             stone = lastPlay.getColor().getOppositeColor();
         }
         return stone;
+    }
+
+    private long countIntersectionsOfColor(Set<Intersection> intersections, Stone color) {
+        return intersections.stream().
+                filter(intersection -> intersection.hasStone(color)).count();
     }
 
     public void fillTerritory(Set<Intersection> territory, Player lastPlay){
