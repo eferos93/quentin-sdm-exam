@@ -164,7 +164,7 @@ public class BoardShould {
         IntStream.range(1, 13).forEach(y -> customBoard.addStoneAt(Stone.WHITE,in(8,y)));
         List<Intersection> territoryToBeFilled = new ArrayList<>();
         IntStream.range(1, 13).forEach(y -> territoryToBeFilled.add(customBoard.intersectionAt(in(8,y))));
-        Stone lastPlay = Stone.BLACK;
+        Player lastPlay = new Player(Stone.BLACK ,"Player2");
         customBoard.fillTerritory(territoryToBeFilled, lastPlay);
         assertEquals(expectedTerritory,territoryToBeFilled);
     }
@@ -184,7 +184,7 @@ public class BoardShould {
 
         List<Intersection> territoryToBeFilled = new ArrayList<>();
         IntStream.range(1, 13).forEach(y -> territoryToBeFilled.add(customBoard.intersectionAt(in(8,y))));
-        Stone lastPlay = Stone.BLACK;
+        Player lastPlay = new Player(Stone.BLACK ,"Player2");
         customBoard.fillTerritory(territoryToBeFilled, lastPlay);
         assertEquals(expectedTerritory,territoryToBeFilled);
     }
