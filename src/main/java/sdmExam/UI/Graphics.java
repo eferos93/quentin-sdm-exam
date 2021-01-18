@@ -37,4 +37,7 @@ public class Graphics {
     public static void Pie() {System.out.println(Message.PIE);}
 
     public static void ApplyPie(Board board) { board.pie();}
+
+    public static boolean SomeoneWin() {return true;}
+    //Waiting for chain
 }
