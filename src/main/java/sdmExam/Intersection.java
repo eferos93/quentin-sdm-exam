@@ -65,7 +65,7 @@ public class Intersection {
     }
 
     public boolean hasStone(Stone stone) {
-         return this.stone == stone;
+        return this.stone == stone;
     }
 
     @Override

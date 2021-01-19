@@ -14,12 +14,21 @@ public class Game {
         playerTwo = new Player(Stone.WHITE, "player2");
     }
 
-    public Game() { this(new Board()); }
+    public Game() {
+        this(new Board());
+    }
 
-    private Game(int boardSize) { this(Board.buildTestBoard(boardSize)); }
+    private Game(int boardSize) {
+        this(Board.buildTestBoard(boardSize));
+    }
 
-    protected static Game buildTestGame(Board board) { return new Game(board); }
-    protected static Game buildTestGame(int boardSize) { return new Game(boardSize); }
+    protected static Game buildTestGame(Board board) {
+        return new Game(board);
+    }
+
+    protected static Game buildTestGame(int boardSize) {
+        return new Game(boardSize);
+    }
 
     public void makeMove(Stone color, Position position) throws Exception {
 
