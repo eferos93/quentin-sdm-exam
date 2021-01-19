@@ -11,12 +11,13 @@ public class PrintBoard {
     private PrintBoard(){};
 
     public static void displayStone(Stone stone){
-        System.out.print(BoardCellValue.getCellValue(stone));
+        System.out.print(BoardStoneValue.getStoneValue(stone));
     }
+
 
     private static void PrintRow(Board board, int row) {
         System.out.print(row+"\t");
-        IntStream.range(1, board.BOARD_SIZE+1).forEachOrdered(x ->BoardCellValue.getCellValue(board.intersectionAt(new Position(x, row)).getStone()));
+        IntStream.range(1, board.BOARD_SIZE+1).forEachOrdered(x ->BoardStoneValue.getStoneValue(board.intersectionAt(new Position(x, row)).getStone()));
         System.out.print("\n");
     }
 
