@@ -80,4 +80,8 @@ public class Board {
     protected Stream<Intersection> stream() {
         return intersections.stream();
     }
+
+     public int getBoardSize() {
+        return  BOARD_SIZE;
+    }
 }
