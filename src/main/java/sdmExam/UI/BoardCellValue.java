@@ -16,7 +16,8 @@ public class BoardCellValue {
 
     private BoardCellValue();
 
-
-    public static void getCellValue(Stone stone) {System.out.print( CellValue.get(stone));}
+    public static String getCellValue(Stone colour) {
+        return CellValue.get(colour);
+    }
 
 }
