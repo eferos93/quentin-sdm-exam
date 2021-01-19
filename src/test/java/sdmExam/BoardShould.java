@@ -17,12 +17,6 @@ import static sdmExam.Position.in;
 public class BoardShould {
     private final static Board board = new Board();
 
-    @ParameterizedTest
-    @MethodSource({"providePositionToGetCorrectIntersectionGivenAPosition"})
-    public void getCorrectIntersectionGivenAPosition(Position position) {
-        assertDoesNotThrow(() -> board.intersectionAt(position));
-    }
-
     private static Stream<Arguments> providePositionToGetCorrectIntersectionGivenAPosition() {
         return Stream.of(
                 Arguments.of(in(1, 1)),
@@ -32,9 +26,9 @@ public class BoardShould {
     }
 
     @ParameterizedTest
-    @MethodSource({"providePositionForIntersectionOutsideBoard"})
-    public void intersectionOutsideBoard(Position position) {
-        assertThrows(Exception.class, () -> board.intersectionAt(position));
+    @MethodSource({"providePositionToGetCorrectIntersectionGivenAPosition"})
+    public void getCorrectIntersectionGivenAPosition(Position position) {
+        assertDoesNotThrow(() -> board.intersectionAt(position));
     }
 
     private static Stream<Arguments> providePositionForIntersectionOutsideBoard() {
@@ -46,15 +40,12 @@ public class BoardShould {
     }
 
     @ParameterizedTest
-    @MethodSource({"provideIntersectionForMarkCorrectlyAnIntersection"})
-    public void markCorrectlyAnIntersection(Intersection intersection, Stone stone) throws NoSuchElementException {
-        board.addStoneAt(Stone.BLACK, in(5, 7));
-        board.addStoneAt(Stone.WHITE, in(4, 3));
-        board.addStoneAt(Stone.WHITE, in(9, 6));
-        assertEquals(intersection.getStone(), stone);
+    @MethodSource({"providePositionForIntersectionOutsideBoard"})
+    public void intersectionOutsideBoard(Position position) {
+        assertThrows(Exception.class, () -> board.intersectionAt(position));
     }
 
-    private static Stream<Arguments> provideIntersectionForMarkCorrectlyAnIntersection() {
+    private static Stream<Arguments> provideIntersectionToMarkCorrectlyAnIntersection() {
         return Stream.of(
                 Arguments.of(board.intersectionAt(in(5, 7)), Stone.BLACK),
                 Arguments.of(board.intersectionAt(in(4, 3)), Stone.WHITE),
@@ -62,6 +53,14 @@ public class BoardShould {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource({"provideIntersectionToMarkCorrectlyAnIntersection"})
+    public void markCorrectlyAnIntersection(Intersection intersection, Stone stone) throws NoSuchElementException {
+        board.addStoneAt(Stone.BLACK, in(5, 7));
+        board.addStoneAt(Stone.WHITE, in(4, 3));
+        board.addStoneAt(Stone.WHITE, in(9, 6));
+        assertEquals(intersection.getStone(), stone);
+    }
 
     @TestFactory
     Stream<DynamicTest> checkOrthogonalAdjacent() {
