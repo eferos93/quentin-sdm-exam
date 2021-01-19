@@ -14,7 +14,7 @@ public class BoardSideShould {
 
 
     @TestFactory
-    Stream<DynamicTest> checkEdges() {
+    Stream<DynamicTest> checkAdjacentPositionToEdges() {
 
         Position firstPosition = Position.in(1, 4);
         Position secondPosition = Position.in(13, 4);
