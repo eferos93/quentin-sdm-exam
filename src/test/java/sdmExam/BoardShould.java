@@ -156,7 +156,8 @@ public class BoardShould {
 
     @Test
     public void fillTerritoryWithEqualNumberOfStoneOfTheSameColor() {
-        Board customBoard = new Board();
+        int boardSize = 13;
+        Board customBoard = Board.buildTestBoard(boardSize);
         IntStream.rangeClosed(1, 13).forEach(column -> {
             customBoard.addStoneAt(Stone.WHITE, in(7, column));
             customBoard.addStoneAt(Stone.BLACK, in(9, column));
