@@ -178,13 +178,13 @@ public class BoardShould {
         Board customBoard = Board.buildTestBoard(boardSize);
         IntStream.rangeClosed(1,boardSize)
                 .forEach(column -> {
-                    if (column > 6) customBoard.addStoneAt(Stone.BLACK, in(7, column));
-                    else customBoard.addStoneAt(Stone.WHITE, in(7, column)); });
+                    if (column <= 6) customBoard.addStoneAt(Stone.WHITE, in(7, column));
+                    else customBoard.addStoneAt(Stone.BLACK, in(7, column)); });
 
         IntStream.rangeClosed(1,boardSize)
                 .forEach(column -> {
-                    if (column > 4) customBoard.addStoneAt(Stone.BLACK, in(9, column));
-                    else customBoard.addStoneAt(Stone.WHITE, in(9, column)); });
+                    if (column <= 4) customBoard.addStoneAt(Stone.WHITE, in(9, column));
+                    else customBoard.addStoneAt(Stone.BLACK, in(9, column)); });
 
         Set<Intersection> territory = customBoard.getTerritories().get(0);
 
