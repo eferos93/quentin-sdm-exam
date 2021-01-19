@@ -113,16 +113,6 @@ public class BoardShould {
     }
 
     @Test
-    public void updateTheChainsCorrectly() {
-        Board customBoard = Board.buildTestBoard(3);
-        customBoard.addStoneAt(Stone.BLACK, in(1, 1));
-        customBoard.addStoneAt(Stone.BLACK, in(1, 2));
-        customBoard.addStoneAt(Stone.BLACK, in(2, 2));
-        customBoard.addStoneAt(Stone.BLACK, in(3, 2));
-        assertEquals(Stone.BLACK, customBoard.colorWithCompleteChain());
-    }
-
-    @Test
     public void getCorrectTerritories() {
         Board customBoard = Board.buildTestBoard(4);
         customBoard.addStoneAt(Stone.BLACK, in(1, 2));
