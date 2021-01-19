@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class PrintBoard {
-    private static int i, j;
-
 
     private static void PrintRow(Board board, int row) {
         System.out.print(row+"\t");
