@@ -14,7 +14,7 @@ public class BoardCellValue {
         }
     };
 
-    private BoardCellValue();
+    private BoardCellValue(){};
 
     public static String getCellValue(Stone colour) {
         return CellValue.get(colour);

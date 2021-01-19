@@ -4,15 +4,19 @@ import sdmExam.Board;
 import sdmExam.Position;
 import sdmExam.Stone;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.IntStream;
 
 public class PrintBoard {
 
+    private PrintBoard(){};
+
+    public static void displayStone(Stone stone){
+        System.out.print(BoardCellValue.getCellValue(stone));
+    }
+
     private static void PrintRow(Board board, int row) {
         System.out.print(row+"\t");
-        IntStream.range(1, board.BOARD_SIZE+1).forEachOrdered(x ->getCellValue(board.intersectionAt(new Position(x, row)).getStone()));
+        IntStream.range(1, board.BOARD_SIZE+1).forEachOrdered(x ->BoardCellValue.getCellValue(board.intersectionAt(new Position(x, row)).getStone()));
         System.out.print("\n");
     }
 
