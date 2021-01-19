@@ -14,18 +14,18 @@ public class PrintBoard {
         System.out.print(BoardStoneValue.getStoneValue(stone));
     }
 
-    private static void PrintRow(Board board, int row) {
-        System.out.print(row+"\t");
-        IntStream.range(1, board.getBoardSize()+1).forEachOrdered(x ->displayStone(board.intersectionAt(new Position(x, row)).getStone()));
+    private static void PrintRow(Board board, int column) {
+        System.out.print(column+"\t");
+        IntStream.range(1, board.getBoardSize()+1).forEachOrdered(x ->displayStone(board.intersectionAt(new Position(x, column)).getStone()));
         System.out.print("\n");
     }
 
     private static String padLeft(String s) { return String.format("%" + 3 + "s", s); }
 
     public static void Print(Board board) {
-        IntStream.iterate(board.getBoardSize() , x -> --x).limit(board.getBoardSize()).forEach(y -> PrintRow(board, y));
+        IntStream.iterate(board.getBoardSize(), x -> --x).limit(board.getBoardSize()).forEach(y -> PrintRow(board, y));
         System.out.print("\t");
-        IntStream.range(0, board.getBoardSize()).forEachOrdered(i -> System.out.print(padLeft(i + " ")));
+        IntStream.range(0, board.getBoardSize()).forEachOrdered(index -> System.out.print(padLeft(index + " ")));
         System.out.print("\n");
     }
 
