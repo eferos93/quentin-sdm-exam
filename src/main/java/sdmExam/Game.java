@@ -50,8 +50,6 @@ public class Game {
 
         board.addStoneAt(color, position);
         lastPlay = color;
-
-        searchAndFillTerritories();
     }
 
     //TODO: maybe rename this method to avoid overloading
@@ -76,10 +74,6 @@ public class Game {
     public boolean isPlayerAbleToMakeAMove(Stone player) {
         return board.getEmptyIntersections()
                 .anyMatch(emptyIntersection -> !isIllegalMove(player, emptyIntersection));
-    }
-
-    private void searchAndFillTerritories() {
-        board.getTerritories().forEach(territory -> board.fillTerritory(territory, lastPlay));
     }
 
     public Stone getWinner() {

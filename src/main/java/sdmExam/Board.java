@@ -135,4 +135,8 @@ public class Board {
         Stone territoryStoneColor = getStoneToFillTerritory(territory, lastPlay);
         territory.forEach(intersection -> this.addStoneAt(territoryStoneColor, intersection.getPosition()));
     }
+
+    private void searchAndFillTerritories(Stone lastPlay) {
+        getTerritories().forEach(territory -> fillTerritory(territory, lastPlay));
+    }
 }
