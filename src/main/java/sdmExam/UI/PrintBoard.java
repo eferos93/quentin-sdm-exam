@@ -11,14 +11,6 @@ import java.util.stream.IntStream;
 public class PrintBoard {
     private static int i, j;
 
-    private static final Map<Stone, String> CellValue = new HashMap<>() {
-        {
-        put(Stone.BLACK, "[B]");
-        put(Stone.WHITE, "[W]");
-        put(Stone.NONE, "[ ]");
-        }
-    };
-    public static void getCellValue(Stone stone) {System.out.print( CellValue.get(stone));}
 
     private static void PrintRow(Board board, int row) {
         System.out.print(row+"\t");
