@@ -14,12 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class IntersectionShould {
 
-    @ParameterizedTest
-    @MethodSource("provideIntersection")
-    public void beEqualToAnotherIntersectionWithEqualFields(Intersection firstIntersection, Intersection secondIntersection) {
-        assertEquals(firstIntersection, secondIntersection);
-    }
-
     private static Stream<Arguments> provideIntersection() {
         return Stream.of(
                 Arguments.of(new Intersection(Position.in(3, 3), Stone.WHITE)
@@ -29,6 +23,18 @@ public class IntersectionShould {
                 Arguments.of(new Intersection(Position.in(5, 12), Stone.WHITE)
                         , new Intersection(Position.in(5, 12), Stone.WHITE))
         );
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideIntersection")
+    public void beEqualToAnotherIntersectionWithEqualFields(Intersection firstIntersection, Intersection secondIntersection) {
+        assertEquals(firstIntersection, secondIntersection);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideIntersection")
+    public void checkOccupiedIntersections(Intersection intersection) {
+        assertTrue(intersection.isOccupied());
     }
 
     @TestFactory
