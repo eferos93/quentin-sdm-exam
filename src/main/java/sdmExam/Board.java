@@ -106,6 +106,7 @@ public class Board {
                 .collect(Collectors.toList());
     }
 
+    //TODO: code smell long method, need to refactor
     public Stone getStoneToFillTerritory(Set<Intersection> territory, Stone lastPlay) {
         Set<Intersection> intersectionsSurroundingTerritory = territory.stream()
                 .flatMap(intersection -> getOrthogonalAdjacencyIntersections(intersection).stream())
