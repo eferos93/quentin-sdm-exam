@@ -81,7 +81,5 @@ public class Board {
         return intersections.stream();
     }
 
-     public int getBoardSize() {
-        return  BOARD_SIZE;
-    }
+    public int getBoardSize(){return  BOARD_SIZE;}
 }
