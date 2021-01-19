@@ -18,12 +18,12 @@ public class BoardShould {
     private final static Board board = new Board();
 
     @ParameterizedTest
-    @MethodSource({"providePositionForGetCorrectIntersectionGivenAPosition"})
+    @MethodSource({"providePositionToGetCorrectIntersectionGivenAPosition"})
     public void getCorrectIntersectionGivenAPosition(Position position) {
         assertDoesNotThrow(() -> board.intersectionAt(position));
     }
 
-    private static Stream<Arguments> providePositionForGetCorrectIntersectionGivenAPosition() {
+    private static Stream<Arguments> providePositionToGetCorrectIntersectionGivenAPosition() {
         return Stream.of(
                 Arguments.of(in(1, 1)),
                 Arguments.of(in(7, 2)),
