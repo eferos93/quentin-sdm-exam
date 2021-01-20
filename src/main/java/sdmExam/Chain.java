@@ -17,19 +17,19 @@ public class Chain {
                 .forEach(orthogonalIntersection -> chains.addEdge(orthogonalIntersection, newIntersection));
     }
 
-    protected boolean hasACompleteChain(List<Edge> sameColorEdges) {
+    protected boolean hasACompleteChain(List<BoardSide> sameColorSides) {
         return new ConnectivityInspector<>(chains).connectedSets().stream()
-                .anyMatch(chain -> isChainConnectedToSameColorEdges(sameColorEdges, chain));
+                .anyMatch(chain -> isChainConnectedToSameColorEdges(sameColorSides, chain));
     }
 
-    private boolean isChainConnectedToSameColorEdges(List<Edge> sameColorEdges, Set<Intersection> chain) {
+    private boolean isChainConnectedToSameColorEdges(List<BoardSide> sameColorSides, Set<Intersection> chain) {
         return
                 chain.stream()
                         .map(Intersection::getPosition)
-                        .anyMatch(position -> sameColorEdges.get(0).isAdjacentTo(position))
+                        .anyMatch(position -> sameColorSides.get(0).isAdjacentTo(position))
                 &&
                 chain.stream()
                         .map(Intersection::getPosition)
-                        .anyMatch(position -> sameColorEdges.get(1).isAdjacentTo(position));
+                        .anyMatch(position -> sameColorSides.get(1).isAdjacentTo(position));
     }
 }

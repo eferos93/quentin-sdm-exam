@@ -22,12 +22,12 @@ public class ChainShould {
         Chain chain = new Chain();
         intersectionStream.forEach(chain::updateChain);
 
-        List<Edge> listOfEdges = List.of(Edge.BOTTOM, Edge.TOP);
+        List<BoardSide> listOfBoardSides = List.of(BoardSide.BOTTOM, BoardSide.TOP);
 
-        Edge.setBoardSize(3);
-        listOfEdges.forEach(Edge::initialiseEdge);
+        BoardSide.setBoardSize(3);
+        listOfBoardSides.forEach(BoardSide::initialiseSide);
 
-        assertTrue(chain.hasACompleteChain(listOfEdges));
+        assertTrue(chain.hasACompleteChain(listOfBoardSides));
     }
 
     @Test
@@ -41,12 +41,12 @@ public class ChainShould {
         Chain chain = new Chain();
         intersectionStream.forEach(chain::updateChain);
 
-        List<Edge> listOfEdges = List.of(Edge.BOTTOM, Edge.TOP);
+        List<BoardSide> listOfBoardSides = List.of(BoardSide.BOTTOM, BoardSide.TOP);
 
-        Edge.setBoardSize(3);
-        listOfEdges.forEach(Edge::initialiseEdge);
+        BoardSide.setBoardSize(3);
+        listOfBoardSides.forEach(BoardSide::initialiseSide);
 
-        assertFalse(chain.hasACompleteChain(listOfEdges));
+        assertFalse(chain.hasACompleteChain(listOfBoardSides));
     }
 
     @Test

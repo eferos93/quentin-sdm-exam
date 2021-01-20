@@ -1,73 +1,73 @@
 package sdmExam;
 
-public enum Edge {
+public enum BoardSide {
     LEFT(Stone.WHITE) {
         @Override
         public boolean isAdjacentTo(Position position) {
-            return  getEdgeIndex() == position.getColumn();
+            return  getSideIndex() == position.getColumn();
         }
 
         @Override
-        protected void initialiseEdge() {
-            this.setEdgeIndex(1);
+        protected void initialiseSide() {
+            this.setSideIndex(1);
         }
     },
     RIGHT(Stone.WHITE) {
         @Override
         public boolean isAdjacentTo(Position position) {
-            return getEdgeIndex() == position.getColumn();
+            return getSideIndex() == position.getColumn();
         }
 
         @Override
-        protected void initialiseEdge() {
-            this.setEdgeIndex(Edge.boardSize);
+        protected void initialiseSide() {
+            this.setSideIndex(BoardSide.boardSize);
         }
     },
     BOTTOM(Stone.BLACK) {
         @Override
         public boolean isAdjacentTo(Position position) {
-            return getEdgeIndex() == position.getRow();
+            return getSideIndex() == position.getRow();
         }
 
         @Override
-        protected void initialiseEdge() {
-            this.setEdgeIndex(Edge.boardSize);
+        protected void initialiseSide() {
+            this.setSideIndex(BoardSide.boardSize);
         }
     },
     TOP(Stone.BLACK) {
         @Override
         public boolean isAdjacentTo(Position position) {
-            return getEdgeIndex() == position.getRow();
+            return getSideIndex() == position.getRow();
         }
 
         @Override
-        protected void initialiseEdge() {
-            this.setEdgeIndex(1);
+        protected void initialiseSide() {
+            this.setSideIndex(1);
         }
     };
 
     private final Stone color;
-    private int edgeIndex;
+    private int sideIndex;
     private static int boardSize;
 
-    Edge(Stone color) {
+    BoardSide(Stone color) {
         this.color = color;
     }
 
-    abstract protected void initialiseEdge();
+    abstract protected void initialiseSide();
 
     abstract protected boolean isAdjacentTo(Position position);
 
-    protected int getEdgeIndex() {
-        return this.edgeIndex;
+    protected int getSideIndex() {
+        return this.sideIndex;
     }
 
-    protected void setEdgeIndex(int edgeIndex) {
-        this.edgeIndex = edgeIndex;
+    protected void setSideIndex(int edgeIndex) {
+        this.sideIndex = edgeIndex;
     }
 
     protected static void setBoardSize(int boardSize) {
-        Edge.boardSize = boardSize;
+        BoardSide.boardSize = boardSize;
     }
 
     protected boolean hasColor(Stone color) {
@@ -76,9 +76,9 @@ public enum Edge {
 
     @Override
     public String toString() {
-        return "Edge{" +
+        return "Side{" +
                 "color=" + color +
-                ", edgeIndex=" + edgeIndex +
+                ", sideIndex=" + sideIndex +
                 '}';
     }
 }

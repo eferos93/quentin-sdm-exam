@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class EdgeShould {
+public class BoardSideShould {
     private final Board board = new Board();
 
 
@@ -21,7 +21,7 @@ public class EdgeShould {
         Position thirdPosition = Position.in(13, 1);
         Position fourthPosition = Position.in(1, 13);
 
-        List<Edge> edgesList = Arrays.asList(Edge.TOP, Edge.BOTTOM, Edge.LEFT, Edge.RIGHT);
+        List<BoardSide> edgesList = Arrays.asList(BoardSide.TOP, BoardSide.BOTTOM, BoardSide.LEFT, BoardSide.RIGHT);
         List<Position> positionList = Arrays.asList(firstPosition, secondPosition, thirdPosition, fourthPosition);
 
         return edgesList.stream()

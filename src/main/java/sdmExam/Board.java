@@ -11,7 +11,7 @@ public class Board {
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
     private final RegionContainer regionsContainer = RegionContainer.getRegionsContainer();
-    private final Set<Edge> edges = EnumSet.of(Edge.BOTTOM, Edge.TOP, Edge.LEFT, Edge.RIGHT);
+    private final Set<BoardSide> sides = EnumSet.of(BoardSide.BOTTOM, BoardSide.TOP, BoardSide.LEFT, BoardSide.RIGHT);
     private final Map<Stone, Chain> chainsContainer = new HashMap<>() {{
         put(Stone.BLACK, new Chain());
         put(Stone.WHITE, new Chain());
@@ -23,8 +23,8 @@ public class Board {
 
     private Board(int boardSize) {
         this.BOARD_SIZE = boardSize;
-        Edge.setBoardSize(boardSize);
-        this.edges.forEach(Edge::initialiseEdge);
+        BoardSide.setBoardSize(boardSize);
+        this.sides.forEach(BoardSide::initialiseSide);
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
             for (int column = 1; column <= this.BOARD_SIZE; column++) {
                 this.intersections.add(Intersection.empty(in(row, column)));
@@ -70,8 +70,8 @@ public class Board {
                 );
     }
 
-    private List<Edge> getEdgesOfColor(Stone color) {
-        return edges.stream().filter(edge -> edge.hasColor(color)).collect(Collectors.toList());
+    private List<BoardSide> getEdgesOfColor(Stone color) {
+        return sides.stream().filter(edge -> edge.hasColor(color)).collect(Collectors.toList());
     }
 
     protected Stone colorWithCompleteChain() {
