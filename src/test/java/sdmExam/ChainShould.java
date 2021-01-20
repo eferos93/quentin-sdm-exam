@@ -2,8 +2,8 @@ package sdmExam;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static sdmExam.Position.in;
@@ -12,21 +12,17 @@ public class ChainShould {
 
     @Test
     public void touchEdgesIfItIsACompleteChain() {
+        Stream<Intersection> intersectionStream = Stream.of(
+                new Intersection(in(1, 1), Stone.BLACK),
+                new Intersection(in(1, 2), Stone.BLACK),
+                new Intersection(in(2, 2), Stone.BLACK),
+                new Intersection(in(3, 2), Stone.BLACK)
+        );
+
         Chain chain = new Chain();
+        intersectionStream.forEach(chain::updateChain);
 
-        Intersection intersection1 = new Intersection(in(1, 1), Stone.BLACK);
-        Intersection intersection2 = new Intersection(in(1, 2), Stone.BLACK);
-        Intersection intersection3 = new Intersection(in(2, 2), Stone.BLACK);
-        Intersection intersection4 = new Intersection(in(3, 2), Stone.BLACK);
-
-        chain.updateChain(intersection1);
-        chain.updateChain(intersection2);
-        chain.updateChain(intersection3);
-        chain.updateChain(intersection4);
-
-        List<Edge> listOfEdges = new ArrayList<>();
-        listOfEdges.add(Edge.BOTTOM);
-        listOfEdges.add(Edge.TOP);
+        List<Edge> listOfEdges = List.of(Edge.BOTTOM, Edge.TOP);
 
         Edge.setBoardSize(3);
         listOfEdges.forEach(Edge::initialiseEdge);
@@ -36,19 +32,16 @@ public class ChainShould {
 
     @Test
     public void NotTouchEdgesIfItIsNotACompleteChain() {
+        Stream<Intersection> intersectionStream = Stream.of(
+                new Intersection(in(1, 1), Stone.BLACK),
+                new Intersection(in(1, 2), Stone.BLACK),
+                new Intersection(in(2, 2), Stone.BLACK)
+        );
+
         Chain chain = new Chain();
+        intersectionStream.forEach(chain::updateChain);
 
-        Intersection intersection1 = new Intersection(in(1, 1), Stone.BLACK);
-        Intersection intersection2 = new Intersection(in(1, 2), Stone.BLACK);
-        Intersection intersection3 = new Intersection(in(2, 2), Stone.BLACK);
-
-        chain.updateChain(intersection1);
-        chain.updateChain(intersection2);
-        chain.updateChain(intersection3);
-
-        List<Edge> listOfEdges = new ArrayList<>();
-        listOfEdges.add(Edge.BOTTOM);
-        listOfEdges.add(Edge.TOP);
+        List<Edge> listOfEdges = List.of(Edge.BOTTOM, Edge.TOP);
 
         Edge.setBoardSize(3);
         listOfEdges.forEach(Edge::initialiseEdge);
