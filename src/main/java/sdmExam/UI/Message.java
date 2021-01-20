@@ -12,4 +12,5 @@ public class Message {
 
 
     public static final String ASK_SIZE = "Choose the dimension of the board between 4 and 13";
+    public static final String INVALID_INPUT_SIZE = "Invalid input";
 }
