@@ -11,4 +11,5 @@ public class Message {
     public static final String PIE="Apply pie rule? 0/1";
 
 
+    public static final String ASK_SIZE = "Choose the dimension of the board between 4 and 13";
 }
