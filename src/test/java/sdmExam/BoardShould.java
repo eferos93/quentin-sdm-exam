@@ -168,13 +168,13 @@ public class BoardShould {
         Board customBoard = Board.buildTestBoard(boardSize);
         IntStream.rangeClosed(1,boardSize)
                 .forEach(column -> {
-                    if (column <= 6) customBoard.addStoneAt(Stone.WHITE, in(7, column));
-                    else customBoard.addStoneAt(Stone.BLACK, in(7, column)); });
+                    if (column <= 6) {customBoard.addStoneAt(Stone.WHITE, in(7, column));}
+                    else {customBoard.addStoneAt(Stone.BLACK, in(7, column));} });
 
         IntStream.rangeClosed(1,boardSize)
                 .forEach(column -> {
-                    if (column <= 4) customBoard.addStoneAt(Stone.WHITE, in(9, column));
-                    else customBoard.addStoneAt(Stone.BLACK, in(9, column)); });
+                    if (column <= 4) {customBoard.addStoneAt(Stone.WHITE, in(9, column));}
+                    else {customBoard.addStoneAt(Stone.BLACK, in(9, column));} });
 
         Set<Intersection> territory = customBoard.getTerritories().get(0);
 
@@ -184,5 +184,15 @@ public class BoardShould {
                         .hasStone(Stone.BLACK)
                 )
         );
+    }
+
+    @Test
+    public void updateTheChainsCorrectly() {
+        Board customBoard = Board.buildTestBoard(3);
+        customBoard.addStoneAt(Stone.BLACK, in(1, 1));
+        customBoard.addStoneAt(Stone.BLACK, in(1, 2));
+        customBoard.addStoneAt(Stone.BLACK, in(2, 2));
+        customBoard.addStoneAt(Stone.BLACK, in(3, 2));
+        assertEquals(Stone.BLACK, customBoard.colorWithCompleteChain());
     }
 }
