@@ -75,8 +75,8 @@ public class BoardShould {
         Intersection secondIntersection = customBoard.intersectionAt(in(3, 4));
         Intersection thirdIntersection = customBoard.intersectionAt(in(12, 5));
 
-        List<Intersection> inputList = Arrays.asList(firstIntersection, secondIntersection, thirdIntersection);
-        List<Boolean> outputList = Arrays.asList(false, true, true);
+        List<Intersection> inputList = List.of(firstIntersection, secondIntersection, thirdIntersection);
+        List<Boolean> outputList = List.of(false, true, true);
 
         return inputList.stream()
                 .map(intersection -> DynamicTest.dynamicTest("Checking Orthogonal Adjacent of " + intersection,
@@ -101,8 +101,8 @@ public class BoardShould {
         Intersection secondIntersection = customBoard.intersectionAt(in(3, 4));
         Intersection thirdIntersection = customBoard.intersectionAt(in(12, 5));
 
-        List<Intersection> inputList = Arrays.asList(firstIntersection, secondIntersection, thirdIntersection);
-        List<Boolean> outputList = Arrays.asList(false, true, true);
+        List<Intersection> inputList = List.of(firstIntersection, secondIntersection, thirdIntersection);
+        List<Boolean> outputList = List.of(false, true, true);
 
         return inputList.stream()
                 .map(intersection -> DynamicTest.dynamicTest("Checking Diagonal Adjacent of " + intersection,
