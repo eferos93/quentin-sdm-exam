@@ -31,7 +31,7 @@ public class ChainShould {
     }
 
     @Test
-    public void NotTouchEdgesIfItIsNotACompleteChain() {
+    public void notTouchEdgesIfItIsNotACompleteChain() {
         Stream<Intersection> intersectionStream = Stream.of(
                 new Intersection(in(1, 1), Stone.BLACK),
                 new Intersection(in(1, 2), Stone.BLACK),
