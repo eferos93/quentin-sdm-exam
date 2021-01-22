@@ -1,6 +1,7 @@
 package sdmExam.UI;
 
 import sdmExam.UI.Exception.OutOfBoardException;
+import sdmExam.UI.Exception.PieException;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -37,6 +38,21 @@ public class InputHandle   {
             scanner.next();
             return getInteger();
         }
+    }
+
+    public boolean askPie() {
+        Graphics.Pie();
+        String answer;
+        try {
+            answer = scanner.next();
+            if(!(answer.equals("n") || answer.equals("y")))
+                throw new PieException(Message.INVALID_INPUT_SIZE);
+        } catch(PieException error) {
+            System.out.println(error.getMessage());
+            scanner.next();
+            return askPie();
+        }
+        return answer.equals("y");
     }
 
 
