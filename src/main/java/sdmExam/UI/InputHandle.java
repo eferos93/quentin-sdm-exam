@@ -45,14 +45,14 @@ public class InputHandle   {
         String answer;
         try {
             answer = scanner.next();
-            if(!(answer.toLowerCase().equals("n") || answer.toLowerCase().equals("y")))
+            if(!(answer.toLowerCase().equals("no") || answer.toLowerCase().equals("yes")))
                 throw new PieException(Message.INVALID_INPUT_SIZE);
         } catch(PieException error) {
             System.out.println(error.getMessage());
             scanner.next();
             return askPie();
         }
-        return answer.toLowerCase().equals("y");
+        return answer.toLowerCase().equals("yes");
     }
 
 

@@ -11,15 +11,16 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Board board = new Board();
         Game game= new Game();
+        InputHandle inputHandle  =new InputHandle();
         Graphics.printTitle();
         Graphics.Instructions();
-        InputHandle inputHandler = new InputHandle();
-        int size = inputHandler.askSize();
-        /*while (Graphics.SomeoneWin()) {
-            Graphics.Set(Stone.BLACK, board, game);
-            Graphics.Set(Stone.WHITE, board, game);
-        }*/
-
+        Graphics.BlackPlayerPlayFirst();
+        Graphics.FillEdges(board);
+        Graphics.Set(Stone.BLACK,board, game);
+        Graphics.Pie();
+        if(inputHandle.askPie())
+            Graphics.ApplyPie(board);
+        else{Graphics.Set(Stone.WHITE,board,game);}
     }
 
 }
