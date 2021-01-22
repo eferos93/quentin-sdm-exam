@@ -79,9 +79,10 @@ public class GameShould {
     }
 
     @Test
-    public void provideCorrectWinnerMergeChainsFeature() throws Exception {
+    public void provideCorrectWinnerWithPieRule() throws Exception {
         Game customGame = Game.buildTestGame(4);
         customGame.makeMove(Stone.BLACK, in(1, 1));
+        customGame.applyPieRule();
         customGame.makeMove(Stone.WHITE, in(1, 2));
         customGame.makeMove(Stone.BLACK, in(4, 4));
         assertEquals(Stone.NONE, customGame.getWinner());
@@ -101,10 +102,9 @@ public class GameShould {
     }
 
     @Test
-    public void provideCorrectWinnerWithPieRule() throws Exception {
+    public void provideCorrectWinnerMergeChainsFeature() throws Exception {
         Game customGame = Game.buildTestGame(4);
         customGame.makeMove(Stone.BLACK, in(1, 1));
-        customGame.applyPieRule();
         customGame.makeMove(Stone.WHITE, in(1, 2));
         customGame.makeMove(Stone.BLACK, in(4, 4));
         assertEquals(Stone.NONE, customGame.getWinner());

@@ -6,8 +6,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,7 +37,7 @@ public class PositionShould {
         Position fourthPosition = Position.in(5, 6);
         Position fifthPosition = Position.in(7, 12);
 
-        return Arrays.asList(
+        return List.of(
                 DynamicTest.dynamicTest("Above Position",
                         () -> assertTrue(firstPosition.isAboveWithRespectTo(Position.in(2, 2)))),
                 DynamicTest.dynamicTest("Not Below Position",

@@ -6,19 +6,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class IntersectionShould {
-
-    @ParameterizedTest
-    @MethodSource("provideIntersection")
-    public void beEqualToAnotherIntersectionWithEqualFields(Intersection firstIntersection, Intersection secondIntersection) {
-        assertEquals(firstIntersection, secondIntersection);
-    }
 
     private static Stream<Arguments> provideIntersection() {
         return Stream.of(
@@ -31,6 +24,18 @@ public class IntersectionShould {
         );
     }
 
+    @ParameterizedTest
+    @MethodSource("provideIntersection")
+    public void beEqualToAnotherIntersectionWithEqualFields(Intersection firstIntersection, Intersection secondIntersection) {
+        assertEquals(firstIntersection, secondIntersection);
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideIntersection")
+    public void checkOccupiedIntersections(Intersection intersection) {
+        assertTrue(intersection.isOccupied());
+    }
+
     @TestFactory
     Stream<DynamicTest> checkOrthogonalAdjacency() {
         Intersection firstIntersection = new Intersection(Position.in(8, 5), Stone.BLACK);
@@ -41,9 +46,9 @@ public class IntersectionShould {
         Intersection secondParameter = new Intersection(Position.in(7, 3), Stone.BLACK);
         Intersection thirdParameter = new Intersection(Position.in(3, 12), Stone.BLACK);
 
-        List<Intersection> inputList = Arrays.asList(firstIntersection, secondIntersection, thirdIntersection);
-        List<Boolean> outputList = Arrays.asList(true, false, false);
-        List<Intersection> parameterList = Arrays.asList(firstParameter, secondParameter, thirdParameter);
+        List<Intersection> inputList = List.of(firstIntersection, secondIntersection, thirdIntersection);
+        List<Boolean> outputList = List.of(true, false, false);
+        List<Intersection> parameterList = List.of(firstParameter, secondParameter, thirdParameter);
 
         return inputList.stream()
                 .map(intersection -> DynamicTest.dynamicTest("Checking Orthogonal Adjacent of " + intersection,
@@ -64,9 +69,9 @@ public class IntersectionShould {
         Intersection secondParameter = new Intersection(Position.in(4, 4), Stone.WHITE);
         Intersection thirdParameter = new Intersection(Position.in(5, 1), Stone.WHITE);
 
-        List<Intersection> inputList = Arrays.asList(firstIntersection, secondIntersection, thirdIntersection);
-        List<Boolean> outputList = Arrays.asList(true, true, false);
-        List<Intersection> parameterList = Arrays.asList(firstParameter, secondParameter, thirdParameter);
+        List<Intersection> inputList = List.of(firstIntersection, secondIntersection, thirdIntersection);
+        List<Boolean> outputList = List.of(true, true, false);
+        List<Intersection> parameterList = List.of(firstParameter, secondParameter, thirdParameter);
 
         return inputList.stream()
                 .map(intersection -> DynamicTest.dynamicTest("Checking Diagonal Adjacent of " + intersection,
