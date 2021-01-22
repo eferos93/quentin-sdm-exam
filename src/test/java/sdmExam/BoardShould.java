@@ -19,7 +19,7 @@ public class BoardShould {
 
     @Test
     public void intersectionOutsideBoard() {
-        assertThrows(Exception.class, () -> board.intersectionAt(Position.in(14, 14)));
+        assertThrows(Exception.class, () -> board.intersectionAt(Position.in(16, 14)));
     }
 
     @Test
