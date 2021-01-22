@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -61,7 +62,9 @@ public class IntersectionShould {
 
     @TestFactory
     Stream<DynamicTest> checkDiagonalAdjacency() {
-        Intersection firstIntersection = new Intersection(Position.in(7, 9), Stone.WHITE);
+
+       // ---- THIS IS THE ORIGINAL PART ---- //
+       /* Intersection firstIntersection = new Intersection(Position.in(7, 9), Stone.WHITE);
         Intersection secondIntersection = new Intersection(Position.in(3, 3), Stone.WHITE);
         Intersection thirdIntersection = new Intersection(Position.in(3, 12), Stone.WHITE);
 
@@ -79,7 +82,53 @@ public class IntersectionShould {
                             int index = inputList.indexOf(intersection);
                             assertEquals(outputList.get(index), intersection.isDiagonalTo(parameterList.get(index)));
                         })
-                );
+                );*/
+        //-------------------------------------//
+
+
+        List<Intersection> inputList = List.of(
+                new Intersection(Position.in(7, 9), Stone.WHITE),
+                new Intersection(Position.in(3, 3), Stone.WHITE),
+                new Intersection(Position.in(3, 12), Stone.WHITE)
+        );
+
+        List<Intersection> paramList = List.of(
+                new Intersection(Position.in(6, 10), Stone.WHITE),
+                new Intersection(Position.in(4, 4), Stone.WHITE),
+                new Intersection(Position.in(5, 1), Stone.WHITE)
+        );
+
+        List<Boolean> outputList = List.of(true, true, false);
+
+        /* // <var>Stream is a Stream of Intersection (replaced by List of Intersections)
+        Iterator<Intersection> inputIterator = inputStream.iterator();
+        Iterator<Intersection> paramIterator = paramStream.iterator();
+        Iterator<Boolean> outputIterator = outputStream.iterator();
+        */
+
+        Stream.Builder<DynamicTest> builder = Stream.builder();
+
+        /* // idea is to pass throughout streams by using iterators
+        while(inputIterator.hasNext() && paramIterator.hasNext() && outputIterator.hasNext()){
+            builder.add( DynamicTest.dynamicTest("Checking Diagonal Adjacency",
+                    () -> {
+                        Boolean methodResult = inputIterator.next().isDiagonalTo(paramIterator.next());
+                        assertEquals(outputIterator.next(), methodResult);
+                    }
+            ));
+        }
+        */
+
+        // this works
+        IntStream.range(0, inputList.size()).forEach(index ->
+        builder.add( DynamicTest.dynamicTest("Checking Diagonal Adjacency" + inputList.get(index),
+            () -> {
+                Boolean methodResult = inputList.get(index).isDiagonalTo(paramList.get(index));
+                assertEquals(outputList.get(index), methodResult);
+            }
+        )));
+
+        return  builder.build();
     }
 }
 
