@@ -19,10 +19,10 @@ public class Main {
         if(scanner.nextInt()==1)
             Graphics.ApplyPie(board);
         else{Graphics.Set(Stone.WHITE,board,game);}
-        while (Graphics.SomeoneWin()) {
+        /*while (Graphics.SomeoneWin()) {
             Graphics.Set(Stone.BLACK, board, game);
             Graphics.Set(Stone.WHITE, board, game);
-        }
+        }*/
 
     }
 
