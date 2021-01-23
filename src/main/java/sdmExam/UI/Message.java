@@ -3,8 +3,8 @@ package sdmExam.UI;
 public class Message {
     public static final String TITLE =  "QUENTIN" ;
     public static final String INSTRUCTIONS= """
-            The Black player B should connect the black edges\s
-            The White player W should connect the white edges\s
+            The Black player B should connect the black edges
+            The White player W should connect the white edges
             For more info visit: https://boardgamegeek.com/boardgame/124095/quentin""";
     public static final String BLACKPLAYFIRST="Black player play first";
     public static final String CHOOSE_X="Choose coordinate X";
