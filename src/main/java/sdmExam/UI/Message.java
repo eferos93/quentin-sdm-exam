@@ -2,7 +2,7 @@ package sdmExam.UI;
 
 public class Message {
     public static final String TITLE =  "QUENTIN" ;
-    public static final String INSTRUCTIONS= """
+    public final static String INSTRUCTIONS= """
             The Black player B should connect the black edges
             The White player W should connect the white edges
             For more info visit: https://boardgamegeek.com/boardgame/124095/quentin""";
@@ -15,4 +15,5 @@ public class Message {
     public static final String ASK_SIZE = "Choose the dimension of the board between 4 and 13";
     public static final String INVALID_INPUT_SIZE = "Invalid input";
     public static final String INVALID_NUMBER_INPUT = "You must write an integer number";
+
 }

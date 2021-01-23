@@ -4,10 +4,7 @@ import sdmExam.UI.Graphics;
 import sdmExam.UI.InputHandle;
 import sdmExam.UI.PrintBoard;
 
-import java.util.Scanner;
-
 public class Main {
-    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws Exception {
         Board board = new Board();
