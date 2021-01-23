@@ -21,7 +21,10 @@ public class PrintBoard {
         System.out.print("W");
         System.out.print("\n");
     }
+
+    //TODO column idexes have to be fixed
     private static String padLeft(String s) { return String.format("%" + 3 + "s", s); }
+
     public static void Print(Board board) {
         String BlackEdge = "  B";
         System.out.println("    "+BlackEdge.repeat(board.getBoardSize()));
