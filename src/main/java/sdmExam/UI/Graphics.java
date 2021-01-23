@@ -6,7 +6,6 @@ import sdmExam.Position;
 import sdmExam.Stone;
 
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 public class Graphics {
     private static final Scanner scanner = new Scanner(System.in);
@@ -21,14 +20,6 @@ public class Graphics {
 
     public static void ApplyPie(Board board) { board.pie();}
 
-
-    public static void FillEdges(Board board){
-        IntStream.range(2, board.getBoardSize()).forEach(y-> board.addStoneAt(Stone.WHITE,new Position(1,y)));
-        IntStream.range(2, board.getBoardSize()).forEach(y-> board.addStoneAt(Stone.WHITE,new Position(board.getBoardSize(), y)));
-        IntStream.range(2, board.getBoardSize()).forEach(x-> board.addStoneAt(Stone.BLACK,new Position(x,1)));
-        IntStream.range(2, board.getBoardSize()).forEach(x-> board.addStoneAt(Stone.BLACK,new Position(x, board.getBoardSize())));
-        PrintBoard.Print(board);
-    }
 
     public static void Set(Stone stone, Board board, Game game) throws  Exception  {
         System.out.println(Message.CHOOSE_X);
