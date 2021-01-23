@@ -23,10 +23,10 @@ public class PrintBoard {
     }
     private static String padLeft(String s) { return String.format("%" + 3 + "s", s); }
     public static void Print(Board board) {
-
-        System.out.println("      B  B  B  B  B  B  B  B  B  B  B  B  B");
+        String BlackEdge = "  B";
+        System.out.println("    "+BlackEdge.repeat(board.getBoardSize()));
         IntStream.iterate(board.getBoardSize(), x -> --x).limit(board.getBoardSize()).forEach(y -> PrintRow(board,y));
-        System.out.println("      B  B  B  B  B  B  B  B  B  B  B  B  B");
+        System.out.println("    "+BlackEdge.repeat(board.getBoardSize()));
         System.out.print("\t");
         IntStream.range(1, board.getBoardSize()+1).forEachOrdered(index -> System.out.print(padLeft(index + " ")));
         System.out.print("\n");
