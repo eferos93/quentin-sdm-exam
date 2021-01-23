@@ -28,7 +28,7 @@ public class PrintBoard {
     public static void Print(Board board) {
         String BlackEdge = "  B";
         System.out.println("    "+BlackEdge.repeat(board.getBoardSize()));
-        IntStream.iterate(board.getBoardSize(), x -> --x).limit(board.getBoardSize()).forEach(y -> PrintRow(board,y));
+        IntStream.rangeClosed(1,board.getBoardSize()).forEach(y -> PrintRow(board,y));
         System.out.println("    "+BlackEdge.repeat(board.getBoardSize()));
         System.out.print("\t");
         IntStream.range(1, board.getBoardSize()+1).forEachOrdered(index -> System.out.print(padLeft(index + " ")));
