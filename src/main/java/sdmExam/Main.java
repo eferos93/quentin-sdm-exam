@@ -1,7 +1,7 @@
 package sdmExam;
 
 import sdmExam.UI.Graphics;
-import sdmExam.UI.InputHandle;
+import sdmExam.UI.PrintBoard;
 
 import java.util.Scanner;
 
@@ -11,14 +11,13 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Board board = new Board();
         Game game= new Game();
-        InputHandle inputHandle  =new InputHandle();
+        PrintBoard.Print(board);
         Graphics.printTitle();
         Graphics.Instructions();
         Graphics.BlackPlayerPlayFirst();
-        Graphics.FillEdges(board);
         Graphics.Set(Stone.BLACK,board, game);
         Graphics.Pie();
-        if(inputHandle.askPie())
+        if(scanner.nextInt()==1)
             Graphics.ApplyPie(board);
         else{Graphics.Set(Stone.WHITE,board,game);}
     }
