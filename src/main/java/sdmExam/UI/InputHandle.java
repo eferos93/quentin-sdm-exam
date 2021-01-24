@@ -10,22 +10,8 @@ public class InputHandle   {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public int askSize() {
-        System.out.println(Message.ASK_SIZE);
-        int size;
-        try {
-            size = getInteger();
-            if (size < 3 || size > 11)
-                throw new OutOfBoardException(Message.INVALID_INPUT_SIZE);
 
-        } catch (OutOfBoardException error) {
-            System.out.println(error.getMessage());
-            return askSize();
-        }
-        return size;
-    }
-
-    private static int getInteger() {
+    public static int getInteger() {
         try {
             if (scanner.hasNextInt())
                 return scanner.nextInt();
@@ -38,6 +24,23 @@ public class InputHandle   {
             return getInteger();
         }
     }
+
+    public boolean askPie() {
+        Graphics.Pie();
+        String answer;
+        try {
+            answer = scanner.next();
+            if(!(answer.toLowerCase().equals("no") || answer.toLowerCase().equals("yes")))
+                throw new PieException(Message.INVALID_INPUT_SIZE);
+        } catch(PieException error) {
+            System.out.println(error.getMessage());
+            scanner.next();
+            return askPie();
+        }
+        return answer.toLowerCase().equals("yes");
+    }
+
+
 
 }
 

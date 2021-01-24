@@ -1,29 +1,24 @@
 package sdmExam;
 
 import sdmExam.UI.Graphics;
-
-import java.util.Scanner;
+import sdmExam.UI.InputHandle;
+import sdmExam.UI.PrintBoard;
 
 public class Main {
-    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws Exception {
         Board board = new Board();
         Game game= new Game();
+        InputHandle inputHandle= new InputHandle();
+
         Graphics.printTitle();
         Graphics.Instructions();
         Graphics.BlackPlayerPlayFirst();
-        Graphics.FillEdges(board);
+        PrintBoard.Print(board);
         Graphics.Set(Stone.BLACK,board, game);
-        Graphics.Pie();
-        if(scanner.nextInt()==1)
+        if(inputHandle.askPie())
             Graphics.ApplyPie(board);
         else{Graphics.Set(Stone.WHITE,board,game);}
-        while (Graphics.SomeoneWin()) {
-            Graphics.Set(Stone.BLACK, board, game);
-            Graphics.Set(Stone.WHITE, board, game);
-        }
-
     }
 
 }
