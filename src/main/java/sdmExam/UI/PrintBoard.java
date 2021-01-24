@@ -26,13 +26,12 @@ public class PrintBoard {
     private static String padLeft(String s) { return String.format("%" + 3 + "s", s); }
 
     public static void printBoard(Board board) {
-        String BlackSide = "  B";
-        System.out.println("    "+BlackSide.repeat(board.getBoardSize()));
-        IntStream.rangeClosed(1,board.getBoardSize()).forEach(y -> printRow(board,y));
-        System.out.println("    "+BlackSide.repeat(board.getBoardSize()));
-        System.out.print("\t");
-        IntStream.range(1, board.getBoardSize()+1).forEachOrdered(index -> System.out.print(padLeft(index + " ")));
-        System.out.print("\n");
+        System.out.println("    " + "  B".repeat(board.getBoardSize()));
+        IntStream.rangeClosed(1, board.getBoardSize()).forEach(rowIndex -> printRow(board, rowIndex));
+        System.out.print("    " + "  B".repeat(board.getBoardSize()) + System.lineSeparator() + "\t ");
+        IntStream.rangeClosed(1, board.getBoardSize())
+                .forEachOrdered(rowIndex -> System.out.printf("%" + 3 + "s", rowIndex + " "));
+        System.out.println();
     }
 
 }
