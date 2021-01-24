@@ -1,30 +1,36 @@
 package sdmExam;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static sdmExam.Position.in;
+
 public class Board {
-    public static final int BOARD_SIZE = 13;
+    protected static final int DEFAULT_BOARD_SIZE = 13;
+    private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
-    private Stone lowerAndUpperEdgesColor = Stone.BLACK;
-    private Stone leftAndRightEdgesColor = Stone.WHITE;
+    private final RegionContainer regionsContainer = RegionContainer.getRegionsContainer();
+    private final Set<BoardSide> sides = EnumSet.of(BoardSide.BOTTOM, BoardSide.TOP, BoardSide.LEFT, BoardSide.RIGHT);
+    private final Map<Stone, Chain> chainsContainer = new HashMap<>() {{
+        put(Stone.BLACK, new Chain());
+        put(Stone.WHITE, new Chain());
+    }};
 
     public Board() {
-        for (int row = 1; row <= BOARD_SIZE; row++) {
-            for (int column = 1; column <= BOARD_SIZE; column++) {
-                intersections.add(Intersection.empty(Position.in(row, column)));
-            }
-        }
+        this(DEFAULT_BOARD_SIZE);
     }
 
-    private Board(int size) {
-        for (int row = 1; row <= size; row++) {
-            for (int column = 1; column <= size; column++) {
-                intersections.add(Intersection.empty(Position.in(row, column)));
+    private Board(int boardSize) {
+        this.BOARD_SIZE = boardSize;
+        BoardSide.setBoardSize(boardSize);
+        this.sides.forEach(BoardSide::initialiseSide);
+        for (int row = 1; row <= this.BOARD_SIZE; row++) {
+            for (int column = 1; column <= this.BOARD_SIZE; column++) {
+                this.intersections.add(Intersection.empty(in(row, column)));
             }
         }
+        regionsContainer.createGraph(this.intersections, boardSize);
     }
 
     protected static Board buildTestBoard(int size) {
@@ -35,51 +41,103 @@ public class Board {
         return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow();
     }
 
-    public Stone addStoneAt(Stone stone, Position position) throws NoSuchElementException {
-        intersectionAt(position).setStone(stone);
-        return stone;
+    public void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
+        Intersection intersection = intersectionAt(position);
+        regionsContainer.updateRegionContainer(intersection);
+        intersection.setStone(stone);
+        updateChains(intersection);
     }
 
-    public void setLowerAndUpperEdgesColor(Stone color) {
-        this.lowerAndUpperEdgesColor = color;
-    }
-
-    public void setLeftAndRightEdgesColor(Stone color) {
-        this.leftAndRightEdgesColor = color;
-    }
-
-    public Stone getLowerAndUpperEdgesColor() {
-        return lowerAndUpperEdgesColor;
-    }
-
-    public Stone getLeftAndRightEdgesColor() {
-        return leftAndRightEdgesColor;
+    private void updateChains(Intersection updatedIntersection) {
+        chainsContainer.get(updatedIntersection.getStone()).updateChain(updatedIntersection);
     }
 
     public boolean isOccupied(Position position) throws NoSuchElementException {
         return intersectionAt(position).isOccupied();
     }
 
-    public void pie() {
-        setLowerAndUpperEdgesColor(Stone.WHITE);
-        setLeftAndRightEdgesColor(Stone.BLACK);
-    }
-
     public boolean existsOrthogonallyAdjacentWithStone(Intersection intersection, Stone stone) {
         return intersections.stream()
-                .filter(intersection::isOrthogonalTo)
-                .anyMatch(orthogonalIntersection -> orthogonalIntersection.hasStone(stone));
+                .anyMatch(otherIntersection ->
+                        otherIntersection.isOrthogonalTo(intersection) && otherIntersection.hasStone(stone)
+                );
     }
 
     public boolean existsDiagonallyAdjacentWithStone(Intersection intersection, Stone stone) {
         return intersections.stream()
-                .filter(intersection::isDiagonalTo)
-                .anyMatch(diagonalIntersection -> diagonalIntersection.hasStone(stone));
+                .anyMatch(otherIntersection ->
+                        otherIntersection.isDiagonalTo(intersection) && otherIntersection.hasStone(stone)
+                );
     }
 
-    protected Stream<Intersection> stream() {
-        return intersections.stream();
+    private List<BoardSide> getEdgesOfColor(Stone color) {
+        return sides.stream().filter(edge -> edge.hasColor(color)).collect(Collectors.toList());
     }
 
-    public int getBoardSize(){return  BOARD_SIZE;}
+    protected Stone colorWithCompleteChain() {
+        return chainsContainer.entrySet().stream()
+                .filter(entry -> entry.getValue().hasACompleteChain(getEdgesOfColor(entry.getKey())))
+                .map(Map.Entry::getKey)
+                .findFirst()
+                .orElse(Stone.NONE);
+    }
+
+    protected Stream<Intersection> getEmptyIntersections() {
+        return intersections.stream().filter(intersection -> !intersection.isOccupied());
+    }
+
+    //TODO: don't know if it's useful to get the territories or just act on them
+    public List<Set<Intersection>> getTerritories() {
+        return regionsContainer.getRegions().stream()
+                .filter(region -> region.stream().allMatch(this::isOrthogonalToAtLeastTwoStones))
+                .collect(Collectors.toList());
+    }
+
+    private boolean isOrthogonalToAtLeastTwoStones(Intersection intersection) {
+        return intersections.stream()
+                .filter(intersection::isOrthogonalTo)
+                .filter(Intersection::isOccupied)
+                .count() >= 2;
+    }
+
+    public List<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection) {
+        return intersections.stream()
+                .filter(otherIntersection -> otherIntersection.isOrthogonalTo(intersection))
+                .collect(Collectors.toList());
+    }
+
+    //TODO: code smell long method, need to refactor
+    public Stone getStoneToFillTerritory(Set<Intersection> territory, Stone lastPlay) {
+        Set<Intersection> intersectionsSurroundingTerritory = territory.stream()
+                .flatMap(intersection -> getOrthogonalAdjacencyIntersections(intersection).stream())
+                .filter(Intersection::isOccupied)
+                .collect(Collectors.toSet());
+
+        long countOfWhiteStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.WHITE);
+        long countOfBlackStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.BLACK);
+
+        Stone stone;
+
+        if (countOfWhiteStones != countOfBlackStones) {
+            stone = (countOfWhiteStones < countOfBlackStones) ? Stone.BLACK : Stone.WHITE;
+        } else {
+            stone = lastPlay.getOppositeColor();
+        }
+        return stone;
+    }
+
+    private long countIntersectionsOfColor(Set<Intersection> intersections, Stone color) {
+        return intersections.stream()
+                .filter(intersection -> intersection.hasStone(color))
+                .count();
+    }
+
+    public void fillTerritory(Set<Intersection> territory, Stone lastPlay) {
+        Stone territoryStoneColor = getStoneToFillTerritory(territory, lastPlay);
+        territory.forEach(intersection -> this.addStoneAt(territoryStoneColor, intersection.getPosition()));
+    }
+
+    private void searchAndFillTerritories(Stone lastPlay) {
+        getTerritories().forEach(territory -> fillTerritory(territory, lastPlay));
+    }
 }

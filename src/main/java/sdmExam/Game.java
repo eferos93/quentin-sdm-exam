@@ -1,26 +1,42 @@
 package sdmExam;
 
 import sdmExam.exceptions.*;
+import java.util.stream.Stream;
 
 public class Game {
     private final Board board;
     private Stone lastPlay = Stone.NONE;
+    private final Player playerOne, playerTwo;
 
-    public Game() {
-        board = new Board();
+    private Game(Board board) {
+        this.board = board;
+        playerOne = new Player(Stone.BLACK, "player1");
+        playerTwo = new Player(Stone.WHITE, "player2");
     }
 
-    private Game(Board board) { this.board = board;  }
+    public Game() {
+        this(new Board());
+    }
 
-    protected static Game buildTestGame(Board board) { return new Game(board); }
+    private Game(int boardSize) {
+        this(Board.buildTestBoard(boardSize));
+    }
 
-    public void play(Stone player, Position position) throws Exception {
+    protected static Game buildTestGame(Board board) {
+        return new Game(board);
+    }
 
-        if (isInvalidFirstPlayer(player)) {
+    protected static Game buildTestGame(int boardSize) {
+        return new Game(boardSize);
+    }
+
+    public void makeMove(Stone color, Position position) throws Exception {
+
+        if (isInvalidFirstPlayer(color)) {
             throw new InvalidFirstPlayerException();
         }
 
-        if (isARepeatedPlay(player)) {
+        if (isARepeatedPlay(color)) {
             throw new RepeatedPlayException();
         }
 
@@ -28,18 +44,18 @@ public class Game {
             throw new OccupiedPositionException(position);
         }
 
-        if (isIllegalMove(player, position)) {
+        if (isIllegalMove(color, position)) {
             throw new IllegalMoveException(position);
         }
 
-        board.addStoneAt(player, position);
-        lastPlay = player;
+        board.addStoneAt(color, position);
+        lastPlay = color;
     }
 
+    //TODO: maybe rename this method to avoid overloading
     private boolean isIllegalMove(Stone player, Position position) {
         final Intersection intersection = board.intersectionAt(position);
-        return board.existsDiagonallyAdjacentWithStone(intersection, player) &&
-                !board.existsOrthogonallyAdjacentWithStone(intersection, player);
+        return isIllegalMove(player, intersection);
     }
 
     private boolean isIllegalMove(Stone player, Intersection intersection) {
@@ -52,12 +68,19 @@ public class Game {
     }
 
     private boolean isInvalidFirstPlayer(Stone player) {
-        return isARepeatedPlay(Stone.NONE) && player == Stone.WHITE;
+        return lastPlay == Stone.NONE && player == Stone.WHITE;
     }
 
     public boolean isPlayerAbleToMakeAMove(Stone player) {
-        return board.stream()
-                .filter(intersection -> !intersection.isOccupied())
+        return board.getEmptyIntersections()
                 .anyMatch(emptyIntersection -> !isIllegalMove(player, emptyIntersection));
+    }
+
+    public Stone getWinner() {
+        return board.colorWithCompleteChain();
+    }
+
+    public void applyPieRule() {
+        Stream.of(playerOne, playerTwo).forEach(Player::changeSide);
     }
 }

@@ -1,85 +1,198 @@
 package sdmExam;
 
-
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static sdmExam.Position.in;
 
 public class BoardShould {
-    private final Board board = new Board();
+    private final static Board board = new Board();
 
-    @Test
-    public void getCorrectIntersectionGivenAPosition() {
-        Position position = Position.in(5, 7);
+    private static Stream<Arguments> providePositionToGetCorrectIntersectionGivenAPosition() {
+        return Stream.of(
+                Arguments.of(in(1, 1)),
+                Arguments.of(in(7, 2)),
+                Arguments.of(in(13, 13))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource({"providePositionToGetCorrectIntersectionGivenAPosition"})
+    public void getCorrectIntersectionGivenAPosition(Position position) {
         assertDoesNotThrow(() -> board.intersectionAt(position));
     }
 
-    @Test
-    public void intersectionOutsideBoard() {
-        assertThrows(Exception.class, () -> board.intersectionAt(Position.in(16, 14)));
+    private static Stream<Arguments> providePositionForIntersectionOutsideBoard() {
+        return Stream.of(
+                Arguments.of(in(14, 14)),
+                Arguments.of(in(0, 0)),
+                Arguments.of(in(-1, 16))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource({"providePositionForIntersectionOutsideBoard"})
+    public void intersectionOutsideBoard(Position position) {
+        assertThrows(Exception.class, () -> board.intersectionAt(position));
+    }
+
+    private static Stream<Arguments> provideIntersectionToMarkCorrectlyAnIntersection() {
+        return Stream.of(
+                Arguments.of(board.intersectionAt(in(5, 7)), Stone.BLACK),
+                Arguments.of(board.intersectionAt(in(4, 3)), Stone.WHITE),
+                Arguments.of(board.intersectionAt(in(9, 6)), Stone.WHITE)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource({"provideIntersectionToMarkCorrectlyAnIntersection"})
+    public void markCorrectlyAnIntersection(Intersection intersection, Stone stone) throws NoSuchElementException {
+        board.addStoneAt(Stone.BLACK, in(5, 7));
+        board.addStoneAt(Stone.WHITE, in(4, 3));
+        board.addStoneAt(Stone.WHITE, in(9, 6));
+        assertEquals(intersection.getStone(), stone);
+    }
+
+    @TestFactory
+    Stream<DynamicTest> checkOrthogonalAdjacent() {
+        Board customBoard = Board.buildTestBoard(13);
+        customBoard.addStoneAt(Stone.WHITE, in(7, 9));
+        customBoard.addStoneAt(Stone.WHITE, in(3, 4));
+        customBoard.addStoneAt(Stone.WHITE, in(4, 4));
+        customBoard.addStoneAt(Stone.WHITE, in(12, 5));
+        customBoard.addStoneAt(Stone.WHITE, in(13, 5));
+
+        Intersection firstIntersection = customBoard.intersectionAt(in(7, 9));
+        Intersection secondIntersection = customBoard.intersectionAt(in(3, 4));
+        Intersection thirdIntersection = customBoard.intersectionAt(in(12, 5));
+
+        List<Intersection> inputList = List.of(firstIntersection, secondIntersection, thirdIntersection);
+        List<Boolean> outputList = List.of(false, true, true);
+
+        return inputList.stream()
+                .map(intersection -> DynamicTest.dynamicTest("Checking Orthogonal Adjacent of " + intersection,
+                        () -> {
+                            int index = inputList.indexOf(intersection);
+                            assertEquals(outputList.get(index), customBoard.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
+                        })
+                );
+    }
+
+
+    @TestFactory
+    Stream<DynamicTest> checkDiagonalAdjacent() {
+        Board customBoard = Board.buildTestBoard(13);
+        customBoard.addStoneAt(Stone.WHITE, in(7, 9));
+        customBoard.addStoneAt(Stone.WHITE, in(3, 4));
+        customBoard.addStoneAt(Stone.WHITE, in(2, 5));
+        customBoard.addStoneAt(Stone.WHITE, in(12, 5));
+        customBoard.addStoneAt(Stone.WHITE, in(13, 4));
+
+        Intersection firstIntersection = customBoard.intersectionAt(in(7, 9));
+        Intersection secondIntersection = customBoard.intersectionAt(in(3, 4));
+        Intersection thirdIntersection = customBoard.intersectionAt(in(12, 5));
+
+        List<Intersection> inputList = List.of(firstIntersection, secondIntersection, thirdIntersection);
+        List<Boolean> outputList = List.of(false, true, true);
+
+        return inputList.stream()
+                .map(intersection -> DynamicTest.dynamicTest("Checking Diagonal Adjacent of " + intersection,
+                        () -> {
+                            int index = inputList.indexOf(intersection);
+                            assertEquals(outputList.get(index), customBoard.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
+                        })
+                );
     }
 
     @Test
-    public void markCorrectlyAnIntersection() throws NoSuchElementException {
-        Intersection intersection = board.intersectionAt(Position.in(5,7));
-        board.addStoneAt(Stone.BLACK, Position.in(5,7));
-        assertEquals(intersection.getStone(), Stone.BLACK);
+    public void getCorrectTerritories() {
+        Board customBoard = Board.buildTestBoard(4);
+        customBoard.addStoneAt(Stone.BLACK, in(1, 2));
+        customBoard.addStoneAt(Stone.WHITE, in(2, 1));
+        List<Set<Intersection>> territories = customBoard.getTerritories();
+        assertEquals(1, territories.size());
+        assertTrue(territories.stream()
+                .anyMatch(territory -> territory.stream()
+                        .allMatch(intersection -> intersection.getPosition().equals(in(1, 1)))
+                )
+        );
     }
 
     @Test
-    public void noOrthogonalAdjacencyOfIntersection() {
-        board.addStoneAt(Stone.WHITE, Position.in(7, 9));
-        Intersection intersection = board.intersectionAt(Position.in(7, 9));
-        assertFalse(board.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
+    public void provideTerritories() {
+        int boardSize = 9;
+        Board customBoard = Board.buildTestBoard(boardSize);
+        Set<Intersection> expectedTerritory = new HashSet<>();
+
+        IntStream.rangeClosed(1, boardSize)
+                .forEach(column -> {
+                    customBoard.addStoneAt(Stone.WHITE, in(6, column));
+                    customBoard.addStoneAt(Stone.WHITE, in(8, column));
+                    expectedTerritory.add(new Intersection(in(7, column), Stone.NONE));
+                });
+
+        List<Set<Intersection>> territories = customBoard.getTerritories();
+        assertTrue(territories.stream()
+                .allMatch(expectedTerritory::containsAll)
+        );
     }
 
     @Test
-    public void rightOrthogonalAdjacencyOfIntersection() {
-        board.addStoneAt(Stone.WHITE, Position.in(3, 4));
-        board.addStoneAt(Stone.WHITE, Position.in(4, 4));
-        Intersection intersection = board.intersectionAt(Position.in(3, 4));
-        assertTrue(board.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
+    public void fillTerritoryWithEqualNumberOfStoneOfTheSameColor() {
+        int boardSize = 13;
+        Board customBoard = Board.buildTestBoard(boardSize);
+        IntStream.rangeClosed(1, boardSize).forEach(column -> {
+            customBoard.addStoneAt(Stone.WHITE, in(7, column));
+            customBoard.addStoneAt(Stone.BLACK, in(9, column));
+        });
+        customBoard.fillTerritory(customBoard.getTerritories().get(0), Stone.BLACK);
+        assertTrue(IntStream.rangeClosed(1, 13)
+                .allMatch(column -> customBoard.intersectionAt(in(8, column))
+                        .hasStone(Stone.WHITE)
+                )
+        );
     }
 
     @Test
-    public void topOrthogonalAdjacencyOfIntersection() {
-        board.addStoneAt(Stone.WHITE, Position.in(12, 5));
-        board.addStoneAt(Stone.WHITE, Position.in(13, 5));
-        Intersection intersection = board.intersectionAt(Position.in(12, 5));
-        assertTrue(board.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
+    public void fillTerritoryWithDifferentNumberOfStone() {
+        int boardSize = 13;
+        Board customBoard = Board.buildTestBoard(boardSize);
+        IntStream.rangeClosed(1,boardSize)
+                .forEach(column -> {
+                    if (column <= 6) {customBoard.addStoneAt(Stone.WHITE, in(7, column));}
+                    else {customBoard.addStoneAt(Stone.BLACK, in(7, column));} });
+
+        IntStream.rangeClosed(1,boardSize)
+                .forEach(column -> {
+                    if (column <= 4) {customBoard.addStoneAt(Stone.WHITE, in(9, column));}
+                    else {customBoard.addStoneAt(Stone.BLACK, in(9, column));} });
+
+        Set<Intersection> territory = customBoard.getTerritories().get(0);
+
+        customBoard.fillTerritory(territory, Stone.BLACK);
+        assertTrue(IntStream.rangeClosed(1, boardSize)
+                .allMatch(column -> customBoard.intersectionAt(in(8, column))
+                        .hasStone(Stone.BLACK)
+                )
+        );
     }
 
     @Test
-    public void edgeColorsAfterPie() {
-        board.pie();
-        assertEquals(board.getLowerAndUpperEdgesColor(), Stone.WHITE);
-        assertEquals(board.getLeftAndRightEdgesColor(), Stone.BLACK);
+    public void updateTheChainsCorrectly() {
+        Board customBoard = Board.buildTestBoard(3);
+        customBoard.addStoneAt(Stone.BLACK, in(1, 1));
+        customBoard.addStoneAt(Stone.BLACK, in(1, 2));
+        customBoard.addStoneAt(Stone.BLACK, in(2, 2));
+        customBoard.addStoneAt(Stone.BLACK, in(3, 2));
+        assertEquals(Stone.BLACK, customBoard.colorWithCompleteChain());
     }
-
-    @Test
-    public void noDiagonalAdjacencyOfIntersection() {
-        board.addStoneAt(Stone.WHITE, Position.in(7, 9));
-        Intersection intersection = board.intersectionAt(Position.in(7, 9));
-        assertFalse(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
-    }
-
-    @Test
-    public void upRightDiagonalAdjacencyOfIntersection() {
-        board.addStoneAt(Stone.WHITE, Position.in(3, 4));
-        board.addStoneAt(Stone.WHITE, Position.in(2, 5));
-        Intersection intersection = board.intersectionAt(Position.in(3, 4));
-        assertTrue(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
-    }
-
-    @Test
-    public void downLeftDiagonalAdjacencyOfIntersection() {
-        board.addStoneAt(Stone.WHITE, Position.in(12, 5));
-        board.addStoneAt(Stone.WHITE, Position.in(13, 4));
-        Intersection intersection = board.intersectionAt(Position.in(12, 5));
-        assertTrue(board.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
-    }
-
 }
