@@ -140,4 +140,7 @@ public class Board {
     private void searchAndFillTerritories(Stone lastPlay) {
         getTerritories().forEach(territory -> fillTerritory(territory, lastPlay));
     }
+
+    public int getBoardSize() { return BOARD_SIZE;
+    }
 }

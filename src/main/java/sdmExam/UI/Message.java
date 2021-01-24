@@ -1,5 +1,6 @@
 package sdmExam.UI;
 
+
 public class Message {
     public static final String TITLE =  "QUENTIN GAME" ;
     public final static String INSTRUCTIONS= """
@@ -13,4 +14,5 @@ public class Message {
     public static final String ASK_SIZE = "Choose the dimension of the board between 4 and 13";
     public static final String INVALID_SIZE_INPUT = "Invalid size. Please select a valid input size for the board.";
     public static final String INVALID_COORDINATE_INPUT = "Invalid input coordinate. Please choose a valid intersection inside the board";
+    public static final String CURRENT_PLAYER = "%s's turn. %s";
 }
