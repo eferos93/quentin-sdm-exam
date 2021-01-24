@@ -9,14 +9,15 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Board board = new Board();
         Game game= new Game();
-        InputHandle inputHandle = new InputHandle();
+        InputHandle inputHandle= new InputHandle();
+
         Graphics.printTitle();
         Graphics.Instructions();
-        PrintBoard.Print(board);
         Graphics.BlackPlayerPlayFirst();
+        PrintBoard.Print(board);
         Graphics.Set(Stone.BLACK,board, game);
-        Graphics.Pie();
-        if(inputHandle.askPie())
+        inputHandle.askPie();
+        if(inputHandle.getInteger()==1)
             Graphics.ApplyPie(board);
         else{Graphics.Set(Stone.WHITE,board,game);}
     }

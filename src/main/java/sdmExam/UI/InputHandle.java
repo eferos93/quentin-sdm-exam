@@ -11,7 +11,7 @@ public class InputHandle   {
     private static final Scanner scanner = new Scanner(System.in);
 
 
-    private static int getInteger() {
+    public static int getInteger() {
         try {
             if (scanner.hasNextInt())
                 return scanner.nextInt();

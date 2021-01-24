@@ -10,8 +10,6 @@ public class Message {
     public static final String CHOOSE_X="Choose coordinate X";
     public static final String CHOOSE_Y="Choose coordinate Y";
     public static final String PIE="Apply pie rule? yes/no";
-
-
     public static final String ASK_SIZE = "Choose the dimension of the board between 4 and 13";
     public static final String INVALID_INPUT_SIZE = "Invalid input";
     public static final String INVALID_NUMBER_INPUT = "You must write an integer number";
