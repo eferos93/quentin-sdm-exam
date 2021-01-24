@@ -22,14 +22,14 @@ public class PrintBoard {
         System.out.print("\n");
     }
 
-    //TODO column idexes have to be fixed
+    //TODO column indexes have to be fixed
     private static String padLeft(String s) { return String.format("%" + 3 + "s", s); }
 
-    public static void Print(Board board) {
-        String BlackEdge = "  B";
-        System.out.println("    "+BlackEdge.repeat(board.getBoardSize()));
+    public static void print(Board board) {
+        String BlackSide = "  B";
+        System.out.println("    "+BlackSide.repeat(board.getBoardSize()));
         IntStream.rangeClosed(1,board.getBoardSize()).forEach(y -> PrintRow(board,y));
-        System.out.println("    "+BlackEdge.repeat(board.getBoardSize()));
+        System.out.println("    "+BlackSide.repeat(board.getBoardSize()));
         System.out.print("\t");
         IntStream.range(1, board.getBoardSize()+1).forEachOrdered(index -> System.out.print(padLeft(index + " ")));
         System.out.print("\n");

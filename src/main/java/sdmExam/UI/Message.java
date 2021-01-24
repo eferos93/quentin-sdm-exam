@@ -3,7 +3,7 @@ package sdmExam.UI;
 
 public class Message {
     public static final String TITLE =  "QUENTIN GAME";
-    public final static String INSTRUCTIONS= """
+    public final static String INSTRUCTIONS = """
             The Black player B should connect the black board sides (top and bottom)
             The White player W should connect the white board sides (left and right)
             For more info visit: https://boardgamegeek.com/boardgame/124095/quentin""";
