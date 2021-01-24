@@ -5,11 +5,9 @@ import sdmExam.exceptions.PieException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class InputHandle   {
-
+public class InputHandler {
 
     private static final Scanner scanner = new Scanner(System.in);
-
 
     public static int getInteger() {
         try {
@@ -19,7 +17,7 @@ public class InputHandle   {
                 throw new InputMismatchException();
         }
         catch (InputMismatchException error) {
-            System.out.println(Message.INVALID_NUMBER_INPUT);
+            System.out.println(Message.INVALID_COORDINATE_INPUT);
             scanner.next();
             return getInteger();
         }
@@ -30,14 +28,14 @@ public class InputHandle   {
         String answer;
         try {
             answer = scanner.next();
-            if(!(answer.toLowerCase().equals("no") || answer.toLowerCase().equals("yes")))
-                throw new PieException(Message.INVALID_INPUT_SIZE);
+            if(!(answer.equalsIgnoreCase("no") || answer.equalsIgnoreCase("yes")))
+                throw new PieException(Message.INVALID_SIZE_INPUT);
         } catch(PieException error) {
             System.out.println(error.getMessage());
             scanner.next();
             return askPie();
         }
-        return answer.toLowerCase().equals("yes");
+        return answer.equalsIgnoreCase("yes");
     }
 
 

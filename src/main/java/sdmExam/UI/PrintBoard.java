@@ -11,7 +11,7 @@ public class PrintBoard {
     private PrintBoard(){}
 
     public static void displayStone(Stone stone){
-        System.out.print(BoardStoneValue.getStoneValue(stone));
+        System.out.print(ConsoleStoneRepresentation.getStoneValue(stone));
     }
 
     private static void PrintRow(Board board, int column) {

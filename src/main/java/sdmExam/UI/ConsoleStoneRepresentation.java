@@ -5,7 +5,7 @@ import sdmExam.Stone;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardStoneValue {
+public class ConsoleStoneRepresentation {
     private static final Map<Stone, String> StoneValue = new HashMap<>() {
         {
             put(Stone.BLACK, "[B]");
@@ -14,7 +14,7 @@ public class BoardStoneValue {
         }
     };
 
-    private BoardStoneValue(){}
+    private ConsoleStoneRepresentation(){}
 
     public static String getStoneValue(Stone stone) {
         return StoneValue.get(stone);
