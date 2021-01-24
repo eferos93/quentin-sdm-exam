@@ -24,7 +24,7 @@ public class InputHandler {
     }
 
     public boolean askPie() {
-        Graphics.Pie();
+        ConsoleMessageWriter.askPie();
         String answer;
         try {
             answer = scanner.next();
