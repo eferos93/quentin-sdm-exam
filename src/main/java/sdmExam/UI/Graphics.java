@@ -5,10 +5,9 @@ import sdmExam.Game;
 import sdmExam.Position;
 import sdmExam.Stone;
 
-import java.util.Scanner;
-
 public class Graphics {
-    private static final Scanner scanner = new Scanner(System.in);
+
+    static InputHandle inputHandle = new InputHandle();
 
     public static void printTitle() {System.out.println(Message.TITLE);}
 
@@ -22,11 +21,12 @@ public class Graphics {
 
     public static void Set(Stone stone, Board board, Game game) throws  Exception  {
         System.out.println(Message.CHOOSE_X);
-        int coordinateX = scanner.nextInt();
+        int coordinateX = inputHandle.getInteger();
         System.out.println(Message.CHOOSE_Y);
-        int coordinateY = scanner.nextInt();
+        int coordinateY = inputHandle.getInteger() ;
         game.play(stone,new Position(coordinateX,coordinateY));
         board.addStoneAt(stone,new Position(coordinateX,coordinateY));
         PrintBoard.Print(board);
     }
+
 }
