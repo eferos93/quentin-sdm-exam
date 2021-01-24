@@ -16,8 +16,7 @@ public class Main {
         Graphics.BlackPlayerPlayFirst();
         PrintBoard.Print(board);
         Graphics.Set(Stone.BLACK,board, game);
-        inputHandle.askPie();
-        if(inputHandle.getInteger()==1)
+        if(inputHandle.askPie())
             Graphics.ApplyPie(board);
         else{Graphics.Set(Stone.WHITE,board,game);}
     }

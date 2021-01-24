@@ -20,15 +20,13 @@ public class Graphics {
 
     public static void ApplyPie(Board board) { board.pie();}
 
-
     public static void Set(Stone stone, Board board, Game game) throws  Exception  {
         System.out.println(Message.CHOOSE_X);
         int coordinateX = scanner.nextInt();
         System.out.println(Message.CHOOSE_Y);
-        game.play(stone,new Position(coordinateX,scanner.nextInt()));
-        board.addStoneAt(stone,new Position(coordinateX,scanner.nextInt()));
+        int coordinateY = scanner.nextInt();
+        game.play(stone,new Position(coordinateX,coordinateY));
+        board.addStoneAt(stone,new Position(coordinateX,coordinateY));
         PrintBoard.Print(board);
     }
-
-
 }
