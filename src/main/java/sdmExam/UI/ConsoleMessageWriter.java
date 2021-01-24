@@ -14,5 +14,9 @@ public class ConsoleMessageWriter {
         System.out.printf(Message.CURRENT_PLAYER, player.getName(), ConsoleStoneRepresentation.getStoneValue(player.getColor()));
     }
 
+    public static void notifyWinner(Player player) {
+        System.out.printf(Message.END_GAME, player.getName());
+    }
+
     public static void askPie() {System.out.println(Message.PIE);}
 }

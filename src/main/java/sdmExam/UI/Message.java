@@ -15,4 +15,5 @@ public class Message {
     public static final String INVALID_SIZE_INPUT = "Invalid size. Please select a valid input size for the board.";
     public static final String INVALID_COORDINATE_INPUT = "Invalid input coordinate. Please choose a valid intersection inside the board";
     public static final String CURRENT_PLAYER = "%s's turn. %s";
+    public static final String END_GAME = "Congratulations to %s, you won!";
 }
