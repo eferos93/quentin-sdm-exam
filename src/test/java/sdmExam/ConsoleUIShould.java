@@ -1,6 +1,7 @@
 package sdmExam;
 
 import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
 import sdmExam.UI.PrintBoard;
 
@@ -36,5 +37,18 @@ public class ConsoleUIShould {
                     fakeStandardOutput.reset();
                 })
         );
+    }
+
+    @Test
+    public void printCorrectlyLine() {
+        Board board = Board.buildTestBoard(5);
+        ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(fakeStandardOutput));
+
+        int rowIndex = 2;
+        String expectedOutput = rowIndex + "\tW[ ][ ][ ][ ][ ]W" + System.lineSeparator();
+        PrintBoard.printRow(board, rowIndex);
+
+        assertEquals(expectedOutput, fakeStandardOutput.toString());
     }
 }
