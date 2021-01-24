@@ -10,20 +10,17 @@ public class PrintBoard {
 
     private PrintBoard(){}
 
-    public static void displayStone(Stone stone){
+    private static void displayStone(Stone stone){
         System.out.print(ConsoleStoneRepresentation.getStoneValue(stone));
     }
 
-    public static void printRow(Board board, int rowIndex) {
+    private static void printRow(Board board, int rowIndex) {
         System.out.print(rowIndex + "\t");
         System.out.print("W");
         IntStream.rangeClosed(1, board.getBoardSize())
                 .forEach(columnIndex -> displayStone(board.intersectionAt(Position.in(rowIndex, columnIndex)).getStone()));
         System.out.print("W" + System.lineSeparator());
     }
-
-    //TODO column indexes have to be fixed
-    private static String padLeft(String s) { return String.format("%" + 3 + "s", s); }
 
     public static void printBoard(Board board) {
         System.out.println("    " + "  B".repeat(board.getBoardSize()));
@@ -33,7 +30,6 @@ public class PrintBoard {
                 .forEachOrdered(rowIndex -> System.out.printf("%" + 3 + "s", rowIndex + " "));
         System.out.println();
     }
-
 }
 
 
