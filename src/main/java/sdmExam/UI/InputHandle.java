@@ -1,6 +1,6 @@
 package sdmExam.UI;
 
-import sdmExam.UI.Exception.OutOfBoardException;
+import sdmExam.exceptions.OutOfBoardException;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

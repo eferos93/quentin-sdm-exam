@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 
 public class PrintBoard {
 
-    private PrintBoard(){};
+    private PrintBoard(){}
 
     public static void displayStone(Stone stone){
         System.out.print(BoardStoneValue.getStoneValue(stone));
