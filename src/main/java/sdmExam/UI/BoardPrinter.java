@@ -6,9 +6,9 @@ import sdmExam.Stone;
 
 import java.util.stream.IntStream;
 
-public class PrintBoard {
+public class BoardPrinter {
 
-    private PrintBoard(){}
+    private BoardPrinter(){}
 
     private static void displayStone(Stone stone){
         System.out.print(ConsoleStoneRepresentation.getStoneValue(stone));

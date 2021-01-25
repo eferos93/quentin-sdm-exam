@@ -1,7 +1,7 @@
 package sdmExam;
 
 import org.junit.jupiter.api.Test;
-import sdmExam.UI.PrintBoard;
+import sdmExam.UI.BoardPrinter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -32,7 +32,7 @@ public class ConsoleUIShould {
 
         expectedOutput.append(System.lineSeparator());
 
-        PrintBoard.printBoard(board);
+        BoardPrinter.printBoard(board);
 
         assertEquals(expectedOutput.toString(), fakeStandardOutput.toString());
     }
