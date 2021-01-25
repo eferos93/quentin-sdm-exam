@@ -7,7 +7,6 @@ import java.util.stream.Stream;
 import static sdmExam.core.Position.in;
 
 public class Board {
-    protected static final int DEFAULT_BOARD_SIZE = 13;
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
     private final RegionContainer regionsContainer = RegionContainer.getRegionsContainer();
@@ -16,10 +15,6 @@ public class Board {
         put(Stone.BLACK, new Chain());
         put(Stone.WHITE, new Chain());
     }};
-
-    public Board() {
-        this(DEFAULT_BOARD_SIZE);
-    }
 
     private Board(int boardSize) {
         this.BOARD_SIZE = boardSize;
@@ -33,7 +28,7 @@ public class Board {
         regionsContainer.createGraph(this.intersections, boardSize);
     }
 
-    public static Board buildTestBoard(int size) {
+    public static Board buildBoard(int size) {
         return new Board(size);
     }
 
@@ -52,18 +47,18 @@ public class Board {
         chainsContainer.get(updatedIntersection.getStone()).updateChain(updatedIntersection);
     }
 
-    public boolean isOccupied(Position position) throws NoSuchElementException {
+    protected boolean isOccupied(Position position) throws NoSuchElementException {
         return intersectionAt(position).isOccupied();
     }
 
-    public boolean existsOrthogonallyAdjacentWithStone(Intersection intersection, Stone stone) {
+    protected boolean existsOrthogonallyAdjacentWithStone(Intersection intersection, Stone stone) {
         return intersections.stream()
                 .anyMatch(otherIntersection ->
                         otherIntersection.isOrthogonalTo(intersection) && otherIntersection.hasStone(stone)
                 );
     }
 
-    public boolean existsDiagonallyAdjacentWithStone(Intersection intersection, Stone stone) {
+    boolean existsDiagonallyAdjacentWithStone(Intersection intersection, Stone stone) {
         return intersections.stream()
                 .anyMatch(otherIntersection ->
                         otherIntersection.isDiagonalTo(intersection) && otherIntersection.hasStone(stone)
@@ -74,7 +69,7 @@ public class Board {
         return sides.stream().filter(edge -> edge.hasColor(color)).collect(Collectors.toList());
     }
 
-    public Stone colorWithCompleteChain() {
+    protected Stone colorWithCompleteChain() {
         return chainsContainer.entrySet().stream()
                 .filter(entry -> entry.getValue().hasACompleteChain(getEdgesOfColor(entry.getKey())))
                 .map(Map.Entry::getKey)
@@ -82,12 +77,12 @@ public class Board {
                 .orElse(Stone.NONE);
     }
 
-    public Stream<Intersection> getEmptyIntersections() {
+    protected Stream<Intersection> getEmptyIntersections() {
         return intersections.stream().filter(intersection -> !intersection.isOccupied());
     }
 
     //TODO: don't know if it's useful to get the territories or just act on them
-    public List<Set<Intersection>> getTerritories() {
+    protected List<Set<Intersection>> getTerritories() {
         return regionsContainer.getRegions().stream()
                 .filter(region -> region.stream().allMatch(this::isOrthogonalToAtLeastTwoStones))
                 .collect(Collectors.toList());
@@ -100,14 +95,14 @@ public class Board {
                 .count() >= 2;
     }
 
-    public List<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection) {
+    protected List<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection) {
         return intersections.stream()
                 .filter(otherIntersection -> otherIntersection.isOrthogonalTo(intersection))
                 .collect(Collectors.toList());
     }
 
     //TODO: code smell long method, need to refactor
-    public Stone getStoneToFillTerritory(Set<Intersection> territory, Stone lastPlay) {
+    protected Stone getStoneToFillTerritory(Set<Intersection> territory, Stone lastPlay) {
         Set<Intersection> intersectionsSurroundingTerritory = territory.stream()
                 .flatMap(intersection -> getOrthogonalAdjacencyIntersections(intersection).stream())
                 .filter(Intersection::isOccupied)
@@ -132,7 +127,7 @@ public class Board {
                 .count();
     }
 
-    public void fillTerritory(Set<Intersection> territory, Stone lastPlay) {
+    protected void fillTerritory(Set<Intersection> territory, Stone lastPlay) {
         Stone territoryStoneColor = getStoneToFillTerritory(territory, lastPlay);
         territory.forEach(intersection -> this.addStoneAt(territoryStoneColor, intersection.getPosition()));
     }
@@ -141,6 +136,7 @@ public class Board {
         getTerritories().forEach(territory -> fillTerritory(territory, lastPlay));
     }
 
-    public int getBoardSize() { return BOARD_SIZE;
+    public int getBoardSize() {
+        return BOARD_SIZE;
     }
 }

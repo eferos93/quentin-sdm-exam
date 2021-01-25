@@ -1,4 +1,4 @@
-package sdmExam;
+package sdmExam.core;
 
 import org.jgrapht.Graph;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
@@ -7,7 +7,6 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.util.SupplierUtil;
 import org.junit.jupiter.api.Test;
-import sdmExam.core.*;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -21,7 +20,7 @@ public class RegionContainerShould {
     public void initialize2x2GridRegion(){
 
         int boardSize = 2;
-        Board customBoard = Board.buildTestBoard(boardSize);
+        Board customBoard = Board.buildBoard(boardSize);
         List<Intersection> emptyIntersections = customBoard.getEmptyIntersections().collect(Collectors.toList());
         Graph<Intersection, DefaultEdge> graph = new SimpleGraph<>(new Supplier<>() {
             private int index = 0;
@@ -40,7 +39,7 @@ public class RegionContainerShould {
 
     @Test
     public void dropVertexCorrectly() {
-        Board customBoard = Board.buildTestBoard(4);
+        Board customBoard = Board.buildBoard(4);
         RegionContainer expectedRegion = RegionContainer.getRegionsContainer();
         Position position = Position.in(2, 2);
         customBoard.addStoneAt(Stone.BLACK, position);

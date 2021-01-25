@@ -1,4 +1,4 @@
-package sdmExam;
+package sdmExam.core;
 
 import org.junit.jupiter.api.Test;
 import sdmExam.core.Player;

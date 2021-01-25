@@ -1,7 +1,6 @@
-package sdmExam;
+package sdmExam.UI;
 
 import org.junit.jupiter.api.Test;
-import sdmExam.UI.BoardPrinter;
 import sdmExam.core.Board;
 
 import java.io.ByteArrayOutputStream;
@@ -14,7 +13,7 @@ public class ConsoleUIShould {
     @Test
     public void printCorrectlyBoard() {
         int boardSize = 4;
-        Board board = Board.buildTestBoard(boardSize);
+        Board board = Board.buildBoard(boardSize);
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
         String expectedOutput = """

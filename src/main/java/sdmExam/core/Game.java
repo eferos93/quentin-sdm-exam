@@ -15,11 +15,11 @@ public class Game {
     }
 
     public Game() {
-        this(new Board());
+        this(13);
     }
 
-    private Game(int boardSize) {
-        this(Board.buildTestBoard(boardSize));
+    public Game(int boardSize) {
+        this(Board.buildBoard(boardSize));
     }
 
     public static Game buildTestGame(Board board) {

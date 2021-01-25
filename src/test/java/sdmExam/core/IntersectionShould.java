@@ -1,4 +1,4 @@
-package sdmExam;
+package sdmExam.core;
 
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;

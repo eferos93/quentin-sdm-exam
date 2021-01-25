@@ -1,9 +1,6 @@
-package sdmExam;
+package sdmExam.core;
 
 import org.junit.jupiter.api.Test;
-import sdmExam.core.Board;
-import sdmExam.core.Game;
-import sdmExam.core.Stone;
 
 import static sdmExam.core.Position.in;
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,7 +48,7 @@ public class GameShould {
 
     @Test
     public void checkIfThereArePossibleLegalMoves() {
-        Board testBoard = Board.buildTestBoard(2);
+        Board testBoard = Board.buildBoard(2);
         testBoard.addStoneAt(Stone.WHITE, in(1, 1));
         testBoard.addStoneAt(Stone.WHITE, in(2, 2));
         testBoard.addStoneAt(Stone.BLACK, in(1, 2));

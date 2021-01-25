@@ -1,4 +1,4 @@
-package sdmExam;
+package sdmExam.core;
 
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
@@ -6,10 +6,6 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import sdmExam.core.Board;
-import sdmExam.core.Intersection;
-import sdmExam.core.Position;
-import sdmExam.core.Stone;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -19,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static sdmExam.core.Position.in;
 
 public class BoardShould {
-    private final static Board board = new Board();
+    private final static Board board = Board.buildBoard(13);
 
     private static Stream<Arguments> providePositionToGetCorrectIntersectionGivenAPosition() {
         return Stream.of(
@@ -68,7 +64,7 @@ public class BoardShould {
 
     @TestFactory
     Stream<DynamicTest> checkOrthogonalAdjacent() {
-        Board customBoard = Board.buildTestBoard(13);
+        Board customBoard = Board.buildBoard(13);
         customBoard.addStoneAt(Stone.WHITE, in(7, 9));
         customBoard.addStoneAt(Stone.WHITE, in(3, 4));
         customBoard.addStoneAt(Stone.WHITE, in(4, 4));
@@ -94,7 +90,7 @@ public class BoardShould {
 
     @TestFactory
     Stream<DynamicTest> checkDiagonalAdjacent() {
-        Board customBoard = Board.buildTestBoard(13);
+        Board customBoard = Board.buildBoard(13);
         customBoard.addStoneAt(Stone.WHITE, in(7, 9));
         customBoard.addStoneAt(Stone.WHITE, in(3, 4));
         customBoard.addStoneAt(Stone.WHITE, in(2, 5));
@@ -119,7 +115,7 @@ public class BoardShould {
 
     @Test
     public void getCorrectTerritories() {
-        Board customBoard = Board.buildTestBoard(4);
+        Board customBoard = Board.buildBoard(4);
         customBoard.addStoneAt(Stone.BLACK, in(1, 2));
         customBoard.addStoneAt(Stone.WHITE, in(2, 1));
         List<Set<Intersection>> territories = customBoard.getTerritories();
@@ -134,7 +130,7 @@ public class BoardShould {
     @Test
     public void provideTerritories() {
         int boardSize = 9;
-        Board customBoard = Board.buildTestBoard(boardSize);
+        Board customBoard = Board.buildBoard(boardSize);
         Set<Intersection> expectedTerritory = new HashSet<>();
 
         IntStream.rangeClosed(1, boardSize)
@@ -153,7 +149,7 @@ public class BoardShould {
     @Test
     public void fillTerritoryWithEqualNumberOfStoneOfTheSameColor() {
         int boardSize = 13;
-        Board customBoard = Board.buildTestBoard(boardSize);
+        Board customBoard = Board.buildBoard(boardSize);
         IntStream.rangeClosed(1, boardSize).forEach(column -> {
             customBoard.addStoneAt(Stone.WHITE, in(7, column));
             customBoard.addStoneAt(Stone.BLACK, in(9, column));
@@ -169,7 +165,7 @@ public class BoardShould {
     @Test
     public void fillTerritoryWithDifferentNumberOfStone() {
         int boardSize = 13;
-        Board customBoard = Board.buildTestBoard(boardSize);
+        Board customBoard = Board.buildBoard(boardSize);
         IntStream.rangeClosed(1,boardSize)
                 .forEach(column -> {
                     if (column <= 6) {customBoard.addStoneAt(Stone.WHITE, in(7, column));}
@@ -192,7 +188,7 @@ public class BoardShould {
 
     @Test
     public void updateTheChainsCorrectly() {
-        Board customBoard = Board.buildTestBoard(3);
+        Board customBoard = Board.buildBoard(3);
         customBoard.addStoneAt(Stone.BLACK, in(1, 1));
         customBoard.addStoneAt(Stone.BLACK, in(1, 2));
         customBoard.addStoneAt(Stone.BLACK, in(2, 2));
