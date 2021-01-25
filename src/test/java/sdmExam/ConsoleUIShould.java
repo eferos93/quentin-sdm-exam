@@ -12,28 +12,21 @@ public class ConsoleUIShould {
 
     @Test
     public void printCorrectlyBoard() {
-        int boardSize = 5;
+        int boardSize = 4;
         Board board = Board.buildTestBoard(boardSize);
-
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
-
-        StringBuilder expectedOutput = new StringBuilder("    " + "  B".repeat(boardSize) + System.lineSeparator());
-        for(int rowIndex = 1; rowIndex <= boardSize; rowIndex++)
-            expectedOutput.append(rowIndex)
-                          .append("\tW").append("[ ]".repeat(boardSize))
-                          .append("W").append(System.lineSeparator());
-
-        expectedOutput.append("    ").append("  B".repeat(boardSize))
-                      .append(System.lineSeparator()).append("\t ");
-
-        for(int rowIndex = 1; rowIndex <= boardSize; rowIndex++)
-            expectedOutput.append(String.format("%" + 3 + "s", rowIndex + " "));
-
-        expectedOutput.append(System.lineSeparator());
-
+        String expectedOutput = """
+                      B  B  B  B
+                1\tW[ ][ ][ ][ ]W
+                2\tW[ ][ ][ ][ ]W
+                3\tW[ ][ ][ ][ ]W
+                4\tW[ ][ ][ ][ ]W
+                      B  B  B  B
+                \t  1  2  3  4
+                """;
         BoardPrinter.printBoard(board);
 
-        assertEquals(expectedOutput.toString(), fakeStandardOutput.toString());
+        assertEquals(expectedOutput, fakeStandardOutput.toString());
     }
 }
