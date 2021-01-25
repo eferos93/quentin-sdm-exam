@@ -1,6 +1,6 @@
 package sdmExam.exceptions;
 
-import sdmExam.Position;
+import sdmExam.core.Position;
 
 public class IllegalMoveException extends Exception {
     public IllegalMoveException(Position position){

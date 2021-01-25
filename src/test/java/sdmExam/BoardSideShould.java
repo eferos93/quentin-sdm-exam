@@ -2,6 +2,9 @@ package sdmExam;
 
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
+import sdmExam.core.Board;
+import sdmExam.core.BoardSide;
+import sdmExam.core.Position;
 
 import java.util.List;
 import java.util.stream.Stream;

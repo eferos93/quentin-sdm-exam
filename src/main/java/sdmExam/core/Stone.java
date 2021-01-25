@@ -1,4 +1,4 @@
-package sdmExam;
+package sdmExam.core;
 
 public enum Stone {
     WHITE,

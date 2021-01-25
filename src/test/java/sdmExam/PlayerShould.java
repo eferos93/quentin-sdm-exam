@@ -1,6 +1,8 @@
 package sdmExam;
 
 import org.junit.jupiter.api.Test;
+import sdmExam.core.Player;
+import sdmExam.core.Stone;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;

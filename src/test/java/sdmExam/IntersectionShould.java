@@ -5,6 +5,9 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import sdmExam.core.Intersection;
+import sdmExam.core.Position;
+import sdmExam.core.Stone;
 
 import java.util.List;
 import java.util.stream.Stream;

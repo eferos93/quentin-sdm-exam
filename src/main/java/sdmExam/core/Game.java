@@ -1,4 +1,4 @@
-package sdmExam;
+package sdmExam.core;
 
 import sdmExam.exceptions.*;
 import java.util.stream.Stream;
@@ -22,11 +22,11 @@ public class Game {
         this(Board.buildTestBoard(boardSize));
     }
 
-    protected static Game buildTestGame(Board board) {
+    public static Game buildTestGame(Board board) {
         return new Game(board);
     }
 
-    protected static Game buildTestGame(int boardSize) {
+    public static Game buildTestGame(int boardSize) {
         return new Game(boardSize);
     }
 

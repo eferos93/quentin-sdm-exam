@@ -1,4 +1,4 @@
-package sdmExam;
+package sdmExam.core;
 
 import org.jgrapht.Graph;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
@@ -17,7 +17,7 @@ public class RegionContainer {
 
     private RegionContainer() {}
 
-    protected static RegionContainer getRegionsContainer() {
+    public static RegionContainer getRegionsContainer() {
         return regionContainer;
     }
 
@@ -40,7 +40,7 @@ public class RegionContainer {
         graph.removeVertex(intersection);
     }
 
-    protected List<Set<Intersection>> getRegions() {
+    public List<Set<Intersection>> getRegions() {
         return new ConnectivityInspector<>(graph).connectedSets();
     }
 

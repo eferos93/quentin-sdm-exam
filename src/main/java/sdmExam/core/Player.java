@@ -1,4 +1,4 @@
-package sdmExam;
+package sdmExam.core;
 
 public class Player {
     private Stone color;

@@ -1,12 +1,16 @@
 package sdmExam;
 
 import org.junit.jupiter.api.Test;
+import sdmExam.core.BoardSide;
+import sdmExam.core.Chain;
+import sdmExam.core.Intersection;
+import sdmExam.core.Stone;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static sdmExam.Position.in;
+import static sdmExam.core.Position.in;
 
 public class ChainShould {
 

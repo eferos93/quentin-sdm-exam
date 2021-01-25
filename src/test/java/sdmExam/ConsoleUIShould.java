@@ -2,6 +2,7 @@ package sdmExam;
 
 import org.junit.jupiter.api.Test;
 import sdmExam.UI.BoardPrinter;
+import sdmExam.core.Board;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -26,7 +27,6 @@ public class ConsoleUIShould {
                 \t  1  2  3  4
                 """;
         BoardPrinter.printBoard(board);
-
         assertEquals(expectedOutput, fakeStandardOutput.toString());
     }
 }

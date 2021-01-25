@@ -1,6 +1,6 @@
 package sdmExam.UI;
 
-import sdmExam.Stone;
+import sdmExam.core.Stone;
 
 import java.util.HashMap;
 import java.util.Map;

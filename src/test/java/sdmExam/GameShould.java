@@ -1,8 +1,11 @@
 package sdmExam;
 
 import org.junit.jupiter.api.Test;
+import sdmExam.core.Board;
+import sdmExam.core.Game;
+import sdmExam.core.Stone;
 
-import static sdmExam.Position.in;
+import static sdmExam.core.Position.in;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameShould {

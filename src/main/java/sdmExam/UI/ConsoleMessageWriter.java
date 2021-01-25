@@ -1,6 +1,6 @@
 package sdmExam.UI;
 
-import sdmExam.Player;
+import sdmExam.core.Player;
 
 public class ConsoleMessageWriter {
 

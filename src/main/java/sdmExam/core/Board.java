@@ -1,10 +1,10 @@
-package sdmExam;
+package sdmExam.core;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static sdmExam.Position.in;
+import static sdmExam.core.Position.in;
 
 public class Board {
     protected static final int DEFAULT_BOARD_SIZE = 13;
@@ -33,7 +33,7 @@ public class Board {
         regionsContainer.createGraph(this.intersections, boardSize);
     }
 
-    protected static Board buildTestBoard(int size) {
+    public static Board buildTestBoard(int size) {
         return new Board(size);
     }
 
@@ -74,7 +74,7 @@ public class Board {
         return sides.stream().filter(edge -> edge.hasColor(color)).collect(Collectors.toList());
     }
 
-    protected Stone colorWithCompleteChain() {
+    public Stone colorWithCompleteChain() {
         return chainsContainer.entrySet().stream()
                 .filter(entry -> entry.getValue().hasACompleteChain(getEdgesOfColor(entry.getKey())))
                 .map(Map.Entry::getKey)
@@ -82,7 +82,7 @@ public class Board {
                 .orElse(Stone.NONE);
     }
 
-    protected Stream<Intersection> getEmptyIntersections() {
+    public Stream<Intersection> getEmptyIntersections() {
         return intersections.stream().filter(intersection -> !intersection.isOccupied());
     }
 

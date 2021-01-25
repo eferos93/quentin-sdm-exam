@@ -1,4 +1,4 @@
-package sdmExam;
+package sdmExam.core;
 
 public enum BoardSide {
     LEFT(Stone.WHITE) {
@@ -8,7 +8,7 @@ public enum BoardSide {
         }
 
         @Override
-        protected void initialiseSide() {
+        public void initialiseSide() {
             this.setSideIndex(1);
         }
     },
@@ -19,7 +19,7 @@ public enum BoardSide {
         }
 
         @Override
-        protected void initialiseSide() {
+        public void initialiseSide() {
             this.setSideIndex(BoardSide.boardSize);
         }
     },
@@ -30,7 +30,7 @@ public enum BoardSide {
         }
 
         @Override
-        protected void initialiseSide() {
+        public void initialiseSide() {
             this.setSideIndex(BoardSide.boardSize);
         }
     },
@@ -41,7 +41,7 @@ public enum BoardSide {
         }
 
         @Override
-        protected void initialiseSide() {
+        public void initialiseSide() {
             this.setSideIndex(1);
         }
     };
@@ -54,9 +54,9 @@ public enum BoardSide {
         this.color = color;
     }
 
-    abstract protected void initialiseSide();
+    public abstract void initialiseSide();
 
-    abstract protected boolean isAdjacentTo(Position position);
+    public abstract boolean isAdjacentTo(Position position);
 
     protected int getSideIndex() {
         return this.sideIndex;
@@ -66,7 +66,7 @@ public enum BoardSide {
         this.sideIndex = edgeIndex;
     }
 
-    protected static void setBoardSize(int boardSize) {
+    public static void setBoardSize(int boardSize) {
         BoardSide.boardSize = boardSize;
     }
 

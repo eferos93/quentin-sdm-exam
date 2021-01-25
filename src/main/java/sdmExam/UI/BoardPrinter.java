@@ -1,8 +1,8 @@
 package sdmExam.UI;
 
-import sdmExam.Board;
-import sdmExam.Position;
-import sdmExam.Stone;
+import sdmExam.core.Board;
+import sdmExam.core.Position;
+import sdmExam.core.Stone;
 
 import java.util.stream.IntStream;
 
