@@ -1,12 +1,13 @@
-package quentin.UI;
+package quentin.UI.console;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class ConsoleInputHandler {
-    private static final Scanner scanner = new Scanner(System.in);
+public class ConsoleInputHandler implements quentin.UI.InputHandler {
+    private final Scanner scanner = new Scanner(System.in);
 
-    public static int getInteger() throws InputMismatchException {
+    @Override
+    public int getInteger() throws InputMismatchException {
         if (scanner.hasNextInt()) {
             return scanner.nextInt();
         } else {
@@ -14,6 +15,7 @@ public class ConsoleInputHandler {
         }
     }
 
+    @Override
     public boolean askPie() throws InputMismatchException {
         String answer = scanner.next();
         if (!(answer.equalsIgnoreCase("no") || answer.equalsIgnoreCase("yes"))) {

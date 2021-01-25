@@ -1,6 +1,7 @@
-package quentin.UI;
+package quentin.UI.console;
 
 import org.junit.jupiter.api.Test;
+import quentin.UI.console.ConsoleOutputHandler;
 import quentin.core.Board;
 
 import java.io.ByteArrayOutputStream;

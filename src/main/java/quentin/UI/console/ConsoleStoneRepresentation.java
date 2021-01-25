@@ -1,4 +1,4 @@
-package quentin.UI;
+package quentin.UI.console;
 
 import quentin.core.Stone;
 
