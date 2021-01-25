@@ -1,10 +1,6 @@
 package sdmExam.core;
 
 import org.junit.jupiter.api.Test;
-import sdmExam.core.BoardSide;
-import sdmExam.core.Chain;
-import sdmExam.core.Intersection;
-import sdmExam.core.Stone;
 
 import java.util.List;
 import java.util.stream.Stream;

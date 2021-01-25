@@ -15,10 +15,10 @@ public class Position {
     }
 
     @Override
-    public boolean equals(Object anotherPosition) {
-        if (this == anotherPosition) return true;
-        if (anotherPosition == null || getClass() != anotherPosition.getClass()) return false;
-        Position position = (Position) anotherPosition;
+    public boolean equals(Object otherPosition) {
+        if (this == otherPosition) return true;
+        if (otherPosition == null || getClass() != otherPosition.getClass()) return false;
+        Position position = (Position) otherPosition;
         return row == position.row && column == position.column;
     }
 
@@ -27,59 +27,51 @@ public class Position {
         return Objects.hash(row, column);
     }
 
-    public int getRow() {
+    protected int getRow() {
         return this.row;
     }
 
-    public int getColumn() {
+    protected int getColumn() {
         return this.column;
     }
 
-    public boolean isAboveWithRespectTo(Position otherIntersectionPosition) {
+    protected boolean isAboveWithRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getRow() == this.row + 1 &&
                 otherIntersectionPosition.getColumn() == this.column;
     }
 
-    public boolean isBelowWithRespectTo(Position otherIntersectionPosition) {
+    protected boolean isBelowWithRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getRow() == this.row - 1 &&
                 otherIntersectionPosition.getColumn() == this.column;
     }
 
-    public boolean isOnTheLeftWithRespectTo(Position otherIntersectionPosition) {
+    protected boolean isOnTheLeftWithRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getColumn() == this.column + 1 &&
                 otherIntersectionPosition.getRow() == this.row;
     }
 
-    public boolean isOnTheRightWithRespectTo(Position otherIntersectionPosition) {
+    protected boolean isOnTheRightWithRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getColumn() == this.column - 1 &&
                 otherIntersectionPosition.getRow() == this.row;
     }
 
-    public boolean isDownLeftRespectTo(Position otherIntersectionPosition) {
+    protected boolean isDownLeftRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getRow() == this.row - 1 &&
                 otherIntersectionPosition.getColumn() == this.column + 1;
     }
 
-    public boolean isUpLeftRespectTo(Position otherIntersectionPosition) {
+    protected boolean isUpLeftRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getRow() == this.row + 1 &&
                 otherIntersectionPosition.getColumn() == this.column + 1;
     }
 
-    public boolean isDownRightRespectTo(Position otherIntersectionPosition) {
+    protected boolean isDownRightRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getRow() == this.row - 1 &&
                 otherIntersectionPosition.getColumn() == this.column - 1;
     }
 
-    public boolean isUpRightRespectTo(Position otherIntersectionPosition) {
+    protected boolean isUpRightRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getRow() == this.row + 1 &&
                 otherIntersectionPosition.getColumn() == this.column - 1;
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "row=" + row +
-                ", column=" + column +
-                '}';
     }
 }

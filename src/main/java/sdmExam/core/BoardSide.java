@@ -73,12 +73,4 @@ public enum BoardSide {
     protected boolean hasColor(Stone color) {
         return this.color == color;
     }
-
-    @Override
-    public String toString() {
-        return "Side{" +
-                "color=" + color +
-                ", sideIndex=" + sideIndex +
-                '}';
-    }
 }

@@ -22,11 +22,11 @@ public class Game {
         this(Board.buildBoard(boardSize));
     }
 
-    public static Game buildTestGame(Board board) {
+    public static Game buildGame(Board board) {
         return new Game(board);
     }
 
-    public static Game buildTestGame(int boardSize) {
+    public static Game buildGame(int boardSize) {
         return new Game(boardSize);
     }
 

@@ -40,14 +40,7 @@ public class RegionContainer {
         graph.removeVertex(intersection);
     }
 
-    public List<Set<Intersection>> getRegions() {
+    protected List<Set<Intersection>> getRegions() {
         return new ConnectivityInspector<>(graph).connectedSets();
-    }
-
-    @Override
-    public String toString() {
-        return "Region{" +
-                "graph=" + graph +
-                '}';
     }
 }

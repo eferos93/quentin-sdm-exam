@@ -28,7 +28,7 @@ public class Intersection {
         return new Intersection(position, Stone.NONE);
     }
 
-    public Position getPosition() {
+    protected Position getPosition() {
         return this.position;
     }
 
@@ -36,19 +36,19 @@ public class Intersection {
         return this.stone;
     }
 
-    public void setStone(Stone stone) {
+    protected void setStone(Stone stone) {
         this.stone = stone;
     }
 
-    public boolean isAt(Position position) {
+    protected boolean isAt(Position position) {
         return position.equals(getPosition());
     }
 
-    public boolean isOccupied() {
+    protected boolean isOccupied() {
         return !hasStone(Stone.NONE);
     }
 
-    public boolean isOrthogonalTo(Intersection otherIntersection) {
+    protected boolean isOrthogonalTo(Intersection otherIntersection) {
         final Position otherIntersectionPosition = otherIntersection.getPosition();
         return position.isBelowWithRespectTo(otherIntersectionPosition) ||
                 position.isAboveWithRespectTo(otherIntersectionPosition) ||
@@ -56,7 +56,7 @@ public class Intersection {
                 position.isOnTheRightWithRespectTo(otherIntersectionPosition);
     }
 
-    public boolean isDiagonalTo(Intersection otherIntersection) {
+    protected boolean isDiagonalTo(Intersection otherIntersection) {
         final Position otherIntersectionPosition = otherIntersection.getPosition();
         return position.isUpLeftRespectTo(otherIntersectionPosition) ||
                 position.isUpRightRespectTo(otherIntersectionPosition) ||
@@ -64,16 +64,7 @@ public class Intersection {
                 position.isDownRightRespectTo(otherIntersectionPosition);
     }
 
-    public boolean hasStone(Stone stone) {
+    protected boolean hasStone(Stone stone) {
         return this.stone == stone;
     }
-
-    @Override
-    public String toString() {
-        return "Intersection{" +
-                "position=" + position +
-                ", stone=" + stone +
-                '}';
-    }
-
 }

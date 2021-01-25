@@ -52,7 +52,7 @@ public class GameShould {
         testBoard.addStoneAt(Stone.WHITE, in(1, 1));
         testBoard.addStoneAt(Stone.WHITE, in(2, 2));
         testBoard.addStoneAt(Stone.BLACK, in(1, 2));
-        Game testGame = Game.buildTestGame(testBoard);
+        Game testGame = Game.buildGame(testBoard);
         assertFalse(testGame.isPlayerAbleToMakeAMove(Stone.BLACK));
     }
 
@@ -65,7 +65,7 @@ public class GameShould {
 
     @Test
     public void provideCorrectWinner() throws Exception {
-        Game customGame = Game.buildTestGame(4);
+        Game customGame = Game.buildGame(4);
         customGame.makeMove(Stone.BLACK, in(1, 1));
         customGame.makeMove(Stone.WHITE, in(2, 2));
         customGame.makeMove(Stone.BLACK, in(2, 1));
@@ -80,7 +80,7 @@ public class GameShould {
 
     @Test
     public void provideCorrectWinnerWithPieRule() throws Exception {
-        Game customGame = Game.buildTestGame(4);
+        Game customGame = Game.buildGame(4);
         customGame.makeMove(Stone.BLACK, in(1, 1));
         customGame.applyPieRule();
         customGame.makeMove(Stone.WHITE, in(1, 2));
@@ -103,7 +103,7 @@ public class GameShould {
 
     @Test
     public void provideCorrectWinnerMergeChainsFeature() throws Exception {
-        Game customGame = Game.buildTestGame(4);
+        Game customGame = Game.buildGame(4);
         customGame.makeMove(Stone.BLACK, in(1, 1));
         customGame.makeMove(Stone.WHITE, in(1, 2));
         customGame.makeMove(Stone.BLACK, in(4, 4));
