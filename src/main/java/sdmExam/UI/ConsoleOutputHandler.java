@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 
 public class ConsoleOutputHandler {
 
-    public static class Message {
+    private static class Message {
         public static final String TITLE =  "QUENTIN GAME";
         public final static String INSTRUCTIONS = """
             The Black player B should connect the black board sides (top and bottom)
@@ -33,42 +33,28 @@ public class ConsoleOutputHandler {
     }
 
 
-    public static void printTitle() {System.out.println(Message.TITLE);}
-
-    public static void printInstructions() {System.out.println(Message.INSTRUCTIONS);}
-
+    public static void notifyInvalidCoordinateInput() { System.out.println(Message.INVALID_COORDINATE_INPUT); }
+    public static void notifyInvalidSizeInput() { System.out.println(Message.INVALID_SIZE_INPUT); }
+    public static void printTitle() { System.out.println(Message.TITLE);}
+    public static void printInstructions() { System.out.println(Message.INSTRUCTIONS);}
     public static void blackPlayerPlayFirst() {System.out.println(Message.BLACK_PLAYS_FIRST);}
-
-    public static void askBoardSize() {
-        System.out.println(Message.ASK_SIZE);
-    }
-
-    public static void askRowCoordinate() {
-        System.out.println(Message.CHOOSE_ROW);
-    }
-
-    public static void askColumnCoordinate() {
-        System.out.println(Message.CHOOSE_COLUMN);
-    }
-
+    public static void askBoardSize() { System.out.println(Message.ASK_SIZE); }
+    public static void askRowCoordinate() { System.out.println(Message.CHOOSE_ROW); }
+    public static void askColumnCoordinate() { System.out.println(Message.CHOOSE_COLUMN); }
     public static void displayPlayer(Player player) {
-        System.out.printf(Message.CURRENT_PLAYER, player.getName(), ConsoleStoneRepresentation.getStoneValue(player.getColor()));
+        System.out.printf(Message.CURRENT_PLAYER,
+                player.getName(),
+                ConsoleStoneRepresentation.getStoneValue(player.getColor())
+        );
     }
-
-    public static void notifyPass(){
-        System.out.println(Message.PASS_TURN);
-    }
-
-    public static void notifyPieRule(Player player1, Player player2){
+    public static void notifyPass(){ System.out.println(Message.PASS_TURN); }
+    public static void notifyPieRule(Player player1, Player player2) {
         System.out.printf(Message.PIE, player1.getName(), ConsoleStoneRepresentation.getStoneValue(player1.getColor()),
                 player2.getName(), ConsoleStoneRepresentation.getStoneValue(player2.getColor()));
     }
 
-    public static void notifyWinner(Player player) {
-        System.out.printf(Message.END_GAME, player.getName());
-    }
-
-    public static void askPie() {System.out.println(Message.QUERY_PIE);}
+    public static void notifyWinner(Player player) { System.out.printf(Message.END_GAME, player.getName()); }
+    public static void askPie() { System.out.println(Message.QUERY_PIE); }
 
     private static void displayStone(Stone stone){
         System.out.print(ConsoleStoneRepresentation.getStoneValue(stone));
