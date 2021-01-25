@@ -25,7 +25,7 @@ public class ConsoleUIShould {
                       B  B  B  B
                 \t  1  2  3  4
                 """;
-        BoardPrinter.printBoard(board);
+        ConsoleOutputHandler.printBoard(board);
         assertEquals(expectedOutput, fakeStandardOutput.toString());
     }
 }

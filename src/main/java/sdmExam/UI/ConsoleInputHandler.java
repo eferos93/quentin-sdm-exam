@@ -24,7 +24,7 @@ public class ConsoleInputHandler {
     }
 
     public boolean askPie() {
-        ConsoleMessageWriter.askPie();
+        ConsoleOutputHandler.askPie();
         String answer;
         try {
             answer = scanner.next();
