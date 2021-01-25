@@ -5,7 +5,7 @@ import sdmExam.exceptions.PieException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class InputHandler {
+public class ConsoleInputHandler {
 
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -37,8 +37,5 @@ public class InputHandler {
         }
         return answer.equalsIgnoreCase("yes");
     }
-
-
-
 }
 
