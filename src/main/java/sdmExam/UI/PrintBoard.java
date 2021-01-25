@@ -27,7 +27,7 @@ public class PrintBoard {
         IntStream.rangeClosed(1, board.getBoardSize()).forEach(rowIndex -> printRow(board, rowIndex));
         System.out.print("    " + "  B".repeat(board.getBoardSize()) + System.lineSeparator() + "\t ");
         IntStream.rangeClosed(1, board.getBoardSize())
-                .forEachOrdered(rowIndex -> System.out.printf("%" + 3 + "s", rowIndex + " "));
+                .forEachOrdered(columnIndex -> System.out.printf("%" + 3 + "s", columnIndex+ " "));
         System.out.println();
     }
 }
