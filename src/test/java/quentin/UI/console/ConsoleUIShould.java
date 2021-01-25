@@ -1,7 +1,7 @@
 package quentin.UI.console;
 
 import org.junit.jupiter.api.Test;
-import quentin.UI.console.ConsoleOutputHandler;
+import quentin.UI.OutputHandler;
 import quentin.core.Board;
 
 import java.io.ByteArrayOutputStream;
@@ -15,6 +15,7 @@ public class ConsoleUIShould {
     public void printCorrectlyBoard() {
         int boardSize = 4;
         Board board = Board.buildBoard(boardSize);
+        OutputHandler outputHandler = new ConsoleOutputHandler();
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
         String expectedOutput = """
@@ -26,7 +27,7 @@ public class ConsoleUIShould {
                       B  B  B  B
                 \t  1  2  3  4
                 """;
-        ConsoleOutputHandler.printBoard(board);
+        outputHandler.displayBoard(board);
         assertEquals(expectedOutput, fakeStandardOutput.toString());
     }
 }
