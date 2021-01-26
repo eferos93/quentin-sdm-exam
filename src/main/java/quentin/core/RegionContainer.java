@@ -1,4 +1,4 @@
-package sdmExam;
+package quentin.core;
 
 import org.jgrapht.Graph;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
@@ -17,7 +17,7 @@ public class RegionContainer {
 
     private RegionContainer() {}
 
-    protected static RegionContainer getRegionsContainer() {
+    public static RegionContainer getRegionsContainer() {
         return regionContainer;
     }
 
@@ -42,12 +42,5 @@ public class RegionContainer {
 
     protected List<Set<Intersection>> getRegions() {
         return new ConnectivityInspector<>(graph).connectedSets();
-    }
-
-    @Override
-    public String toString() {
-        return "Region{" +
-                "graph=" + graph +
-                '}';
     }
 }

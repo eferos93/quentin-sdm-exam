@@ -1,4 +1,4 @@
-package sdmExam;
+package quentin.core;
 
 import org.junit.jupiter.api.Test;
 
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static sdmExam.Position.in;
+import static quentin.core.Position.in;
 
 public class ChainShould {
 

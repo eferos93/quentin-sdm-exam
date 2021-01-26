@@ -1,4 +1,4 @@
-package sdmExam.exceptions;
+package quentin.exceptions;
 
 public class InvalidFirstPlayerException extends Exception {
 

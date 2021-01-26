@@ -1,4 +1,4 @@
-package sdmExam;
+package quentin.core;
 
 import org.jgrapht.Graph;
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
