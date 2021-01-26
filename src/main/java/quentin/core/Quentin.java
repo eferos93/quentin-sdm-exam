@@ -3,6 +3,8 @@ package quentin.core;
 import quentin.UI.InputHandler;
 import quentin.UI.OutputHandler;
 import quentin.exceptions.*;
+
+import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 public class Quentin<InputHandlerImplementation extends InputHandler, OutputHandlerImplementation extends OutputHandler> {
@@ -11,6 +13,7 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
     private final Player playerOne, playerTwo;
     private final InputHandlerImplementation inputHandler;
     private final OutputHandlerImplementation outputHandler;
+    boolean whiteAlreadyPlayed = false;
 
     protected Quentin(int boardSize, InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler) {
         this(boardSize, "player1", "player2", inputHandler, outputHandler);
@@ -63,7 +66,7 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
     }
 
     private boolean isInvalidFirstPlayer(Stone playerColor) {
-        return lastPlay == Stone.NONE && playerColor == Stone.WHITE;
+        return isFirstTurn() && playerColor == Stone.WHITE;
     }
 
     public boolean isPlayerAbleToMakeAMove(Stone playerColor) {
@@ -77,5 +80,68 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
 
     public void applyPieRule() {
         Stream.of(playerOne, playerTwo).forEach(Player::changeSide);
+    }
+
+    public void play() throws Exception {
+        if(isFirstTurn()) {
+            outputHandler.displayTitle();
+            outputHandler.displayInstructions();
+        }
+
+        Player currentPlayer = isFirstTurn() ?
+                getPlayerOfColor(Stone.BLACK) :
+                getPlayerOfColor(lastPlay.getOppositeColor());
+
+        outputHandler.displayBoard(board);
+        outputHandler.displayPlayer(currentPlayer);
+
+        if(!isPlayerAbleToMakeAMove(currentPlayer.getColor())) {
+            lastPlay = currentPlayer.getColor();
+            outputHandler.notifyPass(currentPlayer);
+            play();
+        }
+
+        if (!whiteAlreadyPlayed && currentPlayer.getColor() == Stone.WHITE) {
+            whiteAlreadyPlayed = true;
+            outputHandler.askPie();
+            if (inputHandler.askPie()) {
+                applyPieRule();
+                play();
+            }
+        }
+
+        outputHandler.askRowCoordinate();
+        int rowCoordinate = inputHandler.getInteger();
+        outputHandler.askColumnCoordinate();
+        int columnCoordinate = inputHandler.getInteger();
+
+        makeMove(currentPlayer.getColor(), Position.in(rowCoordinate, columnCoordinate));
+
+        Stone winnerColor = getWinner();
+        if(winnerColor != Stone.NONE) {
+            outputHandler.notifyWinner(getPlayerOfColor(winnerColor));
+            return;
+        }
+
+        board.searchAndFillTerritories(lastPlay);
+
+        winnerColor = getWinner();
+        if (winnerColor != Stone.NONE) {
+            outputHandler.notifyWinner(getPlayerOfColor(winnerColor));
+            return;
+        }
+
+        play();
+    }
+
+    private Player getPlayerOfColor(Stone color) throws NoSuchElementException {
+        return Stream.of(playerOne, playerTwo)
+                .filter(player -> player.getColor() == color)
+                .findFirst()
+                .orElseThrow();
+    }
+
+    private boolean isFirstTurn() {
+        return lastPlay == Stone.NONE;
     }
 }

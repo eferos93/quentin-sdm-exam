@@ -22,7 +22,7 @@ public interface OutputHandler {
 
     void displayPlayer(Player player);
 
-    void notifyPass();
+    void notifyPass(Player currentPlayer);
 
     void notifyPieRule(Player player1, Player player2);
 
@@ -52,6 +52,6 @@ public interface OutputHandler {
         public static final String INVALID_COORDINATE_INPUT = "Invalid input coordinate. Please choose a valid intersection inside the board";
         public static final String CURRENT_PLAYER = "%s's turn. %s";
         public static final String END_GAME = "Congratulations to %s, you won!";
-        public static final String PASS_TURN = "You have to pass";
+        public static final String PASS_TURN = "%s passes turn as there no possible move to make";
     }
 }

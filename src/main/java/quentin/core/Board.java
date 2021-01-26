@@ -132,7 +132,7 @@ public class Board {
         territory.forEach(intersection -> this.addStoneAt(territoryStoneColor, intersection.getPosition()));
     }
 
-    private void searchAndFillTerritories(Stone lastPlay) {
+    protected void searchAndFillTerritories(Stone lastPlay) {
         getTerritories().forEach(territory -> fillTerritory(territory, lastPlay));
     }
 

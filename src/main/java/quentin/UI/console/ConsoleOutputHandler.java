@@ -42,7 +42,7 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
     }
 
     @Override
-    public void notifyPass(){ System.out.println(Message.PASS_TURN); }
+    public void notifyPass(Player currentPlayer) { System.out.printf(Message.PASS_TURN, currentPlayer.getName()); }
 
     @Override
     public void notifyPieRule(Player player1, Player player2) {
