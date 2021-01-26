@@ -1,4 +1,4 @@
-package sdmExam;
+package quentin.core;
 
 import org.junit.jupiter.api.Test;
 

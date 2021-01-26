@@ -1,6 +1,6 @@
-package sdmExam.exceptions;
+package quentin.exceptions;
 
-import sdmExam.Position;
+import quentin.core.Position;
 
 public class OccupiedPositionException extends Exception {
 

@@ -1,4 +1,4 @@
-package sdmExam;
+package quentin.core;
 
 public enum Stone {
     WHITE,

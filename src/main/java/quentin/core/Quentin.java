@@ -1,33 +1,33 @@
-package sdmExam;
+package quentin.core;
 
-import sdmExam.exceptions.*;
+import quentin.exceptions.*;
 import java.util.stream.Stream;
 
-public class Game {
+public class Quentin {
     private final Board board;
     private Stone lastPlay = Stone.NONE;
     private final Player playerOne, playerTwo;
 
-    private Game(Board board) {
+    private Quentin(Board board) {
         this.board = board;
         playerOne = new Player(Stone.BLACK, "player1");
         playerTwo = new Player(Stone.WHITE, "player2");
     }
 
-    public Game() {
-        this(new Board());
+    public Quentin() {
+        this(13);
     }
 
-    private Game(int boardSize) {
-        this(Board.buildTestBoard(boardSize));
+    public Quentin(int boardSize) {
+        this(Board.buildBoard(boardSize));
     }
 
-    protected static Game buildTestGame(Board board) {
-        return new Game(board);
+    public static Quentin buildGame(Board board) {
+        return new Quentin(board);
     }
 
-    protected static Game buildTestGame(int boardSize) {
-        return new Game(boardSize);
+    public static Quentin buildGame(int boardSize) {
+        return new Quentin(boardSize);
     }
 
     public void makeMove(Stone color, Position position) throws Exception {

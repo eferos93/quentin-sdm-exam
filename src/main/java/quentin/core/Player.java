@@ -1,4 +1,4 @@
-package sdmExam;
+package quentin.core;
 
 public class Player {
     private Stone color;
