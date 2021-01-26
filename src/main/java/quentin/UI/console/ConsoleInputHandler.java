@@ -23,5 +23,15 @@ public class ConsoleInputHandler implements quentin.UI.InputHandler {
         }
         return answer.equalsIgnoreCase("yes");
     }
+
+    @Override
+    public String askBlackPlayerName() {
+        return scanner.next();
+    }
+
+    @Override
+    public String askWhitePlayerName() {
+        return scanner.next();
+    }
 }
 

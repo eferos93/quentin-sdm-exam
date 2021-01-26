@@ -32,6 +32,12 @@ public interface OutputHandler {
 
     void displayBoard(Board board);
 
+    void askBlackPlayerName();
+
+    void askWhitePlayerName();
+
+    void notifyException(String message);
+
     class Message {
         public static final String TITLE =  "QUENTIN GAME";
         public final static String INSTRUCTIONS = """
@@ -53,5 +59,7 @@ public interface OutputHandler {
         public static final String CURRENT_PLAYER = "%s's turn. %s";
         public static final String END_GAME = "Congratulations to %s, you won!";
         public static final String PASS_TURN = "%s passes turn as there no possible move to make";
+        public static final String ASK_BLACK_PLAYER_NAME = "Please insert the name of the Black Player:";
+        public static final String ASK_WHITE_PLAYER_NAME = "Please insert the name of the White Player:";
     }
 }

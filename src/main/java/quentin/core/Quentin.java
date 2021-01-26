@@ -4,27 +4,21 @@ import quentin.UI.InputHandler;
 import quentin.UI.OutputHandler;
 import quentin.exceptions.*;
 
+import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 public class Quentin<InputHandlerImplementation extends InputHandler, OutputHandlerImplementation extends OutputHandler> {
     private final Board board;
     private Stone lastPlay = Stone.NONE;
-    private final Player playerOne, playerTwo;
+    private final Player playerOne = new Player(Stone.BLACK, "player1" );
+    private final Player playerTwo = new Player( Stone.WHITE, "player2");
     private final InputHandlerImplementation inputHandler;
     private final OutputHandlerImplementation outputHandler;
     boolean whiteAlreadyPlayed = false;
 
     protected Quentin(int boardSize, InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler) {
-        this(boardSize, "player1", "player2", inputHandler, outputHandler);
-    }
-
-    protected Quentin(int boardSize,
-                    String blackPlayerName, String whitePlayerName,
-                    InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler) {
         this.board = Board.buildBoard(boardSize);
-        this.playerOne = new Player(Stone.BLACK, blackPlayerName);
-        this.playerTwo = new Player(Stone.WHITE, whitePlayerName);
         this.inputHandler = inputHandler;
         this.outputHandler = outputHandler;
     }
@@ -82,12 +76,20 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
         Stream.of(playerOne, playerTwo).forEach(Player::changeSide);
     }
 
-    public void play() throws Exception {
-        if(isFirstTurn()) {
-            outputHandler.displayTitle();
-            outputHandler.displayInstructions();
-        }
+    public void run() {
+        outputHandler.displayTitle();
+        outputHandler.displayInstructions();
+        outputHandler.askBlackPlayerName();
+        String blackPlayerName = inputHandler.askBlackPlayerName();
+        playerOne.setName(blackPlayerName);
+        outputHandler.askWhitePlayerName();
+        String whitePlayerName = inputHandler.askWhitePlayerName();
+        playerTwo.setName(whitePlayerName);
+        Player winner = play();
+        outputHandler.notifyWinner(winner);
+    }
 
+    public Player play() {
         Player currentPlayer = isFirstTurn() ?
                 getPlayerOfColor(Stone.BLACK) :
                 getPlayerOfColor(lastPlay.getOppositeColor());
@@ -98,7 +100,7 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
         if(!isPlayerAbleToMakeAMove(currentPlayer.getColor())) {
             lastPlay = currentPlayer.getColor();
             outputHandler.notifyPass(currentPlayer);
-            play();
+            return play();
         }
 
         if (!whiteAlreadyPlayed && currentPlayer.getColor() == Stone.WHITE) {
@@ -106,21 +108,45 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
             outputHandler.askPie();
             if (inputHandler.askPie()) {
                 applyPieRule();
-                play();
+                outputHandler.notifyPieRule(playerOne, playerTwo);
+                return play();
             }
         }
 
-        outputHandler.askRowCoordinate();
-        int rowCoordinate = inputHandler.getInteger();
-        outputHandler.askColumnCoordinate();
-        int columnCoordinate = inputHandler.getInteger();
+        int rowCoordinate, columnCoordinate;
+        while (true) {
+            while (true) {
+                try {
+                    outputHandler.askRowCoordinate();
+                    rowCoordinate = inputHandler.getInteger();
+                    break;
+                } catch (InputMismatchException exception) {
+                    outputHandler.notifyException(exception.getMessage());
+                }
+            }
 
-        makeMove(currentPlayer.getColor(), Position.in(rowCoordinate, columnCoordinate));
+            while (true) {
+                try {
+                    outputHandler.askRowCoordinate();
+                    columnCoordinate = inputHandler.getInteger();
+                    break;
+                } catch (InputMismatchException exception) {
+                    outputHandler.notifyException(exception.getMessage());
+                }
+            }
+
+            try {
+                makeMove(currentPlayer.getColor(), Position.in(rowCoordinate, columnCoordinate));
+                break;
+            } catch (Exception exception) {
+                outputHandler.notifyException(exception.getMessage());
+            }
+        }
+
 
         Stone winnerColor = getWinner();
         if(winnerColor != Stone.NONE) {
-            outputHandler.notifyWinner(getPlayerOfColor(winnerColor));
-            return;
+            return getPlayerOfColor(winnerColor);
         }
 
         board.searchAndFillTerritories(lastPlay);
@@ -128,10 +154,10 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
         winnerColor = getWinner();
         if (winnerColor != Stone.NONE) {
             outputHandler.notifyWinner(getPlayerOfColor(winnerColor));
-            return;
+            return getPlayerOfColor(winnerColor);
         }
 
-        play();
+        return play();
     }
 
     private Player getPlayerOfColor(Stone color) throws NoSuchElementException {

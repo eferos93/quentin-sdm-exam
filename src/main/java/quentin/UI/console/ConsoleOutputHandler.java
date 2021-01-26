@@ -79,4 +79,19 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
                 .forEachOrdered(columnIndex -> System.out.print("  " + columnIndex));
         System.out.println();
     }
+
+    @Override
+    public void askBlackPlayerName() {
+        System.out.println(Message.ASK_BLACK_PLAYER_NAME);
+    }
+
+    @Override
+    public void askWhitePlayerName() {
+        System.out.println(Message.ASK_WHITE_PLAYER_NAME);
+    }
+
+    @Override
+    public void notifyException(String message) {
+        System.out.println(message);
+    }
 }
