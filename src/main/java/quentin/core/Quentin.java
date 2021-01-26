@@ -1,29 +1,29 @@
 package quentin.core;
 
+import quentin.UI.InputHandler;
+import quentin.UI.OutputHandler;
 import quentin.exceptions.*;
 import java.util.stream.Stream;
 
-public class Quentin {
+public class Quentin<InputHandlerImplementation extends InputHandler, OutputHandlerImplementation extends OutputHandler> {
     private final Board board;
     private Stone lastPlay = Stone.NONE;
     private final Player playerOne, playerTwo;
+    private final InputHandlerImplementation inputHandler;
+    private final OutputHandlerImplementation outputHandler;
 
-    private Quentin(int boardSize) {
-        this(boardSize, "player1", "player2");
+    protected Quentin(int boardSize, InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler) {
+        this(boardSize, "player1", "player2", inputHandler, outputHandler);
     }
 
-    private Quentin(int boardSize, String blackPlayerName, String whitePlayerName) {
+    protected Quentin(int boardSize,
+                    String blackPlayerName, String whitePlayerName,
+                    InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler) {
         this.board = Board.buildBoard(boardSize);
         this.playerOne = new Player(Stone.BLACK, blackPlayerName);
         this.playerTwo = new Player(Stone.WHITE, whitePlayerName);
-    }
-
-    public static Quentin buildGame(int boardSize) {
-        return new Quentin(boardSize);
-    }
-
-    public static Quentin buildGame(int boardSize, String blackPlayerName, String whitePlayerGame) {
-        return new Quentin(boardSize, blackPlayerName, whitePlayerGame);
+        this.inputHandler = inputHandler;
+        this.outputHandler = outputHandler;
     }
 
     public void makeMove(Stone color, Position position) throws Exception {
