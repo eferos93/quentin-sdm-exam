@@ -17,7 +17,7 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
     private final OutputHandlerImplementation outputHandler;
     boolean whiteAlreadyPlayed = false;
 
-    protected Quentin(int boardSize, InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler) {
+    public Quentin(int boardSize, InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler) {
         this.board = Board.buildBoard(boardSize);
         this.inputHandler = inputHandler;
         this.outputHandler = outputHandler;
