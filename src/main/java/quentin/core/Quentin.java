@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 public class Quentin<InputHandlerImplementation extends InputHandler, OutputHandlerImplementation extends OutputHandler> {
-    private final Board board;
+    private Board board;
     private Stone lastPlay = Stone.NONE;
     private final Player playerOne = new Player(Stone.BLACK, "player1" );
     private final Player playerTwo = new Player( Stone.WHITE, "player2");
@@ -79,6 +79,20 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
     public void run() {
         outputHandler.displayTitle();
         outputHandler.displayInstructions();
+        outputHandler.askBoardSize();
+        while(true) {
+            try {
+                int boardSize = inputHandler.getInteger();
+                if (boardSize < 4 || boardSize > 13) {
+                    throw new InputMismatchException("Invalid board size! It must be between 4 and 13!");
+                }
+                board = Board.buildBoard(inputHandler.getInteger());
+                break;
+            } catch(Exception exception) {
+                outputHandler.notifyException(exception.getMessage());
+            }
+        }
+
         outputHandler.askBlackPlayerName();
         String blackPlayerName = inputHandler.askBlackPlayerName();
         playerOne.setName(blackPlayerName);
@@ -127,7 +141,7 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
 
             while (true) {
                 try {
-                    outputHandler.askRowCoordinate();
+                    outputHandler.askColumnCoordinate();
                     columnCoordinate = inputHandler.getInteger();
                     break;
                 } catch (InputMismatchException exception) {
@@ -142,7 +156,6 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
                 outputHandler.notifyException(exception.getMessage());
             }
         }
-
 
         Stone winnerColor = getWinner();
         if(winnerColor != Stone.NONE) {
