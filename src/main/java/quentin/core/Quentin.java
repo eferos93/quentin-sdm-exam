@@ -8,26 +8,22 @@ public class Quentin {
     private Stone lastPlay = Stone.NONE;
     private final Player playerOne, playerTwo;
 
-    private Quentin(Board board) {
-        this.board = board;
-        playerOne = new Player(Stone.BLACK, "player1");
-        playerTwo = new Player(Stone.WHITE, "player2");
+    private Quentin(int boardSize) {
+        this(boardSize, "player1", "player2");
     }
 
-    public Quentin() {
-        this(13);
-    }
-
-    public Quentin(int boardSize) {
-        this(Board.buildBoard(boardSize));
-    }
-
-    public static Quentin buildGame(Board board) {
-        return new Quentin(board);
+    private Quentin(int boardSize, String blackPlayerName, String whitePlayerName) {
+        this.board = Board.buildBoard(boardSize);
+        this.playerOne = new Player(Stone.BLACK, blackPlayerName);
+        this.playerTwo = new Player(Stone.WHITE, whitePlayerName);
     }
 
     public static Quentin buildGame(int boardSize) {
         return new Quentin(boardSize);
+    }
+
+    public static Quentin buildGame(int boardSize, String blackPlayerName, String whitePlayerGame) {
+        return new Quentin(boardSize, blackPlayerName, whitePlayerGame);
     }
 
     public void makeMove(Stone color, Position position) throws Exception {
@@ -54,8 +50,7 @@ public class Quentin {
 
     //TODO: maybe rename this method to avoid overloading
     private boolean isIllegalMove(Stone player, Position position) {
-        final Intersection intersection = board.intersectionAt(position);
-        return isIllegalMove(player, intersection);
+        return isIllegalMove(player, board.intersectionAt(position));
     }
 
     private boolean isIllegalMove(Stone player, Intersection intersection) {

@@ -6,7 +6,7 @@ import static quentin.core.Position.in;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class QuentinShould {
-    private final Quentin quentin = new Quentin();
+    private final Quentin quentin = Quentin.buildGame(13);
 
     @Test
     public void notAllowWhitePlaysFirst() {
@@ -44,16 +44,6 @@ public class QuentinShould {
                     quentin.makeMove(Stone.WHITE, in(1, 2));
                     quentin.makeMove(Stone.BLACK, in(2, 2));
                 });
-    }
-
-    @Test
-    public void checkIfThereArePossibleLegalMoves() {
-        Board testBoard = Board.buildBoard(2);
-        testBoard.addStoneAt(Stone.WHITE, in(1, 1));
-        testBoard.addStoneAt(Stone.WHITE, in(2, 2));
-        testBoard.addStoneAt(Stone.BLACK, in(1, 2));
-        Quentin testQuentin = Quentin.buildGame(testBoard);
-        assertFalse(testQuentin.isPlayerAbleToMakeAMove(Stone.BLACK));
     }
 
     @Test
