@@ -16,7 +16,7 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
     public void notifyInvalidSizeInput() { System.out.println(Message.INVALID_SIZE_INPUT); }
 
     @Override
-    public void printTitle() { System.out.println(Message.TITLE);}
+    public void displayTitle() { System.out.println(Message.TITLE);}
 
     @Override
     public void displayInstructions() { System.out.println(Message.INSTRUCTIONS);}

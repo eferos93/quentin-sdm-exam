@@ -8,7 +8,7 @@ public interface OutputHandler {
 
     void notifyInvalidSizeInput();
 
-    void printTitle();
+    void displayTitle();
 
     void displayInstructions();
 
