@@ -49,26 +49,26 @@ public class Quentin {
     }
 
     //TODO: maybe rename this method to avoid overloading
-    private boolean isIllegalMove(Stone player, Position position) {
-        return isIllegalMove(player, board.intersectionAt(position));
+    private boolean isIllegalMove(Stone playerColor, Position position) {
+        return isIllegalMove(playerColor, board.intersectionAt(position));
     }
 
-    private boolean isIllegalMove(Stone player, Intersection intersection) {
-        return board.existsDiagonallyAdjacentWithStone(intersection, player) &&
-                !board.existsOrthogonallyAdjacentWithStone(intersection, player);
+    private boolean isIllegalMove(Stone playerColor, Intersection intersection) {
+        return board.existsDiagonallyAdjacentWithStone(intersection, playerColor) &&
+                !board.existsOrthogonallyAdjacentWithStone(intersection, playerColor);
     }
 
-    private boolean isARepeatedPlay(Stone player) {
-        return lastPlay == player;
+    private boolean isARepeatedPlay(Stone playerColor) {
+        return lastPlay == playerColor;
     }
 
-    private boolean isInvalidFirstPlayer(Stone player) {
-        return lastPlay == Stone.NONE && player == Stone.WHITE;
+    private boolean isInvalidFirstPlayer(Stone playerColor) {
+        return lastPlay == Stone.NONE && playerColor == Stone.WHITE;
     }
 
-    public boolean isPlayerAbleToMakeAMove(Stone player) {
+    public boolean isPlayerAbleToMakeAMove(Stone playerColor) {
         return board.getEmptyIntersections()
-                .anyMatch(emptyIntersection -> !isIllegalMove(player, emptyIntersection));
+                .anyMatch(emptyIntersection -> !isIllegalMove(playerColor, emptyIntersection));
     }
 
     public Stone getWinner() {
