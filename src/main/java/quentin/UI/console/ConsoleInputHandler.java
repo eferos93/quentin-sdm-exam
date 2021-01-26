@@ -11,7 +11,8 @@ public class ConsoleInputHandler implements quentin.UI.InputHandler {
         if (scanner.hasNextInt()) {
             return scanner.nextInt();
         } else {
-            throw new InputMismatchException();
+            scanner.next();
+            throw new InputMismatchException("You have not inserted a valid integer! Retry.");
         }
     }
 
@@ -19,7 +20,7 @@ public class ConsoleInputHandler implements quentin.UI.InputHandler {
     public boolean askPie() throws InputMismatchException {
         String answer = scanner.next();
         if (!(answer.equalsIgnoreCase("no") || answer.equalsIgnoreCase("yes"))) {
-            throw new InputMismatchException();
+            throw new InputMismatchException("You should insert 'yes' or 'no");
         }
         return answer.equalsIgnoreCase("yes");
     }

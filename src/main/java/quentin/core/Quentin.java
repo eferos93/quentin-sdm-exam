@@ -86,9 +86,9 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
                 if (boardSize < 4 || boardSize > 13) {
                     throw new InputMismatchException("Invalid board size! It must be between 4 and 13!");
                 }
-                board = Board.buildBoard(inputHandler.getInteger());
+                board = Board.buildBoard(boardSize);
                 break;
-            } catch(Exception exception) {
+            } catch(InputMismatchException exception) {
                 outputHandler.notifyException(exception.getMessage());
             }
         }
@@ -119,12 +119,22 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
 
         if (!whiteAlreadyPlayed && currentPlayer.getColor() == Stone.WHITE) {
             whiteAlreadyPlayed = true;
-            outputHandler.askPie();
-            if (inputHandler.askPie()) {
+            boolean isPieApplied;
+            while(true) {
+                try {
+                    outputHandler.askPie();
+                    isPieApplied = inputHandler.askPie();
+                    break;
+                } catch(InputMismatchException exception) {
+                    outputHandler.notifyException(exception.getMessage());
+                }
+            }
+            if (isPieApplied) {
                 applyPieRule();
                 outputHandler.notifyPieRule(playerOne, playerTwo);
                 return play();
             }
+
         }
 
         int rowCoordinate, columnCoordinate;
