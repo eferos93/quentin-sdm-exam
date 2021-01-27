@@ -121,7 +121,7 @@ public class BoardShould {
             customBoard.addStoneAt(Stone.WHITE, in(7, column));
             customBoard.addStoneAt(Stone.BLACK, in(9, column));
         });
-        customBoard.searchAndFillTerritories(Stone.BLACK);
+        customBoard.fillTerritories(Stone.BLACK);
         assertTrue(IntStream.rangeClosed(1, 13)
                 .allMatch(column -> customBoard.intersectionAt(in(8, column))
                         .hasStone(Stone.WHITE)
@@ -145,7 +145,7 @@ public class BoardShould {
                     else { customBoard.addStoneAt(Stone.BLACK, in(9, column)); }
                 });
 
-        customBoard.searchAndFillTerritories(Stone.BLACK);
+        customBoard.fillTerritories(Stone.BLACK);
         assertTrue(IntStream.rangeClosed(1, boardSize)
                 .allMatch(column -> customBoard.intersectionAt(in(8, column))
                         .hasStone(Stone.BLACK)

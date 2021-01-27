@@ -54,7 +54,7 @@ public class Board {
                 );
     }
 
-    boolean existsDiagonallyAdjacentWithStone(Intersection intersection, Stone stone) {
+    protected boolean existsDiagonallyAdjacentWithStone(Intersection intersection, Stone stone) {
         return intersections.stream()
                 .anyMatch(otherIntersection ->
                         otherIntersection.isDiagonalTo(intersection) && otherIntersection.hasStone(stone)
@@ -77,7 +77,7 @@ public class Board {
         return intersections.stream().filter(intersection -> !intersection.isOccupied());
     }
 
-    protected void searchAndFillTerritories(Stone lastPlay) {
+    protected void fillTerritories(Stone lastPlay) {
         regionsContainer.getTerritoriesAndStonesToFill(intersections, lastPlay)
                 .forEach((territory, stone) -> territory.stream()
                         .map(Intersection::getPosition)
