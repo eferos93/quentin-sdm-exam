@@ -65,13 +65,13 @@ public class Board {
                 );
     }
 
-    private List<BoardSide> getEdgesOfColor(Stone color) {
+    private List<BoardSide> getSidesOfColor(Stone color) {
         return sides.stream().filter(edge -> edge.hasColor(color)).collect(Collectors.toList());
     }
 
     protected Stone colorWithCompleteChain() {
         return chainsContainer.entrySet().stream()
-                .filter(entry -> entry.getValue().hasACompleteChain(getEdgesOfColor(entry.getKey())))
+                .filter(entry -> entry.getValue().hasACompleteChain(getSidesOfColor(entry.getKey())))
                 .map(Map.Entry::getKey)
                 .findFirst()
                 .orElse(Stone.NONE);
