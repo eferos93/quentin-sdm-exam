@@ -103,6 +103,7 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
         outputHandler.notifyWinner(winner);
     }
 
+    //TODO: Refactor the play and run methods
     public Player play() {
         Player currentPlayer = isFirstTurn() ?
                 getPlayerOfColor(Stone.BLACK) :
