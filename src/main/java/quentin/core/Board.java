@@ -77,53 +77,12 @@ public class Board {
         return intersections.stream().filter(intersection -> !intersection.isOccupied());
     }
 
-    protected Set<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection) {
-        return intersections.stream()
-                .filter(otherIntersection -> otherIntersection.isOrthogonalTo(intersection))
-                .collect(Collectors.toSet());
-    }
-
-    //TODO: code smell long method, need to refactor
-    protected Stone getStoneToFillTerritory(Set<Intersection> territory, Stone lastPlay) {
-        Set<Intersection> intersectionsSurroundingTerritory = territory.stream()
-                .flatMap(intersection -> getOrthogonalAdjacencyIntersections(intersection).stream())
-                .filter(Intersection::isOccupied)
-                .collect(Collectors.toSet());
-
-        long countOfWhiteStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.WHITE);
-        long countOfBlackStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.BLACK);
-
-        Stone stone;
-
-        if (countOfWhiteStones != countOfBlackStones) {
-            stone = (countOfWhiteStones < countOfBlackStones) ? Stone.BLACK : Stone.WHITE;
-        } else {
-            stone = lastPlay.getOppositeColor();
-        }
-        return stone;
-    }
-
-    private long countIntersectionsOfColor(Set<Intersection> intersections, Stone color) {
-        return intersections.stream()
-                .filter(intersection -> intersection.hasStone(color))
-                .count();
-    }
-
-    private void fillTerritory(Set<Intersection> territory, Stone lastPlay) {
-//        Stone stoneToFillTerritory = regionsContainer.getStoneToFillTerritory(territory)
-        Stone territoryStoneColor = getStoneToFillTerritory(territory, lastPlay);
-        territory.forEach(intersection -> this.addStoneAt(territoryStoneColor, intersection.getPosition()));
-    }
-
     protected void searchAndFillTerritories(Stone lastPlay) {
         regionsContainer.getTerritoriesAndStonesToFill(intersections, lastPlay)
                 .forEach((territory, stone) -> territory.stream()
                         .map(Intersection::getPosition)
                         .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
                 );
-
-//        regionsContainer.getTerritories(intersections)
-//                .forEach(territory -> fillTerritory(territory, lastPlay));
     }
 
     public int getBoardSize() {

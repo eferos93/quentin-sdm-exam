@@ -62,7 +62,7 @@ public class RegionContainer {
     //TODO: code smell long method, need to refactor
     private Stone getStoneToFillTerritory(List<Intersection> intersections, Set<Intersection> territory, Stone lastPlay) {
         Set<Intersection> intersectionsSurroundingTerritory = territory.stream()
-                .flatMap(intersection -> getOrthogonalAdjacencyIntersections(intersections, intersection).stream())
+                .flatMap(intersection -> getOrthogonalAdjacencyIntersections(intersection, intersections).stream())
                 .filter(Intersection::isOccupied)
                 .collect(Collectors.toSet());
 
@@ -79,7 +79,7 @@ public class RegionContainer {
         return stone;
     }
 
-    private Set<Intersection> getOrthogonalAdjacencyIntersections(List<Intersection> intersections, Intersection intersection) {
+    private Set<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection, List<Intersection> intersections) {
         return intersections.stream()
                 .filter(otherIntersection -> otherIntersection.isOrthogonalTo(intersection))
                 .collect(Collectors.toSet());
