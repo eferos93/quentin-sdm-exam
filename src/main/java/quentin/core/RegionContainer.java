@@ -10,6 +10,7 @@ import org.jgrapht.util.SupplierUtil;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class RegionContainer {
     private static final RegionContainer regionContainer = new RegionContainer();
@@ -22,7 +23,6 @@ public class RegionContainer {
     }
 
     protected void createGraph(List<Intersection> emptyIntersections, int boardSize) {
-
         Supplier<Intersection> vertexSupplier = new Supplier<>() {
             private int index = 0;
 
@@ -42,5 +42,20 @@ public class RegionContainer {
 
     protected List<Set<Intersection>> getRegions() {
         return new ConnectivityInspector<>(graph).connectedSets();
+    }
+
+    protected List<Set<Intersection>> getTerritories(final List<Intersection> intersections) {
+        return getRegions().stream()
+                .filter(region -> region.stream()
+                        .allMatch(intersection -> isOrthogonalToAtLeastTwoStones(intersection, intersections))
+                ).collect(Collectors.toList());
+
+    }
+
+    private boolean isOrthogonalToAtLeastTwoStones(Intersection emptyIntersection, final List<Intersection> intersections) {
+        return intersections.stream()
+                .filter(emptyIntersection::isOrthogonalTo)
+                .filter(Intersection::isOccupied)
+                .count() >= 2;
     }
 }

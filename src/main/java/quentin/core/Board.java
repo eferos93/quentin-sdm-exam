@@ -83,16 +83,7 @@ public class Board {
 
     //TODO: don't know if it's useful to get the territories or just act on them
     protected List<Set<Intersection>> getTerritories() {
-        return regionsContainer.getRegions().stream()
-                .filter(region -> region.stream().allMatch(this::isOrthogonalToAtLeastTwoStones))
-                .collect(Collectors.toList());
-    }
-
-    private boolean isOrthogonalToAtLeastTwoStones(Intersection intersection) {
-        return intersections.stream()
-                .filter(intersection::isOrthogonalTo)
-                .filter(Intersection::isOccupied)
-                .count() >= 2;
+        return regionsContainer.getTerritories(intersections);
     }
 
     protected List<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection) {
