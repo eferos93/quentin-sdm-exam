@@ -7,11 +7,13 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 import org.jgrapht.util.SupplierUtil;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class RegionContainer {
     private static final RegionContainer regionContainer = new RegionContainer();
@@ -77,6 +79,16 @@ public class RegionContainer {
                 .flatMap(intersection -> getOrthogonalAdjacencyIntersections(intersection, allIntersections).stream())
                 .filter(Intersection::isOccupied)
                 .collect(Collectors.toSet());
+//
+//        Stream.of(Map.entry(Stone.WHITE, countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.WHITE)),
+//                Map.entry(Stone.BLACK, countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.BLACK)))
+//                .max((entry1, entry2) -> {
+//                    if (entry1.getValue().equals(entry2.getValue())) return null;
+//                    else return Long.compare(entry1.getValue(), entry2.getValue());
+//                })
+//                .map(Map.Entry::getKey)
+//                .orElse(lastPlay.getOppositeColor());
+
 
         long countOfWhiteStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.WHITE);
         long countOfBlackStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.BLACK);
