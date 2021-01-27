@@ -51,7 +51,7 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
     }
 
     @Override
-    public void notifyWinner(Player player) { System.out.printf(Message.END_GAME, player.getName()); }
+    public void notifyWinner(Player player) { System.out.printf(Message.END_GAME, player.getName(), ConsoleStoneRepresentation.getStoneValue(player.getColor())); }
 
     @Override
     public void askPie() { System.out.println(Message.QUERY_PIE); }
