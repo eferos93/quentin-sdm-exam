@@ -40,11 +40,7 @@ public class Board {
         Intersection intersection = intersectionAt(position);
         regionsContainer.updateRegionContainer(intersection);
         intersection.setStone(stone);
-        updateChains(intersection);
-    }
-
-    private void updateChains(Intersection updatedIntersection) {
-        chainsContainer.get(updatedIntersection.getStone()).updateChain(updatedIntersection);
+        chainsContainer.get(stone).updateChain(intersection);
     }
 
     protected boolean isOccupied(Position position) throws NoSuchElementException {
@@ -81,15 +77,10 @@ public class Board {
         return intersections.stream().filter(intersection -> !intersection.isOccupied());
     }
 
-    //TODO: don't know if it's useful to get the territories or just act on them
-    protected List<Set<Intersection>> getTerritories() {
-        return regionsContainer.getTerritories(intersections);
-    }
-
-    protected List<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection) {
+    protected Set<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection) {
         return intersections.stream()
                 .filter(otherIntersection -> otherIntersection.isOrthogonalTo(intersection))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     //TODO: code smell long method, need to refactor
@@ -124,7 +115,8 @@ public class Board {
     }
 
     protected void searchAndFillTerritories(Stone lastPlay) {
-        getTerritories().forEach(territory -> fillTerritory(territory, lastPlay));
+        regionsContainer.getTerritories(intersections)
+                .forEach(territory -> fillTerritory(territory, lastPlay));
     }
 
     public int getBoardSize() {

@@ -114,39 +114,6 @@ public class BoardShould {
     }
 
     @Test
-    public void getCorrectTerritories() {
-        Board customBoard = Board.buildBoard(4);
-        customBoard.addStoneAt(Stone.BLACK, in(1, 2));
-        customBoard.addStoneAt(Stone.WHITE, in(2, 1));
-        List<Set<Intersection>> territories = customBoard.getTerritories();
-        assertEquals(1, territories.size());
-        assertTrue(territories.stream()
-                .anyMatch(territory -> territory.stream()
-                        .allMatch(intersection -> intersection.getPosition().equals(in(1, 1)))
-                )
-        );
-    }
-
-    @Test
-    public void provideTerritories() {
-        int boardSize = 9;
-        Board customBoard = Board.buildBoard(boardSize);
-        Set<Intersection> expectedTerritory = new HashSet<>();
-
-        IntStream.rangeClosed(1, boardSize)
-                .forEach(column -> {
-                    customBoard.addStoneAt(Stone.WHITE, in(6, column));
-                    customBoard.addStoneAt(Stone.WHITE, in(8, column));
-                    expectedTerritory.add(new Intersection(in(7, column), Stone.NONE));
-                });
-
-        List<Set<Intersection>> territories = customBoard.getTerritories();
-        assertTrue(territories.stream()
-                .allMatch(expectedTerritory::containsAll)
-        );
-    }
-
-    @Test
     public void fillTerritoryWithEqualNumberOfStoneOfTheSameColor() {
         int boardSize = 13;
         Board customBoard = Board.buildBoard(boardSize);
@@ -154,7 +121,7 @@ public class BoardShould {
             customBoard.addStoneAt(Stone.WHITE, in(7, column));
             customBoard.addStoneAt(Stone.BLACK, in(9, column));
         });
-        customBoard.fillTerritory(customBoard.getTerritories().get(0), Stone.BLACK);
+        customBoard.searchAndFillTerritories(Stone.BLACK);
         assertTrue(IntStream.rangeClosed(1, 13)
                 .allMatch(column -> customBoard.intersectionAt(in(8, column))
                         .hasStone(Stone.WHITE)
@@ -178,9 +145,7 @@ public class BoardShould {
                     else { customBoard.addStoneAt(Stone.BLACK, in(9, column)); }
                 });
 
-        Set<Intersection> territory = customBoard.getTerritories().get(0);
-
-        customBoard.fillTerritory(territory, Stone.BLACK);
+        customBoard.searchAndFillTerritories(Stone.BLACK);
         assertTrue(IntStream.rangeClosed(1, boardSize)
                 .allMatch(column -> customBoard.intersectionAt(in(8, column))
                         .hasStone(Stone.BLACK)

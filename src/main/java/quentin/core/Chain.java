@@ -19,10 +19,10 @@ public class Chain {
 
     protected boolean hasACompleteChain(List<BoardSide> sameColorSides) {
         return new ConnectivityInspector<>(chains).connectedSets().stream()
-                .anyMatch(chain -> isChainConnectedToSameColorEdges(sameColorSides, chain));
+                .anyMatch(chain -> isChainConnectedToSameColorSides(sameColorSides, chain));
     }
 
-    private boolean isChainConnectedToSameColorEdges(List<BoardSide> sameColorSides, Set<Intersection> chain) {
+    private boolean isChainConnectedToSameColorSides(List<BoardSide> sameColorSides, Set<Intersection> chain) {
         return
                 chain.stream()
                         .map(Intersection::getPosition)
