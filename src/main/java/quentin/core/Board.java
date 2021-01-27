@@ -38,7 +38,7 @@ public class Board {
 
     public void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
         Intersection intersection = intersectionAt(position);
-        regionsContainer.updateRegionContainer(intersection);
+        regionsContainer.removeNonEmptyIntersection(intersection);
         intersection.setStone(stone);
         chainsContainer.get(stone).updateChain(intersection);
     }
@@ -109,14 +109,21 @@ public class Board {
                 .count();
     }
 
-    protected void fillTerritory(Set<Intersection> territory, Stone lastPlay) {
+    private void fillTerritory(Set<Intersection> territory, Stone lastPlay) {
+//        Stone stoneToFillTerritory = regionsContainer.getStoneToFillTerritory(territory)
         Stone territoryStoneColor = getStoneToFillTerritory(territory, lastPlay);
         territory.forEach(intersection -> this.addStoneAt(territoryStoneColor, intersection.getPosition()));
     }
 
     protected void searchAndFillTerritories(Stone lastPlay) {
-        regionsContainer.getTerritories(intersections)
-                .forEach(territory -> fillTerritory(territory, lastPlay));
+        regionsContainer.getTerritoriesAndStonesToFill(intersections, lastPlay)
+                .forEach((territory, stone) -> territory.stream()
+                        .map(Intersection::getPosition)
+                        .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
+                );
+
+//        regionsContainer.getTerritories(intersections)
+//                .forEach(territory -> fillTerritory(territory, lastPlay));
     }
 
     public int getBoardSize() {
