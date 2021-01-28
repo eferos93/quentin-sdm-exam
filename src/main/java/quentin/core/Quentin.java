@@ -23,7 +23,7 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
         this.outputHandler = outputHandler;
     }
 
-    public void makeMove(Stone color, Position position) throws Exception {
+    protected void makeMove(Stone color, Position position) throws Exception {
 
         if (isInvalidFirstPlayer(color)) {
             throw new InvalidFirstPlayerException();
