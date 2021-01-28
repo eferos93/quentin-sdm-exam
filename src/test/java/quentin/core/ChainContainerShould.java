@@ -11,7 +11,7 @@ import static quentin.core.Position.in;
 public class ChainContainerShould {
 
     @Test
-    public void touchEdgesIfItIsACompleteChain() {
+    public void touchSidesIfItIsACompleteChain() {
         Stream<Intersection> intersectionStream = Stream.of(
                 new Intersection(in(1, 1), Stone.BLACK),
                 new Intersection(in(1, 2), Stone.BLACK),
@@ -25,7 +25,7 @@ public class ChainContainerShould {
     }
 
     @Test
-    public void notTouchEdgesIfItIsNotACompleteChain() {
+    public void notTouchSidesIfItIsNotACompleteChain() {
         Stream<Intersection> intersectionStream = Stream.of(
                 new Intersection(in(1, 1), Stone.BLACK),
                 new Intersection(in(1, 2), Stone.BLACK),
