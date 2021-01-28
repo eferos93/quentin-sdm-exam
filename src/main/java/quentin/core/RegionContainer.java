@@ -45,8 +45,8 @@ public class RegionContainer {
                 ).collect(Collectors.toList());
     }
 
-    private boolean isOrthogonalToAtLeastTwoStones(Intersection emptyIntersection, final List<Intersection> intersections) {
-        return intersections.stream()
+    private boolean isOrthogonalToAtLeastTwoStones(Intersection emptyIntersection, final List<Intersection> allIntersections) {
+        return allIntersections.stream()
                 .filter(emptyIntersection::isOrthogonalTo)
                 .filter(Intersection::isOccupied)
                 .count() >= 2;

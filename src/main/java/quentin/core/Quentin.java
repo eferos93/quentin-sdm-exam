@@ -59,6 +59,10 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
         return lastPlay == playerColor;
     }
 
+    private boolean isFirstTurn() {
+        return lastPlay == Stone.NONE;
+    }
+
     private boolean isInvalidFirstPlayer(Stone playerColor) {
         return isFirstTurn() && playerColor == Stone.WHITE;
     }
@@ -189,9 +193,5 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
                 .filter(player -> player.getColor() == color)
                 .findFirst()
                 .orElseThrow();
-    }
-
-    private boolean isFirstTurn() {
-        return lastPlay == Stone.NONE;
     }
 }
