@@ -97,11 +97,12 @@ public class BoardShould {
         customBoard.addStoneAt(Stone.WHITE, in(12, 5));
         customBoard.addStoneAt(Stone.WHITE, in(13, 4));
 
-        Intersection firstIntersection = customBoard.intersectionAt(in(7, 9));
-        Intersection secondIntersection = customBoard.intersectionAt(in(3, 4));
-        Intersection thirdIntersection = customBoard.intersectionAt(in(12, 5));
+        List<Intersection> inputList = List.of(
+                customBoard.intersectionAt(in(7, 9)),
+                customBoard.intersectionAt(in(3, 4)),
+                customBoard.intersectionAt(in(12, 5))
+        );
 
-        List<Intersection> inputList = List.of(firstIntersection, secondIntersection, thirdIntersection);
         List<Boolean> outputList = List.of(false, true, true);
 
         return inputList.stream()
