@@ -113,16 +113,14 @@ public class QuentinConsole extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         ConsoleOutputHandler.displayTitle();
         ConsoleOutputHandler.displayInstructions();
         ConsoleOutputHandler.askBoardSize();
-
-        while(true) {
+        for (boolean insertedAValidBoardSize = false; !insertedAValidBoardSize;) {
             try {
                 int boardSize = ConsoleInputHandler.getInteger();
                 if (boardSize < 4 || boardSize > 13) {
                     throw new InputMismatchException("Invalid board size! It must be between 4 and 13!");
                 }
-
-                break;
-            } catch(InputMismatchException exception) {
+                insertedAValidBoardSize = true;
+            } catch (InputMismatchException exception) {
                 ConsoleOutputHandler.notifyException(exception.getMessage());
             }
         }
