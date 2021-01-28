@@ -6,12 +6,11 @@ import quentin.core.Player;
 import java.util.List;
 
 public interface OutputHandler {
-    void notifyInvalidCoordinateInput();
-
-    void notifyInvalidSizeInput();
-
-    void notifyBlackPlayerPlayFirst();
-
+//    void notifyInvalidCoordinateInput();
+//
+//    void notifyInvalidSizeInput();
+//
+//    void notifyBlackPlayerPlayFirst();
     void askRowCoordinate();
 
     void askColumnCoordinate();
