@@ -2,7 +2,7 @@ package quentin.core;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,12 +22,12 @@ public class ChainContainerShould {
         ChainContainer chainContainer = new ChainContainer();
         intersectionStream.forEach(chainContainer::updateChain);
 
-        List<BoardSide> listOfBoardSides = List.of(BoardSide.BOTTOM, BoardSide.TOP);
+        Set<BoardSide> listOfBoardSides = Set.of(BoardSide.BOTTOM, BoardSide.TOP);
 
         BoardSide.setBoardSize(3);
         listOfBoardSides.forEach(BoardSide::initialiseSide);
 
-        assertTrue(chainContainer.hasACompleteChain(listOfBoardSides));
+        assertEquals(Stone.BLACK, chainContainer.getColorWithCompleteChain(listOfBoardSides));
     }
 
     @Test
@@ -41,12 +41,12 @@ public class ChainContainerShould {
         ChainContainer chainContainer = new ChainContainer();
         intersectionStream.forEach(chainContainer::updateChain);
 
-        List<BoardSide> listOfBoardSides = List.of(BoardSide.BOTTOM, BoardSide.TOP);
+        Set<BoardSide> listOfBoardSides = Set.of(BoardSide.BOTTOM, BoardSide.TOP);
 
         BoardSide.setBoardSize(3);
         listOfBoardSides.forEach(BoardSide::initialiseSide);
 
-        assertFalse(chainContainer.hasACompleteChain(listOfBoardSides));
+        assertEquals(Stone.NONE, chainContainer.getColorWithCompleteChain(listOfBoardSides));
     }
 
 }

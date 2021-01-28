@@ -1,7 +1,6 @@
 package quentin.core;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static quentin.core.Position.in;
@@ -11,10 +10,7 @@ public class Board {
     private final List<Intersection> intersections = new ArrayList<>();
     private final RegionContainer regionsContainer = RegionContainer.getRegionsContainer();
     private final Set<BoardSide> sides = EnumSet.of(BoardSide.BOTTOM, BoardSide.TOP, BoardSide.LEFT, BoardSide.RIGHT);
-    private final Map<Stone, ChainContainer> chainsContainer = new HashMap<>() {{
-        put(Stone.BLACK, new ChainContainer());
-        put(Stone.WHITE, new ChainContainer());
-    }};
+    private final ChainContainer chainContainer = ChainContainer.getChainContainer();
 
     private Board(int boardSize) {
         this.BOARD_SIZE = boardSize;
@@ -40,7 +36,7 @@ public class Board {
         Intersection intersection = intersectionAt(position);
         regionsContainer.removeNonEmptyIntersection(intersection);
         intersection.setStone(stone);
-        chainsContainer.get(stone).updateChain(intersection);
+        chainContainer.updateChain(intersection);
     }
 
     protected boolean isOccupied(Position position) throws NoSuchElementException {
@@ -61,16 +57,8 @@ public class Board {
                 );
     }
 
-    private List<BoardSide> getSidesOfColor(Stone color) {
-        return sides.stream().filter(edge -> edge.hasColor(color)).collect(Collectors.toList());
-    }
-
     protected Stone colorWithCompleteChain() {
-        return chainsContainer.entrySet().stream()
-                .filter(entry -> entry.getValue().hasACompleteChain(getSidesOfColor(entry.getKey())))
-                .map(Map.Entry::getKey)
-                .findFirst()
-                .orElse(Stone.NONE);
+        return chainContainer.getColorWithCompleteChain(sides);
     }
 
     protected Stream<Intersection> getEmptyIntersections() {
