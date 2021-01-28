@@ -7,7 +7,7 @@ import org.jgrapht.graph.SimpleGraph;
 import java.util.List;
 import java.util.Set;
 
-public class Chain {
+public class ChainContainer {
     private final Graph<Intersection, DefaultEdge> chains = new SimpleGraph<>(DefaultEdge.class);
 
     protected void updateChain(Intersection newIntersection) {

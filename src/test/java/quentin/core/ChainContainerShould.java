@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.*;
 import static quentin.core.Position.in;
 
-public class ChainShould {
+public class ChainContainerShould {
 
     @Test
     public void touchEdgesIfItIsACompleteChain() {
@@ -19,15 +19,15 @@ public class ChainShould {
                 new Intersection(in(3, 2), Stone.BLACK)
         );
 
-        Chain chain = new Chain();
-        intersectionStream.forEach(chain::updateChain);
+        ChainContainer chainContainer = new ChainContainer();
+        intersectionStream.forEach(chainContainer::updateChain);
 
         List<BoardSide> listOfBoardSides = List.of(BoardSide.BOTTOM, BoardSide.TOP);
 
         BoardSide.setBoardSize(3);
         listOfBoardSides.forEach(BoardSide::initialiseSide);
 
-        assertTrue(chain.hasACompleteChain(listOfBoardSides));
+        assertTrue(chainContainer.hasACompleteChain(listOfBoardSides));
     }
 
     @Test
@@ -38,15 +38,15 @@ public class ChainShould {
                 new Intersection(in(2, 2), Stone.BLACK)
         );
 
-        Chain chain = new Chain();
-        intersectionStream.forEach(chain::updateChain);
+        ChainContainer chainContainer = new ChainContainer();
+        intersectionStream.forEach(chainContainer::updateChain);
 
         List<BoardSide> listOfBoardSides = List.of(BoardSide.BOTTOM, BoardSide.TOP);
 
         BoardSide.setBoardSize(3);
         listOfBoardSides.forEach(BoardSide::initialiseSide);
 
-        assertFalse(chain.hasACompleteChain(listOfBoardSides));
+        assertFalse(chainContainer.hasACompleteChain(listOfBoardSides));
     }
 
 }

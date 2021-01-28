@@ -11,9 +11,9 @@ public class Board {
     private final List<Intersection> intersections = new ArrayList<>();
     private final RegionContainer regionsContainer = RegionContainer.getRegionsContainer();
     private final Set<BoardSide> sides = EnumSet.of(BoardSide.BOTTOM, BoardSide.TOP, BoardSide.LEFT, BoardSide.RIGHT);
-    private final Map<Stone, Chain> chainsContainer = new HashMap<>() {{
-        put(Stone.BLACK, new Chain());
-        put(Stone.WHITE, new Chain());
+    private final Map<Stone, ChainContainer> chainsContainer = new HashMap<>() {{
+        put(Stone.BLACK, new ChainContainer());
+        put(Stone.WHITE, new ChainContainer());
     }};
 
     private Board(int boardSize) {
