@@ -23,7 +23,7 @@ test {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'quentin.QuentinMain'
+        attributes 'Main-Class': 'quentin.QuentinConsole'
     }
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }

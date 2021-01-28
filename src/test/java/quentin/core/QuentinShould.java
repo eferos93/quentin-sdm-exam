@@ -1,6 +1,7 @@
 package quentin.core;
 
 import org.junit.jupiter.api.Test;
+import quentin.QuentinConsole;
 import quentin.UI.console.ConsoleInputHandler;
 import quentin.UI.console.ConsoleOutputHandler;
 
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class QuentinShould {
     private final Quentin<ConsoleInputHandler, ConsoleOutputHandler> quentin =
-            new Quentin<>(13, new ConsoleInputHandler(), new ConsoleOutputHandler());
+            new QuentinConsole(13, new ConsoleInputHandler(), new ConsoleOutputHandler());
 
     @Test
     public void notAllowWhitePlaysFirst() {
@@ -59,7 +60,7 @@ public class QuentinShould {
     @Test
     public void provideCorrectWinner() throws Exception {
         Quentin<ConsoleInputHandler, ConsoleOutputHandler> customQuentin =
-                new Quentin<>(4, new ConsoleInputHandler(), new ConsoleOutputHandler());
+                new QuentinConsole(4, new ConsoleInputHandler(), new ConsoleOutputHandler());
         customQuentin.makeMove(Stone.BLACK, in(1, 1));
         customQuentin.makeMove(Stone.WHITE, in(2, 2));
         customQuentin.makeMove(Stone.BLACK, in(2, 1));
@@ -75,7 +76,7 @@ public class QuentinShould {
     @Test
     public void provideCorrectWinnerWithPieRule() throws Exception {
         Quentin<ConsoleInputHandler, ConsoleOutputHandler> customQuentin =
-                new Quentin<>(4, new ConsoleInputHandler(), new ConsoleOutputHandler());
+                new QuentinConsole(4, new ConsoleInputHandler(), new ConsoleOutputHandler());
         customQuentin.makeMove(Stone.BLACK, in(1, 1));
         customQuentin.applyPieRule();
         customQuentin.makeMove(Stone.WHITE, in(1, 2));
@@ -99,7 +100,7 @@ public class QuentinShould {
     @Test
     public void provideCorrectWinnerMergeChainsFeature() throws Exception {
         Quentin<ConsoleInputHandler, ConsoleOutputHandler> customQuentin =
-                new Quentin<>(4, new ConsoleInputHandler(), new ConsoleOutputHandler());
+                new QuentinConsole(4, new ConsoleInputHandler(), new ConsoleOutputHandler());
         customQuentin.makeMove(Stone.BLACK, in(1, 1));
         customQuentin.makeMove(Stone.WHITE, in(1, 2));
         customQuentin.makeMove(Stone.BLACK, in(4, 4));

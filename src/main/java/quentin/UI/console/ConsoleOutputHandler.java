@@ -5,9 +5,28 @@ import quentin.core.Player;
 import quentin.core.Position;
 import quentin.core.Stone;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
+
+    public static void displayTitle() { System.out.println(Message.TITLE);}
+
+    public static void displayInstructions() { System.out.println(Message.INSTRUCTIONS);}
+
+    public static void askBoardSize() { System.out.println(Message.ASK_SIZE); }
+
+    public static void askBlackPlayerName() {
+        System.out.println(Message.ASK_BLACK_PLAYER_NAME);
+    }
+
+    public static void askWhitePlayerName() {
+        System.out.println(Message.ASK_WHITE_PLAYER_NAME);
+    }
+
+    public static void notifyException(String message) {
+        System.out.println(message);
+    }
 
     @Override
     public void notifyInvalidCoordinateInput() { System.out.println(Message.INVALID_COORDINATE_INPUT); }
@@ -16,16 +35,7 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
     public void notifyInvalidSizeInput() { System.out.println(Message.INVALID_SIZE_INPUT); }
 
     @Override
-    public void displayTitle() { System.out.println(Message.TITLE);}
-
-    @Override
-    public void displayInstructions() { System.out.println(Message.INSTRUCTIONS);}
-
-    @Override
     public void notifyBlackPlayerPlayFirst() {System.out.println(Message.BLACK_PLAYS_FIRST);}
-
-    @Override
-    public void askBoardSize() { System.out.println(Message.ASK_SIZE); }
 
     @Override
     public void askRowCoordinate() { System.out.println(Message.CHOOSE_ROW); }
@@ -45,9 +55,9 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
     public void notifyPass(Player currentPlayer) { System.out.printf(Message.PASS_TURN, currentPlayer.getName()); }
 
     @Override
-    public void notifyPieRule(Player player1, Player player2) {
-        System.out.printf(Message.PIE, player1.getName(), ConsoleStoneRepresentation.getStoneValue(player1.getColor()),
-                player2.getName(), ConsoleStoneRepresentation.getStoneValue(player2.getColor()));
+    public void notifyPieRule(List<Player> players) {
+        System.out.printf(Message.PIE, players.get(0).getName(), ConsoleStoneRepresentation.getStoneValue(players.get(0).getColor()),
+                players.get(1).getName(), ConsoleStoneRepresentation.getStoneValue(players.get(1).getColor()));
     }
 
     @Override
@@ -78,20 +88,5 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
         IntStream.rangeClosed(1, board.getBoardSize())
                 .forEachOrdered(columnIndex -> System.out.print("  " + columnIndex));
         System.out.println();
-    }
-
-    @Override
-    public void askBlackPlayerName() {
-        System.out.println(Message.ASK_BLACK_PLAYER_NAME);
-    }
-
-    @Override
-    public void askWhitePlayerName() {
-        System.out.println(Message.ASK_WHITE_PLAYER_NAME);
-    }
-
-    @Override
-    public void notifyException(String message) {
-        System.out.println(message);
     }
 }

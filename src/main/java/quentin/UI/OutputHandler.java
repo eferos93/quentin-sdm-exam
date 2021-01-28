@@ -3,18 +3,14 @@ package quentin.UI;
 import quentin.core.Board;
 import quentin.core.Player;
 
+import java.util.List;
+
 public interface OutputHandler {
     void notifyInvalidCoordinateInput();
 
     void notifyInvalidSizeInput();
 
-    void displayTitle();
-
-    void displayInstructions();
-
     void notifyBlackPlayerPlayFirst();
-
-    void askBoardSize();
 
     void askRowCoordinate();
 
@@ -24,19 +20,13 @@ public interface OutputHandler {
 
     void notifyPass(Player currentPlayer);
 
-    void notifyPieRule(Player player1, Player player2);
+    void notifyPieRule(List<Player> players);
 
     void notifyWinner(Player player);
 
     void askPie();
 
     void displayBoard(Board board);
-
-    void askBlackPlayerName();
-
-    void askWhitePlayerName();
-
-    void notifyException(String message);
 
     class Message {
         public static final String TITLE =  "QUENTIN GAME";
