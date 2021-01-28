@@ -9,19 +9,17 @@ public class Board {
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
     private final RegionContainer regionsContainer = RegionContainer.getRegionsContainer();
-    private final Set<BoardSide> sides = EnumSet.of(BoardSide.BOTTOM, BoardSide.TOP, BoardSide.LEFT, BoardSide.RIGHT);
-    private final ChainContainer chainContainer = ChainContainer.getChainContainer();
+    private final ChainContainer chainContainer;
 
     private Board(int boardSize) {
         this.BOARD_SIZE = boardSize;
-        BoardSide.setBoardSize(boardSize);
-        this.sides.forEach(BoardSide::initialiseSide);
+        this.chainContainer = new ChainContainer(this.BOARD_SIZE);
         for (int row = 1; row <= this.BOARD_SIZE; row++) {
             for (int column = 1; column <= this.BOARD_SIZE; column++) {
                 this.intersections.add(Intersection.empty(in(row, column)));
             }
         }
-        regionsContainer.createGraph(this.intersections, boardSize);
+        regionsContainer.createGraph(this.intersections, this.BOARD_SIZE);
     }
 
     public static Board buildBoard(int size) {
@@ -58,7 +56,7 @@ public class Board {
     }
 
     protected Stone colorWithCompleteChain() {
-        return chainContainer.getColorWithCompleteChain(sides);
+        return chainContainer.getColorWithCompleteChain();
     }
 
     protected Stream<Intersection> getEmptyIntersections() {

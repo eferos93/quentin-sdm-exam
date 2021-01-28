@@ -19,15 +19,9 @@ public class ChainContainerShould {
                 new Intersection(in(3, 2), Stone.BLACK)
         );
 
-        ChainContainer chainContainer = new ChainContainer();
+        ChainContainer chainContainer = new ChainContainer(3);
         intersectionStream.forEach(chainContainer::updateChain);
-
-        Set<BoardSide> listOfBoardSides = Set.of(BoardSide.BOTTOM, BoardSide.TOP);
-
-        BoardSide.setBoardSize(3);
-        listOfBoardSides.forEach(BoardSide::initialiseSide);
-
-        assertEquals(Stone.BLACK, chainContainer.getColorWithCompleteChain(listOfBoardSides));
+        assertEquals(Stone.BLACK, chainContainer.getColorWithCompleteChain());
     }
 
     @Test
@@ -38,15 +32,9 @@ public class ChainContainerShould {
                 new Intersection(in(2, 2), Stone.BLACK)
         );
 
-        ChainContainer chainContainer = new ChainContainer();
+        ChainContainer chainContainer = new ChainContainer(3);
         intersectionStream.forEach(chainContainer::updateChain);
-
-        Set<BoardSide> listOfBoardSides = Set.of(BoardSide.BOTTOM, BoardSide.TOP);
-
-        BoardSide.setBoardSize(3);
-        listOfBoardSides.forEach(BoardSide::initialiseSide);
-
-        assertEquals(Stone.NONE, chainContainer.getColorWithCompleteChain(listOfBoardSides));
+        assertEquals(Stone.NONE, chainContainer.getColorWithCompleteChain());
     }
 
 }

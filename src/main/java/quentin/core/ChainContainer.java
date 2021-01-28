@@ -5,10 +5,7 @@ import org.jgrapht.alg.connectivity.ConnectivityInspector;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChainContainer {
@@ -16,9 +13,11 @@ public class ChainContainer {
         put(Stone.BLACK, new SimpleGraph<>(DefaultEdge.class));
         put(Stone.WHITE, new SimpleGraph<>(DefaultEdge.class));
     }};
+    private final Set<BoardSide> sides = EnumSet.allOf(BoardSide.class);
 
-    static ChainContainer getChainContainer() {
-        return new ChainContainer();
+    ChainContainer(int boardSize) {
+        BoardSide.setBoardSize(boardSize);
+        sides.forEach(BoardSide::initialiseSide);
     }
 
     protected void updateChain(Intersection newIntersection) {
@@ -29,29 +28,29 @@ public class ChainContainer {
                 .forEach(orthogonalIntersection -> chainsOfColor.addEdge(orthogonalIntersection, newIntersection));
     }
 
-    private boolean hasACompleteChain(Graph<Intersection, DefaultEdge> chains, List<BoardSide> sameColorSides) {
-        return new ConnectivityInspector<>(chains).connectedSets().stream()
-                .anyMatch(chain -> isChainConnectedToSameColorSides(sameColorSides, chain));
+    private boolean hasACompleteChain(Map.Entry<Stone, Graph<Intersection, DefaultEdge>> chainsOfAGivenColor) {
+        return new ConnectivityInspector<>(chainsOfAGivenColor.getValue()).connectedSets().stream()
+                .anyMatch(chain -> isChainConnectedToSameColorSides(chainsOfAGivenColor.getKey(), chain));
     }
 
-    private boolean isChainConnectedToSameColorSides(List<BoardSide> sameColorSides, Set<Intersection> chain) {
+    private boolean isChainConnectedToSameColorSides(Stone color, Set<Intersection> chain) {
         return
                 chain.stream()
                         .map(Intersection::getPosition)
-                        .anyMatch(position -> sameColorSides.get(0).isAdjacentTo(position))
+                        .anyMatch(position -> getSidesOfColor(color).get(0).isAdjacentTo(position))
                 &&
                 chain.stream()
                         .map(Intersection::getPosition)
-                        .anyMatch(position -> sameColorSides.get(1).isAdjacentTo(position));
+                        .anyMatch(position -> getSidesOfColor(color).get(1).isAdjacentTo(position));
     }
 
-    private List<BoardSide> getSidesOfColor(Set<BoardSide> sides, Stone color) {
+    private List<BoardSide> getSidesOfColor(Stone color) {
         return sides.stream().filter(side -> side.hasColor(color)).collect(Collectors.toList());
     }
 
-    public Stone getColorWithCompleteChain(Set<BoardSide> sides) {
+    public Stone getColorWithCompleteChain() {
         return chains.entrySet().stream()
-                .filter(chains -> hasACompleteChain(chains.getValue(), getSidesOfColor(sides, chains.getKey())))
+                .filter(this::hasACompleteChain)
                 .map(Map.Entry::getKey)
                 .findFirst()
                 .orElse(Stone.NONE);

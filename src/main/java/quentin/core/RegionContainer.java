@@ -59,7 +59,8 @@ public class RegionContainer {
                 .count() >= 2;
     }
 
-    private Set<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection, final List<Intersection> allIntersections) {
+    private Set<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection,
+                                                                  final List<Intersection> allIntersections) {
         return allIntersections.stream()
                 .filter(otherIntersection -> otherIntersection.isOrthogonalTo(intersection))
                 .collect(Collectors.toSet());
@@ -80,7 +81,8 @@ public class RegionContainer {
     }
 
 
-    private Stone getStoneToFillTerritory(Set<Intersection> territory, final List<Intersection> allIntersections,
+    private Stone getStoneToFillTerritory(Set<Intersection> territory,
+                                          final List<Intersection> allIntersections,
                                           Stone lastPlay) {
         Set<Intersection> intersectionsSurroundingTerritory = getIntersectionsThatSurroundsTheTerritory(territory, allIntersections);
         long countOfWhiteStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.WHITE);
