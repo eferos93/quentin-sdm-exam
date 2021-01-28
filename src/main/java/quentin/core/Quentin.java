@@ -173,7 +173,7 @@ public class Quentin<InputHandlerImplementation extends InputHandler, OutputHand
             return getPlayerOfColor(winnerColor);
         }
 
-        board.searchAndFillTerritories(lastPlay);
+        board.fillTerritories(lastPlay);
 
         winnerColor = getWinner();
         if (winnerColor != Stone.NONE) {
