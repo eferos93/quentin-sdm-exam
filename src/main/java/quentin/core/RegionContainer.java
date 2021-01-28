@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-//TODO: some methods have long parameter list
+//TODO: some methods have long parameter list: evaluate if it worth to be refactored
 public class RegionContainer {
     private static final RegionContainer regionContainer = new RegionContainer();
     private Graph<Intersection, DefaultEdge> graph;
@@ -45,10 +45,10 @@ public class RegionContainer {
         return new ConnectivityInspector<>(graph).connectedSets();
     }
 
-    protected List<Set<Intersection>> getTerritories(final List<Intersection> intersections) {
+    protected List<Set<Intersection>> getTerritories(final List<Intersection> allIntersections) {
         return getRegions().stream()
                 .filter(region -> region.stream()
-                        .allMatch(emptyIntersection -> isOrthogonalToAtLeastTwoStones(emptyIntersection, intersections))
+                        .allMatch(emptyIntersection -> isOrthogonalToAtLeastTwoStones(emptyIntersection, allIntersections))
                 ).collect(Collectors.toList());
     }
 
@@ -59,8 +59,8 @@ public class RegionContainer {
                 .count() >= 2;
     }
 
-    private Set<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection, List<Intersection> intersections) {
-        return intersections.stream()
+    private Set<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection, final List<Intersection> allIntersections) {
+        return allIntersections.stream()
                 .filter(otherIntersection -> otherIntersection.isOrthogonalTo(intersection))
                 .collect(Collectors.toSet());
     }
