@@ -14,14 +14,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 //TODO: some methods have long parameter list: evaluate if it worth to be refactored
 public class RegionContainer {
-    private static final RegionContainer regionContainer = new RegionContainer();
     private Graph<Intersection, DefaultEdge> graph;
-
-    private RegionContainer() {}
-
-    public static RegionContainer getRegionsContainer() {
-        return regionContainer;
-    }
 
     protected void createGraph(List<Intersection> emptyIntersections, int boardSize) {
         Supplier<Intersection> vertexSupplier = new Supplier<>() {
@@ -41,11 +34,11 @@ public class RegionContainer {
         graph.removeVertex(nonEmptyIntersection);
     }
 
-    protected List<Set<Intersection>> getRegions() {
+    private List<Set<Intersection>> getRegions() {
         return new ConnectivityInspector<>(graph).connectedSets();
     }
 
-    protected List<Set<Intersection>> getTerritories(final List<Intersection> allIntersections) {
+    private List<Set<Intersection>> getTerritories(final List<Intersection> allIntersections) {
         return getRegions().stream()
                 .filter(region -> region.stream()
                         .allMatch(emptyIntersection -> isOrthogonalToAtLeastTwoStones(emptyIntersection, allIntersections))
@@ -95,7 +88,8 @@ public class RegionContainer {
         }
     }
 
-    public Map<Set<Intersection>, Stone> getTerritoriesAndStonesToFill(List<Intersection> allIntersections, Stone lastPlay) {
+    protected Map<Set<Intersection>, Stone> getTerritoriesAndStonesToFill(final List<Intersection> allIntersections,
+                                                                          Stone lastPlay) {
         return getTerritories(allIntersections).stream()
                 .map(territory -> {
                     Stone stone = getStoneToFillTerritory(territory, allIntersections, lastPlay);
