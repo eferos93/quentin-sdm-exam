@@ -4,10 +4,9 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConsoleInputHandler implements quentin.UI.InputHandler {
-    private final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
-    @Override
-    public int getInteger() throws InputMismatchException {
+    public static int getInteger() throws InputMismatchException {
         if (scanner.hasNextInt()) {
             return scanner.nextInt();
         } else {
@@ -25,13 +24,10 @@ public class ConsoleInputHandler implements quentin.UI.InputHandler {
         return answer.equalsIgnoreCase("yes");
     }
 
-    @Override
-    public String askBlackPlayerName() {
+    public static String askBlackPlayerName() {
         return scanner.next();
     }
-
-    @Override
-    public String askWhitePlayerName() {
+    public static String askWhitePlayerName() {
         return scanner.next();
     }
 }

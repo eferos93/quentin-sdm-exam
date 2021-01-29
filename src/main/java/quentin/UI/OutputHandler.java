@@ -3,18 +3,9 @@ package quentin.UI;
 import quentin.core.Board;
 import quentin.core.Player;
 
+import java.util.List;
+
 public interface OutputHandler {
-    void notifyInvalidCoordinateInput();
-
-    void notifyInvalidSizeInput();
-
-    void displayTitle();
-
-    void displayInstructions();
-
-    void notifyBlackPlayerPlayFirst();
-
-    void askBoardSize();
 
     void askRowCoordinate();
 
@@ -24,19 +15,13 @@ public interface OutputHandler {
 
     void notifyPass(Player currentPlayer);
 
-    void notifyPieRule(Player player1, Player player2);
+    void notifyPieRule(List<Player> players);
 
     void notifyWinner(Player player);
 
     void askPie();
 
     void displayBoard(Board board);
-
-    void askBlackPlayerName();
-
-    void askWhitePlayerName();
-
-    void notifyException(String message);
 
     class Message {
         public static final String TITLE =  "QUENTIN GAME";
@@ -54,8 +39,6 @@ public interface OutputHandler {
             %s's color: %s 
             """;
         public static final String ASK_SIZE = "Choose the dimension of the board between 4 and 13";
-        public static final String INVALID_SIZE_INPUT = "Invalid size. Please select a valid input size for the board.";
-        public static final String INVALID_COORDINATE_INPUT = "Invalid input coordinate. Please choose a valid intersection inside the board";
         public static final String CURRENT_PLAYER = "%s's turn. %s\n";
         public static final String END_GAME = "Congratulations to %s %s, you won!";
         public static final String PASS_TURN = "%s passes turn as there no possible move to make";
