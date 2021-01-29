@@ -47,8 +47,7 @@ public class QuentinConsole extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         return !whiteAlreadyPlayed && currentPlayer.getColor() == Stone.WHITE;
     }
 
-    private void askForPieRule(Player currentPlayer) {
-        if (isWhitePlayerFirstTurn(currentPlayer)) {
+    private void askForPieRule() {
             whiteAlreadyPlayed = true;
             while(true) {
                 try {
@@ -62,8 +61,6 @@ public class QuentinConsole extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                     ConsoleOutputHandler.notifyException(exception.getMessage());
                 }
             }
-            play();
-        }
     }
 
 
@@ -73,15 +70,11 @@ public class QuentinConsole extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         outputHandler.displayBoard(getBoard());
         outputHandler.displayPlayer(currentPlayer);
         checkIfPlayerIsAbleToMakeAMove(currentPlayer);
-        askForPieRule(currentPlayer);
+        if (isWhitePlayerFirstTurn(currentPlayer)) { askForPieRule(); play();}
         getCoordinatesAndMakeMove(currentPlayer);
-        if (checkForWinner()) {
-            return;
-        }
+        if (checkForWinner()) { return; }
         fillTerritories();
-        if (checkForWinner()) {
-            return;
-        }
+        if (checkForWinner()) { return; }
         play();
     }
 
