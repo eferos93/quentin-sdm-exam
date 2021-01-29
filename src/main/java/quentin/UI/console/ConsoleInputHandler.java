@@ -4,14 +4,14 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConsoleInputHandler implements quentin.UI.InputHandler {
-    private final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
 
-    @Override
-    public int getInteger() throws InputMismatchException {
+    public static int getInteger() throws InputMismatchException {
         if (scanner.hasNextInt()) {
             return scanner.nextInt();
         } else {
-            throw new InputMismatchException();
+            scanner.next();
+            throw new InputMismatchException("You have not inserted a valid integer! Retry.");
         }
     }
 
@@ -19,9 +19,16 @@ public class ConsoleInputHandler implements quentin.UI.InputHandler {
     public boolean askPie() throws InputMismatchException {
         String answer = scanner.next();
         if (!(answer.equalsIgnoreCase("no") || answer.equalsIgnoreCase("yes"))) {
-            throw new InputMismatchException();
+            throw new InputMismatchException("You should insert 'yes' or 'no");
         }
         return answer.equalsIgnoreCase("yes");
+    }
+
+    public static String askBlackPlayerName() {
+        return scanner.next();
+    }
+    public static String askWhitePlayerName() {
+        return scanner.next();
     }
 }
 

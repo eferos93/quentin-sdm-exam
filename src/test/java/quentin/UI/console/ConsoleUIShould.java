@@ -20,12 +20,12 @@ public class ConsoleUIShould {
         System.setOut(new PrintStream(fakeStandardOutput));
         String expectedOutput = """
                       B  B  B  B
-                1\tW[ ][ ][ ][ ]W
-                2\tW[ ][ ][ ][ ]W
-                3\tW[ ][ ][ ][ ]W
-                4\tW[ ][ ][ ][ ]W
+                1   W[ ][ ][ ][ ]W
+                2   W[ ][ ][ ][ ]W
+                3   W[ ][ ][ ][ ]W
+                4   W[ ][ ][ ][ ]W
                       B  B  B  B
-                \t  1  2  3  4
+                      1  2  3  4
                 """;
         outputHandler.displayBoard(board);
         assertEquals(expectedOutput, fakeStandardOutput.toString());
