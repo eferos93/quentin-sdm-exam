@@ -2,10 +2,14 @@ package quentin.core;
 
 public class Player {
     private Stone color;
-    private final String name;
+    private String name;
 
     public Player(Stone color, String name) {
         this.color = color;
+        this.name = name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 

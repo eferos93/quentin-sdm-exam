@@ -3,18 +3,9 @@ package quentin.UI;
 import quentin.core.Board;
 import quentin.core.Player;
 
+import java.util.List;
+
 public interface OutputHandler {
-    void notifyInvalidCoordinateInput();
-
-    void notifyInvalidSizeInput();
-
-    void displayTitle();
-
-    void displayInstructions();
-
-    void notifyBlackPlayerPlayFirst();
-
-    void askBoardSize();
 
     void askRowCoordinate();
 
@@ -22,9 +13,9 @@ public interface OutputHandler {
 
     void displayPlayer(Player player);
 
-    void notifyPass();
+    void notifyPass(Player currentPlayer);
 
-    void notifyPieRule(Player player1, Player player2);
+    void notifyPieRule(List<Player> players);
 
     void notifyWinner(Player player);
 
@@ -48,10 +39,10 @@ public interface OutputHandler {
             %s's color: %s 
             """;
         public static final String ASK_SIZE = "Choose the dimension of the board between 4 and 13";
-        public static final String INVALID_SIZE_INPUT = "Invalid size. Please select a valid input size for the board.";
-        public static final String INVALID_COORDINATE_INPUT = "Invalid input coordinate. Please choose a valid intersection inside the board";
-        public static final String CURRENT_PLAYER = "%s's turn. %s";
-        public static final String END_GAME = "Congratulations to %s, you won!";
-        public static final String PASS_TURN = "You have to pass";
+        public static final String CURRENT_PLAYER = "%s's turn. %s\n";
+        public static final String END_GAME = "Congratulations to %s %s, you won!";
+        public static final String PASS_TURN = "%s passes turn as there no possible move to make";
+        public static final String ASK_BLACK_PLAYER_NAME = "Please insert the name of the Black Player:";
+        public static final String ASK_WHITE_PLAYER_NAME = "Please insert the name of the White Player:";
     }
 }
