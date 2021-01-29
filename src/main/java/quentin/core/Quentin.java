@@ -15,7 +15,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     protected final InputHandlerImplementation inputHandler;
     protected final OutputHandlerImplementation outputHandler;
 
-    public Quentin(int boardSize, InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler,
+    protected Quentin(int boardSize, InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler,
                    String blackPlayerName, String whitePlayerName) {
         this.board = Board.buildBoard(boardSize);
         this.inputHandler = inputHandler;
@@ -24,7 +24,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         this.playerTwo = new Player(Stone.WHITE, whitePlayerName);
     }
 
-    public Quentin(int boardSize, InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler) {
+    protected Quentin(int boardSize, InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler) {
         this.board = Board.buildBoard(boardSize);
         this.inputHandler = inputHandler;
         this.outputHandler = outputHandler;
