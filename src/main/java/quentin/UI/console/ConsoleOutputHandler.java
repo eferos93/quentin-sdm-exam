@@ -28,15 +28,6 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
         System.out.println(message);
     }
 
-//    @Override
-//    public void notifyInvalidCoordinateInput() { System.out.println(Message.INVALID_COORDINATE_INPUT); }
-//
-//    @Override
-//    public void notifyInvalidSizeInput() { System.out.println(Message.INVALID_SIZE_INPUT); }
-//
-//    @Override
-//    public void notifyBlackPlayerPlayFirst() {System.out.println(Message.BLACK_PLAYS_FIRST);}
-
     @Override
     public void askRowCoordinate() { System.out.println(Message.CHOOSE_ROW); }
 

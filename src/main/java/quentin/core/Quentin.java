@@ -4,6 +4,7 @@ import quentin.UI.InputHandler;
 import quentin.UI.OutputHandler;
 import quentin.exceptions.*;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 public abstract class Quentin<InputHandlerImplementation extends InputHandler, OutputHandlerImplementation extends OutputHandler> {
@@ -13,7 +14,6 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     private final Player playerTwo;
     protected final InputHandlerImplementation inputHandler;
     protected final OutputHandlerImplementation outputHandler;
-    protected boolean whiteAlreadyPlayed = false;
 
     public Quentin(int boardSize, InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler,
                    String blackPlayerName, String whitePlayerName) {
@@ -72,11 +72,23 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     }
 
     public boolean isPlayerAbleToMakeAMove(Stone playerColor) {
-        return board.getEmptyIntersections()
-                .anyMatch(emptyIntersection -> !isIllegalMove(playerColor, emptyIntersection));
+        return board.getEmptyIntersections().anyMatch(emptyIntersection -> !isIllegalMove(playerColor, emptyIntersection));
     }
 
-    public Stone getWinner() {
+    protected Player getPlayerOfColor(Stone color) throws NoSuchElementException {
+        return getPlayers().stream().filter(player -> player.getColor() == color).findFirst().orElseThrow();
+    }
+
+    protected boolean checkForWinner() {
+        Stone winnerColor = getWinner();
+        if (winnerColor != Stone.NONE) {
+            outputHandler.notifyWinner(getPlayerOfColor(winnerColor));
+            return true;
+        }
+        return false;
+    }
+
+    protected Stone getWinner() {
         return board.colorWithCompleteChain();
     }
 
