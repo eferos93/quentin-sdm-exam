@@ -79,6 +79,15 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         return getPlayers().stream().filter(player -> player.getColor() == color).findFirst().orElseThrow();
     }
 
+    protected boolean checkIfPlayerIsAbleToMakeAMove(Player currentPlayer) {
+        if(!isPlayerAbleToMakeAMove(currentPlayer.getColor())) {
+            setLastPlay(currentPlayer.getColor());
+            outputHandler.notifyPass(currentPlayer);
+            return false;
+        }
+        return true;
+    }
+
     protected boolean checkForWinner() {
         Stone winnerColor = getWinner();
         if (winnerColor != Stone.NONE) {

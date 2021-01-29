@@ -17,10 +17,6 @@ public class QuentinConsole extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         super(boardSize, inputHandler, outputHandler);
     }
 
-    private Position getPosition() {
-        return Position.in(getCoordinate(outputHandler::askRowCoordinate), getCoordinate(outputHandler::askColumnCoordinate));
-    }
-
     private int getCoordinate(Runnable printer) {
         while(true) {
             try {
@@ -30,6 +26,10 @@ public class QuentinConsole extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                 ConsoleOutputHandler.notifyException(exception.getMessage());
             }
         }
+    }
+
+    private Position getPosition() {
+        return Position.in(getCoordinate(outputHandler::askRowCoordinate), getCoordinate(outputHandler::askColumnCoordinate));
     }
 
     private void getCoordinatesAndMakeMove(Player currentPlayer) {
@@ -47,20 +47,23 @@ public class QuentinConsole extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         return !whiteAlreadyPlayed && currentPlayer.getColor() == Stone.WHITE;
     }
 
-    private void askForPieRule() {
+    private boolean askForPieRule(Player currentPlayer) {
+        if (isWhitePlayerFirstTurn(currentPlayer)) {
             whiteAlreadyPlayed = true;
-            while(true) {
+            while (true) {
                 try {
                     outputHandler.askPie();
                     if (inputHandler.askPie()) {
                         applyPieRule();
                         outputHandler.notifyPieRule(getPlayers());
+                        return true;
                     }
-                    break;
-                } catch(InputMismatchException exception) {
+                } catch (InputMismatchException exception) {
                     ConsoleOutputHandler.notifyException(exception.getMessage());
                 }
             }
+        }
+        return false;
     }
 
 
@@ -69,21 +72,13 @@ public class QuentinConsole extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         Player currentPlayer = isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());
         outputHandler.displayBoard(getBoard());
         outputHandler.displayPlayer(currentPlayer);
-        checkIfPlayerIsAbleToMakeAMove(currentPlayer);
-        if (isWhitePlayerFirstTurn(currentPlayer)) { askForPieRule(); play();}
+        if (!checkIfPlayerIsAbleToMakeAMove(currentPlayer)) { play(); }
+        if (askForPieRule(currentPlayer)) { play(); }
         getCoordinatesAndMakeMove(currentPlayer);
         if (checkForWinner()) { return; }
         fillTerritories();
         if (checkForWinner()) { return; }
         play();
-    }
-
-    private void checkIfPlayerIsAbleToMakeAMove(Player currentPlayer) {
-        if(!isPlayerAbleToMakeAMove(currentPlayer.getColor())) {
-            setLastPlay(currentPlayer.getColor());
-            outputHandler.notifyPass(currentPlayer);
-            play();
-        }
     }
 
     private static int getBoardSize() {
