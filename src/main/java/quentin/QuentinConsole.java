@@ -55,35 +55,15 @@ public class QuentinConsole extends Quentin<ConsoleInputHandler, ConsoleOutputHa
 
         }
 
-        int rowCoordinate, columnCoordinate;
-        while (true) {
-            while (true) {
-                try {
-                    outputHandler.askRowCoordinate();
-                    rowCoordinate = ConsoleInputHandler.getInteger();
-                    break;
-                } catch (InputMismatchException exception) {
-                    ConsoleOutputHandler.notifyException(exception.getMessage());
-                }
-            }
-
-            while (true) {
-                try {
-                    outputHandler.askColumnCoordinate();
-                    columnCoordinate = ConsoleInputHandler.getInteger();
-                    break;
-                } catch (InputMismatchException exception) {
-                    ConsoleOutputHandler.notifyException(exception.getMessage());
-                }
-            }
-
+        for (boolean areCoordinatesValid = false; !areCoordinatesValid; ){
             try {
-                makeMove(currentPlayer.getColor(), Position.in(rowCoordinate, columnCoordinate));
-                break;
+                makeMove(currentPlayer.getColor(), getPosition());
+                areCoordinatesValid = true;
             } catch (Exception exception) {
                 ConsoleOutputHandler.notifyException(exception.getMessage());
             }
         }
+
 
         Stone winnerColor = getWinner();
         if(winnerColor != Stone.NONE) {
@@ -100,6 +80,33 @@ public class QuentinConsole extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         }
 
         play();
+    }
+
+    private Position getPosition() {
+        return Position.in(getRowCoordinate(), getColumnCoordinate());
+    }
+
+
+    private int getColumnCoordinate() {
+        while(true) {
+            try {
+                outputHandler.askColumnCoordinate();
+                return ConsoleInputHandler.getInteger();
+            } catch (InputMismatchException exception) {
+                ConsoleOutputHandler.notifyException(exception.getMessage());
+            }
+        }
+    }
+
+    private int getRowCoordinate() {
+        while (true) {
+            try {
+                outputHandler.askRowCoordinate();
+                return ConsoleInputHandler.getInteger();
+            } catch (InputMismatchException exception) {
+                ConsoleOutputHandler.notifyException(exception.getMessage());
+            }
+        }
     }
 
     private Player getPlayerOfColor(Stone color) throws NoSuchElementException {
