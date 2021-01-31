@@ -29,22 +29,22 @@ public class GUIOutputHandler implements OutputHandler {
 
     @Override
     public void displayPlayer(Player player) {
-        createAndSetAlert("Current Player Information", Message.CURRENT_PLAYER);
+        createAndSetAlert("Current Player Information", String.format("%s", Message.CURRENT_PLAYER));
     }
 
     @Override
     public void notifyPass(Player currentPlayer) {
-        createAndSetAlert("Pass Rule Information", Message.PASS_TURN);
+        createAndSetAlert("Pass Rule Information", String.format("%s", Message.PASS_TURN));
     }
 
     @Override
     public void notifyPieRule(List<Player> players) {
-        createAndSetAlert("Pie Rule Information", Message.PIE);
+        createAndSetAlert("Pie Rule Information", String.format("%s", Message.PIE));
     }
 
     @Override
     public void notifyWinner(Player player) {
-        createAndSetAlert("Winner Information", Message.END_GAME);
+        createAndSetAlert("Winner Information", String.format("%s", Message.END_GAME));
     }
 
     @Override
