@@ -33,7 +33,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     }
 
     protected void makeMove(Stone color, Position position) throws Exception {
-        /*
+
         if (isInvalidFirstPlayer(color)) {
             throw new InvalidFirstPlayerException();
         }
@@ -46,7 +46,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         if (isIllegalMove(color, position)) {
             throw new IllegalMoveException(position);
         }
-         */
+
         board.addStoneAt(color, position);
         lastPlay = color;
     }
