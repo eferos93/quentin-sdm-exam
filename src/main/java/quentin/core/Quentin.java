@@ -33,24 +33,30 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     }
 
     protected void makeMove(Stone color, Position position) throws Exception {
+        /*
         if (isInvalidFirstPlayer(color)) {
             throw new InvalidFirstPlayerException();
         }
         if (isARepeatedPlay(color)) {
             throw new RepeatedPlayException();
         }
-        if (board.isOccupied(position)) {
+        if (isOccupied(position)) {
             throw new OccupiedPositionException(position);
         }
         if (isIllegalMove(color, position)) {
             throw new IllegalMoveException(position);
         }
+         */
         board.addStoneAt(color, position);
         lastPlay = color;
     }
 
+    protected boolean isOccupied(Position position) {
+        return board.isOccupied(position);
+    }
+
     //TODO: maybe rename this method to avoid overloading
-    private boolean isIllegalMove(Stone playerColor, Position position) {
+    protected boolean isIllegalMove(Stone playerColor, Position position) {
         return isIllegalMove(playerColor, board.intersectionAt(position));
     }
 
@@ -59,7 +65,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
                 !board.existsOrthogonallyAdjacentWithStone(intersection, playerColor);
     }
 
-    private boolean isARepeatedPlay(Stone playerColor) {
+    protected boolean isARepeatedPlay(Stone playerColor) {
         return lastPlay == playerColor;
     }
 
@@ -67,7 +73,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         return lastPlay == Stone.NONE;
     }
 
-    private boolean isInvalidFirstPlayer(Stone playerColor) {
+    protected boolean isInvalidFirstPlayer(Stone playerColor) {
         return isFirstTurn() && playerColor == Stone.WHITE;
     }
 
@@ -117,7 +123,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         return this.board;
     }
 
-    protected Stone getLastPlay() {
+    public Stone getLastPlay() {
         return this.lastPlay;
     }
 

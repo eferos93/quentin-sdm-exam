@@ -2,6 +2,7 @@ package quentin.UI.GUI;
 
 import javafx.scene.control.Alert;
 import quentin.UI.OutputHandler;
+import quentin.UI.console.ConsoleStoneRepresentation;
 import quentin.core.Board;
 import quentin.core.Player;
 
@@ -17,34 +18,46 @@ public class GUIOutputHandler implements OutputHandler {
         alert.showAndWait();
     }
 
-    @Override
-    public void askRowCoordinate() {
-        createAndSetAlert("Row Coordinate Information", Message.CHOOSE_ROW);
+    public static void notifyException(String message) {
+        createAndSetAlert("Invalid Action Information", String.format("%s", message));
+    }
+
+    public void notifyInvalidMove() {
+        createAndSetAlert("Invalid Move Information", String.format("%s", Message.INVALID_MOVE));
     }
 
     @Override
-    public void askColumnCoordinate() {
-        createAndSetAlert("Column Coordinate Information", Message.CHOOSE_COLUMN);
-    }
+    public void askRowCoordinate() { /**/ }
 
     @Override
-    public void displayPlayer(Player player) {
-        createAndSetAlert("Current Player Information", String.format("%s", Message.CURRENT_PLAYER));
-    }
+    public void askColumnCoordinate() { /**/ }
+
+    @Override
+    public void displayPlayer(Player player) { /**/ }
 
     @Override
     public void notifyPass(Player currentPlayer) {
-        createAndSetAlert("Pass Rule Information", String.format("%s", Message.PASS_TURN));
+
+        String message = String.format(Message.PASS_TURN, currentPlayer.getName());
+        createAndSetAlert("Pass Rule Information", String.format("%s", message));
     }
 
     @Override
     public void notifyPieRule(List<Player> players) {
-        createAndSetAlert("Pie Rule Information", String.format("%s", Message.PIE));
+
+        String message = String.format(Message.PIE, players.get(0).getName(), ConsoleStoneRepresentation.getStoneValue(players.get(0).getColor()),
+                players.get(1).getName(), ConsoleStoneRepresentation.getStoneValue(players.get(1).getColor()));
+
+        createAndSetAlert("Pie Rule Information", String.format("%s", message));
     }
 
     @Override
     public void notifyWinner(Player player) {
-        createAndSetAlert("Winner Information", String.format("%s", Message.END_GAME));
+
+        String message = String.format(Message.END_GAME, player.getName(),
+                ConsoleStoneRepresentation.getStoneValue(player.getColor()));
+
+        createAndSetAlert("Winner Information", String.format("%s", message));
     }
 
     @Override

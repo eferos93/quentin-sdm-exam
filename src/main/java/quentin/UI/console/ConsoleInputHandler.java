@@ -19,7 +19,7 @@ public class ConsoleInputHandler implements quentin.UI.InputHandler {
     public boolean askPie() throws InputMismatchException {
         String answer = scanner.next();
         if (!(answer.equalsIgnoreCase("no") || answer.equalsIgnoreCase("yes"))) {
-            throw new InputMismatchException("You should insert 'yes' or 'no");
+            throw new InputMismatchException("You should insert 'yes' or 'no'");
         }
         return answer.equalsIgnoreCase("yes");
     }

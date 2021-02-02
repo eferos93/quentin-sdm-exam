@@ -30,7 +30,7 @@ public class Board {
         return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow();
     }
 
-    public void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
+    protected void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
         Intersection intersection = intersectionAt(position);
         regionsContainer.removeNonEmptyIntersection(intersection);
         intersection.setStone(stone);

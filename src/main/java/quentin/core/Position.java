@@ -27,11 +27,11 @@ public class Position {
         return Objects.hash(row, column);
     }
 
-    protected int getRow() {
+    public int getRow() {
         return this.row;
     }
 
-    protected int getColumn() {
+    public int getColumn() {
         return this.column;
     }
 
