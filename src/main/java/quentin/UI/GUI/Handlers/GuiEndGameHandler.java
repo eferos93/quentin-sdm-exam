@@ -2,6 +2,7 @@ package quentin.UI.GUI.Handlers;
 
 import javafx.event.EventHandler;
 import quentin.UI.GUI.Events.EndGameEvent;
+import quentin.UI.GUI.GUI;
 
 public class GuiEndGameHandler implements EventHandler<EndGameEvent> {
     private final GUI gui;
@@ -11,9 +12,9 @@ public class GuiEndGameHandler implements EventHandler<EndGameEvent> {
     @Override
     public void handle(EndGameEvent event) {
         if (gui.getGame().checkAndPerformEndGameRule()) {
+            gui.outputHandler.notifyWinner(gui.getGame().getCurrentPlayer());
             gui.stop();
         }
         event.consume();
     }
-//TODO it will be necessary to implement a GUI class for this handler and for the following
 }
