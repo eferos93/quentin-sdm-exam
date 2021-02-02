@@ -1,5 +1,6 @@
 package quentin.UI.GUI;
 
+import javafx.application.Application;
 import quentin.core.*;
 import quentin.exceptions.IllegalMoveException;
 import quentin.exceptions.OccupiedPositionException;
@@ -101,4 +102,8 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
             return;
         }
     }
+
+    public static void main (String[] args) {
+            new Thread(() -> Application.launch(GUI.class)).start();
+        }
 }
