@@ -59,8 +59,8 @@ public class RegionContainer {
                 .collect(Collectors.toSet());
     }
 
-    private long countIntersectionsOfColor(Set<Intersection> intersections, Stone color) {
-        return intersections.stream()
+    private long countIntersectionsOfColor(final Set<Intersection> intersectionsSurroundingTerritory, Stone color) {
+        return intersectionsSurroundingTerritory.stream()
                 .filter(intersection -> intersection.hasStone(color))
                 .count();
     }
