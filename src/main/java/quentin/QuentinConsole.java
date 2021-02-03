@@ -57,6 +57,8 @@ public class QuentinConsole extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                         applyPieRule();
                         outputHandler.notifyPieRule(getPlayers());
                         return true;
+                    } else {
+                        return false;
                     }
                 } catch (InputMismatchException exception) {
                     ConsoleOutputHandler.notifyException(exception.getMessage());
