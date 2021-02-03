@@ -20,7 +20,6 @@ public class Board {
             }
         }
         regionsContainer = new RegionContainer(this.intersections, this.BOARD_SIZE);
-//        regionsContainer.createGraph(this.intersections, this.BOARD_SIZE);
     }
 
     public static Board buildBoard(int size) {
@@ -65,7 +64,7 @@ public class Board {
     }
 
     protected void fillTerritories(Stone lastPlay) {
-        regionsContainer.getTerritoriesAndStonesToFill(intersections, lastPlay)
+        regionsContainer.getTerritoriesAndStonesToFill(lastPlay)
                 .forEach((territory, stone) -> territory.stream()
                         .map(Intersection::getPosition)
                         .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
