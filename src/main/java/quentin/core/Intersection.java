@@ -28,7 +28,7 @@ public class Intersection {
         return new Intersection(position, Stone.NONE);
     }
 
-    protected Position getPosition() {
+    public Position getPosition() {
         return this.position;
     }
 

@@ -10,16 +10,24 @@ import java.util.InputMismatchException;
 public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
 
     private boolean whiteAlreadyPlayed = false;
-    public Position newPosition;
-    public boolean playTerminate = false;
+    private boolean playEndSuccessfully = true;
+    private Position newPosition;
 
     public GUIQuentin(int boardSize, GUIInputHandler inputHandler, GUIOutputHandler outputHandler) {
         super(boardSize, inputHandler, outputHandler, "Player 1","Player 2");
     }
 
+    public void setNewPosition(Position position){
+        this.newPosition = position;
+    }
+
     public Player getCurrentPlayer() {return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());}
 
     public Player getLastPlayer() { return getPlayerOfColor(getCurrentPlayer().getColor()); }
+
+    public Boolean getPlayEndSuccessfully(){
+        return playEndSuccessfully;
+    }
 
     private boolean isWhitePlayerFirstTurn(Player currentPlayer) {
         return !whiteAlreadyPlayed && currentPlayer.getColor() == Stone.WHITE;
@@ -45,65 +53,44 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         return checkForWinner();
     }
 
-    public Boolean checkAndPerformNewMove(Position position) {
+    public Boolean checkAndPerformNewMove() {
 
-        if(!checkIfPlayerIsAbleToMakeAMove(getCurrentPlayer())){
+        if(!checkIfPlayerIsAbleToMakeAMove(getCurrentPlayer())) { //TODO: not sure it is used
             outputHandler.notifyInvalidMove();
             return false;
         }
 
-        System.out.println(getBoard().intersectionAt(position));
-
-        if (isOccupied(position)) {
-            GUIOutputHandler.notifyException(new OccupiedPositionException(position).getMessage());
+        if (isOccupied(newPosition)) {
+            GUIOutputHandler.notifyException(new OccupiedPositionException(newPosition).getMessage());
             return false;
         }
 
-        if(isIllegalMove(getCurrentPlayer().getColor(), position)){
-            GUIOutputHandler.notifyException(new IllegalMoveException(position).getMessage());
+        if(isIllegalMove(getCurrentPlayer().getColor(), newPosition)){
+            GUIOutputHandler.notifyException(new IllegalMoveException(newPosition).getMessage());
             return false;
         }
 
         return true;
     }
 
-    private boolean getCoordinatesAndMakeMove(Player currentPlayer) {
-        try{
-            makeMove(currentPlayer.getColor(), newPosition);
-            return true;
-        } catch (Exception exception){
-            GUIOutputHandler.notifyException(exception.getMessage());
-        }
-        return false;
-    }
-
     @Override
     public void play() {
-        playTerminate = true;
 
         if (Boolean.TRUE.equals(checkAndPerformPieRule(getCurrentPlayer()))){
-            playTerminate = false;
+            playEndSuccessfully = false;
             return;
         }
 
-        if(!getCoordinatesAndMakeMove(getCurrentPlayer())){
-            playTerminate = false;
-            return;
+        try{
+            makeMove(getCurrentPlayer().getColor(), newPosition);
+        } catch (Exception exception){
+            playEndSuccessfully = false;
+            GUIOutputHandler.notifyException(exception.getMessage());
         }
 
-
-        if (checkForWinner()) {
-            return;
-        }
-
-        fillTerritories();
-
-        if (checkForWinner()) {
-            return;
-        }
+//        if(!getCoordinatesAndMakeMove(getCurrentPlayer())){ return; } // unnecessary (?)
+//        if (checkForWinner()) { return; } // unnecessary (?)
     }
 
-    public static void main (String[] args) {
-            new Thread(() -> Application.launch(GUI.class)).start();
-        }
+    public static void main (String[] args) { new Thread(() -> Application.launch(GUI.class)).start(); }
 }

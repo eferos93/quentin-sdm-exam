@@ -22,7 +22,7 @@ public class GUIOutputHandler implements OutputHandler {
         createAndSetAlert("Invalid Action Information", String.format("%s", message));
     }
 
-    public void notifyInvalidMove() {
+    public void notifyInvalidMove() { //TODO: not sure it used
         createAndSetAlert("Invalid Move Information", String.format("%s", Message.INVALID_MOVE));
     }
 

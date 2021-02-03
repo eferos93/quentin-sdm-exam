@@ -44,6 +44,6 @@ public interface OutputHandler {
         public static final String PASS_TURN = "%s passes turn as there no possible move to make";
         public static final String ASK_BLACK_PLAYER_NAME = "Please insert the name of the Black Player:";
         public static final String ASK_WHITE_PLAYER_NAME = "Please insert the name of the White Player:";
-        public static final String INVALID_MOVE = "Attention, this move is invalid!";
+        public static final String INVALID_MOVE = "Attention, this move is invalid!"; //TODO: not sure it is used
     }
 }

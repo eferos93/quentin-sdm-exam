@@ -64,11 +64,15 @@ public class Board {
     }
 
     protected void fillTerritories(Stone lastPlay) {
-        regionsContainer.getTerritoriesAndStonesToFill(intersections, lastPlay)
+        getTerritoriesAndStones(lastPlay)
                 .forEach((territory, stone) -> territory.stream()
                         .map(Intersection::getPosition)
                         .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
                 );
+    }
+
+    protected Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone lastPlay){
+        return regionsContainer.getTerritoriesAndStonesToFill(intersections, lastPlay);
     }
 
     public int getBoardSize() {
