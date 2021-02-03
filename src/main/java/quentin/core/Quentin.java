@@ -4,7 +4,9 @@ import quentin.UI.InputHandler;
 import quentin.UI.OutputHandler;
 import quentin.exceptions.*;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public abstract class Quentin<InputHandlerImplementation extends InputHandler, OutputHandlerImplementation extends OutputHandler> {
