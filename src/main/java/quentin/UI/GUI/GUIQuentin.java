@@ -23,7 +23,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
 
     public Player getCurrentPlayer() {return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());}
 
-    public Player getLastPlayer() { return getPlayerOfColor(getCurrentPlayer().getColor()); }
+    public Player getLastPlayer() { return getPlayerOfColor(getCurrentPlayer().getColor().getOppositeColor()); }
 
     public Boolean getPlayEndSuccessfully(){
         return playEndSuccessfully;
