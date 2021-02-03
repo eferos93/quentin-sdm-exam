@@ -16,6 +16,20 @@ import java.util.stream.Collectors;
 public class RegionContainer {
     private Graph<Intersection, DefaultEdge> graph;
 
+    RegionContainer(List<Intersection> allEmptyIntersections, int boardSize) {
+        Supplier<Intersection> vertexSupplier = new Supplier<>() {
+            private int index = 0;
+
+            @Override
+            public Intersection get() {
+                return allEmptyIntersections.get(index++);
+            }
+        };
+
+        graph = new SimpleGraph<>(vertexSupplier, SupplierUtil.createDefaultEdgeSupplier(), false);
+        new GridGraphGenerator<Intersection, DefaultEdge>(boardSize, boardSize).generateGraph(graph, null);
+    }
+
     protected void createGraph(List<Intersection> emptyIntersections, int boardSize) {
         Supplier<Intersection> vertexSupplier = new Supplier<>() {
             private int index = 0;

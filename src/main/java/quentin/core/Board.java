@@ -8,7 +8,7 @@ import static quentin.core.Position.in;
 public class Board {
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
-    private final RegionContainer regionsContainer = new RegionContainer();
+    private final RegionContainer regionsContainer;
     private final ChainContainer chainContainer;
 
     private Board(int boardSize) {
@@ -19,7 +19,8 @@ public class Board {
                 this.intersections.add(Intersection.empty(in(row, column)));
             }
         }
-        regionsContainer.createGraph(this.intersections, this.BOARD_SIZE);
+        regionsContainer = new RegionContainer(this.intersections, this.BOARD_SIZE);
+//        regionsContainer.createGraph(this.intersections, this.BOARD_SIZE);
     }
 
     public static Board buildBoard(int size) {
