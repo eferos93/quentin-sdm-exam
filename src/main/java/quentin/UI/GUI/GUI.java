@@ -37,6 +37,7 @@ public class GUI extends Application {
         GridPane borders = (GridPane) gridPane.getChildrenUnmodifiable().get(0);
         return (GridPane) borders.getChildren().get(0);
     }
+
     public GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
     public GUIQuentin getGame() { return guiQuentin; }
     public GUIBoardDisplayer getBoardFiller() { return boardFiller; }
@@ -64,10 +65,11 @@ public class GUI extends Application {
                 guiQuentin.getLastPlayer().getName());
         labelBoard.getStyleClass().add("label-board");
 
-        gridBoard.addEventHandler(MouseEvent.MOUSE_CLICKED, new GuiMouseHandler(this));
-        gridBoard.addEventHandler(EndGameEvent.END_GAME_EVENT_TYPE, new GuiEndGameHandler(this));
-        gridBoard.addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler(this));
+
         gridBoard.addEventHandler(PieRuleEvent.PIE_RULE_EVENT_TYPE, new GuiPieHandler(this));
+        gridBoard.addEventHandler(MouseEvent.MOUSE_CLICKED, new GuiMouseHandler(this));
+        gridBoard.addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler(this));
+        gridBoard.addEventHandler(EndGameEvent.END_GAME_EVENT_TYPE, new GuiEndGameHandler(this));
 
         gridPane.add(borders, 0, 0);
         gridPane.add(labelBoard, 0, 1);
@@ -134,6 +136,4 @@ public class GUI extends Application {
 
     @Override
     public void stop() { Platform.exit(); }
-
-    public static void main(String[] args) { Application.launch(args); }
 }
