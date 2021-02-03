@@ -27,8 +27,8 @@ public class GUIInputHandler implements InputHandler {
     }
 
     public int askSize() {
-        ArrayList<Integer> sizes = new ArrayList<>(Arrays.asList(3, 4, 5, 6, 7, 8, 9, 10, 11));
-        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(11, sizes);
+        ArrayList<Integer> sizes = new ArrayList<>(Arrays.asList(3, 4, 5, 6, 7, 8, 9, 10, 11,12,13));
+        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(13, sizes);
 
         dialog.setTitle("Enter Size");
         dialog.setHeaderText(null);
@@ -36,7 +36,7 @@ public class GUIInputHandler implements InputHandler {
         dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setDisable(true);
 
         Optional<Integer> result = dialog.showAndWait();
-        return result.orElse(11);
+        return result.orElse(13);
     }
 }
 

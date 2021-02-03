@@ -80,7 +80,7 @@ public class GUI extends Application {
         String path = getClass().getResource("/GUI.css").toExternalForm();
         scene.getStylesheets().add(path);
 
-        stage.setTitle("ChessBoard");
+        stage.setTitle("Board");
         stage.setScene(scene);
         stage.show();
     }
