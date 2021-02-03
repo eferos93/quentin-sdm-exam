@@ -7,7 +7,7 @@ import quentin.UI.GUI.GUI;
 public class GuiEndGameHandler implements EventHandler<EndGameEvent> {
     private final GUI gui;
 
-    public GuiEndGameHandler(GUI g) { gui = g; }
+    public GuiEndGameHandler(GUI gui) { this.gui = gui; }
 
     @Override
     public void handle(EndGameEvent event) {

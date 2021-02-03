@@ -8,7 +8,7 @@ public class GuiPassHandler implements EventHandler<PassEvent> {
 
     private final GUI gui;
 
-    public GuiPassHandler(GUI g) { gui = g; }
+    public GuiPassHandler(GUI gui) { this.gui = gui; }
 
     @Override
     public void handle(PassEvent event) {

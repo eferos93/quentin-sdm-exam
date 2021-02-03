@@ -8,7 +8,7 @@ public class GuiPieHandler implements EventHandler<PieRuleEvent> {
 
     private final GUI gui;
 
-    public GuiPieHandler(GUI g) { gui = g; }
+    public GuiPieHandler(GUI gui) { this.gui = gui; }
 
     @Override
     public void handle(PieRuleEvent event) {

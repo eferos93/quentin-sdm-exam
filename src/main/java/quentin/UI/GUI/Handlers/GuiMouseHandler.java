@@ -11,7 +11,7 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
 
     private final GUI gui;
 
-    public GuiMouseHandler(GUI g) { gui = g; }
+    public GuiMouseHandler(GUI gui) { this.gui = gui; }
 
     @Override
     public void handle(MouseEvent event) {
