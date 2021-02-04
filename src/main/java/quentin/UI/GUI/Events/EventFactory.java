@@ -1,4 +1,4 @@
-package quentin.UI.GUI;
+package quentin.UI.GUI.Events;
 
 import javafx.event.Event;
 import quentin.UI.GUI.Events.EndGameEvent;

@@ -2,7 +2,7 @@ package quentin.UI.GUI.Handlers;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import quentin.UI.GUI.EventFactory;
+import quentin.UI.GUI.Events.EventFactory;
 import quentin.UI.GUI.GUI;
 import quentin.core.Intersection;
 import quentin.core.Position;
