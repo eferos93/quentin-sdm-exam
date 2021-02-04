@@ -53,7 +53,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         return checkForWinner();
     }
 
-    public Boolean checkAndPerformNewMove() {
+    public Boolean checkNewMove() {
 
         if(!checkIfPlayerIsAbleToMakeAMove(getCurrentPlayer())) { //TODO: not sure it is used
             outputHandler.notifyInvalidMove();

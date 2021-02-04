@@ -20,8 +20,8 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
 
         gui.getGame().setNewPosition(Position.in(rowIndex + 1, columnIndex + 1));
 
-        if (Boolean.TRUE.equals(!gui.getGame().checkAndPerformNewMove())) {
-            System.out.println("INVALID MOVE: something goes wrong");
+        if (Boolean.TRUE.equals(!gui.getGame().checkNewMove())) {
+            System.out.println("INVALID MOVE");
             return;
         }
 
