@@ -4,11 +4,10 @@ package quentin.UI.GUI;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
+import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import quentin.core.Stone;
 
@@ -38,6 +37,14 @@ public class GUIBoardDisplayer {
                 r.setFill( Color.MEDIUMSEAGREEN);
                 r.setStrokeType(StrokeType.INSIDE);
                 r.setStroke(Color.BLACK);
+
+                Line line = new Line(0, 0, 0, r.getHeight());
+                line.setStrokeType(StrokeType.OUTSIDE);
+                line.setStroke(Color.BLACK);
+
+//                GridPane.setHalignment(line, HPos.CENTER);
+//                GridPane.setValignment(line, VPos.CENTER);
+                gridPane.addRow(row, line);
                 gridPane.addRow(row, r);
             }
         }
