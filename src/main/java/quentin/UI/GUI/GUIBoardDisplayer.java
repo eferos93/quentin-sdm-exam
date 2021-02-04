@@ -35,9 +35,9 @@ public class GUIBoardDisplayer {
         for (int row = 0; row < boardSize; row++) {
             for (int col = 0; col < boardSize; col++) {
                 Rectangle r = new Rectangle(col * tileSize,row * tileSize , tileSize, tileSize);
-                r.setFill( (col + row) % 2 == 0 ? Color.PALEVIOLETRED : Color.DARKSEAGREEN);
+                r.setFill( Color.MEDIUMSEAGREEN);
                 r.setStrokeType(StrokeType.INSIDE);
-                r.setStroke(Color.GRAY);
+                r.setStroke(Color.BLACK);
                 gridPane.addRow(row, r);
             }
         }
