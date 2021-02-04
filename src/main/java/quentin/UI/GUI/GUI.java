@@ -49,10 +49,10 @@ public class GUI extends Application {
         initUI();
     }
 
-    private void initGameInterface(int boardSize) {
+    private void initGameInterface(int boardSize, String namePlayer1, String namePlayer2) {
         gridPane = new GridPane();
         gridPane.setVgap(20);
-        guiQuentin = new GUIQuentin(boardSize,inputHandler, outputHandler);
+        guiQuentin = new GUIQuentin(boardSize,inputHandler, outputHandler, namePlayer1, namePlayer2);
         boardFiller = new GUIBoardDisplayer(boardSize, tileSize);
 
         GridPane borders = new GridPane();
@@ -114,7 +114,11 @@ public class GUI extends Application {
 
         Button startButton = createAndSetButton("Start", width, height, (ActionEvent e) -> {
             int size = inputHandler.askSize();
-            initGameInterface(size);});
+            String namePlayer1 = inputHandler.askPlayerName("1");
+            String namePlayer2 = inputHandler.askPlayerName("2");
+
+            initGameInterface(size, namePlayer1, namePlayer2);
+        });
 
         Button endButton = createAndSetButton("Exit", width, height, (ActionEvent e) -> stop());
 

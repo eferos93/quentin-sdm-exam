@@ -1,9 +1,6 @@
 package quentin.UI.GUI;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.*;
 import quentin.UI.InputHandler;
 import quentin.UI.OutputHandler;
 
@@ -37,6 +34,23 @@ public class GUIInputHandler implements InputHandler {
 
         Optional<Integer> result = dialog.showAndWait();
         return result.orElse(13);
+    }
+
+    public String askPlayerName(String playerNumber) {
+
+        TextInputDialog dialog = new TextInputDialog("Player ".concat(playerNumber));
+        dialog.setTitle("Enter name player " + playerNumber);
+        dialog.setHeaderText(null);
+
+        String message = playerNumber.equals("1") ?
+                OutputHandler.Message.ASK_BLACK_PLAYER_NAME :
+                OutputHandler.Message.ASK_WHITE_PLAYER_NAME;
+
+        dialog.setContentText(message);
+        dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setDisable(true);
+
+        Optional<String> result = dialog.showAndWait();
+        return result.equals(Optional.of("")) ? "Player ".concat(playerNumber) : result.orElse(null);
     }
 }
 

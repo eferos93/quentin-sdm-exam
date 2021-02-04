@@ -13,6 +13,10 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
     private boolean playEndSuccessfully = true;
     private Position newPosition;
 
+    public GUIQuentin(int boardSize, GUIInputHandler inputHandler, GUIOutputHandler outputHandler, String blackPlayerName, String whitePlayerName) {
+        super(boardSize, inputHandler, outputHandler, blackPlayerName,whitePlayerName);
+    }
+
     public GUIQuentin(int boardSize, GUIInputHandler inputHandler, GUIOutputHandler outputHandler) {
         super(boardSize, inputHandler, outputHandler, "Player 1","Player 2");
     }
