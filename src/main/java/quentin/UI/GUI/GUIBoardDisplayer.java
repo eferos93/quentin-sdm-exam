@@ -4,7 +4,6 @@ package quentin.UI.GUI;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
@@ -30,22 +29,26 @@ public class GUIBoardDisplayer {
     public GridPane createEmptyBoard() {
 
         GridPane gridPane = new GridPane();
+        gridPane.setStyle("-fx-background-color: #3CB371");
 
         for (int row = 0; row < boardSize; row++) {
             for (int col = 0; col < boardSize; col++) {
-                Rectangle r = new Rectangle(col * tileSize,row * tileSize , tileSize, tileSize);
-                r.setFill( Color.MEDIUMSEAGREEN);
-                r.setStrokeType(StrokeType.INSIDE);
-                r.setStroke(Color.BLACK);
 
-                Line line = new Line(0, 0, 0, r.getHeight());
-                line.setStrokeType(StrokeType.OUTSIDE);
-                line.setStroke(Color.BLACK);
+                Line verticalLine = new Line(0, 0, 0, tileSize);
+                verticalLine.setFill(Color.BLACK);
+                verticalLine.setStroke(Color.BLACK);
+                verticalLine.setStrokeWidth(2.0);
 
-//                GridPane.setHalignment(line, HPos.CENTER);
-//                GridPane.setValignment(line, VPos.CENTER);
-                gridPane.addRow(row, line);
-                gridPane.addRow(row, r);
+                Line horizontalLine = new Line(0, 0, tileSize, 0);
+                horizontalLine.setFill(Color.BLACK);
+                horizontalLine.setStroke(Color.BLACK);
+                horizontalLine.setStrokeWidth(2.0);
+
+                GridPane.setHalignment(verticalLine, HPos.CENTER);
+                GridPane.setValignment(verticalLine, VPos.CENTER);
+
+                gridPane.add(horizontalLine, row, col);
+                gridPane.add(verticalLine, row, col);
             }
         }
 
