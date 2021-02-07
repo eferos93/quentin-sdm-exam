@@ -30,8 +30,6 @@ public class GUI extends Application {
     private GridPane gridPane;
     private GUIQuentin guiQuentin;
     private GUIBoardDisplayer boardFiller;
-    private final GUIInputHandler inputHandler = new GUIInputHandler();
-    public final GUIOutputHandler outputHandler = new GUIOutputHandler();
 
     public GridPane getGridBoard() {
         GridPane borders = (GridPane) gridPane.getChildrenUnmodifiable().get(0);
@@ -52,7 +50,7 @@ public class GUI extends Application {
     private void initGameInterface(int boardSize, String namePlayer1, String namePlayer2) {
         gridPane = new GridPane();
         gridPane.setVgap(20);
-        guiQuentin = new GUIQuentin(boardSize,inputHandler, outputHandler, namePlayer1, namePlayer2);
+        guiQuentin = new GUIQuentin(boardSize,new GUIInputHandler(), new GUIOutputHandler(), namePlayer1, namePlayer2);
         boardFiller = new GUIBoardDisplayer(boardSize, tileSize);
 
         GridPane borders = new GridPane();
@@ -113,9 +111,10 @@ public class GUI extends Application {
         int height = 35;
 
         Button startButton = createAndSetButton("Start", width, height, (ActionEvent e) -> {
-            int size = inputHandler.askSize();
-            String namePlayer1 = inputHandler.askPlayerName("1");
-            String namePlayer2 = inputHandler.askPlayerName("2");
+            GUIInputHandler guiInputHandler = new GUIInputHandler();
+            int size = guiInputHandler.askSize();
+            String namePlayer1 = guiInputHandler.askPlayerName("1");
+            String namePlayer2 = guiInputHandler.askPlayerName("2");
 
             initGameInterface(size, namePlayer1, namePlayer2);
         });
