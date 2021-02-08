@@ -23,6 +23,7 @@ import quentin.UI.GUI.Handlers.GuiMouseHandler;
 import quentin.UI.GUI.Handlers.GuiPassHandler;
 import quentin.UI.GUI.Handlers.GuiPieHandler;
 import quentin.GUIQuentin;
+import quentin.core.Intersection;
 
 public class GUI extends Application {
 
@@ -136,6 +137,16 @@ public class GUI extends Application {
         stage.setTitle("Quentin");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void fillGridBoardWithTerritories(){
+        guiQuentin.getTerritoriesAndStones(guiQuentin.getLastPlay()).forEach((territory, stone) ->
+                territory.stream().map(Intersection::getPosition).
+                        forEach(position -> this.getBoardFiller().
+                                addPiece(this.getGridBoard(),
+                                        position.getColumn() - 1, // to be consistent with the board gui representation
+                                        position.getRow() - 1, // to be consistent with the board gui representation
+                                        stone)));
     }
 
     @Override
