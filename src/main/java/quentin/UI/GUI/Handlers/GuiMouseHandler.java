@@ -4,7 +4,6 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import quentin.UI.GUI.Events.EventFactory;
 import quentin.UI.GUI.GUI;
-import quentin.core.Intersection;
 import quentin.core.Position;
 
 public class GuiMouseHandler implements EventHandler<MouseEvent> {
@@ -31,10 +30,10 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
 
     private void updateGUIAndFireEvents (int columnIndex, int rowIndex) {
         gui.getBoardFiller().addPiece(gui.getGridBoard(), columnIndex, rowIndex, gui.getGame().getCurrentPlayer().getColor());
-        gui.getGame().play(); // update Board.board if it is possible
+        gui.getGame().play();
 
-        fillGridBoardWithTerritories(); // fill gui board representation with territories if any
-        gui.getGame().fillTerritories(); // fill Board.board with territories if any
+        gui.fillGridBoardWithTerritories();
+        gui.getGame().fillTerritories();
 
         if(Boolean.TRUE.equals(gui.getGame().getPlayEndSuccessfully())) {
             gui.getBoardFiller().switchLabelsCurrentPlayer(gui.getLabelBoard());
@@ -43,13 +42,4 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
         EventFactory.create().forEach(x -> gui.getGridBoard().fireEvent(x));
     }
 
-    private void fillGridBoardWithTerritories(){
-        gui.getGame().getTerritoriesAndStones(gui.getGame().getLastPlay()).forEach((territory, stone) ->
-                territory.stream().map(Intersection::getPosition).
-                        forEach(position -> gui.getBoardFiller().
-                                addPiece(gui.getGridBoard(),
-                                        position.getColumn() - 1, // to be consistent with the board gui representation
-                                        position.getRow() - 1, // to be consistent with the board gui representation
-                                        stone)));
-    }
 }
