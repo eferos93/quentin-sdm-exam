@@ -22,6 +22,7 @@ import quentin.UI.GUI.Handlers.GuiEndGameHandler;
 import quentin.UI.GUI.Handlers.GuiMouseHandler;
 import quentin.UI.GUI.Handlers.GuiPassHandler;
 import quentin.UI.GUI.Handlers.GuiPieHandler;
+import quentin.GUIQuentin;
 
 public class GUI extends Application {
 
