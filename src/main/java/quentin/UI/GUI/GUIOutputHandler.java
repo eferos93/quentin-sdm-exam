@@ -27,13 +27,13 @@ public class GUIOutputHandler implements OutputHandler {
     }
 
     @Override
-    public void askRowCoordinate() { /**/ }
+    public void askRowCoordinate() {}
 
     @Override
-    public void askColumnCoordinate() { /**/ }
+    public void askColumnCoordinate() {}
 
     @Override
-    public void displayPlayer(Player player) { /**/ }
+    public void displayPlayer(Player player) {}
 
     @Override
     public void notifyPass(Player currentPlayer) {
