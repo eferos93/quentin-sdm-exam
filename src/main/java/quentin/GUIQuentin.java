@@ -1,6 +1,9 @@
-package quentin.UI.GUI;
+package quentin;
 
 import javafx.application.Application;
+import quentin.UI.GUI.GUI;
+import quentin.UI.GUI.GUIInputHandler;
+import quentin.UI.GUI.GUIOutputHandler;
 import quentin.core.*;
 import quentin.exceptions.IllegalMoveException;
 import quentin.exceptions.OccupiedPositionException;
@@ -92,8 +95,6 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
             GUIOutputHandler.notifyException(exception.getMessage());
         }
 
-//        if(!getCoordinatesAndMakeMove(getCurrentPlayer())){ return; } // unnecessary (?)
-//        if (checkForWinner()) { return; } // unnecessary (?)
     }
 
     public static void main (String[] args) { new Thread(() -> Application.launch(GUI.class)).start(); }
