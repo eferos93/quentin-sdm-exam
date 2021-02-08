@@ -72,7 +72,7 @@ public class Board {
     }
 
     protected Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone lastPlay){
-        return regionsContainer.getTerritoriesAndStonesToFill(intersections, lastPlay);
+        return regionsContainer.getTerritoriesAndStonesToFill(lastPlay);
     }
 
     public int getBoardSize() {
