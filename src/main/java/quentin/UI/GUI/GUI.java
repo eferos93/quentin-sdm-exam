@@ -49,6 +49,13 @@ public class GUI extends Application {
         initUI();
     }
 
+    private void addGridEvent(GridPane gridBoard) {
+        gridBoard.addEventHandler(PieRuleEvent.PIE_RULE_EVENT_TYPE, new GuiPieHandler(this));
+        gridBoard.addEventHandler(MouseEvent.MOUSE_CLICKED, new GuiMouseHandler(this));
+        gridBoard.addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler(this));
+        gridBoard.addEventHandler(EndGameEvent.END_GAME_EVENT_TYPE, new GuiEndGameHandler(this));
+    }
+
     private void initGameInterface(int boardSize, String namePlayer1, String namePlayer2) {
         gridPane = new GridPane();
         gridPane.setVgap(20);
@@ -65,11 +72,7 @@ public class GUI extends Application {
                 guiQuentin.getLastPlayer().getName());
         labelBoard.getStyleClass().add("label-board");
 
-
-        gridBoard.addEventHandler(PieRuleEvent.PIE_RULE_EVENT_TYPE, new GuiPieHandler(this));
-        gridBoard.addEventHandler(MouseEvent.MOUSE_CLICKED, new GuiMouseHandler(this));
-        gridBoard.addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler(this));
-        gridBoard.addEventHandler(EndGameEvent.END_GAME_EVENT_TYPE, new GuiEndGameHandler(this));
+        addGridEvent(gridBoard);
 
         gridPane.add(borders, 0, 0);
         gridPane.add(labelBoard, 0, 1);
