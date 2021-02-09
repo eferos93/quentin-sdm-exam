@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 import quentin.core.Stone;
 
 import java.util.EnumMap;
+import java.util.stream.IntStream;
 
 public class GUIBoardDisplayer {
 
@@ -31,28 +32,28 @@ public class GUIBoardDisplayer {
         GridPane gridPane = new GridPane();
         gridPane.setStyle("-fx-background-color: #3CB371");
 
-        for (int row = 0; row < boardSize; row++) {
-            for (int col = 0; col < boardSize; col++) {
+        IntStream.range(0, boardSize).forEach(row ->
+                IntStream.range(0, boardSize).forEach(column ->
+                        {
+                            Line verticalLine = lineGenerator(0,tileSize);
 
-                Line verticalLine = new Line(0, 0, 0, tileSize);
-                verticalLine.setFill(Color.BLACK);
-                verticalLine.setStroke(Color.BLACK);
-                verticalLine.setStrokeWidth(2.0);
+                            GridPane.setHalignment(verticalLine, HPos.CENTER);
+                            GridPane.setValignment(verticalLine, VPos.CENTER);
 
-                Line horizontalLine = new Line(0, 0, tileSize, 0);
-                horizontalLine.setFill(Color.BLACK);
-                horizontalLine.setStroke(Color.BLACK);
-                horizontalLine.setStrokeWidth(2.0);
+                            Line horizontalLine = lineGenerator(tileSize,0);
 
-                GridPane.setHalignment(verticalLine, HPos.CENTER);
-                GridPane.setValignment(verticalLine, VPos.CENTER);
-
-                gridPane.add(horizontalLine, row, col);
-                gridPane.add(verticalLine, row, col);
-            }
-        }
+                            gridPane.add(horizontalLine, row, column);
+                            gridPane.add(verticalLine, row, column);
+                        }));
 
         return gridPane;
+    }
+
+    private Line lineGenerator(int endX,int endY){
+        Line generatedLine = new Line(0, 0, endX, endY);
+        generatedLine.setStroke(Color.BLACK);
+        generatedLine.setStrokeWidth(2.0);
+        return generatedLine;
     }
 
     public void addPiece(GridPane gridPane, int coordinateX, int coordinateY, Stone stone) {
