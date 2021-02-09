@@ -84,7 +84,6 @@ public class GUIBoardDisplayer {
     }
 
     public void switchColorPlayerLabel(GridPane labelBoard){
-
         switchColorLabel(labelBoard, 3, Color.BLACK);
         switchColorLabel(labelBoard, 4, Color.WHITE);
     }
@@ -94,7 +93,7 @@ public class GUIBoardDisplayer {
         currentPlayerLabel.setFill(color);
     }
 
-    public void switchLabelsCurrentPlayer(GridPane labelBoard ){
+    public void switchLabelsCurrentPlayer(GridPane labelBoard){
         Circle currentPlayerLabel = (Circle) labelBoard.getChildren().get(5);
         currentPlayerLabel.setFill(currentPlayerLabel.getFill() == Color.BLACK ? Color.WHITE : Color.BLACK);
     }
