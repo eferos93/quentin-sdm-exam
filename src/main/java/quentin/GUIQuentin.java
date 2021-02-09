@@ -48,6 +48,8 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
                     applyPieRule();
                     outputHandler.notifyPieRule(getPlayers());
                     return true;
+                }else{
+                    return false;
                 }
             }catch (InputMismatchException exception) {
                 GUIOutputHandler.notifyException(exception.getMessage());

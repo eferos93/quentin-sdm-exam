@@ -114,7 +114,6 @@ public class GUI extends Application {
 
         Button rulesButton = createAndSetButton("Rules", width, height, (ActionEvent e) -> getHostServices().showDocument("https://boardgamegeek.com/boardgame/124095/quentin"));
         return Stream.of(startButton, endButton, rulesButton);
-
     }
 
     private void initUI() {
