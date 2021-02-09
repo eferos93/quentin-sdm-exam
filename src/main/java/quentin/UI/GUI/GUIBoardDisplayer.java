@@ -83,12 +83,15 @@ public class GUIBoardDisplayer {
         return gridLabels;
     }
 
-    public void switchLabelsColors(GridPane labelBoard){
-        Circle currentBlackPlayerLabel = (Circle) labelBoard.getChildren().get(3);
-        currentBlackPlayerLabel.setFill(Color.WHITE);
+    public void switchColorPlayerLabel(GridPane labelBoard){
 
-        Circle currentWhitePlayerLabel = (Circle) labelBoard.getChildren().get(4);
-        currentWhitePlayerLabel.setFill(Color.BLACK);
+        switchColorLabel(labelBoard, 3, Color.BLACK);
+        switchColorLabel(labelBoard, 4, Color.WHITE);
+    }
+
+    private void switchColorLabel(GridPane labelBoard, int position, Color color){
+        Circle currentPlayerLabel = (Circle) labelBoard.getChildren().get(position);
+        currentPlayerLabel.setFill(color);
     }
 
     public void switchLabelsCurrentPlayer(GridPane labelBoard ){
