@@ -68,20 +68,16 @@ public class GUIBoardDisplayer {
         GridPane gridLabels = new GridPane();
         gridLabels.setVgap(10);
 
-        Text p1 = new Text(namePLayerOne + ": ");
-        Text p2 = new Text(namePlayerTwo + ": ");
-        Text currentPlayer = new Text("Now playing: ");
+        gridLabels.add(new Text(namePLayerOne + ": "), 0, 0);
+        gridLabels.add(new Text(namePlayerTwo + ": "), 0, 1);
+        gridLabels.add(new Text("Now playing: "), 0, 2);
 
-        gridLabels.add(p1, 0, 0);
-        gridLabels.add(p2, 0, 1);
-        gridLabels.add(currentPlayer, 0, 2);
-
-        Circle whitePlayerLabel = new Circle(tileSize * 0.1, Color.BLACK);
-        Circle blackPlayerLabel = new Circle(tileSize * 0.1, Color.WHITE);
+        Circle whitePlayerLabel = new Circle(tileSize * 0.1, Color.WHITE);
+        Circle blackPlayerLabel = new Circle(tileSize * 0.1, Color.BLACK);
         Circle currentPlayerLabel = new Circle(tileSize * 0.1, Color.BLACK);
 
-        gridLabels.add(whitePlayerLabel, 1, 0);
-        gridLabels.add(blackPlayerLabel, 1, 1);
+        gridLabels.add(whitePlayerLabel, 1, 1);
+        gridLabels.add(blackPlayerLabel, 1, 0);
         gridLabels.add(currentPlayerLabel, 1, 2);
 
         return gridLabels;
