@@ -7,12 +7,6 @@ import java.util.List;
 
 public interface OutputHandler {
 
-    void askRowCoordinate();
-
-    void askColumnCoordinate();
-
-    void displayPlayer(Player player);
-
     void notifyPass(Player currentPlayer);
 
     void notifyPieRule(List<Player> players);
