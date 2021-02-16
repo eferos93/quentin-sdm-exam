@@ -11,9 +11,8 @@ public class GuiEndGameHandler implements EventHandler<EndGameEvent> {
 
     @Override
     public void handle(EndGameEvent event) {
-        if (Boolean.TRUE.equals(gui.getGame().checkAndPerformEndGameRule())) {
-            gui.stop();
+        if (gui.getGame().checkAndPerformEndGameRule()) {
+            event.consume();
         }
-        event.consume();
     }
 }
