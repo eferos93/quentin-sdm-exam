@@ -70,7 +70,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
 
     @Override
     public void play() {
-        Player currentPlayer = isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());
+        Player currentPlayer = getCurrentPlayer();
         outputHandler.displayBoard(getBoard());
         outputHandler.displayPlayer(currentPlayer);
         if (!isPlayerAbleToMakeAMove(currentPlayer)) { passTurn(currentPlayer); play(); }
@@ -80,6 +80,10 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         fillTerritories();
         if (checkForWinner()) { return; }
         play();
+    }
+
+    private Player getCurrentPlayer() {
+        return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());
     }
 
     private static int getBoardSize() {
