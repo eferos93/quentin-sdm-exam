@@ -28,11 +28,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     }
 
     protected Quentin(int boardSize, InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler) {
-        this.board = Board.buildBoard(boardSize);
-        this.inputHandler = inputHandler;
-        this.outputHandler = outputHandler;
-        this.playerOne = new Player(Stone.BLACK, "player1");
-        this.playerTwo = new Player(Stone.WHITE, "player2");
+        this(boardSize, inputHandler, outputHandler, "player1", "player2");
     }
 
     protected void makeMove(Stone color, Position position) throws Exception {
@@ -80,21 +76,17 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         return isFirstTurn() && playerColor == Stone.WHITE;
     }
 
-    public boolean isPlayerAbleToMakeAMove(Stone playerColor) {
-        return board.getEmptyIntersections().anyMatch(emptyIntersection -> !isIllegalMove(playerColor, emptyIntersection));
+    public boolean isPlayerAbleToMakeAMove(Player player) {
+        return board.getEmptyIntersections().anyMatch(emptyIntersection -> !isIllegalMove(player.getColor(), emptyIntersection));
     }
 
     protected Player getPlayerOfColor(Stone color) throws NoSuchElementException {
         return getPlayers().stream().filter(player -> player.getColor() == color).findFirst().orElseThrow();
     }
 
-    protected boolean checkIfPlayerIsAbleToMakeAMove(Player currentPlayer) {
-        if(!isPlayerAbleToMakeAMove(currentPlayer.getColor())) {
-            setLastPlay(currentPlayer.getColor());
-            outputHandler.notifyPass(currentPlayer);
-            return false;
-        }
-        return true;
+    public void passTurn(Player currentPlayer) {
+        setLastPlay(currentPlayer.getColor());
+        outputHandler.notifyPass(currentPlayer);
     }
 
     protected boolean checkForWinner() {
@@ -138,6 +130,5 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         this.lastPlay = colorOfPlayerWhoJustPlayed;
     }
 
-    public abstract void play();
+    public abstract void play() throws Exception;
 }
-

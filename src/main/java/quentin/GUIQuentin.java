@@ -38,7 +38,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
     public boolean checkAndPerformPieRule(Player currentPlayer){
         if (isWhitePlayerFirstTurn(currentPlayer)) {
             whiteAlreadyPlayed = true;
-            try{
+            try {
                 if (inputHandler.askPie()) {
                     applyPieRule();
                     outputHandler.notifyPieRule(getPlayers());
@@ -46,7 +46,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
                 }else{
                     return false;
                 }
-            }catch (InputMismatchException exception) {
+            } catch (InputMismatchException exception) {
                 GUIOutputHandler.notifyException(exception.getMessage());
             }
         }
@@ -57,41 +57,41 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         return checkForWinner();
     }
 
-    public boolean checkNewMove() {
-
-        if(!checkIfPlayerIsAbleToMakeAMove(getCurrentPlayer())) { //TODO: not sure it is used
-            outputHandler.notifyInvalidMove();
-            return false;
-        }
-
-        if (isOccupied(newPosition)) {
-            GUIOutputHandler.notifyException(new OccupiedPositionException(newPosition).getMessage());
-            return false;
-        }
-
-        if(isIllegalMove(getCurrentPlayer().getColor(), newPosition)){
-            GUIOutputHandler.notifyException(new IllegalMoveException(newPosition).getMessage());
-            return false;
-        }
-
-        return true;
-    }
+    // TODO: this method is a repetition
+//    public boolean checkNewMove() {
+//
+//        if(!passTurn(getCurrentPlayer())) { //TODO: not sure it is used
+//            outputHandler.notifyInvalidMove();
+//            return false;
+//        }
+//
+//        if (isOccupied(newPosition)) {
+//            GUIOutputHandler.notifyException(new OccupiedPositionException(newPosition).getMessage());
+//            return false;
+//        }
+//
+//        if(isIllegalMove(getCurrentPlayer().getColor(), newPosition)){
+//            GUIOutputHandler.notifyException(new IllegalMoveException(newPosition).getMessage());
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
     @Override
-    public void play() {
+    public void play() throws Exception {
 
-        if (Boolean.TRUE.equals(checkAndPerformPieRule(getCurrentPlayer()))){
+        if (checkAndPerformPieRule(getCurrentPlayer())) {
             playEndSuccessfully = false;
             return;
         }
 
-        try{
+//        try{
             makeMove(getCurrentPlayer().getColor(), newPosition);
-        } catch (Exception exception){
-            playEndSuccessfully = false;
-            GUIOutputHandler.notifyException(exception.getMessage());
-        }
-
+//        } catch (Exception exception){
+//            playEndSuccessfully = false;
+//            GUIOutputHandler.notifyException(exception.getMessage());
+//        }
     }
 
     public static void main (String[] args) { new Thread(() -> Application.launch(GUI.class)).start(); }
