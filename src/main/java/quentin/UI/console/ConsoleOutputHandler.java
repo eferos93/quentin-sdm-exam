@@ -28,13 +28,10 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
         System.out.println(message);
     }
 
-    @Override
     public void askRowCoordinate() { System.out.println(Message.CHOOSE_ROW); }
 
-    @Override
     public void askColumnCoordinate() { System.out.println(Message.CHOOSE_COLUMN); }
 
-    @Override
     public void displayPlayer(Player player) {
         System.out.printf(Message.CURRENT_PLAYER,
                 player.getName(),

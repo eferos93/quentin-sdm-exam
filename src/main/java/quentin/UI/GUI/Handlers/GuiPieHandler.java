@@ -13,7 +13,7 @@ public class GuiPieHandler implements EventHandler<PieRuleEvent> {
     @Override
     public void handle(PieRuleEvent event) {
         if (gui.getGame().checkAndPerformPieRule(gui.getGame().getCurrentPlayer())) {
-            gui.getBoardFiller().switchLabelsColors(gui.getLabelBoard());
+            gui.getBoardFiller().switchColorPlayerLabel(gui.getLabelBoard());
         }
         event.consume();
     }

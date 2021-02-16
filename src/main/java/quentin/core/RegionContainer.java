@@ -12,17 +12,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-//TODO: some methods have long parameter list: evaluate if it worth to be refactored
 public class RegionContainer {
-    private Graph<Intersection, DefaultEdge> graph;
+    private final Graph<Intersection, DefaultEdge> graph;
+    private final List<Intersection> intersections;
 
-    protected void createGraph(List<Intersection> emptyIntersections, int boardSize) {
+    RegionContainer(List<Intersection> allEmptyIntersections, int boardSize) {
+        this.intersections = allEmptyIntersections;
         Supplier<Intersection> vertexSupplier = new Supplier<>() {
             private int index = 0;
 
             @Override
             public Intersection get() {
-                return emptyIntersections.get(index++);
+                return allEmptyIntersections.get(index++);
             }
         };
 
@@ -38,46 +39,46 @@ public class RegionContainer {
         return new ConnectivityInspector<>(graph).connectedSets();
     }
 
-    private List<Set<Intersection>> getTerritories(final List<Intersection> allIntersections) {
+    private List<Set<Intersection>> getTerritories() {
         return getRegions().stream()
                 .filter(region -> region.stream()
-                        .allMatch(emptyIntersection -> isOrthogonalToAtLeastTwoStones(emptyIntersection, allIntersections))
+                        .allMatch(this::isOrthogonalToAtLeastTwoStones)
                 ).collect(Collectors.toList());
     }
 
-    private boolean isOrthogonalToAtLeastTwoStones(Intersection emptyIntersection, final List<Intersection> allIntersections) {
-        return allIntersections.stream()
+    private boolean isOrthogonalToAtLeastTwoStones(Intersection emptyIntersection) {
+        return this.intersections.stream()
                 .filter(emptyIntersection::isOrthogonalTo)
                 .filter(Intersection::isOccupied)
                 .count() >= 2;
     }
 
-    private Set<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection,
-                                                                  final List<Intersection> allIntersections) {
-        return allIntersections.stream()
+    private Set<Intersection> getOrthogonalAdjacencyIntersections(Intersection intersection) {
+        return this.intersections.stream()
                 .filter(otherIntersection -> otherIntersection.isOrthogonalTo(intersection))
                 .collect(Collectors.toSet());
     }
 
-    private long countIntersectionsOfColor(Set<Intersection> intersections, Stone color) {
-        return intersections.stream()
+    private long countIntersectionsOfColor(final Set<Intersection> intersectionsSurroundingTerritory, Stone color) {
+        return intersectionsSurroundingTerritory.stream()
                 .filter(intersection -> intersection.hasStone(color))
                 .count();
     }
 
-    private Set<Intersection> getIntersectionsThatSurroundsTheTerritory(Set<Intersection> territory,
-                                                                        final List<Intersection> allIntersections) {
+    private Set<Intersection> getIntersectionsThatSurroundsTheTerritory(Set<Intersection> territory) {
         return territory.stream()
-                .flatMap(intersection -> getOrthogonalAdjacencyIntersections(intersection, allIntersections).stream())
+                .flatMap(territoryIntersection ->
+                        getOrthogonalAdjacencyIntersections(territoryIntersection).stream()
+                )
                 .filter(Intersection::isOccupied)
                 .collect(Collectors.toSet());
     }
 
 
     private Stone getStoneToFillTerritory(Set<Intersection> territory,
-                                          final List<Intersection> allIntersections,
                                           Stone lastPlay) {
-        Set<Intersection> intersectionsSurroundingTerritory = getIntersectionsThatSurroundsTheTerritory(territory, allIntersections);
+        Set<Intersection> intersectionsSurroundingTerritory =
+                getIntersectionsThatSurroundsTheTerritory(territory);
         long countOfWhiteStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.WHITE);
         long countOfBlackStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.BLACK);
 
@@ -88,11 +89,10 @@ public class RegionContainer {
         }
     }
 
-    protected Map<Set<Intersection>, Stone> getTerritoriesAndStonesToFill(final List<Intersection> allIntersections,
-                                                                          Stone lastPlay) {
-        return getTerritories(allIntersections).stream()
+    protected Map<Set<Intersection>, Stone> getTerritoriesAndStonesToFill(Stone lastPlay) {
+        return getTerritories().stream()
                 .map(territory -> {
-                    Stone stone = getStoneToFillTerritory(territory, allIntersections, lastPlay);
+                    Stone stone = getStoneToFillTerritory(territory, lastPlay);
                     return Map.entry(territory, stone);
                 })
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

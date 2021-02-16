@@ -29,15 +29,6 @@ public class GUIOutputHandler implements OutputHandler {
     }
 
     @Override
-    public void askRowCoordinate() { /**/ }
-
-    @Override
-    public void askColumnCoordinate() { /**/ }
-
-    @Override
-    public void displayPlayer(Player player) { /**/ }
-
-    @Override
     public void notifyPass(Player currentPlayer) {
 
         String message = String.format(Message.PASS_TURN, currentPlayer.getName());

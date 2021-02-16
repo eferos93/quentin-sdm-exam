@@ -22,6 +22,9 @@ import quentin.UI.GUI.Handlers.GuiEndGameHandler;
 import quentin.UI.GUI.Handlers.GuiMouseHandler;
 import quentin.UI.GUI.Handlers.GuiPassHandler;
 import quentin.UI.GUI.Handlers.GuiPieHandler;
+import quentin.GUIQuentin;
+import quentin.core.Intersection;
+import java.util.stream.Stream;
 
 public class GUI extends Application {
 
@@ -30,17 +33,6 @@ public class GUI extends Application {
     private GridPane gridPane;
     private GUIQuentin guiQuentin;
     private GUIBoardDisplayer boardFiller;
-    private final GUIInputHandler inputHandler = new GUIInputHandler();
-    public final GUIOutputHandler outputHandler = new GUIOutputHandler();
-
-    public GridPane getGridBoard() {
-        GridPane borders = (GridPane) gridPane.getChildrenUnmodifiable().get(0);
-        return (GridPane) borders.getChildren().get(0);
-    }
-
-    public GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
-    public GUIQuentin getGame() { return guiQuentin; }
-    public GUIBoardDisplayer getBoardFiller() { return boardFiller; }
 
     @Override
     public void start(Stage primaryStage) {
@@ -49,14 +41,19 @@ public class GUI extends Application {
         initUI();
     }
 
-    private void initGameInterface(int boardSize, String namePlayer1, String namePlayer2) {
+    private void addGridEvent(GridPane gridBoard) {
+        gridBoard.addEventHandler(PieRuleEvent.PIE_RULE_EVENT_TYPE, new GuiPieHandler(this));
+        gridBoard.addEventHandler(MouseEvent.MOUSE_CLICKED, new GuiMouseHandler(this));
+        gridBoard.addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler(this));
+        gridBoard.addEventHandler(EndGameEvent.END_GAME_EVENT_TYPE, new GuiEndGameHandler(this));
+    }
+
+    private GridPane createGridBoard(){
         gridPane = new GridPane();
         gridPane.setVgap(20);
-        guiQuentin = new GUIQuentin(boardSize,inputHandler, outputHandler, namePlayer1, namePlayer2);
-        boardFiller = new GUIBoardDisplayer(boardSize, tileSize);
 
-        GridPane borders = new GridPane();
         GridPane gridBoard = boardFiller.createEmptyBoard();
+        GridPane borders = new GridPane();
         borders.getStyleClass().add("borders");
         borders.add(gridBoard, 0, 0);
 
@@ -65,15 +62,20 @@ public class GUI extends Application {
                 guiQuentin.getLastPlayer().getName());
         labelBoard.getStyleClass().add("label-board");
 
-
-        gridBoard.addEventHandler(PieRuleEvent.PIE_RULE_EVENT_TYPE, new GuiPieHandler(this));
-        gridBoard.addEventHandler(MouseEvent.MOUSE_CLICKED, new GuiMouseHandler(this));
-        gridBoard.addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler(this));
-        gridBoard.addEventHandler(EndGameEvent.END_GAME_EVENT_TYPE, new GuiEndGameHandler(this));
-
         gridPane.add(borders, 0, 0);
         gridPane.add(labelBoard, 0, 1);
         gridPane.getStyleClass().add("grid-pane");
+
+        return gridBoard;
+    }
+
+    private void initGameInterface(int boardSize, String namePlayer1, String namePlayer2) {
+
+        guiQuentin = new GUIQuentin(boardSize,new GUIInputHandler(), new GUIOutputHandler(), namePlayer1, namePlayer2);
+        boardFiller = new GUIBoardDisplayer(boardSize, tileSize);
+
+        GridPane gridBoard = createGridBoard();
+        addGridEvent(gridBoard);
 
         Scene scene = new Scene(gridPane, Color.WHITESMOKE);
 
@@ -97,9 +99,25 @@ public class GUI extends Application {
         return button;
     }
 
+    private Stream<Button> createSetButtons(int width, int height){
+
+        Button startButton = createAndSetButton("Start", width, height, (ActionEvent e) -> {
+            GUIInputHandler guiInputHandler = new GUIInputHandler();
+            int size = guiInputHandler.askSize();
+            String namePlayer1 = guiInputHandler.askPlayerName("1");
+            String namePlayer2 = guiInputHandler.askPlayerName("2");
+
+            initGameInterface(size, namePlayer1, namePlayer2);
+        });
+
+        Button endButton = createAndSetButton("Exit", width, height, (ActionEvent e) -> stop());
+
+        Button rulesButton = createAndSetButton("Rules", width, height, (ActionEvent e) -> getHostServices().showDocument("https://boardgamegeek.com/boardgame/124095/quentin"));
+        return Stream.of(startButton, endButton, rulesButton);
+    }
+
     private void initUI() {
         GridPane pane = new GridPane();
-
         pane.setPadding(new Insets(20, 20, 20, 20));
         pane.setVgap(20);
 
@@ -109,23 +127,10 @@ public class GUI extends Application {
         pane.add(text, 0, 0 );
         GridPane.setHalignment(text, HPos.CENTER);
 
-        int width = 80;
-        int height = 35;
-
-        Button startButton = createAndSetButton("Start", width, height, (ActionEvent e) -> {
-            int size = inputHandler.askSize();
-            String namePlayer1 = inputHandler.askPlayerName("1");
-            String namePlayer2 = inputHandler.askPlayerName("2");
-
-            initGameInterface(size, namePlayer1, namePlayer2);
-        });
-
-        Button endButton = createAndSetButton("Exit", width, height, (ActionEvent e) -> stop());
-
-        Button rulesButton = createAndSetButton("Rules", width, height, (ActionEvent e) -> getHostServices().showDocument("https://boardgamegeek.com/boardgame/124095/quentin"));
+        Stream<Button> buttonStream = createSetButtons(80,35);
 
         HBox hBox = new HBox();
-        hBox.getChildren().addAll(startButton, endButton, rulesButton);
+        buttonStream.forEach(button -> hBox.getChildren().add(button));
 
         pane.add(hBox, 0, 1);
         hBox.setSpacing(15);
@@ -138,6 +143,26 @@ public class GUI extends Application {
         stage.show();
     }
 
+    public void fillGridBoardWithTerritories() {
+        guiQuentin.getTerritoriesAndStones(guiQuentin.getLastPlay()).forEach((territory, stone) ->
+                territory.stream().map(Intersection::getPosition).
+                        forEach(position -> this.getBoardFiller().
+                                addPiece(this.getGridBoard(),
+                                        position.getColumn() - 1, // to be consistent with the board gui representation
+                                        position.getRow() - 1, // to be consistent with the board gui representation
+                                        stone)));
+    }
+
     @Override
     public void stop() { Platform.exit(); }
+
+    public GridPane getGridBoard() {
+        GridPane borders = (GridPane) gridPane.getChildrenUnmodifiable().get(0);
+        return (GridPane) borders.getChildren().get(0);
+    }
+
+    public GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
+    public GUIQuentin getGame() { return guiQuentin; }
+    public GUIBoardDisplayer getBoardFiller() { return boardFiller; }
+
 }

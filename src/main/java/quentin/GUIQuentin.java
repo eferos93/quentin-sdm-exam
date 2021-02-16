@@ -1,6 +1,9 @@
-package quentin.UI.GUI;
+package quentin;
 
 import javafx.application.Application;
+import quentin.UI.GUI.GUI;
+import quentin.UI.GUI.GUIInputHandler;
+import quentin.UI.GUI.GUIOutputHandler;
 import quentin.core.*;
 import quentin.exceptions.IllegalMoveException;
 import quentin.exceptions.OccupiedPositionException;
@@ -17,10 +20,6 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         super(boardSize, inputHandler, outputHandler, blackPlayerName,whitePlayerName);
     }
 
-    public GUIQuentin(int boardSize, GUIInputHandler inputHandler, GUIOutputHandler outputHandler) {
-        super(boardSize, inputHandler, outputHandler, "Player 1","Player 2");
-    }
-
     public void setNewPosition(Position position){
         this.newPosition = position;
     }
@@ -29,7 +28,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
 
     public Player getLastPlayer() { return getPlayerOfColor(getCurrentPlayer().getColor().getOppositeColor()); }
 
-    public Boolean getPlayEndSuccessfully(){
+    public boolean getPlayEndSuccessfully(){
         return playEndSuccessfully;
     }
 
@@ -37,7 +36,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         return !whiteAlreadyPlayed && currentPlayer.getColor() == Stone.WHITE;
     }
 
-    public Boolean checkAndPerformPieRule(Player currentPlayer){
+    public boolean checkAndPerformPieRule(Player currentPlayer){
         if (isWhitePlayerFirstTurn(currentPlayer)) {
             whiteAlreadyPlayed = true;
             try{
@@ -45,6 +44,8 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
                     applyPieRule();
                     outputHandler.notifyPieRule(getPlayers());
                     return true;
+                }else{
+                    return false;
                 }
             }catch (InputMismatchException exception) {
                 GUIOutputHandler.notifyException(exception.getMessage());
@@ -53,11 +54,11 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         return false;
     }
 
-    public Boolean checkAndPerformEndGameRule() {
+    public boolean checkAndPerformEndGameRule() {
         return checkForWinner();
     }
 
-    public Boolean checkNewMove() {
+    public boolean checkNewMove() {
 
         if(!checkIfPlayerIsAbleToMakeAMove(getCurrentPlayer())) { //TODO: not sure it is used
             outputHandler.notifyInvalidMove();
@@ -92,8 +93,6 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
             GUIOutputHandler.notifyException(exception.getMessage());
         }
 
-//        if(!getCoordinatesAndMakeMove(getCurrentPlayer())){ return; } // unnecessary (?)
-//        if (checkForWinner()) { return; } // unnecessary (?)
     }
 
     public static void main (String[] args) { new Thread(() -> Application.launch(GUI.class)).start(); }

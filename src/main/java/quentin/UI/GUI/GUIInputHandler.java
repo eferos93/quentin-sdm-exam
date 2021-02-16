@@ -32,8 +32,7 @@ public class GUIInputHandler implements InputHandler {
         dialog.setContentText(OutputHandler.Message.ASK_SIZE);
         dialog.getDialogPane().lookupButton(ButtonType.CANCEL).setDisable(true);
 
-        Optional<Integer> result = dialog.showAndWait();
-        return result.orElse(13);
+        return dialog.showAndWait().orElse(null);
     }
 
     public String askPlayerName(String playerNumber) {
