@@ -3,7 +3,6 @@ package quentin.UI.GUI.Handlers;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import quentin.GUIQuentin;
-import quentin.UI.GUI.Events.EventFactory;
 import quentin.UI.GUI.GUI;
 import quentin.UI.GUI.GUIOutputHandler;
 import quentin.core.Player;
