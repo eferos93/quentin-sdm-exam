@@ -143,7 +143,7 @@ public class GUI extends Application {
         stage.show();
     }
 
-    public void fillGridBoardWithTerritories(){
+    public void fillGridBoardWithTerritories() {
         guiQuentin.getTerritoriesAndStones(guiQuentin.getLastPlay()).forEach((territory, stone) ->
                 territory.stream().map(Intersection::getPosition).
                         forEach(position -> this.getBoardFiller().

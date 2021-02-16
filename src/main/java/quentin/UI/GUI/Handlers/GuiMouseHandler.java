@@ -19,7 +19,7 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
 
         gui.getGame().setNewPosition(Position.in(rowIndex + 1, columnIndex + 1));
 
-        if (Boolean.TRUE.equals(!gui.getGame().checkNewMove())) {
+        if (!gui.getGame().checkNewMove()) {
             System.out.println("INVALID MOVE");
             return;
         }
@@ -35,11 +35,11 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
         gui.fillGridBoardWithTerritories();
         gui.getGame().fillTerritories();
 
-        if(Boolean.TRUE.equals(gui.getGame().getPlayEndSuccessfully())) {
+        if (gui.getGame().getPlayEndSuccessfully()) {
             gui.getBoardFiller().switchLabelsCurrentPlayer(gui.getLabelBoard());
         }
 
-        EventFactory.create().forEach(x -> gui.getGridBoard().fireEvent(x));
+        EventFactory.create().forEach(event -> gui.getGridBoard().fireEvent(event));
     }
 
 }

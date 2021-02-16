@@ -32,7 +32,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
 
     public Player getLastPlayer() { return getPlayerOfColor(getCurrentPlayer().getColor().getOppositeColor()); }
 
-    public Boolean getPlayEndSuccessfully(){
+    public boolean getPlayEndSuccessfully(){
         return playEndSuccessfully;
     }
 
@@ -40,7 +40,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         return !whiteAlreadyPlayed && currentPlayer.getColor() == Stone.WHITE;
     }
 
-    public Boolean checkAndPerformPieRule(Player currentPlayer){
+    public boolean checkAndPerformPieRule(Player currentPlayer){
         if (isWhitePlayerFirstTurn(currentPlayer)) {
             whiteAlreadyPlayed = true;
             try{
@@ -58,11 +58,11 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         return false;
     }
 
-    public Boolean checkAndPerformEndGameRule() {
+    public boolean checkAndPerformEndGameRule() {
         return checkForWinner();
     }
 
-    public Boolean checkNewMove() {
+    public boolean checkNewMove() {
 
         if(!checkIfPlayerIsAbleToMakeAMove(getCurrentPlayer())) { //TODO: not sure it is used
             outputHandler.notifyInvalidMove();
