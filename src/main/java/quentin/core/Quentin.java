@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 public abstract class Quentin<InputHandlerImplementation extends InputHandler, OutputHandlerImplementation extends OutputHandler> {
     private final Board board;
+    protected boolean whiteAlreadyPlayed = false;
     private Stone lastPlay = Stone.NONE;
     private final Player playerOne;
     private final Player playerTwo;

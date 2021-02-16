@@ -12,7 +12,6 @@ import java.util.InputMismatchException;
 
 public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
 
-    private boolean whiteAlreadyPlayed = false;
     private boolean playEndSuccessfully = true;
     private Position newPosition;
 

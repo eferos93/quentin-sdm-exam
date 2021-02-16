@@ -8,7 +8,6 @@ import quentin.core.*;
 import java.util.InputMismatchException;
 
 public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHandler> {
-    private boolean whiteAlreadyPlayed = false;
     public ConsoleQuentin(int boardSize, ConsoleInputHandler inputHandler, ConsoleOutputHandler outputHandler,
                           String blackPlayerName, String whitePlayerName) {
         super(boardSize, inputHandler, outputHandler, blackPlayerName, whitePlayerName);
