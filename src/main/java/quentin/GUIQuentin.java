@@ -20,10 +20,6 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         super(boardSize, inputHandler, outputHandler, blackPlayerName,whitePlayerName);
     }
 
-    public GUIQuentin(int boardSize, GUIInputHandler inputHandler, GUIOutputHandler outputHandler) {
-        super(boardSize, inputHandler, outputHandler, "Player 1","Player 2");
-    }
-
     public void setNewPosition(Position position){
         this.newPosition = position;
     }
