@@ -22,10 +22,6 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
 
         gui.getGame().setNewPosition(Position.in(rowIndex + 1, columnIndex + 1));
 
-//        if (!gui.getGame().checkNewMove()) {
-//            System.out.println("INVALID MOVE");
-//            return;
-//        }
         GUIQuentin game = gui.getGame();
         Player currentPlayer = game.getCurrentPlayer();
         if (!game.isPlayerAbleToMakeAMove(currentPlayer)) {
@@ -40,19 +36,7 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
             return;
         }
 
-        updateGUIAndFireEvents(columnIndex, rowIndex, currentPlayer);
         gui.updateGUIAndFireEvents(columnIndex, rowIndex, currentPlayer);
         event.consume();
     }
-
-    // this method should be executed only if the move is valid
-    private void updateGUIAndFireEvents (int columnIndex, int rowIndex, Player currentPlayer) {
-        gui.getBoardFiller().addPiece(gui.getGridBoard(),
-                columnIndex, rowIndex, currentPlayer.getColor());
-        gui.fillGridBoardWithTerritories();
-        gui.getGame().fillTerritories();
-        gui.getBoardFiller().switchLabelsCurrentPlayer(gui.getLabelBoard());
-        EventFactory.create().forEach(event -> gui.getGridBoard().fireEvent(event));
-    }
-
 }
