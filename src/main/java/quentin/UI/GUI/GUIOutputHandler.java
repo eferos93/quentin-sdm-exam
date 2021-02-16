@@ -1,6 +1,8 @@
 package quentin.UI.GUI;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.layout.Region;
 import quentin.UI.OutputHandler;
 import quentin.UI.console.ConsoleStoneRepresentation;
 import quentin.core.Board;
@@ -11,11 +13,11 @@ import java.util.List;
 public class GUIOutputHandler implements OutputHandler {
 
     private static void createAndSetAlert(String title, String contentText) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, contentText, ButtonType.OK);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText(contentText);
-        alert.showAndWait();
+        alert.show();
     }
 
     public static void notifyException(String message) {
