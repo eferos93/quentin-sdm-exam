@@ -7,13 +7,13 @@ import quentin.core.*;
 
 import java.util.InputMismatchException;
 
-public class QuentinConsole extends Quentin<ConsoleInputHandler, ConsoleOutputHandler> {
+public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHandler> {
     private boolean whiteAlreadyPlayed = false;
-    public QuentinConsole(int boardSize, ConsoleInputHandler inputHandler, ConsoleOutputHandler outputHandler,
+    public ConsoleQuentin(int boardSize, ConsoleInputHandler inputHandler, ConsoleOutputHandler outputHandler,
                           String blackPlayerName, String whitePlayerName) {
         super(boardSize, inputHandler, outputHandler, blackPlayerName, whitePlayerName);
     }
-    public QuentinConsole(int boardSize, ConsoleInputHandler inputHandler, ConsoleOutputHandler outputHandler) {
+    public ConsoleQuentin(int boardSize, ConsoleInputHandler inputHandler, ConsoleOutputHandler outputHandler) {
         super(boardSize, inputHandler, outputHandler);
     }
 
@@ -108,7 +108,7 @@ public class QuentinConsole extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         String blackPlayerName = ConsoleInputHandler.askBlackPlayerName();
         ConsoleOutputHandler.askWhitePlayerName();
         String whitePlayerName = ConsoleInputHandler.askWhitePlayerName();
-        return new QuentinConsole(boardSize, new ConsoleInputHandler(), new ConsoleOutputHandler(),
+        return new ConsoleQuentin(boardSize, new ConsoleInputHandler(), new ConsoleOutputHandler(),
                 blackPlayerName, whitePlayerName);
     }
 
