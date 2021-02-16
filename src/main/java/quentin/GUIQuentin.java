@@ -5,14 +5,11 @@ import quentin.UI.GUI.GUI;
 import quentin.UI.GUI.GUIInputHandler;
 import quentin.UI.GUI.GUIOutputHandler;
 import quentin.core.*;
-import quentin.exceptions.IllegalMoveException;
-import quentin.exceptions.OccupiedPositionException;
 
 import java.util.InputMismatchException;
 
 public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
 
-    private boolean playEndSuccessfully = true;
     private Position newPosition;
 
     public GUIQuentin(int boardSize, GUIInputHandler inputHandler, GUIOutputHandler outputHandler, String blackPlayerName, String whitePlayerName) {
@@ -26,10 +23,6 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
     public Player getCurrentPlayer() {return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());}
 
     public Player getLastPlayer() { return getPlayerOfColor(getCurrentPlayer().getColor().getOppositeColor()); }
-
-    public boolean getPlayEndSuccessfully(){
-        return playEndSuccessfully;
-    }
 
     private boolean isWhitePlayerFirstTurn(Player currentPlayer) {
         return !whiteAlreadyPlayed && currentPlayer.getColor() == Stone.WHITE;
@@ -59,18 +52,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
 
     @Override
     public void play() throws Exception {
-
-        if (checkAndPerformPieRule(getCurrentPlayer())) {
-            playEndSuccessfully = false;
-            return;
-        }
-
-//        try{
-            makeMove(getCurrentPlayer().getColor(), newPosition);
-//        } catch (Exception exception){
-//            playEndSuccessfully = false;
-//            GUIOutputHandler.notifyException(exception.getMessage());
-//        }
+        makeMove(getCurrentPlayer().getColor(), newPosition);
     }
 
     public static void main (String[] args) { new Thread(() -> Application.launch(GUI.class)).start(); }

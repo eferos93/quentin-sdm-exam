@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import quentin.UI.GUI.Events.EndGameEvent;
+import quentin.UI.GUI.Events.EventFactory;
 import quentin.UI.GUI.Events.PassEvent;
 import quentin.UI.GUI.Events.PieRuleEvent;
 import quentin.UI.GUI.Handlers.GuiEndGameHandler;
@@ -24,6 +25,8 @@ import quentin.UI.GUI.Handlers.GuiPassHandler;
 import quentin.UI.GUI.Handlers.GuiPieHandler;
 import quentin.GUIQuentin;
 import quentin.core.Intersection;
+import quentin.core.Player;
+
 import java.util.stream.Stream;
 
 public class GUI extends Application {
@@ -165,4 +168,11 @@ public class GUI extends Application {
     public GUIQuentin getGame() { return guiQuentin; }
     public GUIBoardDisplayer getBoardFiller() { return boardFiller; }
 
+    public void updateGUIAndFireEvents(int columnIndex, int rowIndex, Player currentPlayer) {
+        getBoardFiller().addPiece(getGridBoard(), columnIndex, rowIndex, currentPlayer.getColor());
+        fillGridBoardWithTerritories();
+        getGame().fillTerritories();
+        getBoardFiller().switchLabelsCurrentPlayer(getLabelBoard());
+        EventFactory.create().forEach(event -> getGridBoard().fireEvent(event));
+    }
 }

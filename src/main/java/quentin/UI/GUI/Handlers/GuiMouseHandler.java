@@ -41,6 +41,7 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
         }
 
         updateGUIAndFireEvents(columnIndex, rowIndex, currentPlayer);
+        gui.updateGUIAndFireEvents(columnIndex, rowIndex, currentPlayer);
         event.consume();
     }
 
@@ -48,16 +49,9 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
     private void updateGUIAndFireEvents (int columnIndex, int rowIndex, Player currentPlayer) {
         gui.getBoardFiller().addPiece(gui.getGridBoard(),
                 columnIndex, rowIndex, currentPlayer.getColor());
-        //gui.getGame().play();
-
         gui.fillGridBoardWithTerritories();
         gui.getGame().fillTerritories();
-
-
-       // if (gui.getGame().getPlayEndSuccessfully()) {
-            gui.getBoardFiller().switchLabelsCurrentPlayer(gui.getLabelBoard());
-        //}
-
+        gui.getBoardFiller().switchLabelsCurrentPlayer(gui.getLabelBoard());
         EventFactory.create().forEach(event -> gui.getGridBoard().fireEvent(event));
     }
 
