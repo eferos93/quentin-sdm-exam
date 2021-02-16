@@ -131,4 +131,8 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     }
 
     public abstract void play() throws Exception;
+
+    public Player getCurrentPlayer() {
+        return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());
+    }
 }

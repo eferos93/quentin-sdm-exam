@@ -20,8 +20,6 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         this.newPosition = position;
     }
 
-    public Player getCurrentPlayer() {return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());}
-
     public Player getLastPlayer() { return getPlayerOfColor(getCurrentPlayer().getColor().getOppositeColor()); }
 
     private boolean isWhitePlayerFirstTurn(Player currentPlayer) {

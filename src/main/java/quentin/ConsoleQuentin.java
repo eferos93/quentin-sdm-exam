@@ -82,10 +82,6 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         play();
     }
 
-    private Player getCurrentPlayer() {
-        return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());
-    }
-
     private static int getBoardSize() {
         ConsoleOutputHandler.askBoardSize();
         int boardSize = 0;
