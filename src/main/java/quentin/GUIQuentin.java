@@ -57,27 +57,6 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         return checkForWinner();
     }
 
-    // TODO: this method is a repetition
-//    public boolean checkNewMove() {
-//
-//        if(!passTurn(getCurrentPlayer())) { //TODO: not sure it is used
-//            outputHandler.notifyInvalidMove();
-//            return false;
-//        }
-//
-//        if (isOccupied(newPosition)) {
-//            GUIOutputHandler.notifyException(new OccupiedPositionException(newPosition).getMessage());
-//            return false;
-//        }
-//
-//        if(isIllegalMove(getCurrentPlayer().getColor(), newPosition)){
-//            GUIOutputHandler.notifyException(new IllegalMoveException(newPosition).getMessage());
-//            return false;
-//        }
-//
-//        return true;
-//    }
-
     @Override
     public void play() throws Exception {
 
