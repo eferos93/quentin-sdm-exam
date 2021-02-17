@@ -3,6 +3,7 @@ package quentin.UI.GUI;
 import javafx.scene.control.*;
 import quentin.UI.InputHandler;
 import quentin.UI.OutputHandler;
+import quentin.core.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,10 +11,10 @@ import java.util.Optional;
 
 public class GUIInputHandler implements InputHandler {
 
-    public boolean askPie(){
+    public boolean askPie(Player player){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Pie Rule Dialog");
-        alert.setContentText(OutputHandler.Message.QUERY_PIE);
+        alert.setContentText(player.getName() + " " + OutputHandler.Message.QUERY_PIE);
         alert.setHeaderText(null);
 
         ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("Yes");

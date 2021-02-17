@@ -52,7 +52,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
             while (true) {
                 try {
                     outputHandler.askPie();
-                    if (inputHandler.askPie()) {
+                    if (inputHandler.askPie(currentPlayer)) {
                         applyPieRule();
                         outputHandler.notifyPieRule(getPlayers());
                         return true;

@@ -30,7 +30,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         if (isWhitePlayerFirstTurn(currentPlayer)) {
             whiteAlreadyPlayed = true;
             try {
-                if (inputHandler.askPie()) {
+                if (inputHandler.askPie(currentPlayer)) {
                     applyPieRule();
                     outputHandler.notifyPieRule(getPlayers());
                     return true;

@@ -1,7 +1,9 @@
 package quentin.UI;
 
+import quentin.core.Player;
+
 import java.util.InputMismatchException;
 
 public interface InputHandler {
-    boolean askPie() throws InputMismatchException;
+    boolean askPie(Player player) throws InputMismatchException;
 }

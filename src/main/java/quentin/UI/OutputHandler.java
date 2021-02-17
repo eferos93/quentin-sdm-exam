@@ -26,7 +26,7 @@ public interface OutputHandler {
         public static final String BLACK_PLAYS_FIRST = "Black player plays first";
         public static final String CHOOSE_ROW = "Choose row coordinate: ";
         public static final String CHOOSE_COLUMN = "Choose column coordinate: ";
-        public static final String QUERY_PIE = "Apply pie rule? yes/no";
+        public static final String QUERY_PIE = "apply pie rule? yes/no";
         public static final String PIE = """
             Pie rule applied.
             %s's color: %s
