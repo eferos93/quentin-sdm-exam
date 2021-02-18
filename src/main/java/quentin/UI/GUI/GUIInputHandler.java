@@ -25,7 +25,7 @@ public class GUIInputHandler implements InputHandler {
     }
 
     public int askSize() {
-        ArrayList<Integer> sizes = new ArrayList<>(Arrays.asList(3, 4, 5, 6, 7, 8, 9, 10, 11,12,13));
+        ArrayList<Integer> sizes = new ArrayList<>(Arrays.asList(4, 5, 6, 7, 8, 9, 10, 11,12,13));
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(13, sizes);
 
         dialog.setTitle("Enter Size");

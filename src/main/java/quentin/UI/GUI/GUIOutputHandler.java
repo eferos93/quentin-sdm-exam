@@ -17,7 +17,7 @@ public class GUIOutputHandler implements OutputHandler {
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.show();
+        alert.showAndWait();
     }
 
     public static void notifyException(String message) {
