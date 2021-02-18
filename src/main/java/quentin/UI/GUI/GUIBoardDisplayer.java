@@ -3,7 +3,9 @@ package quentin.UI.GUI;
 
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
@@ -32,25 +34,51 @@ public class GUIBoardDisplayer {
         GridPane gridPane = new GridPane();
         gridPane.setStyle("-fx-background-color: #3CB371");
 
-        IntStream.range(0, boardSize).forEach(row ->
-                IntStream.range(0, boardSize).forEach(column ->
+        for(int gridCellIndex = 0; gridCellIndex < boardSize; gridCellIndex++){
+            gridPane.getColumnConstraints().add(new ColumnConstraints(tileSize));
+            gridPane.getRowConstraints().add(new RowConstraints(tileSize));
+        }
+
+        IntStream.range(0, boardSize).forEach(column ->
+                IntStream.range(0, boardSize).forEach(row ->
                         {
-                            Line verticalLine = lineGenerator(0,tileSize);
+
+                            Line verticalLine = lineGenerator(0, 0, 0,tileSize);
 
                             GridPane.setHalignment(verticalLine, HPos.CENTER);
                             GridPane.setValignment(verticalLine, VPos.CENTER);
 
-                            Line horizontalLine = lineGenerator(tileSize,0);
+                            Line horizontalLine = lineGenerator(0, 0, tileSize,0);
 
-                            gridPane.add(horizontalLine, row, column);
-                            gridPane.add(verticalLine, row, column);
+                            if(row == 0){
+                                verticalLine.setEndY(tileSize/2.0);
+                                GridPane.setValignment(verticalLine, VPos.BOTTOM);
+                            }
+
+                            if(row == boardSize - 1){
+                                verticalLine.setEndY(tileSize/2.0);
+                                GridPane.setValignment(verticalLine, VPos.TOP);
+                            }
+
+                            if(column == 0){
+                                horizontalLine.setEndX(tileSize/2.0);
+                                GridPane.setHalignment(horizontalLine, HPos.RIGHT);
+                            }
+
+                            if(column == boardSize - 1){
+                                horizontalLine.setEndX(tileSize/2.0);
+                                GridPane.setHalignment(horizontalLine, HPos.LEFT);
+                            }
+
+                            gridPane.add(horizontalLine, column, row);
+                            gridPane.add(verticalLine, column, row);
                         }));
 
         return gridPane;
     }
 
-    private Line lineGenerator(int endX,int endY){
-        Line generatedLine = new Line(0, 0, endX, endY);
+    private Line lineGenerator(int startX, int startY, int endX,int endY){
+        Line generatedLine = new Line(startX, startY, endX, endY);
         generatedLine.setStroke(Color.BLACK);
         generatedLine.setStrokeWidth(2.0);
         return generatedLine;
