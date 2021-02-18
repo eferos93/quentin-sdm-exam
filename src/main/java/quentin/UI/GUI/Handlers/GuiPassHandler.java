@@ -12,9 +12,7 @@ public class GuiPassHandler implements EventHandler<PassEvent> {
 
     @Override
     public void handle(PassEvent event) {
-        if (!gui.getGame().isPlayerAbleToMakeAMove(gui.getGame().getCurrentPlayer())) {
-            gui.getGame().passTurn(gui.getGame().getCurrentPlayer());
-        }
+        gui.getGame().passTurn(gui.getGame().getCurrentPlayer());
         event.consume();
     }
 }

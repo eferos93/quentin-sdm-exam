@@ -173,6 +173,20 @@ public class GUI extends Application {
         fillGridBoardWithTerritories();
         getGame().fillTerritories();
         getBoardFiller().switchLabelsCurrentPlayer(getLabelBoard());
-        EventFactory.create().forEach(event -> getGridBoard().fireEvent(event));
+
+        EventFactory.create().forEach(event -> {
+            if(event instanceof PieRuleEvent &&
+                    guiQuentin.checkAndPerformPieRule(guiQuentin.getCurrentPlayer())){
+                getGridBoard().fireEvent(event);
+            }
+            if(event instanceof EndGameEvent &&
+                    guiQuentin.checkAndPerformEndGameRule()){
+                getGridBoard().fireEvent(event);
+            }
+            if(event instanceof PassEvent &&
+                    !guiQuentin.isPlayerAbleToMakeAMove(guiQuentin.getCurrentPlayer())){
+                getGridBoard().fireEvent(event);
+            }
+        });
     }
 }
