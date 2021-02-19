@@ -53,21 +53,25 @@ public class GUIBoardDisplayer {
                             if(row == 0){
                                 verticalLine.setEndY(tileSize/2.0);
                                 GridPane.setValignment(verticalLine, VPos.BOTTOM);
+                                horizontalLine.setStrokeWidth(4);
                             }
 
                             if(row == boardSize - 1){
                                 verticalLine.setEndY(tileSize/2.0);
                                 GridPane.setValignment(verticalLine, VPos.TOP);
+                                horizontalLine.setStrokeWidth(4);
                             }
 
                             if(column == 0){
                                 horizontalLine.setEndX(tileSize/2.0);
                                 GridPane.setHalignment(horizontalLine, HPos.RIGHT);
+                                verticalLine.setStrokeWidth(4);
                             }
 
                             if(column == boardSize - 1){
                                 horizontalLine.setEndX(tileSize/2.0);
                                 GridPane.setHalignment(horizontalLine, HPos.LEFT);
+                                verticalLine.setStrokeWidth(4);
                             }
 
                             gridPane.add(horizontalLine, column, row);
