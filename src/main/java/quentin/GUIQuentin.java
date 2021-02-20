@@ -26,7 +26,8 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         return !whiteAlreadyPlayed && currentPlayer.getColor() == Stone.WHITE;
     }
 
-    public boolean checkAndPerformPieRule(Player currentPlayer){
+    public boolean checkAndPerformPieRule() {
+        Player currentPlayer = getCurrentPlayer();
         if (isWhitePlayerFirstTurn(currentPlayer)) {
             whiteAlreadyPlayed = true;
             try {

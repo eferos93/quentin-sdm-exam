@@ -22,8 +22,8 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
 
         GUIQuentin game = gui.getGame();
         Player currentPlayer = game.getCurrentPlayer();
-        if (!game.isPlayerAbleToMakeAMove(currentPlayer)) {
-            game.passTurn(currentPlayer);
+        if (!game.isCurrentPlayerAbleToMakeAMove()) {
+            game.passTurn();
             return;
         }
 

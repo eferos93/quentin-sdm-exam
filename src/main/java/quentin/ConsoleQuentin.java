@@ -73,7 +73,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         Player currentPlayer = getCurrentPlayer();
         outputHandler.displayBoard(getBoard());
         outputHandler.displayPlayer(currentPlayer);
-        if (!isPlayerAbleToMakeAMove(currentPlayer)) { passTurn(currentPlayer); play(); }
+        if (!isCurrentPlayerAbleToMakeAMove()) { passTurn(); play(); }
         if (askForPieRule(currentPlayer)) { play(); }
         getCoordinatesAndMakeMove(currentPlayer);
         if (checkForWinner()) { return; }

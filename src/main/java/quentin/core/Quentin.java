@@ -76,15 +76,17 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         return isFirstTurn() && playerColor == Stone.WHITE;
     }
 
-    public boolean isPlayerAbleToMakeAMove(Player player) {
-        return board.getEmptyIntersections().anyMatch(emptyIntersection -> !isIllegalMove(player.getColor(), emptyIntersection));
+    public boolean isCurrentPlayerAbleToMakeAMove() {
+        return board.getEmptyIntersections()
+                .anyMatch(emptyIntersection -> !isIllegalMove(getCurrentPlayer().getColor(), emptyIntersection));
     }
 
     protected Player getPlayerOfColor(Stone color) throws NoSuchElementException {
         return getPlayers().stream().filter(player -> player.getColor() == color).findFirst().orElseThrow();
     }
 
-    public void passTurn(Player currentPlayer) {
+    public void passTurn() {
+        Player currentPlayer = getCurrentPlayer();
         setLastPlay(currentPlayer.getColor());
         outputHandler.notifyPass(currentPlayer);
     }
