@@ -12,7 +12,7 @@ import java.util.List;
 
 public class GUIOutputHandler implements OutputHandler {
 
-    private static void createAndSetAlert(String title, String contentText) {
+    private void createAndSetAlert(String title, String contentText) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, contentText, ButtonType.OK);
         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
         alert.setTitle(title);
@@ -20,8 +20,8 @@ public class GUIOutputHandler implements OutputHandler {
         alert.showAndWait();
     }
 
-    public static void notifyException(String message) {
-        createAndSetAlert("Invalid Action Information", String.format("%s", message));
+    public void notifyException(String exceptionMessage) {
+        createAndSetAlert("Invalid Action Information", String.format("%s", exceptionMessage));
     }
 
     public void notifyInvalidMove() { //TODO: not sure it used
@@ -30,7 +30,6 @@ public class GUIOutputHandler implements OutputHandler {
 
     @Override
     public void notifyPass(Player currentPlayer) {
-
         String message = String.format(Message.PASS_TURN, currentPlayer.getName());
         createAndSetAlert("Pass Rule Information", String.format("%s", message));
     }
@@ -46,7 +45,6 @@ public class GUIOutputHandler implements OutputHandler {
 
     @Override
     public void notifyWinner(Player player) {
-
         String message = String.format(Message.END_GAME, player.getName(),
                 ConsoleStoneRepresentation.getStoneValue(player.getColor()));
 
@@ -54,8 +52,8 @@ public class GUIOutputHandler implements OutputHandler {
     }
 
     @Override
-    public void askPie() {
-        createAndSetAlert("Pie Rule Information", Message.QUERY_PIE);
+    public void askPie(String whitePlayerName) {
+        createAndSetAlert("Pie Rule Information", String.format(Message.QUERY_PIE, whitePlayerName));
     }
 
     @Override

@@ -51,8 +51,8 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
             whiteAlreadyPlayed = true;
             while (true) {
                 try {
-                    outputHandler.askPie();
-                    if (inputHandler.askPie(currentPlayer)) {
+                    outputHandler.askPie(currentPlayer.getName());
+                    if (inputHandler.askPie(currentPlayer.getName())) {
                         applyPieRule();
                         outputHandler.notifyPieRule(getPlayers());
                         return true;

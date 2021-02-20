@@ -24,8 +24,8 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
         System.out.println(Message.ASK_WHITE_PLAYER_NAME);
     }
 
-    public static void notifyException(String message) {
-        System.out.println(message);
+    public static void notifyException(String exceptionMessage) {
+        System.out.println(exceptionMessage);
     }
 
     public void askRowCoordinate() { System.out.println(Message.CHOOSE_ROW); }
@@ -52,7 +52,7 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
     public void notifyWinner(Player player) { System.out.printf(Message.END_GAME, player.getName(), ConsoleStoneRepresentation.getStoneValue(player.getColor())); }
 
     @Override
-    public void askPie() { System.out.println(Message.QUERY_PIE); }
+    public void askPie(String whitePlayerName) { System.out.printf(Message.QUERY_PIE, whitePlayerName); }
 
     private void displayStone(Stone stone){
         System.out.print(ConsoleStoneRepresentation.getStoneValue(stone));

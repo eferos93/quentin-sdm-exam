@@ -30,7 +30,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         if (isWhitePlayerFirstTurn(currentPlayer)) {
             whiteAlreadyPlayed = true;
             try {
-                if (inputHandler.askPie(currentPlayer)) {
+                if (inputHandler.askPie(currentPlayer.getName())) {
                     applyPieRule();
                     outputHandler.notifyPieRule(getPlayers());
                     return true;
@@ -38,7 +38,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
                     return false;
                 }
             } catch (InputMismatchException exception) {
-                GUIOutputHandler.notifyException(exception.getMessage());
+                notifyException(exception.getMessage());
             }
         }
         return false;
@@ -51,6 +51,10 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
     @Override
     public void play() throws Exception {
         makeMove(getCurrentPlayer().getColor(), newPosition);
+    }
+
+    public void notifyException(String exceptionMessage) {
+        outputHandler.notifyException(exceptionMessage);
     }
 
     public static void main (String[] args) { new Thread(() -> Application.launch(GUI.class)).start(); }

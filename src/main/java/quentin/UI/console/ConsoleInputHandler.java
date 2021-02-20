@@ -1,7 +1,5 @@
 package quentin.UI.console;
 
-import quentin.core.Player;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -18,7 +16,7 @@ public class ConsoleInputHandler implements quentin.UI.InputHandler {
     }
 
     @Override
-    public boolean askPie(Player player) throws InputMismatchException {
+    public boolean askPie(String whitePlayerName) throws InputMismatchException {
         String answer = scanner.next();
         if (!(answer.equalsIgnoreCase("no") || answer.equalsIgnoreCase("yes"))) {
             throw new InputMismatchException("You should insert 'yes' or 'no'");

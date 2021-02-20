@@ -190,4 +190,8 @@ public class GUI extends Application {
             }
         });
     }
+
+    public void notifyException(String exceptionMessage) {
+        guiQuentin.notifyException(exceptionMessage);
+    }
 }

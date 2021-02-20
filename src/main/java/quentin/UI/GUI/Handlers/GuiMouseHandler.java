@@ -4,7 +4,6 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import quentin.GUIQuentin;
 import quentin.UI.GUI.GUI;
-import quentin.UI.GUI.GUIOutputHandler;
 import quentin.core.Player;
 import quentin.core.Position;
 
@@ -31,7 +30,7 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
         try {
             game.play();
         } catch (Exception exception) {
-            GUIOutputHandler.notifyException(exception.toString());
+            gui.notifyException(exception.getMessage());
             return;
         }
 
