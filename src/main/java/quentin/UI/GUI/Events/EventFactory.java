@@ -7,10 +7,6 @@ public class EventFactory {
 
     private EventFactory() {}
 
-    public static Stream<? extends Event> create() {
-        return Stream.of(new EndGameEvent(), new PieRuleEvent(), new PassEvent());
-    }
-
     public static Event createPieRuleEvent() {
         return new PieRuleEvent();
     }
