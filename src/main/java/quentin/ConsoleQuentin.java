@@ -22,7 +22,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                 printer.run();
                 return ConsoleInputHandler.getInteger();
             } catch (InputMismatchException exception) {
-                ConsoleOutputHandler.notifyException(exception.getMessage());
+                outputHandler.notifyException(exception.getMessage());
             }
         }
     }
@@ -37,7 +37,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                 makeMove(currentPlayer.getColor(), getPosition());
                 areCoordinatesValid = true;
             } catch (Exception exception) {
-                ConsoleOutputHandler.notifyException(exception.getMessage());
+                outputHandler.notifyException(exception.getMessage());
             }
         }
     }
@@ -60,7 +60,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                         return false;
                     }
                 } catch (InputMismatchException exception) {
-                    ConsoleOutputHandler.notifyException(exception.getMessage());
+                    outputHandler.notifyException(exception.getMessage());
                 }
             }
         }
@@ -82,7 +82,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         play();
     }
 
-    private static int getBoardSize() {
+    private static int getBoardSize(ConsoleOutputHandler consoleOutputHandler) {
         ConsoleOutputHandler.askBoardSize();
         int boardSize = 0;
         for (boolean insertedAValidBoardSize = false; !insertedAValidBoardSize;) {
@@ -93,7 +93,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                 }
                 insertedAValidBoardSize = true;
             } catch (InputMismatchException exception) {
-                ConsoleOutputHandler.notifyException(exception.getMessage());
+                consoleOutputHandler.notifyException(exception.getMessage());
             }
         }
         return boardSize;
@@ -102,12 +102,13 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
     private static Quentin<ConsoleInputHandler, ConsoleOutputHandler> initialise() {
         ConsoleOutputHandler.displayTitle();
         ConsoleOutputHandler.displayInstructions();
-        int boardSize = getBoardSize();
+        ConsoleOutputHandler consoleOutputHandler = new ConsoleOutputHandler();
+        int boardSize = getBoardSize(consoleOutputHandler);
         ConsoleOutputHandler.askBlackPlayerName();
         String blackPlayerName = ConsoleInputHandler.askBlackPlayerName();
         ConsoleOutputHandler.askWhitePlayerName();
         String whitePlayerName = ConsoleInputHandler.askWhitePlayerName();
-        return new ConsoleQuentin(boardSize, new ConsoleInputHandler(), new ConsoleOutputHandler(),
+        return new ConsoleQuentin(boardSize, new ConsoleInputHandler(), consoleOutputHandler,
                 blackPlayerName, whitePlayerName);
     }
 

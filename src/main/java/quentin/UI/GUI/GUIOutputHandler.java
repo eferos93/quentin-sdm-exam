@@ -19,6 +19,7 @@ public class GUIOutputHandler implements OutputHandler {
         alert.showAndWait();
     }
 
+    @Override
     public void notifyException(String exceptionMessage) {
         createAndSetAlert("Invalid Action Information", String.format("%s", exceptionMessage));
     }

@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface OutputHandler {
 
+    void notifyException(String exceptionMessage);
+
     void notifyPass(Player currentPlayer);
 
     void notifyPieRule(List<Player> players);

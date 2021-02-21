@@ -24,7 +24,8 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
         System.out.println(Message.ASK_WHITE_PLAYER_NAME);
     }
 
-    public static void notifyException(String exceptionMessage) {
+    @Override
+    public void notifyException(String exceptionMessage) {
         System.out.println(exceptionMessage);
     }
 
