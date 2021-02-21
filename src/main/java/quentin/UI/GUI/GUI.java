@@ -182,21 +182,6 @@ public class GUI extends Application {
         if (guiQuentin.checkAndPerformEndGameRule()) {
             getGridBoard().fireEvent(EventFactory.createEndGameEvent());
         }
-        // currentPlayer and guiQuentin.getCurrentPlayer() are not the same player!
-//        EventFactory.create().forEach(event -> {
-//            if(event instanceof PieRuleEvent &&
-//                    guiQuentin.checkAndPerformPieRule()){
-//                getGridBoard().fireEvent(event);
-//            }
-//            if(event instanceof PassEvent &&
-//                    !guiQuentin.isCurrentPlayerAbleToMakeAMove()){
-//                getGridBoard().fireEvent(event);
-//            }
-//            if(event instanceof EndGameEvent &&
-//                    guiQuentin.checkAndPerformEndGameRule()){
-//                getGridBoard().fireEvent(event);
-//            }
-//        });
     }
 
     public void notifyException(String exceptionMessage) {
