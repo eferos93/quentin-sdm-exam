@@ -52,7 +52,6 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
     @Override
     public void notifyWinner(Player player) { System.out.printf(Message.END_GAME, player.getName(), ConsoleStoneRepresentation.getStoneValue(player.getColor())); }
 
-    @Override
     public void askPie(String whitePlayerName) { System.out.printf(Message.QUERY_PIE, whitePlayerName); }
 
     private void displayStone(Stone stone){
@@ -69,7 +68,6 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
         System.out.print("W" + System.lineSeparator());
     }
 
-    @Override
     public void displayBoard(Board board) {
         System.out.println("    " + "  B".repeat(board.getBoardSize()));
         IntStream.rangeClosed(1, board.getBoardSize()).forEach(rowIndex -> displayRow(board, rowIndex));

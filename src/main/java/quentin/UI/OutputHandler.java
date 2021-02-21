@@ -15,10 +15,6 @@ public interface OutputHandler {
 
     void notifyWinner(Player player);
 
-    void askPie(String whitePlayerName);
-
-    void displayBoard(Board board);
-
     class Message {
         public static final String TITLE =  "QUENTIN GAME";
         public final static String INSTRUCTIONS = """
