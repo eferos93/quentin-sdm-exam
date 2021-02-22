@@ -26,18 +26,18 @@ public class Board {
         return new Board(size);
     }
 
-    public Intersection intersectionAt(Position position) throws NoSuchElementException {
+    public Intersection intersectionAt(Position position) {
         return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow();
     }
 
-    protected void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
+    protected void addStoneAt(Stone stone, Position position){
         Intersection intersection = intersectionAt(position);
         regionsContainer.removeNonEmptyIntersection(intersection);
         intersection.setStone(stone);
         chainContainer.updateChain(intersection);
     }
 
-    protected boolean isOccupied(Position position) throws NoSuchElementException {
+    protected boolean isOccupied(Position position){
         return intersectionAt(position).isOccupied();
     }
 
