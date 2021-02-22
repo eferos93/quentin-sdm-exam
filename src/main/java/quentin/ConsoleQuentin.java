@@ -13,7 +13,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         super(boardSize, inputHandler, outputHandler, blackPlayerName, whitePlayerName);
     }
     public ConsoleQuentin(int boardSize, ConsoleInputHandler inputHandler, ConsoleOutputHandler outputHandler) {
-        super(boardSize, inputHandler, outputHandler);
+        this(boardSize, inputHandler, outputHandler, "Player 1", "Player 2");
     }
 
     private int getCoordinate(Runnable printer) {
