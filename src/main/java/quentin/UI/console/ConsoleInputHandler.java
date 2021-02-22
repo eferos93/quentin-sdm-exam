@@ -8,11 +8,22 @@ public class ConsoleInputHandler implements quentin.UI.InputHandler {
 
     public static int getInteger() throws InputMismatchException {
         if (scanner.hasNextInt()) {
-            return scanner.nextInt();
+            int answer = scanner.nextInt();
+            scanner.nextLine();
+            return answer;
         } else {
-            scanner.next();
+            scanner.nextLine();
             throw new InputMismatchException("You have not inserted a valid integer! Retry.");
         }
+    }
+
+    public static boolean wantToReplay() throws InputMismatchException {
+        String answer = scanner.next();
+        if (!(answer.equalsIgnoreCase("no") || answer.equalsIgnoreCase("yes"))) {
+            throw new InputMismatchException("You should insert 'yes' or 'no'");
+        }
+        scanner.nextLine();
+        return answer.equalsIgnoreCase("yes");
     }
 
     @Override
@@ -21,14 +32,15 @@ public class ConsoleInputHandler implements quentin.UI.InputHandler {
         if (!(answer.equalsIgnoreCase("no") || answer.equalsIgnoreCase("yes"))) {
             throw new InputMismatchException("You should insert 'yes' or 'no'");
         }
+        scanner.nextLine();
         return answer.equalsIgnoreCase("yes");
     }
 
     public static String askBlackPlayerName() {
-        return scanner.next();
+        return scanner.nextLine();
     }
     public static String askWhitePlayerName() {
-        return scanner.next();
+        return scanner.nextLine();
     }
 }
 

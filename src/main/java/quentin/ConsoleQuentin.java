@@ -116,6 +116,18 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
     }
 
     public static void main(String... args) throws Exception {
-       initialise().play();
+        boolean wantToReplay = false;
+        boolean invalidReplayInput;
+        do {
+            Quentin<ConsoleInputHandler, ConsoleOutputHandler> game = initialise();
+            game.play();
+            ConsoleOutputHandler.printWantToReplay();
+            try {
+                wantToReplay = ConsoleInputHandler.wantToReplay();
+                invalidReplayInput = false;
+            } catch (InputMismatchException exception) {
+                invalidReplayInput = true;
+            }
+        } while (wantToReplay && !invalidReplayInput);
     }
 }
