@@ -32,7 +32,8 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
     }
 
     private void getCoordinatesAndMakeMove(Player currentPlayer) {
-        for (boolean areCoordinatesValid = false; !areCoordinatesValid; ){
+        boolean areCoordinatesValid = false;
+        while(!areCoordinatesValid){
             try {
                 makeMove(currentPlayer.getColor(), getPosition());
                 areCoordinatesValid = true;
@@ -85,7 +86,9 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
     private static int getBoardSize(ConsoleOutputHandler consoleOutputHandler) {
         ConsoleOutputHandler.askBoardSize();
         int boardSize = 0;
-        for (boolean insertedAValidBoardSize = false; !insertedAValidBoardSize;) {
+        boolean insertedAValidBoardSize = false;
+
+        while(!insertedAValidBoardSize){
             try {
                 boardSize = ConsoleInputHandler.getInteger();
                 if (boardSize < 4 || boardSize > 13) {
