@@ -22,7 +22,7 @@ public interface OutputHandler {
             For more info visit: https://boardgamegeek.com/boardgame/124095/quentin""";
         public static final String CHOOSE_ROW = "Choose row coordinate: ";
         public static final String CHOOSE_COLUMN = "Choose column coordinate: ";
-        public static final String QUERY_PIE = "%s would you like to apply pie rule? yes/no";
+        public static final String QUERY_PIE = "%s would you like to apply pie rule? yes/no ";
         public static final String PIE = """
             Pie rule applied.
             %s's color: %s
