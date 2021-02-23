@@ -36,10 +36,7 @@ public class ConsoleInputHandler implements quentin.UI.InputHandler {
         return answer.equalsIgnoreCase("yes");
     }
 
-    public static String askBlackPlayerName() {
-        return scanner.nextLine();
-    }
-    public static String askWhitePlayerName() {
+    public static String askPlayerName() {
         return scanner.nextLine();
     }
 }

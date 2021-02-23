@@ -108,9 +108,9 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         ConsoleOutputHandler consoleOutputHandler = new ConsoleOutputHandler();
         int boardSize = getBoardSize(consoleOutputHandler);
         ConsoleOutputHandler.askBlackPlayerName();
-        String blackPlayerName = ConsoleInputHandler.askBlackPlayerName();
+        String blackPlayerName = ConsoleInputHandler.askPlayerName();
         ConsoleOutputHandler.askWhitePlayerName();
-        String whitePlayerName = ConsoleInputHandler.askWhitePlayerName();
+        String whitePlayerName = ConsoleInputHandler.askPlayerName();
         return new ConsoleQuentin(boardSize, new ConsoleInputHandler(), consoleOutputHandler,
                 blackPlayerName, whitePlayerName);
     }
