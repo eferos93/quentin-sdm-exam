@@ -20,7 +20,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         while(true) {
             try {
                 printer.run();
-                return ConsoleInputHandler.getInteger();
+                return inputHandler.getInteger();
             } catch (InputMismatchException exception) {
                 outputHandler.notifyException(exception.getMessage());
             }
@@ -83,14 +83,14 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         play();
     }
 
-    private static int getBoardSize(ConsoleOutputHandler consoleOutputHandler) {
-        ConsoleOutputHandler.askBoardSize();
+    private static int getBoardSize(ConsoleInputHandler consoleInputHandler, ConsoleOutputHandler consoleOutputHandler) {
+        consoleOutputHandler.askBoardSize();
         int boardSize = 0;
         boolean insertedAValidBoardSize = false;
 
         while(!insertedAValidBoardSize){
             try {
-                boardSize = ConsoleInputHandler.getInteger();
+                boardSize = consoleInputHandler.getInteger();
                 if (boardSize < 4 || boardSize > 13) {
                     throw new InputMismatchException("Invalid board size! It must be between 4 and 13!");
                 }
@@ -102,16 +102,17 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         return boardSize;
     }
 
-    private static Quentin<ConsoleInputHandler, ConsoleOutputHandler> initialise() {
-        ConsoleOutputHandler.displayTitle();
-        ConsoleOutputHandler.displayInstructions();
-        ConsoleOutputHandler consoleOutputHandler = new ConsoleOutputHandler();
-        int boardSize = getBoardSize(consoleOutputHandler);
-        ConsoleOutputHandler.askBlackPlayerName();
-        String blackPlayerName = ConsoleInputHandler.askPlayerName();
-        ConsoleOutputHandler.askWhitePlayerName();
-        String whitePlayerName = ConsoleInputHandler.askPlayerName();
-        return new ConsoleQuentin(boardSize, new ConsoleInputHandler(), consoleOutputHandler,
+    private static Quentin<ConsoleInputHandler, ConsoleOutputHandler> initialise(
+            ConsoleInputHandler inputHandler, ConsoleOutputHandler outputHandler
+    ) {
+        outputHandler.displayTitle();
+        outputHandler.displayInstructions();
+        int boardSize = getBoardSize(inputHandler, outputHandler);
+        outputHandler.askBlackPlayerName();
+        String blackPlayerName = inputHandler.askPlayerName();
+        outputHandler.askWhitePlayerName();
+        String whitePlayerName = inputHandler.askPlayerName();
+        return new ConsoleQuentin(boardSize, inputHandler, outputHandler,
                 blackPlayerName, whitePlayerName);
     }
 
@@ -119,11 +120,12 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         boolean wantToReplay = false;
         boolean invalidReplayInput;
         do {
-            Quentin<ConsoleInputHandler, ConsoleOutputHandler> game = initialise();
-            game.play();
-            ConsoleOutputHandler.printWantToReplay();
+            ConsoleOutputHandler consoleOutputHandler = new ConsoleOutputHandler();
+            ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler();
+            initialise(consoleInputHandler, consoleOutputHandler).play();
+            consoleOutputHandler.printWantToReplay();
             try {
-                wantToReplay = ConsoleInputHandler.wantToReplay();
+                wantToReplay = consoleInputHandler.wantToReplay();
                 invalidReplayInput = false;
             } catch (InputMismatchException exception) {
                 invalidReplayInput = true;
