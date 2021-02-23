@@ -128,6 +128,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                 wantToReplay = consoleInputHandler.wantToReplay();
                 invalidReplayInput = false;
             } catch (InputMismatchException exception) {
+                consoleOutputHandler.notifyException(exception.getMessage());
                 invalidReplayInput = true;
             }
         } while (wantToReplay && !invalidReplayInput);
