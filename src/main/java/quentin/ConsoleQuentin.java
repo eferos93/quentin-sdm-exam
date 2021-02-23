@@ -22,7 +22,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                 printer.run();
                 return inputHandler.getInteger();
             } catch (InputMismatchException exception) {
-                outputHandler.notifyException(exception.getMessage());
+                outputHandler.notifyException(exception);
             }
         }
     }
@@ -38,7 +38,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                 makeMove(currentPlayer.getColor(), getPosition());
                 areCoordinatesValid = true;
             } catch (Exception exception) {
-                outputHandler.notifyException(exception.getMessage());
+                outputHandler.notifyException(exception);
             }
         }
     }
@@ -61,7 +61,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                         return false;
                     }
                 } catch (InputMismatchException exception) {
-                    outputHandler.notifyException(exception.getMessage());
+                    outputHandler.notifyException(exception);
                 }
             }
         }
@@ -96,7 +96,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                 }
                 insertedAValidBoardSize = true;
             } catch (InputMismatchException exception) {
-                consoleOutputHandler.notifyException(exception.getMessage());
+                consoleOutputHandler.notifyException(exception);
             }
         }
         return boardSize;
@@ -128,7 +128,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                 wantToReplay = consoleInputHandler.wantToReplay();
                 invalidReplayInput = false;
             } catch (InputMismatchException exception) {
-                consoleOutputHandler.notifyException(exception.getMessage());
+                consoleOutputHandler.notifyException(exception);
                 invalidReplayInput = true;
             }
         } while (wantToReplay && !invalidReplayInput);

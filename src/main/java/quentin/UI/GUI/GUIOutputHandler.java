@@ -19,8 +19,8 @@ public class GUIOutputHandler implements OutputHandler {
     }
 
     @Override
-    public void notifyException(String exceptionMessage) {
-        createAndSetAlert("Invalid Action Information", String.format("%s", exceptionMessage));
+    public void notifyException(Exception exception) {
+        createAndSetAlert("Invalid Action Information", String.format("%s", exception));
     }
 
     @Override

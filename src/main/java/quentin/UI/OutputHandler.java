@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface OutputHandler {
 
-    void notifyException(String exceptionMessage);
+    void notifyException(Exception exception);
 
     void notifyPass(Player currentPlayer);
 

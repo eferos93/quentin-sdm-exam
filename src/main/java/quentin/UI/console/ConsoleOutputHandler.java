@@ -29,8 +29,8 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
     }
 
     @Override
-    public void notifyException(String exceptionMessage) {
-        System.out.println(exceptionMessage);
+    public void notifyException(Exception exception) {
+        System.out.println(exception.getMessage());
     }
 
     public void askRowCoordinate() { System.out.println(Message.CHOOSE_ROW); }

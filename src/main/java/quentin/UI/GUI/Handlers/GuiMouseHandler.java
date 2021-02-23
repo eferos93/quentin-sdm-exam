@@ -30,7 +30,7 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
         try {
             game.play();
         } catch (Exception exception) {
-            gui.notifyException(exception.getMessage());
+            gui.notifyException(exception);
             return;
         }
 
