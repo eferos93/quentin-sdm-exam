@@ -52,7 +52,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         lastPlay = color;
     }
 
-    private boolean isOutsideBoard(Position position) {
+    protected boolean isOutsideBoard(Position position) {
         return (position.getColumn() < 1 || position.getColumn() > board.getBoardSize()) ||
                 (position.getRow() < 1 || position.getRow() > board.getBoardSize());
     }
