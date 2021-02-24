@@ -103,8 +103,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
     }
 
     private static Quentin<ConsoleInputHandler, ConsoleOutputHandler> initialise(
-            ConsoleInputHandler inputHandler, ConsoleOutputHandler outputHandler
-    ) {
+            ConsoleInputHandler inputHandler, ConsoleOutputHandler outputHandler) {
         outputHandler.displayTitle();
         outputHandler.displayInstructions();
         int boardSize = getBoardSize(inputHandler, outputHandler);

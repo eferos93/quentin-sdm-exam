@@ -43,12 +43,12 @@ public class GUIBoardDisplayer {
                 IntStream.range(0, boardSize).forEach(row ->
                         {
 
-                            Line verticalLine = lineGenerator(0, 0, 0,tileSize);
+                            Line verticalLine = lineGenerator(0,tileSize);
 
                             GridPane.setHalignment(verticalLine, HPos.CENTER);
                             GridPane.setValignment(verticalLine, VPos.CENTER);
 
-                            Line horizontalLine = lineGenerator(0, 0, tileSize,0);
+                            Line horizontalLine = lineGenerator(tileSize,0);
 
                             if(row == 0){
                                 verticalLine.setEndY(tileSize/2.0);
@@ -81,8 +81,8 @@ public class GUIBoardDisplayer {
         return gridPane;
     }
 
-    private Line lineGenerator(int startX, int startY, int endX,int endY){
-        Line generatedLine = new Line(startX, startY, endX, endY);
+    private Line lineGenerator(int endX,int endY){
+        Line generatedLine = new Line(0, 0, endX, endY);
         generatedLine.setStroke(Color.BLACK);
         generatedLine.setStrokeWidth(2.0);
         return generatedLine;
