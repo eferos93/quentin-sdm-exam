@@ -40,7 +40,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
                     return false;
                 }
             } catch (InputMismatchException exception) {
-                notifyException(exception.getMessage());
+                notifyException(exception);
             }
         }
         return false;
@@ -55,8 +55,8 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         makeMove(getCurrentPlayer().getColor(), newPosition);
     }
 
-    public void notifyException(String exceptionMessage) {
-        outputHandler.notifyException(exceptionMessage);
+    public void notifyException(Exception exception) {
+        outputHandler.notifyException(exception);
     }
 
     public static void main (String[] args) { new Thread(() -> Application.launch(GUI.class)).start(); }

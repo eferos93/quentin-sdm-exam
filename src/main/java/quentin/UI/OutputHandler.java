@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface OutputHandler {
 
-    void notifyException(String exceptionMessage);
+    void notifyException(Exception exception);
 
     void notifyPass(Player currentPlayer);
 
@@ -34,5 +34,6 @@ public interface OutputHandler {
         public static final String PASS_TURN = "%s passes turn as there no possible move to make";
         public static final String ASK_BLACK_PLAYER_NAME = "Please insert the name of the Black Player:";
         public static final String ASK_WHITE_PLAYER_NAME = "Please insert the name of the White Player:";
+        public static final String WANT_TO_REPLAY = "Do you want to replay the game? yes/no";
     }
 }

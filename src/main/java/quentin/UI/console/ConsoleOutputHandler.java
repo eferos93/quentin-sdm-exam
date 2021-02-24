@@ -10,23 +10,27 @@ import java.util.stream.IntStream;
 
 public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
 
-    public static void displayTitle() { System.out.println(Message.TITLE);}
+    public void displayTitle() { System.out.println(Message.TITLE);}
 
-    public static void displayInstructions() { System.out.println(Message.INSTRUCTIONS);}
+    public void displayInstructions() { System.out.println(Message.INSTRUCTIONS);}
 
-    public static void askBoardSize() { System.out.println(Message.ASK_SIZE); }
+    public void askBoardSize() { System.out.println(Message.ASK_SIZE); }
 
-    public static void askBlackPlayerName() {
+    public void askBlackPlayerName() {
         System.out.println(Message.ASK_BLACK_PLAYER_NAME);
     }
 
-    public static void askWhitePlayerName() {
+    public void askWhitePlayerName() {
         System.out.println(Message.ASK_WHITE_PLAYER_NAME);
     }
 
+    public void printWantToReplay() {
+        System.out.println(Message.WANT_TO_REPLAY);
+    }
+
     @Override
-    public void notifyException(String exceptionMessage) {
-        System.out.println(exceptionMessage);
+    public void notifyException(Exception exception) {
+        System.out.println(exception.getMessage());
     }
 
     public void askRowCoordinate() { System.out.println(Message.CHOOSE_ROW); }
