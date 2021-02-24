@@ -11,7 +11,7 @@ public class GuiEndGameHandler implements EventHandler<EndGameEvent> {
 
     @Override
     public void handle(EndGameEvent event) {
-        gui.stop();
+        gui.endUI();
         event.consume();
     }
 }

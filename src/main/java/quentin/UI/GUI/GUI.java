@@ -105,6 +105,7 @@ public class GUI extends Application {
     private Stream<Button> createSetButtons(int width, int height){
 
         Button startButton = createAndSetButton("Start", width, height, (ActionEvent e) -> {
+            stage.close();
             GUIInputHandler guiInputHandler = new GUIInputHandler();
             int size = guiInputHandler.askSize();
             String namePlayer1 = guiInputHandler.askPlayerName("1");
@@ -117,6 +118,39 @@ public class GUI extends Application {
 
         Button rulesButton = createAndSetButton("Rules", width, height, (ActionEvent e) -> getHostServices().showDocument("https://boardgamegeek.com/boardgame/124095/quentin"));
         return Stream.of(startButton, endButton, rulesButton);
+    }
+
+    private Stream<Button> replayButtons(int width, int height){
+        Button yesButton = createAndSetButton("Yes", width, height, (ActionEvent e) -> { initUI(); });
+        Button noButton = createAndSetButton("No", width, height, (ActionEvent e) -> stop());
+        return Stream.of(yesButton, noButton);
+    }
+
+    public void endUI() {
+        GridPane pane = new GridPane();
+        pane.setPadding(new Insets(20, 20, 20, 20));
+        pane.setVgap(20);
+
+        Text text = new Text("Do you wanna play again?");
+        text.setFont(Font.font("Tahoma", 20));
+
+        pane.add(text, 0, 0 );
+        GridPane.setHalignment(text, HPos.CENTER);
+
+        Stream<Button> buttonStream = replayButtons(80,35);
+
+        HBox hBox = new HBox();
+        buttonStream.forEach(button -> hBox.getChildren().add(button));
+
+        pane.add(hBox, 0, 1);
+        hBox.setSpacing(100);
+        GridPane.setHalignment(hBox, HPos.CENTER);
+
+        Scene scene = new Scene(pane);
+
+        stage.setTitle("Quentin");
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void initUI() {
