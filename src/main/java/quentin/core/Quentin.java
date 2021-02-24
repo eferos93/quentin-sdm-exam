@@ -30,13 +30,16 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         this(boardSize, inputHandler, outputHandler, "player1", "player2");
     }
 
-    protected void makeMove(Stone color, Position position) throws InvalidFirstPlayerException,  RepeatedPlayException, OccupiedPositionException, IllegalMoveException{
+    protected void makeMove(Stone color, Position position) throws InvalidFirstPlayerException, RepeatedPlayException, OccupiedPositionException, IllegalMoveException, InvalidPositionException {
 
         if (isInvalidFirstPlayer(color)) {
             throw new InvalidFirstPlayerException();
         }
         if (isARepeatedPlay(color)) {
             throw new RepeatedPlayException();
+        }
+        if(isOutsideBoard(position)){
+            throw new InvalidPositionException(position);
         }
         if (isOccupied(position)) {
             throw new OccupiedPositionException(position);
@@ -47,6 +50,11 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
 
         board.addStoneAt(color, position);
         lastPlay = color;
+    }
+
+    private boolean isOutsideBoard(Position position) {
+        return (position.getColumn() < 1 || position.getColumn() > board.getBoardSize()) ||
+                (position.getRow() < 1 || position.getRow() > board.getBoardSize());
     }
 
     protected boolean isOccupied(Position position) {
@@ -130,7 +138,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         this.lastPlay = colorOfPlayerWhoJustPlayed;
     }
 
-    public abstract void play() throws Exception;
+    public abstract void play() throws InvalidFirstPlayerException, RepeatedPlayException, OccupiedPositionException, IllegalMoveException, InvalidPositionException;
 
     public Player getCurrentPlayer() {
         return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());

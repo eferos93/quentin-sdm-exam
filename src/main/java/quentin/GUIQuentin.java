@@ -5,6 +5,7 @@ import quentin.UI.GUI.GUI;
 import quentin.UI.GUI.GUIInputHandler;
 import quentin.UI.GUI.GUIOutputHandler;
 import quentin.core.*;
+import quentin.exceptions.*;
 
 import java.util.InputMismatchException;
 
@@ -50,7 +51,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
     }
 
     @Override
-    public void play() throws Exception {
+    public void play() throws InvalidFirstPlayerException, RepeatedPlayException, OccupiedPositionException, IllegalMoveException, InvalidPositionException {
         makeMove(getCurrentPlayer().getColor(), newPosition);
     }
 
