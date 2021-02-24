@@ -26,10 +26,6 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         this.playerTwo = new Player(Stone.WHITE, whitePlayerName);
     }
 
-    protected Quentin(int boardSize, InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler) {
-        this(boardSize, inputHandler, outputHandler, "player1", "player2");
-    }
-
     protected void makeMove(Stone color, Position position) throws InvalidFirstPlayerException, RepeatedPlayException, OccupiedPositionException, IllegalMoveException, InvalidPositionException {
 
         if (isInvalidFirstPlayer(color)) {
