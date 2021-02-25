@@ -94,17 +94,17 @@ public class GUI extends Application {
         return (int)(coordinate - 1) / TILESIZE;
     }
 
-    private Button createAndSetButton(String text, int width, int height, EventHandler<ActionEvent> handler) {
+    private Button createAndSetButton(String text, EventHandler<ActionEvent> handler) {
         Button button = new Button(text);
-        button.setPrefWidth(width);
-        button.setPrefHeight(height);
+        button.setPrefWidth(80);
+        button.setPrefHeight(35);
         button.setOnAction(handler);
         return button;
     }
 
-    private Stream<Button> initialSceneButtons(int width, int height){
+    private Stream<Button> initialButtons(){
 
-        Button startButton = createAndSetButton("Start", width, height, (ActionEvent e) -> {
+        Button startButton = createAndSetButton("Start", (ActionEvent e) -> {
             stage.close();
             GUIInputHandler guiInputHandler = new GUIInputHandler();
             int size = guiInputHandler.askSize();
@@ -114,19 +114,19 @@ public class GUI extends Application {
             initGameInterface(size, namePlayer1, namePlayer2);
         });
 
-        Button endButton = createAndSetButton("Exit", width, height, (ActionEvent e) -> stop());
+        Button endButton = createAndSetButton("Exit", (ActionEvent e) -> stop());
 
-        Button rulesButton = createAndSetButton("Rules", width, height, (ActionEvent e) -> getHostServices().showDocument("https://boardgamegeek.com/boardgame/124095/quentin"));
+        Button rulesButton = createAndSetButton("Rules", (ActionEvent e) -> getHostServices().showDocument("https://boardgamegeek.com/boardgame/124095/quentin"));
         return Stream.of(startButton, endButton, rulesButton);
     }
 
-    private Stream<Button> replayButtons(int width, int height){
-        Button yesButton = createAndSetButton("Yes", width, height, (ActionEvent e) -> initUI());
-        Button noButton = createAndSetButton("No", width, height, (ActionEvent e) -> stop());
+    private Stream<Button> replayButtons(){
+        Button yesButton = createAndSetButton("Yes", (ActionEvent e) -> initUI());
+        Button noButton = createAndSetButton("No", (ActionEvent e) -> stop());
         return Stream.of(yesButton, noButton);
     }
 
-    private void structureUI(Stream<Button> buttonStream, String content, int size, int buttonsSpasing){
+    private void structureUI(Stream<Button> buttonStream, String content, int size, int buttonsSpacing){
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(20, 20, 20, 20));
         pane.setVgap(20);
@@ -141,7 +141,7 @@ public class GUI extends Application {
         buttonStream.forEach(button -> hBox.getChildren().add(button));
 
         pane.add(hBox, 0, 1);
-        hBox.setSpacing(buttonsSpasing);
+        hBox.setSpacing(buttonsSpacing);
         GridPane.setHalignment(hBox, HPos.CENTER);
 
         Scene scene = new Scene(pane);
@@ -152,11 +152,11 @@ public class GUI extends Application {
     }
 
     private void initUI() {
-        structureUI(initialSceneButtons(80,35), "Quentin Game", 40, 15);
+        structureUI(initialButtons(), "Quentin Game", 40, 15);
     }
 
     public void endUI() {
-        structureUI(replayButtons(80,35), "Do you wanna play again?", 20, 100);
+        structureUI(replayButtons(), "Do you wanna play again?", 20, 100);
     }
 
     public void fillGridBoardWithTerritories() {
