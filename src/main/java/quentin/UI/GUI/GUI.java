@@ -37,6 +37,15 @@ public class GUI extends Application {
     private GUIQuentin guiQuentin;
     private GUIBoardDisplayer boardFiller;
 
+    public GridPane getGridBoard() {
+        GridPane borders = (GridPane) gridPane.getChildrenUnmodifiable().get(0);
+        return (GridPane) borders.getChildren().get(0);
+    }
+
+    public GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
+    public GUIQuentin getGame() { return guiQuentin; }
+    public GUIBoardDisplayer getBoardFiller() { return boardFiller; }
+
     @Override
     public void start(Stage primaryStage) {
         stage = primaryStage;
@@ -171,15 +180,6 @@ public class GUI extends Application {
 
     @Override
     public void stop() { Platform.exit(); }
-
-    public GridPane getGridBoard() {
-        GridPane borders = (GridPane) gridPane.getChildrenUnmodifiable().get(0);
-        return (GridPane) borders.getChildren().get(0);
-    }
-
-    public GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
-    public GUIQuentin getGame() { return guiQuentin; }
-    public GUIBoardDisplayer getBoardFiller() { return boardFiller; }
 
     public void updateGUIAndFireEvents(int columnIndex, int rowIndex, Player currentPlayer) {
         getBoardFiller().addPiece(getGridBoard(), columnIndex, rowIndex, currentPlayer.getColor());
