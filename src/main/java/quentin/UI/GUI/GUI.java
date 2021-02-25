@@ -31,7 +31,7 @@ import java.util.stream.Stream;
 
 public class GUI extends Application {
 
-    private static final int tileSize = 50;
+    private static final int TILESIZE = 50;
     private Stage stage;
     private GridPane gridPane;
     private GUIQuentin guiQuentin;
@@ -75,7 +75,7 @@ public class GUI extends Application {
     private void initGameInterface(int boardSize, String namePlayer1, String namePlayer2) {
 
         guiQuentin = new GUIQuentin(boardSize,new GUIInputHandler(), new GUIOutputHandler(), namePlayer1, namePlayer2);
-        boardFiller = new GUIBoardDisplayer(boardSize, tileSize);
+        boardFiller = new GUIBoardDisplayer(boardSize, TILESIZE);
 
         GridPane gridBoard = createGridBoard();
         addGridEvent(gridBoard);
@@ -91,7 +91,7 @@ public class GUI extends Application {
     }
 
     public int coordinateConversion(double coordinate) {
-        return (int)(coordinate - 1) / tileSize;
+        return (int)(coordinate - 1) / TILESIZE;
     }
 
     private Button createAndSetButton(String text, int width, int height, EventHandler<ActionEvent> handler) {
@@ -102,7 +102,7 @@ public class GUI extends Application {
         return button;
     }
 
-    private Stream<Button> createSetButtons(int width, int height){
+    private Stream<Button> initialSceneButtons(int width, int height){
 
         Button startButton = createAndSetButton("Start", width, height, (ActionEvent e) -> {
             stage.close();
@@ -121,29 +121,27 @@ public class GUI extends Application {
     }
 
     private Stream<Button> replayButtons(int width, int height){
-        Button yesButton = createAndSetButton("Yes", width, height, (ActionEvent e) -> { initUI(); });
+        Button yesButton = createAndSetButton("Yes", width, height, (ActionEvent e) -> initUI());
         Button noButton = createAndSetButton("No", width, height, (ActionEvent e) -> stop());
         return Stream.of(yesButton, noButton);
     }
 
-    public void endUI() {
+    private void structureUI(Stream<Button> buttonStream, String content, int size, int buttonsSpasing){
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(20, 20, 20, 20));
         pane.setVgap(20);
 
-        Text text = new Text("Do you wanna play again?");
-        text.setFont(Font.font("Tahoma", 20));
+        Text text = new Text(content);
+        text.setFont(Font.font("Tahoma", size));
 
         pane.add(text, 0, 0 );
         GridPane.setHalignment(text, HPos.CENTER);
-
-        Stream<Button> buttonStream = replayButtons(80,35);
 
         HBox hBox = new HBox();
         buttonStream.forEach(button -> hBox.getChildren().add(button));
 
         pane.add(hBox, 0, 1);
-        hBox.setSpacing(100);
+        hBox.setSpacing(buttonsSpasing);
         GridPane.setHalignment(hBox, HPos.CENTER);
 
         Scene scene = new Scene(pane);
@@ -154,30 +152,11 @@ public class GUI extends Application {
     }
 
     private void initUI() {
-        GridPane pane = new GridPane();
-        pane.setPadding(new Insets(20, 20, 20, 20));
-        pane.setVgap(20);
+        structureUI(initialSceneButtons(80,35), "Quentin Game", 40, 15);
+    }
 
-        Text text = new Text("Quentin Game");
-        text.setFont(Font.font("Tahoma", 40));
-
-        pane.add(text, 0, 0 );
-        GridPane.setHalignment(text, HPos.CENTER);
-
-        Stream<Button> buttonStream = createSetButtons(80,35);
-
-        HBox hBox = new HBox();
-        buttonStream.forEach(button -> hBox.getChildren().add(button));
-
-        pane.add(hBox, 0, 1);
-        hBox.setSpacing(15);
-        GridPane.setHalignment(hBox, HPos.CENTER);
-
-        Scene scene = new Scene(pane);
-
-        stage.setTitle("Quentin");
-        stage.setScene(scene);
-        stage.show();
+    public void endUI() {
+        structureUI(replayButtons(80,35), "Do you wanna play again?", 20, 100);
     }
 
     public void fillGridBoardWithTerritories() {
