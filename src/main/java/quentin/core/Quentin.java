@@ -35,7 +35,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
             throw new RepeatedPlayException();
         }
         if(isOutsideBoard(position)){
-            throw new InvalidPositionException(position);
+            throw new OutsideOfBoardException(position);
         }
         if (isOccupied(position)) {
             throw new OccupiedPositionException(position);

@@ -30,14 +30,14 @@ public class Board {
         return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow();
     }
 
-    protected void addStoneAt(Stone stone, Position position){
+    protected void addStoneAt(Stone stone, Position position) {
         Intersection intersection = intersectionAt(position);
         regionsContainer.removeNonEmptyIntersection(intersection);
         intersection.setStone(stone);
         chainContainer.updateChain(intersection);
     }
 
-    protected boolean isOccupied(Position position){
+    protected boolean isOccupied(Position position) {
         return intersectionAt(position).isOccupied();
     }
 
@@ -65,10 +65,11 @@ public class Board {
 
     protected void fillTerritories(Stone lastPlay) {
         getTerritoriesAndStones(lastPlay)
-                        .forEach((territory, stone) -> territory.stream()
-                        .map(Intersection::getPosition)
-                        .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
-                );
+                        .forEach((territory, stone) ->
+                                territory.stream()
+                                        .map(Intersection::getPosition)
+                                        .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
+                        );
     }
 
     protected Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone lastPlay){
