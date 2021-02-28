@@ -51,7 +51,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
     }
 
     @Override
-    public void play() throws quentinException {
+    public void play() throws QuentinException {
         makeMove(getCurrentPlayer().getColor(), newPosition);
     }
 

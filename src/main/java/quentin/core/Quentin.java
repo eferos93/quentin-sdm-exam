@@ -26,7 +26,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         this.playerTwo = new Player(Stone.WHITE, whitePlayerName);
     }
 
-    protected void makeMove(Stone color, Position position) throws quentinException {
+    protected void makeMove(Stone color, Position position) throws QuentinException {
 
         if (isInvalidFirstPlayer(color)) {
             throw new InvalidFirstPlayerException();
@@ -134,7 +134,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         this.lastPlay = colorOfPlayerWhoJustPlayed;
     }
 
-    public abstract void play() throws InvalidFirstPlayerException, RepeatedPlayException, OccupiedPositionException, IllegalMoveException, InvalidPositionException, quentinException;
+    public abstract void play() throws QuentinException;
 
     public Player getCurrentPlayer() {
         return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());
