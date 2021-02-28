@@ -34,9 +34,6 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         if (isARepeatedPlay(color)) {
             throw new RepeatedPlayException();
         }
-        if(isOutsideBoard(position)){
-            throw new OutsideOfBoardException(position);
-        }
         if (isOccupied(position)) {
             throw new OccupiedPositionException(position);
         }
@@ -48,16 +45,11 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         lastPlay = color;
     }
 
-    protected boolean isOutsideBoard(Position position) {
-        return (position.getColumn() < 1 || position.getColumn() > board.getBoardSize()) ||
-                (position.getRow() < 1 || position.getRow() > board.getBoardSize());
-    }
-
-    protected boolean isOccupied(Position position) {
+    protected boolean isOccupied(Position position) throws OutsideOfBoardException {
         return board.isOccupied(position);
     }
 
-    protected boolean isIllegalMove(Stone playerColor, Position position) {
+    protected boolean isIllegalMove(Stone playerColor, Position position) throws OutsideOfBoardException {
         return isIllegalMove(playerColor, board.intersectionAt(position));
     }
 

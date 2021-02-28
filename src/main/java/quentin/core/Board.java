@@ -1,5 +1,7 @@
 package quentin.core;
 
+import quentin.exceptions.OutsideOfBoardException;
+
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -26,18 +28,20 @@ public class Board {
         return new Board(size);
     }
 
-    public Intersection intersectionAt(Position position) {
-        return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow();
+    public Intersection intersectionAt(Position position) throws OutsideOfBoardException {
+        return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow(
+                () -> new OutsideOfBoardException(position)
+        );
     }
 
-    protected void addStoneAt(Stone stone, Position position) {
+    protected void addStoneAt(Stone stone, Position position) throws OutsideOfBoardException {
         Intersection intersection = intersectionAt(position);
         regionsContainer.removeNonEmptyIntersection(intersection);
         intersection.setStone(stone);
         chainContainer.updateChain(intersection);
     }
 
-    protected boolean isOccupied(Position position) {
+    protected boolean isOccupied(Position position) throws OutsideOfBoardException {
         return intersectionAt(position).isOccupied();
     }
 
@@ -68,7 +72,13 @@ public class Board {
                         .forEach((territory, stone) ->
                                 territory.stream()
                                         .map(Intersection::getPosition)
-                                        .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
+                                        .forEach(emptyIntersectionPosition -> {
+                                            try {
+                                                addStoneAt(stone, emptyIntersectionPosition);
+                                            } catch (OutsideOfBoardException e) {
+                                                e.printStackTrace();
+                                            }
+                                        })
                         );
     }
 

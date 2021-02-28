@@ -4,6 +4,7 @@ import quentin.core.Board;
 import quentin.core.Player;
 import quentin.core.Position;
 import quentin.core.Stone;
+import quentin.exceptions.OutsideOfBoardException;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -67,7 +68,13 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
         System.out.print("W");
         IntStream.rangeClosed(1, board.getBoardSize())
                 .forEach(columnIndex ->
-                        displayStone(board.intersectionAt(Position.in(rowIndex, columnIndex)).getStone())
+                        {
+                            try {
+                                displayStone(board.intersectionAt(Position.in(rowIndex, columnIndex)).getStone());
+                            } catch (OutsideOfBoardException e) {
+                                e.printStackTrace();
+                            }
+                        }
                 );
         System.out.print("W" + System.lineSeparator());
     }

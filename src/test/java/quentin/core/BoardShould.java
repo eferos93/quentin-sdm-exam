@@ -6,6 +6,7 @@ import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import quentin.exceptions.OutsideOfBoardException;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -45,7 +46,7 @@ public class BoardShould {
         assertThrows(Exception.class, () -> board.intersectionAt(position));
     }
 
-    private static Stream<Arguments> provideIntersectionToMarkCorrectlyAnIntersection() {
+    private static Stream<Arguments> provideIntersectionToMarkCorrectlyAnIntersection() throws OutsideOfBoardException {
         return Stream.of(
                 Arguments.of(board.intersectionAt(in(5, 7)), Stone.BLACK),
                 Arguments.of(board.intersectionAt(in(4, 3)), Stone.WHITE),
@@ -55,7 +56,7 @@ public class BoardShould {
 
     @ParameterizedTest
     @MethodSource({"provideIntersectionToMarkCorrectlyAnIntersection"})
-    public void markCorrectlyAnIntersection(Intersection intersection, Stone stone) throws NoSuchElementException {
+    public void markCorrectlyAnIntersection(Intersection intersection, Stone stone) throws NoSuchElementException, OutsideOfBoardException {
         board.addStoneAt(Stone.BLACK, in(5, 7));
         board.addStoneAt(Stone.WHITE, in(4, 3));
         board.addStoneAt(Stone.WHITE, in(9, 6));
@@ -63,7 +64,7 @@ public class BoardShould {
     }
 
     @TestFactory
-    Stream<DynamicTest> checkOrthogonalAdjacent() {
+    Stream<DynamicTest> checkOrthogonalAdjacent() throws OutsideOfBoardException {
         Board customBoard = Board.buildBoard(13);
         customBoard.addStoneAt(Stone.WHITE, in(7, 9));
         customBoard.addStoneAt(Stone.WHITE, in(3, 4));
@@ -90,7 +91,7 @@ public class BoardShould {
 
 
     @TestFactory
-    Stream<DynamicTest> checkDiagonalAdjacent() {
+    Stream<DynamicTest> checkDiagonalAdjacent() throws OutsideOfBoardException {
         Board customBoard = Board.buildBoard(13);
         customBoard.addStoneAt(Stone.WHITE, in(7, 9));
         customBoard.addStoneAt(Stone.WHITE, in(3, 4));
@@ -120,13 +121,24 @@ public class BoardShould {
         int boardSize = 13;
         Board customBoard = Board.buildBoard(boardSize);
         IntStream.rangeClosed(1, boardSize).forEach(column -> {
-            customBoard.addStoneAt(Stone.WHITE, in(7, column));
-            customBoard.addStoneAt(Stone.BLACK, in(9, column));
+            try {
+                customBoard.addStoneAt(Stone.WHITE, in(7, column));
+                customBoard.addStoneAt(Stone.BLACK, in(9, column));
+            } catch (OutsideOfBoardException e) {
+                e.printStackTrace();
+            }
         });
         customBoard.fillTerritories(Stone.BLACK);
         assertTrue(IntStream.rangeClosed(1, 13)
-                .allMatch(column -> customBoard.intersectionAt(in(8, column))
-                        .hasStone(Stone.WHITE)
+                .allMatch(column -> {
+                            try {
+                                return customBoard.intersectionAt(in(8, column))
+                                        .hasStone(Stone.WHITE);
+                            } catch (OutsideOfBoardException e) {
+                                e.printStackTrace();
+                                return false;
+                            }
+                        }
                 )
         );
     }
@@ -137,26 +149,47 @@ public class BoardShould {
         Board customBoard = Board.buildBoard(boardSize);
         IntStream.rangeClosed(1, boardSize)
                 .forEach(column -> {
-                    if (column <= 6) { customBoard.addStoneAt(Stone.WHITE, in(7, column)); }
-                    else { customBoard.addStoneAt(Stone.BLACK, in(7, column)); }
+                    try {
+                        if (column <= 6) {
+                            customBoard.addStoneAt(Stone.WHITE, in(7, column));
+                        } else {
+                            customBoard.addStoneAt(Stone.BLACK, in(7, column));
+                        }
+                    } catch (OutsideOfBoardException e) {
+                        e.printStackTrace();
+                    }
                 });
 
         IntStream.rangeClosed(1, boardSize)
                 .forEach(column -> {
-                    if (column <= 4) { customBoard.addStoneAt(Stone.WHITE, in(9, column)); }
-                    else { customBoard.addStoneAt(Stone.BLACK, in(9, column)); }
+                    try {
+                        if (column <= 4) {
+                            customBoard.addStoneAt(Stone.WHITE, in(9, column));
+                        } else {
+                            customBoard.addStoneAt(Stone.BLACK, in(9, column));
+                        }
+                    } catch (OutsideOfBoardException e) {
+                        e.printStackTrace();
+                    }
                 });
 
         customBoard.fillTerritories(Stone.BLACK);
         assertTrue(IntStream.rangeClosed(1, boardSize)
-                .allMatch(column -> customBoard.intersectionAt(in(8, column))
-                        .hasStone(Stone.BLACK)
+                .allMatch(column -> {
+                            try {
+                                return customBoard.intersectionAt(in(8, column))
+                                        .hasStone(Stone.BLACK);
+                            } catch (OutsideOfBoardException e) {
+                                e.printStackTrace();
+                                return false;
+                            }
+                        }
                 )
         );
     }
 
     @Test
-    public void updateTheChainsCorrectly() {
+    public void updateTheChainsCorrectly() throws OutsideOfBoardException {
         Board customBoard = Board.buildBoard(3);
         customBoard.addStoneAt(Stone.BLACK, in(1, 1));
         customBoard.addStoneAt(Stone.BLACK, in(1, 2));
