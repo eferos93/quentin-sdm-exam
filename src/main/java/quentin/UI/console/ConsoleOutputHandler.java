@@ -68,13 +68,7 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
         System.out.print("W");
         IntStream.rangeClosed(1, board.getBoardSize())
                 .forEach(columnIndex ->
-                        {
-                            try {
-                                displayStone(board.intersectionAt(Position.in(rowIndex, columnIndex)).getStone());
-                            } catch (OutsideOfBoardException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        displayStone(board.intersectionAt(Position.in(rowIndex, columnIndex)).getStone())
                 );
         System.out.print("W" + System.lineSeparator());
     }
