@@ -136,28 +136,20 @@ public class BoardShould {
         Board customBoard = Board.buildBoard(boardSize);
         IntStream.rangeClosed(1, boardSize)
                 .forEach(column -> {
-                    try {
                         if (column <= 6) {
                             customBoard.addStoneAt(Stone.WHITE, in(7, column));
                         } else {
                             customBoard.addStoneAt(Stone.BLACK, in(7, column));
                         }
-                    } catch (OutsideOfBoardException e) {
-                        e.printStackTrace();
-                    }
                 });
 
         IntStream.rangeClosed(1, boardSize)
                 .forEach(column -> {
-                    try {
                         if (column <= 4) {
                             customBoard.addStoneAt(Stone.WHITE, in(9, column));
                         } else {
                             customBoard.addStoneAt(Stone.BLACK, in(9, column));
                         }
-                    } catch (OutsideOfBoardException e) {
-                        e.printStackTrace();
-                    }
                 });
 
         customBoard.fillTerritories(Stone.BLACK);
