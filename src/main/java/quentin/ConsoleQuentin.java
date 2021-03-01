@@ -115,7 +115,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                 blackPlayerName, whitePlayerName);
     }
 
-    public static void main(String... args) throws Exception {
+    public static void main(String... args) {
         boolean wantToReplay = false;
         boolean invalidReplayInput;
         do {

@@ -121,25 +121,12 @@ public class BoardShould {
         int boardSize = 13;
         Board customBoard = Board.buildBoard(boardSize);
         IntStream.rangeClosed(1, boardSize).forEach(column -> {
-            try {
                 customBoard.addStoneAt(Stone.WHITE, in(7, column));
                 customBoard.addStoneAt(Stone.BLACK, in(9, column));
-            } catch (OutsideOfBoardException e) {
-                e.printStackTrace();
-            }
         });
         customBoard.fillTerritories(Stone.BLACK);
         assertTrue(IntStream.rangeClosed(1, 13)
-                .allMatch(column -> {
-                            try {
-                                return customBoard.intersectionAt(in(8, column))
-                                        .hasStone(Stone.WHITE);
-                            } catch (OutsideOfBoardException e) {
-                                e.printStackTrace();
-                                return false;
-                            }
-                        }
-                )
+                .allMatch(column -> customBoard.intersectionAt(in(8, column)).hasStone(Stone.WHITE))
         );
     }
 
