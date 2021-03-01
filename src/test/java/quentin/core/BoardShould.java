@@ -154,16 +154,7 @@ public class BoardShould {
 
         customBoard.fillTerritories(Stone.BLACK);
         assertTrue(IntStream.rangeClosed(1, boardSize)
-                .allMatch(column -> {
-                            try {
-                                return customBoard.intersectionAt(in(8, column))
-                                        .hasStone(Stone.BLACK);
-                            } catch (OutsideOfBoardException e) {
-                                e.printStackTrace();
-                                return false;
-                            }
-                        }
-                )
+                .allMatch(column -> customBoard.intersectionAt(in(8, column)).hasStone(Stone.BLACK))
         );
     }
 
