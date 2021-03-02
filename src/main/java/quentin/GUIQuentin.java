@@ -5,7 +5,6 @@ import quentin.UI.GUI.GUI;
 import quentin.UI.GUI.GUIInputHandler;
 import quentin.UI.GUI.GUIOutputHandler;
 import quentin.core.*;
-import quentin.exceptions.*;
 
 import java.util.InputMismatchException;
 

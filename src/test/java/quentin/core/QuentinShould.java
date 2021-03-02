@@ -51,14 +51,14 @@ public class QuentinShould {
     }
 
     @Test
-    public void provideNoWinner() throws Exception {
+    public void provideNoWinner() {
         quentin.makeMove(Stone.BLACK, in(1, 1));
         quentin.makeMove(Stone.WHITE, in(2, 1));
         assertEquals(Stone.NONE, quentin.getWinner());
     }
 
     @Test
-    public void provideCorrectWinner() throws Exception {
+    public void provideCorrectWinner() {
         Quentin<ConsoleInputHandler, ConsoleOutputHandler> customQuentin =
                 new ConsoleQuentin(4, new ConsoleInputHandler(), new ConsoleOutputHandler());
         customQuentin.makeMove(Stone.BLACK, in(1, 1));
@@ -74,7 +74,7 @@ public class QuentinShould {
     }
 
     @Test
-    public void provideCorrectWinnerWithPieRule() throws Exception {
+    public void provideCorrectWinnerWithPieRule() {
         Quentin<ConsoleInputHandler, ConsoleOutputHandler> customQuentin =
                 new ConsoleQuentin(4, new ConsoleInputHandler(), new ConsoleOutputHandler());
         customQuentin.makeMove(Stone.BLACK, in(1, 1));
@@ -98,7 +98,7 @@ public class QuentinShould {
     }
 
     @Test
-    public void provideCorrectWinnerMergeChainsFeature() throws Exception {
+    public void provideCorrectWinnerMergeChainsFeature() {
         Quentin<ConsoleInputHandler, ConsoleOutputHandler> customQuentin =
                 new ConsoleQuentin(4, new ConsoleInputHandler(), new ConsoleOutputHandler());
         customQuentin.makeMove(Stone.BLACK, in(1, 1));

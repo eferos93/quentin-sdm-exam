@@ -4,7 +4,6 @@ import quentin.core.Board;
 import quentin.core.Player;
 import quentin.core.Position;
 import quentin.core.Stone;
-import quentin.exceptions.OutsideOfBoardException;
 
 import java.util.List;
 import java.util.stream.IntStream;
