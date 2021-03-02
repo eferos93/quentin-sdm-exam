@@ -4,6 +4,7 @@ package quentin;
 import quentin.UI.console.ConsoleInputHandler;
 import quentin.UI.console.ConsoleOutputHandler;
 import quentin.core.*;
+import quentin.exceptions.QuentinException;
 
 import java.util.InputMismatchException;
 
@@ -37,7 +38,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
             try {
                 makeMove(currentPlayer.getColor(), getPosition());
                 areCoordinatesValid = true;
-            } catch (Exception exception) {
+            } catch (QuentinException exception) {
                 outputHandler.notifyException(exception);
             }
         }

@@ -6,6 +6,7 @@ import quentin.GUIQuentin;
 import quentin.UI.GUI.GUI;
 import quentin.core.Player;
 import quentin.core.Position;
+import quentin.exceptions.QuentinException;
 
 public class GuiMouseHandler implements EventHandler<MouseEvent> {
 
@@ -29,7 +30,7 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
 
         try {
             game.play();
-        } catch (Exception exception) {
+        } catch (QuentinException exception) {
             gui.notifyException(exception);
             return;
         }
