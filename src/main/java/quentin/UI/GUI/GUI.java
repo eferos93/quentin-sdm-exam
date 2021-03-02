@@ -31,7 +31,7 @@ import java.util.stream.Stream;
 
 public class GUI extends Application {
 
-    private static final int TILESIZE = 50;
+    private static final int TILE_SIZE = 50;
     private Stage stage;
     private GridPane gridPane;
     private GUIQuentin guiQuentin;
@@ -84,7 +84,7 @@ public class GUI extends Application {
     private void initGameInterface(int boardSize, String namePlayer1, String namePlayer2) {
 
         guiQuentin = new GUIQuentin(boardSize,new GUIInputHandler(), new GUIOutputHandler(), namePlayer1, namePlayer2);
-        boardFiller = new GUIBoardDisplayer(boardSize, TILESIZE);
+        boardFiller = new GUIBoardDisplayer(boardSize, TILE_SIZE);
 
         GridPane gridBoard = createGridBoard();
         addGridEvent(gridBoard);
@@ -100,7 +100,7 @@ public class GUI extends Application {
     }
 
     public int coordinateConversion(double coordinate) {
-        return (int)(coordinate - 1) / TILESIZE;
+        return (int)(coordinate - 1) / TILE_SIZE;
     }
 
     private Button createAndSetButton(String text, EventHandler<ActionEvent> handler) {

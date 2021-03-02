@@ -72,13 +72,7 @@ public class Board {
                         .forEach((territory, stone) ->
                                 territory.stream()
                                         .map(Intersection::getPosition)
-                                        .forEach(emptyIntersectionPosition -> {
-                                            try {
-                                                addStoneAt(stone, emptyIntersectionPosition);
-                                            } catch (OutsideOfBoardException e) {
-                                                e.printStackTrace();
-                                            }
-                                        })
+                                        .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
                         );
     }
 
