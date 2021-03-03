@@ -2,21 +2,18 @@ package quentin.UI.console;
 
 import quentin.core.Stone;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 
 public class ConsoleStoneRepresentation {
-    private static final Map<Stone, String> StoneValue = new HashMap<>() {
-        {
-            put(Stone.BLACK, "[B]");
-            put(Stone.WHITE, "[W]");
-            put(Stone.NONE, "[ ]");
-        }
-    };
+    private static final EnumMap<Stone, String> StoneValue = new EnumMap<>(Stone.class);
 
-    private ConsoleStoneRepresentation(){}
+    private ConsoleStoneRepresentation(){
+    }
 
     public static String getStoneValue(Stone stone) {
+        StoneValue.put(Stone.BLACK, "[B]");
+        StoneValue.put(Stone.WHITE, "[W]");
+        StoneValue.put(Stone.NONE, "[ ]");
         return StoneValue.get(stone);
     }
 }

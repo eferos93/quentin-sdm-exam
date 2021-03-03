@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
 public class RegionContainer {
     private final Graph<Intersection, DefaultEdge> graph;
     private final List<Intersection> intersections;

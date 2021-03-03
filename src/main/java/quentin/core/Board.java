@@ -1,5 +1,7 @@
 package quentin.core;
 
+import quentin.exceptions.OutsideOfBoardException;
+
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -26,18 +28,20 @@ public class Board {
         return new Board(size);
     }
 
-    public Intersection intersectionAt(Position position) throws NoSuchElementException {
-        return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow();
+    public Intersection intersectionAt(Position position) throws OutsideOfBoardException {
+        return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow(
+                () -> new OutsideOfBoardException(position)
+        );
     }
 
-    public void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
+    protected void addStoneAt(Stone stone, Position position) throws OutsideOfBoardException {
         Intersection intersection = intersectionAt(position);
         regionsContainer.removeNonEmptyIntersection(intersection);
         intersection.setStone(stone);
         chainContainer.updateChain(intersection);
     }
 
-    protected boolean isOccupied(Position position) throws NoSuchElementException {
+    protected boolean isOccupied(Position position) throws OutsideOfBoardException {
         return intersectionAt(position).isOccupied();
     }
 
@@ -64,11 +68,16 @@ public class Board {
     }
 
     protected void fillTerritories(Stone lastPlay) {
-        regionsContainer.getTerritoriesAndStonesToFill(lastPlay)
-                .forEach((territory, stone) -> territory.stream()
-                        .map(Intersection::getPosition)
-                        .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
-                );
+        getTerritoriesAndStones(lastPlay)
+                        .forEach((territory, stone) ->
+                                territory.stream()
+                                        .map(Intersection::getPosition)
+                                        .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
+                        );
+    }
+
+    protected Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone lastPlay){
+        return regionsContainer.getTerritoriesAndStonesToFill(lastPlay);
     }
 
     public int getBoardSize() {

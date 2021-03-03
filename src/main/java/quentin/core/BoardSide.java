@@ -66,7 +66,7 @@ public enum BoardSide {
         this.sideIndex = edgeIndex;
     }
 
-    public static void setBoardSize(int boardSize) {
+    protected static void setBoardSize(int boardSize) {
         BoardSide.boardSize = boardSize;
     }
 
