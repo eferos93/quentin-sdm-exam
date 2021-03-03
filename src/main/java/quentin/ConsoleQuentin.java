@@ -69,19 +69,19 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         return false;
     }
 
-
     @Override
     public void play() {
-        Player currentPlayer = getCurrentPlayer();
-        outputHandler.displayBoard(getBoard());
-        outputHandler.displayPlayer(currentPlayer);
-        if (isCurrentPlayerNotAbleToMakeAMove()) { passTurn(); play(); }
-        if (askForPieRule(currentPlayer)) { play(); }
-        getCoordinatesAndMakeMove(currentPlayer);
-        if (checkForWinner()) { return; }
-        fillTerritories();
-        if (checkForWinner()) { return; }
-        play();
+        while (true) {
+            Player currentPlayer = getCurrentPlayer();
+            outputHandler.displayBoard(getBoard());
+            outputHandler.displayPlayer(currentPlayer);
+            if (isCurrentPlayerNotAbleToMakeAMove()) { passTurn(); continue; }
+            if (askForPieRule(currentPlayer)) { continue; }
+            getCoordinatesAndMakeMove(currentPlayer);
+            if (checkForWinner()) { break; }
+            fillTerritories();
+            if (checkForWinner()) { break; }
+        }
     }
 
     private static int getBoardSize(ConsoleInputHandler consoleInputHandler, ConsoleOutputHandler consoleOutputHandler) {

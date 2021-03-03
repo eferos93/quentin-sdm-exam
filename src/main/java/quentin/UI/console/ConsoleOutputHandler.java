@@ -25,7 +25,7 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
     }
 
     public void printWantToReplay() {
-        System.out.println(Message.WANT_TO_REPLAY);
+        System.out.println(System.lineSeparator() + Message.WANT_TO_REPLAY);
     }
 
     @Override
