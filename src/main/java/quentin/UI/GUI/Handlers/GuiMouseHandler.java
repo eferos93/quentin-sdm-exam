@@ -2,9 +2,11 @@ package quentin.UI.GUI.Handlers;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import quentin.UI.GUI.Events.EventFactory;
+import quentin.GUIQuentin;
 import quentin.UI.GUI.GUI;
+import quentin.core.Player;
 import quentin.core.Position;
+import quentin.exceptions.QuentinException;
 
 public class GuiMouseHandler implements EventHandler<MouseEvent> {
 
@@ -19,27 +21,21 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
 
         gui.getGame().setNewPosition(Position.in(rowIndex + 1, columnIndex + 1));
 
-        if (!gui.getGame().checkNewMove()) {
-            System.out.println("INVALID MOVE");
+        GUIQuentin game = gui.getGame();
+        Player currentPlayer = game.getCurrentPlayer();
+        if (game.isCurrentPlayerNotAbleToMakeAMove()) {
+            game.passTurn();
             return;
         }
 
-        updateGUIAndFireEvents(columnIndex, rowIndex);
-        event.consume();
-    }
-
-    private void updateGUIAndFireEvents (int columnIndex, int rowIndex) {
-        gui.getBoardFiller().addPiece(gui.getGridBoard(), columnIndex, rowIndex, gui.getGame().getCurrentPlayer().getColor());
-        gui.getGame().play();
-
-        gui.fillGridBoardWithTerritories();
-        gui.getGame().fillTerritories();
-
-        if (gui.getGame().getPlayEndSuccessfully()) {
-            gui.getBoardFiller().switchLabelsCurrentPlayer(gui.getLabelBoard());
+        try {
+            game.play();
+        } catch (QuentinException exception) {
+            gui.notifyException(exception);
+            return;
         }
 
-        EventFactory.create().forEach(event -> gui.getGridBoard().fireEvent(event));
+        gui.updateGUIAndFireEvents(columnIndex, rowIndex, currentPlayer);
+        event.consume();
     }
-
 }

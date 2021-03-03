@@ -10,22 +10,27 @@ import java.util.stream.IntStream;
 
 public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
 
-    public static void displayTitle() { System.out.println(Message.TITLE);}
+    public void displayTitle() { System.out.println(Message.TITLE);}
 
-    public static void displayInstructions() { System.out.println(Message.INSTRUCTIONS);}
+    public void displayInstructions() { System.out.println(Message.INSTRUCTIONS);}
 
-    public static void askBoardSize() { System.out.println(Message.ASK_SIZE); }
+    public void askBoardSize() { System.out.println(Message.ASK_SIZE); }
 
-    public static void askBlackPlayerName() {
+    public void askBlackPlayerName() {
         System.out.println(Message.ASK_BLACK_PLAYER_NAME);
     }
 
-    public static void askWhitePlayerName() {
+    public void askWhitePlayerName() {
         System.out.println(Message.ASK_WHITE_PLAYER_NAME);
     }
 
-    public static void notifyException(String message) {
-        System.out.println(message);
+    public void printWantToReplay() {
+        System.out.println(System.lineSeparator() + Message.WANT_TO_REPLAY);
+    }
+
+    @Override
+    public void notifyException(Exception exception) {
+        System.out.println(exception.getMessage());
     }
 
     public void askRowCoordinate() { System.out.println(Message.CHOOSE_ROW); }
@@ -51,8 +56,7 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
     @Override
     public void notifyWinner(Player player) { System.out.printf(Message.END_GAME, player.getName(), ConsoleStoneRepresentation.getStoneValue(player.getColor())); }
 
-    @Override
-    public void askPie() { System.out.println(Message.QUERY_PIE); }
+    public void askPie(String whitePlayerName) { System.out.printf(Message.QUERY_PIE, whitePlayerName); }
 
     private void displayStone(Stone stone){
         System.out.print(ConsoleStoneRepresentation.getStoneValue(stone));
@@ -68,7 +72,6 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
         System.out.print("W" + System.lineSeparator());
     }
 
-    @Override
     public void displayBoard(Board board) {
         System.out.println("    " + "  B".repeat(board.getBoardSize()));
         IntStream.rangeClosed(1, board.getBoardSize()).forEach(rowIndex -> displayRow(board, rowIndex));

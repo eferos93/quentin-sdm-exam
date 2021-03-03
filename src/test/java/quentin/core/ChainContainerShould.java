@@ -2,7 +2,6 @@ package quentin.core;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import quentin.UI.GUI.Events.EndGameEvent;
+import quentin.UI.GUI.Events.EventFactory;
 import quentin.UI.GUI.Events.PassEvent;
 import quentin.UI.GUI.Events.PieRuleEvent;
 import quentin.UI.GUI.Handlers.GuiEndGameHandler;
@@ -24,15 +25,26 @@ import quentin.UI.GUI.Handlers.GuiPassHandler;
 import quentin.UI.GUI.Handlers.GuiPieHandler;
 import quentin.GUIQuentin;
 import quentin.core.Intersection;
+import quentin.core.Player;
+
 import java.util.stream.Stream;
 
 public class GUI extends Application {
 
-    private static final int tileSize = 50;
+    private static final int TILE_SIZE = 50;
     private Stage stage;
     private GridPane gridPane;
     private GUIQuentin guiQuentin;
     private GUIBoardDisplayer boardFiller;
+
+    public GridPane getGridBoard() {
+        GridPane borders = (GridPane) gridPane.getChildrenUnmodifiable().get(0);
+        return (GridPane) borders.getChildren().get(0);
+    }
+
+    public GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
+    public GUIQuentin getGame() { return guiQuentin; }
+    public GUIBoardDisplayer getBoardFiller() { return boardFiller; }
 
     @Override
     public void start(Stage primaryStage) {
@@ -72,7 +84,7 @@ public class GUI extends Application {
     private void initGameInterface(int boardSize, String namePlayer1, String namePlayer2) {
 
         guiQuentin = new GUIQuentin(boardSize,new GUIInputHandler(), new GUIOutputHandler(), namePlayer1, namePlayer2);
-        boardFiller = new GUIBoardDisplayer(boardSize, tileSize);
+        boardFiller = new GUIBoardDisplayer(boardSize, TILE_SIZE);
 
         GridPane gridBoard = createGridBoard();
         addGridEvent(gridBoard);
@@ -88,20 +100,21 @@ public class GUI extends Application {
     }
 
     public int coordinateConversion(double coordinate) {
-        return (int)(coordinate - 1) / tileSize;
+        return (int)(coordinate - 1) / TILE_SIZE;
     }
 
-    private Button createAndSetButton(String text, int width, int height, EventHandler<ActionEvent> handler) {
+    private Button createAndSetButton(String text, EventHandler<ActionEvent> handler) {
         Button button = new Button(text);
-        button.setPrefWidth(width);
-        button.setPrefHeight(height);
+        button.setPrefWidth(80);
+        button.setPrefHeight(35);
         button.setOnAction(handler);
         return button;
     }
 
-    private Stream<Button> createSetButtons(int width, int height){
+    private Stream<Button> initialButtons(){
 
-        Button startButton = createAndSetButton("Start", width, height, (ActionEvent e) -> {
+        Button startButton = createAndSetButton("Start", (ActionEvent e) -> {
+            stage.close();
             GUIInputHandler guiInputHandler = new GUIInputHandler();
             int size = guiInputHandler.askSize();
             String namePlayer1 = guiInputHandler.askPlayerName("1");
@@ -110,30 +123,34 @@ public class GUI extends Application {
             initGameInterface(size, namePlayer1, namePlayer2);
         });
 
-        Button endButton = createAndSetButton("Exit", width, height, (ActionEvent e) -> stop());
+        Button endButton = createAndSetButton("Exit", (ActionEvent e) -> stop());
 
-        Button rulesButton = createAndSetButton("Rules", width, height, (ActionEvent e) -> getHostServices().showDocument("https://boardgamegeek.com/boardgame/124095/quentin"));
+        Button rulesButton = createAndSetButton("Rules", (ActionEvent e) -> getHostServices().showDocument("https://boardgamegeek.com/boardgame/124095/quentin"));
         return Stream.of(startButton, endButton, rulesButton);
     }
 
-    private void initUI() {
+    private Stream<Button> replayButtons(){
+        Button yesButton = createAndSetButton("Yes", (ActionEvent e) -> initUI());
+        Button noButton = createAndSetButton("No", (ActionEvent e) -> stop());
+        return Stream.of(yesButton, noButton);
+    }
+
+    private void structureUI(Stream<Button> buttonStream, String content, int size, int buttonsSpacing){
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(20, 20, 20, 20));
         pane.setVgap(20);
 
-        Text text = new Text("Quentin Game");
-        text.setFont(Font.font("Tahoma", 40));
+        Text text = new Text(content);
+        text.setFont(Font.font("Tahoma", size));
 
         pane.add(text, 0, 0 );
         GridPane.setHalignment(text, HPos.CENTER);
-
-        Stream<Button> buttonStream = createSetButtons(80,35);
 
         HBox hBox = new HBox();
         buttonStream.forEach(button -> hBox.getChildren().add(button));
 
         pane.add(hBox, 0, 1);
-        hBox.setSpacing(15);
+        hBox.setSpacing(buttonsSpacing);
         GridPane.setHalignment(hBox, HPos.CENTER);
 
         Scene scene = new Scene(pane);
@@ -141,6 +158,14 @@ public class GUI extends Application {
         stage.setTitle("Quentin");
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void initUI() {
+        structureUI(initialButtons(), "Quentin Game", 40, 15);
+    }
+
+    public void endUI() {
+        structureUI(replayButtons(), "Do you wanna play again?", 20, 100);
     }
 
     public void fillGridBoardWithTerritories() {
@@ -156,13 +181,23 @@ public class GUI extends Application {
     @Override
     public void stop() { Platform.exit(); }
 
-    public GridPane getGridBoard() {
-        GridPane borders = (GridPane) gridPane.getChildrenUnmodifiable().get(0);
-        return (GridPane) borders.getChildren().get(0);
+    public void updateGUIAndFireEvents(int columnIndex, int rowIndex, Player currentPlayer) {
+        getBoardFiller().addPiece(getGridBoard(), columnIndex, rowIndex, currentPlayer.getColor());
+        fillGridBoardWithTerritories();
+        getGame().fillTerritories();
+        getBoardFiller().switchLabelsCurrentPlayer(getLabelBoard());
+        if (guiQuentin.checkAndPerformPieRule()) {
+            getGridBoard().fireEvent(EventFactory.createPieRuleEvent());
+        }
+        if (guiQuentin.isCurrentPlayerNotAbleToMakeAMove()) {
+            getGridBoard().fireEvent(EventFactory.createPassEvent());
+        }
+        if (guiQuentin.checkAndPerformEndGameRule()) {
+            getGridBoard().fireEvent(EventFactory.createEndGameEvent());
+        }
     }
 
-    public GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
-    public GUIQuentin getGame() { return guiQuentin; }
-    public GUIBoardDisplayer getBoardFiller() { return boardFiller; }
-
+    public void notifyException(Exception exception) {
+        guiQuentin.notifyException(exception);
+    }
 }

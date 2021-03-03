@@ -5,12 +5,12 @@ import quentin.UI.OutputHandler;
 import quentin.exceptions.*;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Stream;
 
 public abstract class Quentin<InputHandlerImplementation extends InputHandler, OutputHandlerImplementation extends OutputHandler> {
     private final Board board;
+    protected boolean whiteAlreadyPlayed = false;
     private Stone lastPlay = Stone.NONE;
     private final Player playerOne;
     private final Player playerTwo;
@@ -26,15 +26,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         this.playerTwo = new Player(Stone.WHITE, whitePlayerName);
     }
 
-    protected Quentin(int boardSize, InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler) {
-        this.board = Board.buildBoard(boardSize);
-        this.inputHandler = inputHandler;
-        this.outputHandler = outputHandler;
-        this.playerOne = new Player(Stone.BLACK, "player1");
-        this.playerTwo = new Player(Stone.WHITE, "player2");
-    }
-
-    protected void makeMove(Stone color, Position position) throws Exception {
+    protected void makeMove(Stone color, Position position) {
 
         if (isInvalidFirstPlayer(color)) {
             throw new InvalidFirstPlayerException();
@@ -53,12 +45,11 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         lastPlay = color;
     }
 
-    protected boolean isOccupied(Position position) {
+    protected boolean isOccupied(Position position) throws OutsideOfBoardException {
         return board.isOccupied(position);
     }
 
-    //TODO: maybe rename this method to avoid overloading
-    protected boolean isIllegalMove(Stone playerColor, Position position) {
+    protected boolean isIllegalMove(Stone playerColor, Position position) throws OutsideOfBoardException {
         return isIllegalMove(playerColor, board.intersectionAt(position));
     }
 
@@ -79,21 +70,19 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         return isFirstTurn() && playerColor == Stone.WHITE;
     }
 
-    public boolean isPlayerAbleToMakeAMove(Stone playerColor) {
-        return board.getEmptyIntersections().anyMatch(emptyIntersection -> !isIllegalMove(playerColor, emptyIntersection));
+    public boolean isCurrentPlayerNotAbleToMakeAMove() {
+        return board.getEmptyIntersections()
+                .allMatch(emptyIntersection -> isIllegalMove(getCurrentPlayer().getColor(), emptyIntersection));
     }
 
-    protected Player getPlayerOfColor(Stone color) throws NoSuchElementException {
+    protected Player getPlayerOfColor(Stone color) {
         return getPlayers().stream().filter(player -> player.getColor() == color).findFirst().orElseThrow();
     }
 
-    protected boolean checkIfPlayerIsAbleToMakeAMove(Player currentPlayer) {
-        if(!isPlayerAbleToMakeAMove(currentPlayer.getColor())) {
-            setLastPlay(currentPlayer.getColor());
-            outputHandler.notifyPass(currentPlayer);
-            return false;
-        }
-        return true;
+    public void passTurn() {
+        Player currentPlayer = getCurrentPlayer();
+        setLastPlay(currentPlayer.getColor());
+        outputHandler.notifyPass(currentPlayer);
     }
 
     protected boolean checkForWinner() {
@@ -137,6 +126,9 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         this.lastPlay = colorOfPlayerWhoJustPlayed;
     }
 
-    public abstract void play();
-}
+    public abstract void play() throws QuentinException;
 
+    public Player getCurrentPlayer() {
+        return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());
+    }
+}

@@ -3,7 +3,9 @@ package quentin.UI.GUI;
 
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
@@ -32,9 +34,15 @@ public class GUIBoardDisplayer {
         GridPane gridPane = new GridPane();
         gridPane.setStyle("-fx-background-color: #3CB371");
 
-        IntStream.range(0, boardSize).forEach(row ->
-                IntStream.range(0, boardSize).forEach(column ->
+        for(int gridCellIndex = 0; gridCellIndex < boardSize; gridCellIndex++){
+            gridPane.getColumnConstraints().add(new ColumnConstraints(tileSize));
+            gridPane.getRowConstraints().add(new RowConstraints(tileSize));
+        }
+
+        IntStream.range(0, boardSize).forEach(column ->
+                IntStream.range(0, boardSize).forEach(row ->
                         {
+
                             Line verticalLine = lineGenerator(0,tileSize);
 
                             GridPane.setHalignment(verticalLine, HPos.CENTER);
@@ -42,8 +50,32 @@ public class GUIBoardDisplayer {
 
                             Line horizontalLine = lineGenerator(tileSize,0);
 
-                            gridPane.add(horizontalLine, row, column);
-                            gridPane.add(verticalLine, row, column);
+                            if(row == 0){
+                                verticalLine.setEndY(tileSize/2.0);
+                                GridPane.setValignment(verticalLine, VPos.BOTTOM);
+                                horizontalLine.setStrokeWidth(4);
+                            }
+
+                            if(row == boardSize - 1){
+                                verticalLine.setEndY(tileSize/2.0);
+                                GridPane.setValignment(verticalLine, VPos.TOP);
+                                horizontalLine.setStrokeWidth(4);
+                            }
+
+                            if(column == 0){
+                                horizontalLine.setEndX(tileSize/2.0);
+                                GridPane.setHalignment(horizontalLine, HPos.RIGHT);
+                                verticalLine.setStrokeWidth(4);
+                            }
+
+                            if(column == boardSize - 1){
+                                horizontalLine.setEndX(tileSize/2.0);
+                                GridPane.setHalignment(horizontalLine, HPos.LEFT);
+                                verticalLine.setStrokeWidth(4);
+                            }
+
+                            gridPane.add(horizontalLine, column, row);
+                            gridPane.add(verticalLine, column, row);
                         }));
 
         return gridPane;
