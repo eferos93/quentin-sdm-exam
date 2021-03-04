@@ -31,7 +31,7 @@ import java.util.stream.Stream;
 
 public class GUI extends Application {
 
-    private static final int TILE_SIZE = 50;
+    public static final int TILE_SIZE = 50;
     private Stage stage;
     private GridPane gridPane;
     private GUIQuentin guiQuentin;
@@ -100,10 +100,6 @@ public class GUI extends Application {
         stage.setTitle("Board");
         stage.setScene(scene);
         stage.show();
-    }
-
-    public int coordinateConversion(double coordinate) {
-        return (int)(coordinate - 1) / TILE_SIZE;
     }
 
     private Button createAndSetButton(String text, EventHandler<ActionEvent> handler) {
