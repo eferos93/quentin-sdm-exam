@@ -45,11 +45,11 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         lastPlay = color;
     }
 
-    protected boolean isOccupied(Position position) throws OutsideOfBoardException {
+    private boolean isOccupied(Position position) throws OutsideOfBoardException {
         return board.isOccupied(position);
     }
 
-    protected boolean isIllegalMove(Stone playerColor, Position position) throws OutsideOfBoardException {
+    private boolean isIllegalMove(Stone playerColor, Position position) throws OutsideOfBoardException {
         return isIllegalMove(playerColor, board.intersectionAt(position));
     }
 
@@ -58,15 +58,15 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
                 !board.existsOrthogonallyAdjacentWithStone(intersection, playerColor);
     }
 
-    protected boolean isARepeatedPlay(Stone playerColor) {
+    private boolean isARepeatedPlay(Stone playerColor) {
         return lastPlay == playerColor;
     }
 
-    protected boolean isFirstTurn() {
+    private boolean isFirstTurn() {
         return lastPlay == Stone.NONE;
     }
 
-    protected boolean isInvalidFirstPlayer(Stone playerColor) {
+    private boolean isInvalidFirstPlayer(Stone playerColor) {
         return isFirstTurn() && playerColor == Stone.WHITE;
     }
 
@@ -81,7 +81,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
 
     public void passTurn() {
         Player currentPlayer = getCurrentPlayer();
-        setLastPlay(currentPlayer.getColor());
+        this.lastPlay = currentPlayer.getColor();
         outputHandler.notifyPass(currentPlayer);
     }
 
@@ -122,13 +122,9 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         return this.lastPlay;
     }
 
-    protected void setLastPlay(Stone colorOfPlayerWhoJustPlayed) {
-        this.lastPlay = colorOfPlayerWhoJustPlayed;
-    }
-
-    public abstract void play() throws QuentinException;
-
     public Player getCurrentPlayer() {
         return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());
     }
+
+    public abstract void play() throws QuentinException;
 }
