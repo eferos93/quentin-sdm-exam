@@ -180,11 +180,14 @@ public class GUI extends Application {
     @Override
     public void stop() { Platform.exit(); }
 
-    public void updateGUIAndFireEvents(int columnIndex, int rowIndex, Player currentPlayer) {
+    public void updateGUI(int columnIndex, int rowIndex, Player currentPlayer) {
         boardFiller.addPiece(getGridBoard(), columnIndex, rowIndex, currentPlayer.getColor());
         fillGridBoardWithTerritories();
         getGame().fillTerritories();
         boardFiller.switchLabelsCurrentPlayer(getLabelBoard());
+    }
+
+    public void fireEvents() {
         if (guiQuentin.checkAndPerformPieRule()) {
             getGridBoard().fireEvent(EventFactory.createPieRuleEvent());
         }

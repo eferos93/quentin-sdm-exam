@@ -39,7 +39,8 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
             return;
         }
 
-        gui.updateGUIAndFireEvents(columnIndex, rowIndex, currentPlayer);
+        gui.updateGUI(columnIndex, rowIndex, currentPlayer);
+        gui.fireEvents();
         event.consume();
     }
 }
