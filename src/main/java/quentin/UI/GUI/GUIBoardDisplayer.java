@@ -29,7 +29,7 @@ public class GUIBoardDisplayer {
         colorPaintMap.put(Stone.WHITE, Color.WHITE);
     }
 
-    public GridPane createEmptyBoard() {
+    GridPane createEmptyBoard() {
 
         GridPane gridPane = new GridPane();
         gridPane.setStyle("-fx-background-color: #3CB371");
@@ -88,7 +88,7 @@ public class GUIBoardDisplayer {
         return generatedLine;
     }
 
-    public void addPiece(GridPane gridPane, int coordinateX, int coordinateY, Stone stone) {
+    void addPiece(GridPane gridPane, int coordinateX, int coordinateY, Stone stone) {
         Circle piece = new Circle(coordinateX * tileSize, coordinateY * tileSize, tileSize * 0.4);
         piece.setFill(colorPaintMap.get(stone));
         GridPane.setHalignment(piece, HPos.CENTER);
@@ -96,7 +96,7 @@ public class GUIBoardDisplayer {
         gridPane.add(piece, coordinateX, coordinateY);
     }
 
-    public GridPane createLabelPane(String namePLayerOne, String namePlayerTwo) {
+    GridPane createLabelPane(String namePLayerOne, String namePlayerTwo) {
         GridPane gridLabels = new GridPane();
         gridLabels.setVgap(10);
 
@@ -115,7 +115,7 @@ public class GUIBoardDisplayer {
         return gridLabels;
     }
 
-    public void switchColorPlayerLabel(GridPane labelBoard){
+    void switchColorPlayerLabel(GridPane labelBoard){
         switchColorLabel(labelBoard, 3, Color.BLACK);
         switchColorLabel(labelBoard, 4, Color.WHITE);
     }
@@ -125,7 +125,7 @@ public class GUIBoardDisplayer {
         currentPlayerLabel.setFill(color);
     }
 
-    public void switchLabelsCurrentPlayer(GridPane labelBoard){
+    void switchLabelsCurrentPlayer(GridPane labelBoard){
         Circle currentPlayerLabel = (Circle) labelBoard.getChildren().get(5);
         currentPlayerLabel.setFill(currentPlayerLabel.getFill() == Color.BLACK ? Color.WHITE : Color.BLACK);
     }
