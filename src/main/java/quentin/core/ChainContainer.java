@@ -9,13 +9,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChainContainer {
-    private final Map<Stone, Graph<Intersection, DefaultEdge>> chains = new HashMap<>() {{
-        put(Stone.BLACK, new SimpleGraph<>(DefaultEdge.class));
-        put(Stone.WHITE, new SimpleGraph<>(DefaultEdge.class));
-    }};
+    private final EnumMap<Stone, Graph<Intersection, DefaultEdge>> chains = new EnumMap<>(Stone.class);
     private final Set<BoardSide> sides = EnumSet.allOf(BoardSide.class);
 
     ChainContainer(int boardSize) {
+
+        chains.put(Stone.BLACK, new SimpleGraph<>(DefaultEdge.class));
+        chains.put(Stone.WHITE, new SimpleGraph<>(DefaultEdge.class));
+
         BoardSide.setBoardSize(boardSize);
         sides.forEach(BoardSide::initialiseSide);
     }
