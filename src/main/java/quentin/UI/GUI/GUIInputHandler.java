@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public class GUIInputHandler implements InputHandler {
 
+    @Override
     public boolean askPie(String whitePlayerName){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Pie Rule Dialog");
@@ -21,7 +22,7 @@ public class GUIInputHandler implements InputHandler {
         return result.filter(buttonType -> buttonType == ButtonType.OK).isPresent();
     }
 
-    public int askSize() {
+    int askSize() {
         List<Integer> sizes = List.of(4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(13, sizes);
 
@@ -33,7 +34,7 @@ public class GUIInputHandler implements InputHandler {
         return dialog.showAndWait().orElse(dialog.getDefaultChoice());
     }
 
-    public String askPlayerName(String playerNumber) {
+    String askPlayerName(String playerNumber) {
 
         TextInputDialog dialog = new TextInputDialog("Player ".concat(playerNumber));
         dialog.setTitle("Enter name player " + playerNumber);
