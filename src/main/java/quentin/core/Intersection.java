@@ -49,19 +49,11 @@ public class Intersection {
     }
 
     protected boolean isOrthogonalTo(Intersection otherIntersection) {
-        final Position otherIntersectionPosition = otherIntersection.getPosition();
-        return position.isBelowWithRespectTo(otherIntersectionPosition) ||
-                position.isAboveWithRespectTo(otherIntersectionPosition) ||
-                position.isOnTheLeftWithRespectTo(otherIntersectionPosition) ||
-                position.isOnTheRightWithRespectTo(otherIntersectionPosition);
+        return position.isOrthogonalTo(otherIntersection.getPosition());
     }
 
     protected boolean isDiagonalTo(Intersection otherIntersection) {
-        final Position otherIntersectionPosition = otherIntersection.getPosition();
-        return position.isUpLeftRespectTo(otherIntersectionPosition) ||
-                position.isUpRightRespectTo(otherIntersectionPosition) ||
-                position.isDownLeftRespectTo(otherIntersectionPosition) ||
-                position.isDownRightRespectTo(otherIntersectionPosition);
+        return position.isDiagonalTo(otherIntersection.getPosition());
     }
 
     protected boolean hasStone(Stone stone) {
