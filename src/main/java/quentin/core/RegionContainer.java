@@ -32,7 +32,7 @@ public class RegionContainer {
         new GridGraphGenerator<Intersection, DefaultEdge>(boardSize, boardSize).generateGraph(graph, null);
     }
 
-    protected void removeNonEmptyIntersection(Intersection nonEmptyIntersection) {
+    void removeNonEmptyIntersection(Intersection nonEmptyIntersection) {
         graph.removeVertex(nonEmptyIntersection);
     }
 
@@ -90,7 +90,7 @@ public class RegionContainer {
         }
     }
 
-    protected Map<Set<Intersection>, Stone> getTerritoriesAndStonesToFill(Stone lastPlay) {
+    Map<Set<Intersection>, Stone> getTerritoriesAndStonesToFill(Stone lastPlay) {
         return getTerritories().stream()
                 .map(territory -> {
                     Stone stone = getStoneToFillTerritory(territory, lastPlay);
