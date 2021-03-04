@@ -29,19 +29,20 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
     }
 
     private Position getPosition() {
-        return Position.in(getCoordinate(outputHandler::askRowCoordinate), getCoordinate(outputHandler::askColumnCoordinate));
+        return Position.in(getCoordinate(outputHandler::askRowCoordinate),
+                getCoordinate(outputHandler::askColumnCoordinate));
     }
 
     private void getCoordinatesAndMakeMove(Player currentPlayer) {
         boolean areCoordinatesValid = false;
-        while(!areCoordinatesValid){
+        do {
             try {
                 makeMove(currentPlayer.getColor(), getPosition());
                 areCoordinatesValid = true;
             } catch (QuentinException exception) {
                 outputHandler.notifyException(exception);
             }
-        }
+        } while (!areCoordinatesValid);
     }
 
     private boolean isWhitePlayerFirstTurn(Player currentPlayer) {
