@@ -12,7 +12,7 @@ public class GuiPieHandler implements EventHandler<PieRuleEvent> {
 
     @Override
     public void handle(PieRuleEvent event) {
-        gui.getBoardFiller().switchColorPlayerLabel(gui.getLabelBoard());
+        gui.switchColorPlayerLabel();
         event.consume();
     }
 }

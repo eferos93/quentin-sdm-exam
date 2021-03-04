@@ -37,7 +37,7 @@ public class GUI extends Application {
     private GUIQuentin guiQuentin;
     private GUIBoardDisplayer boardFiller;
 
-    public GridPane getGridBoard() {
+    private GridPane getGridBoard() {
         GridPane borders = (GridPane) gridPane.getChildrenUnmodifiable().get(0);
         return (GridPane) borders.getChildren().get(0);
     }
@@ -45,6 +45,10 @@ public class GUI extends Application {
     public GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
     public GUIQuentin getGame() { return guiQuentin; }
     public GUIBoardDisplayer getBoardFiller() { return boardFiller; }
+
+    public void switchColorPlayerLabel() {
+        boardFiller.switchColorPlayerLabel(getLabelBoard());
+    }
 
     @Override
     public void start(Stage primaryStage) {
