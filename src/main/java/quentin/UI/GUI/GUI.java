@@ -44,7 +44,6 @@ public class GUI extends Application {
 
     public GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
     public GUIQuentin getGame() { return guiQuentin; }
-    public GUIBoardDisplayer getBoardFiller() { return boardFiller; }
 
     public void switchColorPlayerLabel() {
         boardFiller.switchColorPlayerLabel(getLabelBoard());
@@ -175,7 +174,7 @@ public class GUI extends Application {
     public void fillGridBoardWithTerritories() {
         guiQuentin.getTerritoriesAndStones(guiQuentin.getLastPlay()).forEach((territory, stone) ->
                 territory.stream().map(Intersection::getPosition).
-                        forEach(position -> this.getBoardFiller().
+                        forEach(position -> boardFiller.
                                 addPiece(this.getGridBoard(),
                                         position.getColumn() - 1, // to be consistent with the board gui representation
                                         position.getRow() - 1, // to be consistent with the board gui representation
@@ -186,10 +185,10 @@ public class GUI extends Application {
     public void stop() { Platform.exit(); }
 
     public void updateGUIAndFireEvents(int columnIndex, int rowIndex, Player currentPlayer) {
-        getBoardFiller().addPiece(getGridBoard(), columnIndex, rowIndex, currentPlayer.getColor());
+        boardFiller.addPiece(getGridBoard(), columnIndex, rowIndex, currentPlayer.getColor());
         fillGridBoardWithTerritories();
         getGame().fillTerritories();
-        getBoardFiller().switchLabelsCurrentPlayer(getLabelBoard());
+        boardFiller.switchLabelsCurrentPlayer(getLabelBoard());
         if (guiQuentin.checkAndPerformPieRule()) {
             getGridBoard().fireEvent(EventFactory.createPieRuleEvent());
         }
