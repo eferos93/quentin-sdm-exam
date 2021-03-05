@@ -33,16 +33,16 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                 getCoordinate(outputHandler::askColumnCoordinate));
     }
 
-    private void getCoordinatesAndMakeMove(Player currentPlayer) {
-        boolean areCoordinatesValid = false;
+    private void getPositionAndMakeMove(Player currentPlayer) {
+        boolean arePositionCoordinatesValid = false;
         do {
             try {
                 makeMove(currentPlayer.getColor(), getPosition());
-                areCoordinatesValid = true;
+                arePositionCoordinatesValid = true;
             } catch (QuentinException exception) {
                 outputHandler.notifyException(exception);
             }
-        } while (!areCoordinatesValid);
+        } while (!arePositionCoordinatesValid);
     }
 
     private boolean isWhitePlayerFirstTurn(Player currentPlayer) {
@@ -78,7 +78,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
             outputHandler.displayPlayer(currentPlayer);
             if (isCurrentPlayerNotAbleToMakeAMove()) { passTurn(); continue; }
             if (askForPieRule(currentPlayer)) { continue; }
-            getCoordinatesAndMakeMove(currentPlayer);
+            getPositionAndMakeMove(currentPlayer);
             if (checkForWinner()) { break; }
             fillTerritories();
             if (checkForWinner()) { break; }
@@ -90,7 +90,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         int boardSize = 0;
         boolean insertedAValidBoardSize = false;
 
-        while(!insertedAValidBoardSize){
+        while (!insertedAValidBoardSize) {
             try {
                 boardSize = consoleInputHandler.getInteger();
                 if (boardSize < 4 || boardSize > 13) {
