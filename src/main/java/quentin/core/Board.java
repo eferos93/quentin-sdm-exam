@@ -70,7 +70,6 @@ public class Board {
 
     protected Set<Position> fillTerritories(Stone lastPlay) {
         Map<Set<Intersection>, Stone> territoriesToFill = getTerritoriesAndStones(lastPlay);
-
         territoriesToFill
                 .forEach((territory, stone) ->
                                 territory.stream()
