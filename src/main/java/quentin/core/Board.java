@@ -46,20 +46,6 @@ public class Board {
         return intersectionAt(position).isOccupied();
     }
 
-    protected boolean existsOrthogonallyAdjacentWithStone(Intersection intersection, Stone stone) {
-        return intersections.stream()
-                .anyMatch(otherIntersection ->
-                        otherIntersection.isOrthogonalTo(intersection) && otherIntersection.hasStone(stone)
-                );
-    }
-
-    protected boolean existsDiagonallyAdjacentWithStone(Intersection intersection, Stone stone) {
-        return intersections.stream()
-                .anyMatch(otherIntersection ->
-                        otherIntersection.isDiagonalTo(intersection) && otherIntersection.hasStone(stone)
-                );
-    }
-
     protected Set<Intersection> getDiagonallyAdjacentIntersectionsOfColour(Intersection intersection, Stone color) {
         return intersections.stream()
                 .filter(intersection::isDiagonalTo)
