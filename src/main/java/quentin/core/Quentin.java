@@ -44,8 +44,8 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
             revertChanges(territoriesFilled);
             throw new IllegalMoveException(position);
         }
-        territoriesFilled.forEach(board::updateChains);
-        board.updateChains(position);
+//        territoriesFilled.forEach(board::updateChains);
+//        board.updateChains(position);
 //        board.addStoneAt(color, position);
         lastPlay = color;
     }
@@ -116,9 +116,9 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         Stream.of(playerOne, playerTwo).forEach(Player::changeSide);
     }
 
-    public void fillTerritories() {
-        board.fillTerritories(lastPlay);
-    }
+//    public void fillTerritories() {
+//        board.fillTerritories(lastPlay);
+//    }
 
     public Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone stone){
         return board.getTerritoriesAndStones(stone);
