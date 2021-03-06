@@ -185,10 +185,9 @@ public class BoardShould {
         customBoard.addStoneAt(Stone.BLACK, in(3, 3));
         customBoard.addStoneAt(Stone.WHITE, in(1, 3));
         customBoard.addStoneAt(Stone.WHITE, in(3, 1));
-        customBoard.addStoneAt(Stone.BLACK, in(2, 2));
 
         Set<Intersection> colourAlikeDiagonallyAdjacentIntersections =
-                customBoard.getColourAlikeDiagonallyAdjacentIntersections(customBoard.intersectionAt(in(2, 2)));
+                customBoard.getDiagonallyAdjacentIntersectionsOfColour(customBoard.intersectionAt(in(2, 2)), Stone.BLACK);
         assertTrue(colourAlikeDiagonallyAdjacentIntersections.containsAll(blackIntersections));
         assertFalse(colourAlikeDiagonallyAdjacentIntersections.containsAll(whiteIntersections));
     }
@@ -212,7 +211,9 @@ public class BoardShould {
         customBoard.addStoneAt(Stone.WHITE, in (2, 3));
 
         Set<Intersection> colourAlikeOrthogonallyAdjacentIntersections =
-                customBoard.getColourAlikeOrthogonallyAdjacentIntersections(customBoard.intersectionAt(in(2, 2)));
+                customBoard.getOrthogonallyAdjacentIntersectionsOfColour(
+                        customBoard.intersectionAt(in(2, 2)), Stone.BLACK
+                );
         assertTrue(colourAlikeOrthogonallyAdjacentIntersections.containsAll(blackIntersections));
         assertFalse(colourAlikeOrthogonallyAdjacentIntersections.containsAll(whiteIntersections));
     }
