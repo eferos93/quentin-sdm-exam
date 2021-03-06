@@ -63,59 +63,6 @@ public class BoardShould {
         assertEquals(intersection.getStone(), stone);
     }
 
-//    @TestFactory
-//    Stream<DynamicTest> checkOrthogonalAdjacent() throws OutsideOfBoardException {
-//        Board customBoard = Board.buildBoard(13);
-//        customBoard.addStoneAt(Stone.WHITE, in(7, 9));
-//        customBoard.addStoneAt(Stone.WHITE, in(3, 4));
-//        customBoard.addStoneAt(Stone.WHITE, in(4, 4));
-//        customBoard.addStoneAt(Stone.WHITE, in(12, 5));
-//        customBoard.addStoneAt(Stone.WHITE, in(13, 5));
-//
-//        List<Intersection> inputList = List.of(
-//                customBoard.intersectionAt(in(7, 9)),
-//                customBoard.intersectionAt(in(3, 4)),
-//                customBoard.intersectionAt(in(12, 5))
-//        );
-//
-//        List<Boolean> outputList = List.of(false, true, true);
-//
-//        return inputList.stream()
-//                .map(intersection -> DynamicTest.dynamicTest("Checking Orthogonal Adjacent of " + intersection,
-//                        () -> {
-//                            int index = inputList.indexOf(intersection);
-//                            assertEquals(outputList.get(index), customBoard.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
-//                        })
-//                );
-//    }
-
-
-//    @TestFactory
-//    Stream<DynamicTest> checkDiagonalAdjacent() throws OutsideOfBoardException {
-//        Board customBoard = Board.buildBoard(13);
-//        customBoard.addStoneAt(Stone.WHITE, in(7, 9));
-//        customBoard.addStoneAt(Stone.WHITE, in(3, 4));
-//        customBoard.addStoneAt(Stone.WHITE, in(2, 5));
-//        customBoard.addStoneAt(Stone.WHITE, in(12, 5));
-//        customBoard.addStoneAt(Stone.WHITE, in(13, 4));
-//
-//        List<Intersection> inputList = List.of(
-//                customBoard.intersectionAt(in(7, 9)),
-//                customBoard.intersectionAt(in(3, 4)),
-//                customBoard.intersectionAt(in(12, 5))
-//        );
-//
-//        List<Boolean> outputList = List.of(false, true, true);
-//
-//        return inputList.stream()
-//                .map(intersection -> DynamicTest.dynamicTest("Checking Diagonal Adjacent of " + intersection,
-//                        () -> {
-//                            int index = inputList.indexOf(intersection);
-//                            assertEquals(outputList.get(index), customBoard.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
-//                        })
-//                );
-//    }
-
     @Test
     public void fillTerritoryWithEqualNumberOfStoneOfTheSameColor() {
         int boardSize = 13;
