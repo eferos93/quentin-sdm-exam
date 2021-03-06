@@ -32,15 +32,16 @@ public class RegionContainer {
         new GridGraphGenerator<Intersection, DefaultEdge>(boardSize, boardSize).generateGraph(graph, null);
     }
 
-    void updateRegionContainer(Intersection nonEmptyIntersection) {
-        if (nonEmptyIntersection.hasStone(Stone.NONE)) {
-            graph.addVertex(nonEmptyIntersection);
-            graph.vertexSet().stream()
-                    .filter(nonEmptyIntersection::isOrthogonalTo)
-                    .forEach(orthogonalIntersection -> graph.addEdge(orthogonalIntersection, nonEmptyIntersection));
-        } else {
-            graph.removeVertex(nonEmptyIntersection);
-        }
+    void removeIntersection(Intersection nonEmptyIntersection) {
+//        if (nonEmptyIntersection.hasStone(Stone.NONE)) {
+//            graph.addVertex(nonEmptyIntersection);
+//            graph.vertexSet().stream()
+//                    .filter(nonEmptyIntersection::isOrthogonalTo)
+//                    .forEach(orthogonalIntersection -> graph.addEdge(orthogonalIntersection, nonEmptyIntersection));
+//        } else {
+            boolean isRemoved = graph.removeVertex(nonEmptyIntersection);
+            System.out.println(isRemoved);
+//        }
     }
 
     private List<Set<Intersection>> getRegions() {
@@ -104,5 +105,12 @@ public class RegionContainer {
                     return Map.entry(territory, stone);
                 })
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public void addIntersection(Intersection intersection) {
+        graph.addVertex(intersection);
+            graph.vertexSet().stream()
+                    .filter(intersection::isOrthogonalTo)
+                    .forEach(orthogonalIntersection -> graph.addEdge(orthogonalIntersection, intersection));
     }
 }

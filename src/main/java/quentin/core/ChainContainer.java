@@ -23,16 +23,20 @@ public class ChainContainer {
 
     protected void updateChain(Intersection newIntersection) {
         Optional<Graph<Intersection, DefaultEdge>> chainsOfColor = Optional.ofNullable(chains.get(newIntersection.getStone()));
-        chainsOfColor.ifPresentOrElse(chains -> {
+        chainsOfColor.ifPresent(chains -> {
             chains.addVertex(newIntersection);
             chains.vertexSet().stream()
                     .filter(newIntersection::isOrthogonalTo)
                     .forEach(orthogonalIntersection -> chains.addEdge(orthogonalIntersection, newIntersection));
-        }, () -> chains.forEach((key, value) -> value.removeVertex(newIntersection)));
+        });//, () -> chains.forEach((key, value) -> value.removeVertex(newIntersection)));
 //        chainsOfColor.addVertex(newIntersection);
 //        chainsOfColor.vertexSet().stream()
 //                .filter(newIntersection::isOrthogonalTo)
 //                .forEach(orthogonalIntersection -> chainsOfColor.addEdge(orthogonalIntersection, newIntersection));
+    }
+
+    protected void removeIntersection(Intersection intersection) {
+        chains.get(intersection.getStone()).removeVertex(intersection);
     }
 
     private boolean hasACompleteChain(Map.Entry<Stone, Graph<Intersection, DefaultEdge>> chainsOfAGivenColor) {

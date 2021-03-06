@@ -37,8 +37,8 @@ public class Board {
 
     protected void addStoneAt(Stone stone, Position position) throws OutsideOfBoardException {
         Intersection intersection = intersectionAt(position);
+        regionsContainer.removeIntersection(intersection);
         intersection.setStone(stone);
-        regionsContainer.updateRegionContainer(intersection);
         chainContainer.updateChain(intersection);
     }
 
@@ -93,5 +93,13 @@ public class Board {
 
     public int getBoardSize() {
         return BOARD_SIZE;
+    }
+
+    protected void updateRegions(Intersection intersection) {
+        regionsContainer.addIntersection(intersection);
+    }
+
+    protected void removeFromChain(Intersection intersection) {
+        chainContainer.removeIntersection(intersection);
     }
 }

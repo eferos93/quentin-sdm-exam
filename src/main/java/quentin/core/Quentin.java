@@ -51,7 +51,12 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     }
 
     protected void revertChanges(Set<Position> intersectionsToBeReverted) {
-        intersectionsToBeReverted.forEach(position -> board.addStoneAt(Stone.NONE, position));
+        intersectionsToBeReverted.forEach(position -> {
+            Intersection intersection = board.intersectionAt(position);
+            board.removeFromChain(intersection);
+            intersection.setStone(Stone.NONE);
+            board.updateRegions(intersection);
+        });
     }
 
     private boolean isOccupied(Position position) throws OutsideOfBoardException {
