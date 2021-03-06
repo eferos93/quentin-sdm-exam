@@ -42,10 +42,6 @@ public class Board {
         chainContainer.updateChain(intersection);
     }
 
-    void updateChains(Position intersectionPosition) {
-        chainContainer.updateChain(intersectionAt(intersectionPosition));
-    }
-
     protected boolean isOccupied(Position position) throws OutsideOfBoardException {
         return intersectionAt(position).isOccupied();
     }
@@ -95,11 +91,10 @@ public class Board {
         return BOARD_SIZE;
     }
 
-    protected void updateRegions(Intersection intersection) {
-        regionsContainer.addIntersection(intersection);
-    }
-
-    protected void removeFromChain(Intersection intersection) {
+    public void revertForIntersectionIn(Position position) {
+        Intersection intersection = intersectionAt(position);
         chainContainer.removeIntersection(intersection);
+        intersection.setStone(Stone.NONE);
+        regionsContainer.addIntersection(intersection);
     }
 }

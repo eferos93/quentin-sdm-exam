@@ -41,22 +41,10 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
 
         if (isIllegalMove(color, position)) {
             territoriesFilled.add(position);
-            revertChanges(territoriesFilled);
+            territoriesFilled.forEach(board::revertForIntersectionIn);
             throw new IllegalMoveException(position);
         }
-//        territoriesFilled.forEach(board::updateChains);
-//        board.updateChains(position);
-//        board.addStoneAt(color, position);
         lastPlay = color;
-    }
-
-    protected void revertChanges(Set<Position> intersectionsToBeReverted) {
-        intersectionsToBeReverted.forEach(position -> {
-            Intersection intersection = board.intersectionAt(position);
-            board.removeFromChain(intersection);
-            intersection.setStone(Stone.NONE);
-            board.updateRegions(intersection);
-        });
     }
 
     private boolean isOccupied(Position position) throws OutsideOfBoardException {
@@ -120,10 +108,6 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     public void applyPieRule() {
         Stream.of(playerOne, playerTwo).forEach(Player::changeSide);
     }
-
-//    public void fillTerritories() {
-//        board.fillTerritories(lastPlay);
-//    }
 
     public Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone stone){
         return board.getTerritoriesAndStones(stone);
