@@ -6,8 +6,9 @@ import quentin.exceptions.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
+
+import static java.util.function.Predicate.not;
 
 public abstract class Quentin<InputHandlerImplementation extends InputHandler, OutputHandlerImplementation extends OutputHandler> {
     private final Board board;
@@ -56,11 +57,9 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         Set<Intersection> colorAlikeOrthogonalIntersections =
                 board.getOrthogonallyAdjacentIntersectionsOfColour(intersection, playerColor);
         return board.getDiagonallyAdjacentIntersectionsOfColour(intersection, playerColor).stream()
-                .reduce(false,
-                        (partialResult, nextDiagonalIntersection) -> partialResult ||
-                            board.getOrthogonallyAdjacentIntersectionsOfColour(nextDiagonalIntersection, playerColor).stream()
-                                    .allMatch(Predicate.not(colorAlikeOrthogonalIntersections::contains)),
-                        Boolean::logicalOr
+                .anyMatch(diagonalIntersection ->
+                        board.getOrthogonallyAdjacentIntersectionsOfColour(diagonalIntersection, playerColor).stream()
+                            .noneMatch(colorAlikeOrthogonalIntersections::contains)
                 );
     }
 
