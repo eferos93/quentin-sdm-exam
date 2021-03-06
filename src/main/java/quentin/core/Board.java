@@ -3,6 +3,7 @@ package quentin.core;
 import quentin.exceptions.OutsideOfBoardException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static quentin.core.Position.in;
@@ -59,16 +60,18 @@ public class Board {
                 );
     }
 
-    protected Stream<Intersection> getColourAlikeDiagonallyAdjacentIntersections(Intersection intersection) {
+    protected Set<Intersection> getColourAlikeDiagonallyAdjacentIntersections(Intersection intersection) {
         return intersections.stream()
-                .filter(intersection::isOrthogonalTo)
-                .filter(diagonalIntersection -> intersection.hasStone(diagonalIntersection.getStone()));
+                .filter(intersection::isDiagonalTo)
+                .filter(diagonalIntersection -> intersection.hasStone(diagonalIntersection.getStone()))
+                .collect(Collectors.toUnmodifiableSet());
     }
 
-    protected Stream<Intersection> getOrthogonallyAdjacentIntersections(Intersection intersection) {
+    protected Set<Intersection> getOrthogonallyAdjacentIntersections(Intersection intersection) {
         return intersections.stream()
                 .filter(intersection::isOrthogonalTo)
-                .filter(diagonalIntersection -> intersection.hasStone(diagonalIntersection.getStone()));
+                .filter(diagonalIntersection -> intersection.hasStone(diagonalIntersection.getStone()))
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     protected Stone colorWithCompleteChain() {

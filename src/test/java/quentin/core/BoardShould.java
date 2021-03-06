@@ -167,4 +167,29 @@ public class BoardShould {
         customBoard.addStoneAt(Stone.BLACK, in(3, 2));
         assertEquals(Stone.BLACK, customBoard.colorWithCompleteChain());
     }
+
+    @Test
+    public void provideCorrectDiagonallyAdjacentStones() {
+        Board customBoard = Board.buildBoard(4);
+        List<Intersection> blackIntersections = List.of(
+                customBoard.intersectionAt(in(1, 1)),
+                customBoard.intersectionAt(in(3, 3))
+        );
+
+        List<Intersection> whiteIntersections = List.of(
+                customBoard.intersectionAt(in(1, 3)),
+                customBoard.intersectionAt(in(3, 1))
+        );
+
+        customBoard.addStoneAt(Stone.BLACK, in(1, 1));
+        customBoard.addStoneAt(Stone.BLACK, in(3, 3));
+        customBoard.addStoneAt(Stone.WHITE, in(1, 3));
+        customBoard.addStoneAt(Stone.WHITE, in(3, 1));
+        customBoard.addStoneAt(Stone.BLACK, in(2, 2));
+
+        Set<Intersection> colourAlikeAdjacentIntersections =
+                customBoard.getColourAlikeDiagonallyAdjacentIntersections(customBoard.intersectionAt(in(2, 2)));
+        assertTrue(colourAlikeAdjacentIntersections.containsAll(blackIntersections));
+        assertFalse(colourAlikeAdjacentIntersections.containsAll(whiteIntersections));
+    }
 }
