@@ -169,7 +169,7 @@ public class BoardShould {
     }
 
     @Test
-    public void provideCorrectDiagonallyAdjacentStones() {
+    public void provideCorrectColourAlikeDiagonallyAdjacentStones() {
         Board customBoard = Board.buildBoard(4);
         List<Intersection> blackIntersections = List.of(
                 customBoard.intersectionAt(in(1, 1)),
@@ -187,9 +187,33 @@ public class BoardShould {
         customBoard.addStoneAt(Stone.WHITE, in(3, 1));
         customBoard.addStoneAt(Stone.BLACK, in(2, 2));
 
-        Set<Intersection> colourAlikeAdjacentIntersections =
+        Set<Intersection> colourAlikeDiagonallyAdjacentIntersections =
                 customBoard.getColourAlikeDiagonallyAdjacentIntersections(customBoard.intersectionAt(in(2, 2)));
-        assertTrue(colourAlikeAdjacentIntersections.containsAll(blackIntersections));
-        assertFalse(colourAlikeAdjacentIntersections.containsAll(whiteIntersections));
+        assertTrue(colourAlikeDiagonallyAdjacentIntersections.containsAll(blackIntersections));
+        assertFalse(colourAlikeDiagonallyAdjacentIntersections.containsAll(whiteIntersections));
+    }
+
+    @Test
+    public void provideCorrectColourAlikeOrthogonallyAdjacentStones() {
+        Board customBoard = Board.buildBoard(4);
+        List<Intersection> blackIntersections = List.of(
+                customBoard.intersectionAt(in(1, 2)),
+                customBoard.intersectionAt(in(3, 2))
+        );
+        List<Intersection> whiteIntersections = List.of(
+                customBoard.intersectionAt(in(2, 1)),
+                customBoard.intersectionAt(in(2, 3))
+        );
+
+        customBoard.addStoneAt(Stone.BLACK, in(2, 2));
+        customBoard.addStoneAt(Stone.BLACK, in(1, 2));
+        customBoard.addStoneAt(Stone.BLACK, in(3, 2));
+        customBoard.addStoneAt(Stone.WHITE, in(2, 1));
+        customBoard.addStoneAt(Stone.WHITE, in (2, 3));
+
+        Set<Intersection> colourAlikeOrthogonallyAdjacentIntersections =
+                customBoard.getColourAlikeOrthogonallyAdjacentIntersections(customBoard.intersectionAt(in(2, 2)));
+        assertTrue(colourAlikeOrthogonallyAdjacentIntersections.containsAll(blackIntersections));
+        assertFalse(colourAlikeOrthogonallyAdjacentIntersections.containsAll(whiteIntersections));
     }
 }

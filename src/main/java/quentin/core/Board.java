@@ -67,7 +67,7 @@ public class Board {
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    protected Set<Intersection> getOrthogonallyAdjacentIntersections(Intersection intersection) {
+    protected Set<Intersection> getColourAlikeOrthogonallyAdjacentIntersections(Intersection intersection) {
         return intersections.stream()
                 .filter(intersection::isOrthogonalTo)
                 .filter(diagonalIntersection -> intersection.hasStone(diagonalIntersection.getStone()))
