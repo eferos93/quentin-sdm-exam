@@ -59,6 +59,18 @@ public class Board {
                 );
     }
 
+    protected Stream<Intersection> getColourAlikeDiagonallyAdjacentIntersections(Intersection intersection) {
+        return intersections.stream()
+                .filter(intersection::isOrthogonalTo)
+                .filter(diagonalIntersection -> intersection.hasStone(diagonalIntersection.getStone()));
+    }
+
+    protected Stream<Intersection> getOrthogonallyAdjacentIntersections(Intersection intersection) {
+        return intersections.stream()
+                .filter(intersection::isOrthogonalTo)
+                .filter(diagonalIntersection -> intersection.hasStone(diagonalIntersection.getStone()));
+    }
+
     protected Stone colorWithCompleteChain() {
         return chainContainer.getColorWithCompleteChain();
     }
