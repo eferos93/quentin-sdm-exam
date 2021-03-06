@@ -28,11 +28,7 @@ public class ChainContainer {
             chains.vertexSet().stream()
                     .filter(newIntersection::isOrthogonalTo)
                     .forEach(orthogonalIntersection -> chains.addEdge(orthogonalIntersection, newIntersection));
-        });//, () -> chains.forEach((key, value) -> value.removeVertex(newIntersection)));
-//        chainsOfColor.addVertex(newIntersection);
-//        chainsOfColor.vertexSet().stream()
-//                .filter(newIntersection::isOrthogonalTo)
-//                .forEach(orthogonalIntersection -> chainsOfColor.addEdge(orthogonalIntersection, newIntersection));
+        });
     }
 
     protected void removeIntersection(Intersection intersection) {

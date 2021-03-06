@@ -33,15 +33,7 @@ public class RegionContainer {
     }
 
     void removeIntersection(Intersection nonEmptyIntersection) {
-//        if (nonEmptyIntersection.hasStone(Stone.NONE)) {
-//            graph.addVertex(nonEmptyIntersection);
-//            graph.vertexSet().stream()
-//                    .filter(nonEmptyIntersection::isOrthogonalTo)
-//                    .forEach(orthogonalIntersection -> graph.addEdge(orthogonalIntersection, nonEmptyIntersection));
-//        } else {
-            boolean isRemoved = graph.removeVertex(nonEmptyIntersection);
-            System.out.println(isRemoved);
-//        }
+        graph.removeVertex(nonEmptyIntersection);
     }
 
     private List<Set<Intersection>> getRegions() {

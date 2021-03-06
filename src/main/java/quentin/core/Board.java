@@ -84,7 +84,7 @@ public class Board {
         return territoriesToFill.entrySet().stream()
                 .flatMap(entry -> entry.getKey().stream())
                 .map(Intersection::getPosition)
-                .collect(Collectors.toUnmodifiableSet());
+                .collect(Collectors.toSet());
     }
 
     protected Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone lastPlay){
