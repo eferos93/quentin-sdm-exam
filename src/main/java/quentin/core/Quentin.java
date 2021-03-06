@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static java.util.function.Predicate.not;
-
 public abstract class Quentin<InputHandlerImplementation extends InputHandler, OutputHandlerImplementation extends OutputHandler> {
     private final Board board;
     protected boolean whiteAlreadyPlayed = false;
