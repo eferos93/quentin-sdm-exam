@@ -60,17 +60,17 @@ public class Board {
                 );
     }
 
-    protected Set<Intersection> getColourAlikeDiagonallyAdjacentIntersections(Intersection intersection) {
+    protected Set<Intersection> getDiagonallyAdjacentIntersectionsOfColour(Intersection intersection, Stone color) {
         return intersections.stream()
                 .filter(intersection::isDiagonalTo)
-                .filter(diagonalIntersection -> intersection.hasStone(diagonalIntersection.getStone()))
+                .filter(diagonalIntersection -> diagonalIntersection.hasStone(color))
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    protected Set<Intersection> getColourAlikeOrthogonallyAdjacentIntersections(Intersection intersection) {
+    protected Set<Intersection> getOrthogonallyAdjacentIntersectionsOfColour(Intersection intersection, Stone color) {
         return intersections.stream()
                 .filter(intersection::isOrthogonalTo)
-                .filter(diagonalIntersection -> intersection.hasStone(diagonalIntersection.getStone()))
+                .filter(diagonalIntersection -> diagonalIntersection.hasStone(color))
                 .collect(Collectors.toUnmodifiableSet());
     }
 
