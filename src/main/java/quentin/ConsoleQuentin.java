@@ -80,7 +80,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
             if (askForPieRule(currentPlayer)) { continue; }
             getPositionAndMakeMove(currentPlayer);
             if (checkForWinner()) { break; }
-            fillTerritories();
+//            fillTerritories();
             if (checkForWinner()) { break; }
         }
     }

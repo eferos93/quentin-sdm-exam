@@ -37,9 +37,13 @@ public class Board {
 
     protected void addStoneAt(Stone stone, Position position) throws OutsideOfBoardException {
         Intersection intersection = intersectionAt(position);
-        regionsContainer.removeNonEmptyIntersection(intersection);
         intersection.setStone(stone);
+        regionsContainer.updateRegionContainer(intersection);
         chainContainer.updateChain(intersection);
+    }
+
+    void updateChains(Position intersectionPosition) {
+        chainContainer.updateChain(intersectionAt(intersectionPosition));
     }
 
     protected boolean isOccupied(Position position) throws OutsideOfBoardException {
@@ -68,13 +72,19 @@ public class Board {
         return intersections.stream().filter(intersection -> !intersection.isOccupied());
     }
 
-    protected void fillTerritories(Stone lastPlay) {
-        getTerritoriesAndStones(lastPlay)
-                        .forEach((territory, stone) ->
+    protected Set<Position> fillTerritories(Stone lastPlay) {
+        Map<Set<Intersection>, Stone> territoriesToFill = getTerritoriesAndStones(lastPlay);
+
+        territoriesToFill
+                .forEach((territory, stone) ->
                                 territory.stream()
                                         .map(Intersection::getPosition)
                                         .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
-                        );
+                );
+        return territoriesToFill.entrySet().stream()
+                .flatMap(entry -> entry.getKey().stream())
+                .map(Intersection::getPosition)
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     protected Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone lastPlay){

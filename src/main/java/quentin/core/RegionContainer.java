@@ -32,8 +32,15 @@ public class RegionContainer {
         new GridGraphGenerator<Intersection, DefaultEdge>(boardSize, boardSize).generateGraph(graph, null);
     }
 
-    void removeNonEmptyIntersection(Intersection nonEmptyIntersection) {
-        graph.removeVertex(nonEmptyIntersection);
+    void updateRegionContainer(Intersection nonEmptyIntersection) {
+        if (nonEmptyIntersection.hasStone(Stone.NONE)) {
+            graph.addVertex(nonEmptyIntersection);
+            graph.vertexSet().stream()
+                    .filter(nonEmptyIntersection::isOrthogonalTo)
+                    .forEach(orthogonalIntersection -> graph.addEdge(orthogonalIntersection, nonEmptyIntersection));
+        } else {
+            graph.removeVertex(nonEmptyIntersection);
+        }
     }
 
     private List<Set<Intersection>> getRegions() {

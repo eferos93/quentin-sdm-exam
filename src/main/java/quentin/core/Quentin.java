@@ -36,11 +36,22 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         if (isOccupied(position)) {
             throw new OccupiedPositionException(position);
         }
+        board.addStoneAt(color, position);
+        Set<Position> territoriesFilled = board.fillTerritories(color);
+
         if (isIllegalMove(color, position)) {
+            territoriesFilled.add(position);
+            revertChanges(territoriesFilled);
             throw new IllegalMoveException(position);
         }
-        board.addStoneAt(color, position);
+        territoriesFilled.forEach(board::updateChains);
+        board.updateChains(position);
+//        board.addStoneAt(color, position);
         lastPlay = color;
+    }
+
+    protected void revertChanges(Set<Position> intersectionsToBeReverted) {
+        intersectionsToBeReverted.forEach(position -> board.addStoneAt(Stone.NONE, position));
     }
 
     private boolean isOccupied(Position position) throws OutsideOfBoardException {

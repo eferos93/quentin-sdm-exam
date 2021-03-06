@@ -22,11 +22,17 @@ public class ChainContainer {
     }
 
     protected void updateChain(Intersection newIntersection) {
-        Graph<Intersection, DefaultEdge> chainsOfColor = chains.get(newIntersection.getStone());
-        chainsOfColor.addVertex(newIntersection);
-        chainsOfColor.vertexSet().stream()
-                .filter(newIntersection::isOrthogonalTo)
-                .forEach(orthogonalIntersection -> chainsOfColor.addEdge(orthogonalIntersection, newIntersection));
+        Optional<Graph<Intersection, DefaultEdge>> chainsOfColor = Optional.ofNullable(chains.get(newIntersection.getStone()));
+        chainsOfColor.ifPresentOrElse(chains -> {
+            chains.addVertex(newIntersection);
+            chains.vertexSet().stream()
+                    .filter(newIntersection::isOrthogonalTo)
+                    .forEach(orthogonalIntersection -> chains.addEdge(orthogonalIntersection, newIntersection));
+        }, () -> chains.forEach((key, value) -> value.removeVertex(newIntersection)));
+//        chainsOfColor.addVertex(newIntersection);
+//        chainsOfColor.vertexSet().stream()
+//                .filter(newIntersection::isOrthogonalTo)
+//                .forEach(orthogonalIntersection -> chainsOfColor.addEdge(orthogonalIntersection, newIntersection));
     }
 
     private boolean hasACompleteChain(Map.Entry<Stone, Graph<Intersection, DefaultEdge>> chainsOfAGivenColor) {

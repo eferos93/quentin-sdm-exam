@@ -183,7 +183,7 @@ public class GUI extends Application {
     public void updateGUI(int columnIndex, int rowIndex, Player currentPlayer) {
         boardFiller.addPiece(getGridBoard(), columnIndex, rowIndex, currentPlayer.getColor());
         fillGridBoardWithTerritories();
-        getGame().fillTerritories();
+//        getGame().fillTerritories();
         boardFiller.switchLabelsCurrentPlayer(getLabelBoard());
     }
 
