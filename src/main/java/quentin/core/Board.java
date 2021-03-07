@@ -96,4 +96,8 @@ public class Board {
         intersection.setStone(Stone.NONE);
         regionsContainer.addIntersection(intersection);
     }
+
+    public List<Intersection> getIntersections() {
+        return this.intersections;
+    }
 }

@@ -25,9 +25,10 @@ import quentin.UI.GUI.Handlers.GuiPassHandler;
 import quentin.UI.GUI.Handlers.GuiPieHandler;
 import quentin.GUIQuentin;
 import quentin.core.Intersection;
-import quentin.core.Player;
 
 import java.util.stream.Stream;
+
+import static java.util.function.Predicate.not;
 
 public class GUI extends Application {
 
@@ -167,23 +168,19 @@ public class GUI extends Application {
         structureUI(replayButtons(), "Do you wanna play again?", 20, 100);
     }
 
-    public void fillGridBoardWithTerritories() {
-        guiQuentin.getTerritoriesAndStones(guiQuentin.getLastPlay()).forEach((territory, stone) ->
-                territory.stream().map(Intersection::getPosition).
-                        forEach(position -> boardFiller.
-                                addPiece(this.getGridBoard(),
-                                        position.getColumn() - 1, // to be consistent with the board gui representation
-                                        position.getRow() - 1, // to be consistent with the board gui representation
-                                        stone)));
-    }
-
     @Override
     public void stop() { Platform.exit(); }
 
-    public void updateGUI(int columnIndex, int rowIndex, Player currentPlayer) {
-        boardFiller.addPiece(getGridBoard(), columnIndex, rowIndex, currentPlayer.getColor());
-        fillGridBoardWithTerritories();
-//        getGame().fillTerritories();
+    public void updateGUI() {
+        guiQuentin.getBoard().getIntersections().stream()
+                .filter(not(Intersection::isEmpty))
+                .forEach(nonEmptyIntersection ->
+                        boardFiller.addPiece(getGridBoard(),
+                                nonEmptyIntersection.getPosition().getColumn() - 1,
+                                nonEmptyIntersection.getPosition().getRow() - 1,
+                                nonEmptyIntersection.getStone()
+                        )
+                );
         boardFiller.switchLabelsCurrentPlayer(getLabelBoard());
     }
 

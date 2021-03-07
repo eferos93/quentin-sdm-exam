@@ -4,7 +4,6 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import quentin.GUIQuentin;
 import quentin.UI.GUI.GUI;
-import quentin.core.Player;
 import quentin.core.Position;
 import quentin.exceptions.QuentinException;
 
@@ -26,7 +25,6 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
 
         game.setNewPosition(Position.in(rowIndex + 1, columnIndex + 1));
 
-        Player currentPlayer = game.getCurrentPlayer();
         if (game.isCurrentPlayerNotAbleToMakeAMove()) {
             game.passTurn();
             return;
@@ -39,7 +37,7 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
             return;
         }
 
-        gui.updateGUI(columnIndex, rowIndex, currentPlayer);
+        gui.updateGUI();
         gui.fireEvents();
         event.consume();
     }

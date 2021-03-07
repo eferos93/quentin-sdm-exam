@@ -45,7 +45,7 @@ public class Intersection {
     }
 
     protected boolean isOccupied() {
-        return !hasStone(Stone.NONE);
+        return !this.isEmpty();
     }
 
     protected boolean isOrthogonalTo(Intersection otherIntersection) {
@@ -56,9 +56,11 @@ public class Intersection {
         return position.isDiagonalTo(otherIntersection.getPosition());
     }
 
-    protected boolean hasStone(Stone stone) {
+    public boolean hasStone(Stone stone) {
         return this.stone == stone;
     }
+
+    public boolean isEmpty() { return hasStone(Stone.NONE); }
 
     @Override
     public String toString() {

@@ -110,15 +110,11 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         Stream.of(playerOne, playerTwo).forEach(Player::changeSide);
     }
 
-    public Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone stone){
-        return board.getTerritoriesAndStones(stone);
-    }
-
     protected List<Player> getPlayers() {
         return List.of(playerOne, playerTwo);
     }
 
-    protected Board getBoard() {
+    public Board getBoard() {
         return this.board;
     }
 
