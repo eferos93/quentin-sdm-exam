@@ -63,7 +63,7 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
     }
 
     private void displayRow(Board board, int rowIndex) {
-        System.out.print(rowIndex + "   ");
+        System.out.print(rowIndex >= 10 ? rowIndex + "  " : rowIndex + "   ");
         System.out.print("W");
         IntStream.rangeClosed(1, board.getBoardSize())
                 .forEach(columnIndex ->
@@ -77,7 +77,7 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
         IntStream.rangeClosed(1, board.getBoardSize()).forEach(rowIndex -> displayRow(board, rowIndex));
         System.out.print("    " + "  B".repeat(board.getBoardSize()) + System.lineSeparator() + "    ");
         IntStream.rangeClosed(1, board.getBoardSize())
-                .forEachOrdered(columnIndex -> System.out.print("  " + columnIndex));
+                .forEachOrdered(columnIndex -> System.out.print(columnIndex < 10 ? "  " + columnIndex : " " + columnIndex));
         System.out.println();
     }
 }
