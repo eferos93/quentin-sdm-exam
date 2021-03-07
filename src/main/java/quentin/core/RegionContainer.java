@@ -32,7 +32,7 @@ public class RegionContainer {
         new GridGraphGenerator<Intersection, DefaultEdge>(boardSize, boardSize).generateGraph(graph, null);
     }
 
-    void removeIntersection(Intersection nonEmptyIntersection) {
+    protected void removeIntersection(Intersection nonEmptyIntersection) {
         graph.removeVertex(nonEmptyIntersection);
     }
 
@@ -99,7 +99,7 @@ public class RegionContainer {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public void addIntersection(Intersection intersection) {
+    protected void addIntersection(Intersection intersection) {
         graph.addVertex(intersection);
             graph.vertexSet().stream()
                     .filter(intersection::isOrthogonalTo)
