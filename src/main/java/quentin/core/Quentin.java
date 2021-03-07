@@ -106,7 +106,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         return board.colorWithCompleteChain();
     }
 
-    public void applyPieRule() {
+    protected void applyPieRule() {
         Stream.of(playerOne, playerTwo).forEach(Player::changeSide);
     }
 
@@ -118,12 +118,8 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         return this.board;
     }
 
-    public Stone getLastPlay() {
-        return this.lastPlay;
-    }
-
     public Player getCurrentPlayer() {
-        return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());
+        return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(this.lastPlay.getOppositeColor());
     }
 
     public abstract void play() throws QuentinException;
