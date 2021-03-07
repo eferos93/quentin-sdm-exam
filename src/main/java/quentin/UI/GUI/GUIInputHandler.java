@@ -22,7 +22,7 @@ public class GUIInputHandler implements InputHandler {
         return result.filter(buttonType -> buttonType == ButtonType.OK).isPresent();
     }
 
-    int askSize() {
+    protected int askSize() {
         List<Integer> sizes = List.of(4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(13, sizes);
 
@@ -34,7 +34,7 @@ public class GUIInputHandler implements InputHandler {
         return dialog.showAndWait().orElse(dialog.getDefaultChoice());
     }
 
-    String askPlayerName(String playerNumber) {
+    protected String askPlayerName(String playerNumber) {
 
         TextInputDialog dialog = new TextInputDialog("Player ".concat(playerNumber));
         dialog.setTitle("Enter name player " + playerNumber);
