@@ -90,14 +90,14 @@ public class Board {
         return BOARD_SIZE;
     }
 
-    public void revertForIntersectionAt(Position position) {
+    protected void revertForIntersectionAt(Position position) {
         Intersection intersection = intersectionAt(position);
         chainContainer.removeIntersection(intersection);
         intersection.setStone(Stone.NONE);
         regionsContainer.addIntersection(intersection);
     }
 
-    public List<Intersection> getIntersections() {
+    public final List<Intersection> getIntersections() {
         return this.intersections;
     }
 }

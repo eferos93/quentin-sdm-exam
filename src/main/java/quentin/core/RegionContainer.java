@@ -17,7 +17,7 @@ public class RegionContainer {
     private final Graph<Intersection, DefaultEdge> graph;
     private final List<Intersection> intersections;
 
-    RegionContainer(List<Intersection> allEmptyIntersections, int boardSize) {
+    protected RegionContainer(List<Intersection> allEmptyIntersections, int boardSize) {
         this.intersections = allEmptyIntersections;
         Supplier<Intersection> vertexSupplier = new Supplier<>() {
             private int index = 0;
@@ -90,7 +90,7 @@ public class RegionContainer {
         }
     }
 
-    Map<Set<Intersection>, Stone> getTerritoriesAndStonesToFill(Stone lastPlay) {
+    protected Map<Set<Intersection>, Stone> getTerritoriesAndStonesToFill(Stone lastPlay) {
         return getTerritories().stream()
                 .map(territory -> {
                     Stone stone = getStoneToFillTerritory(territory, lastPlay);
