@@ -9,15 +9,15 @@ public class Player {
         this.name = name;
     }
 
-    public Stone getColor() {
+    public final Stone getColor() {
         return color;
     }
 
-    public String getName() {
+    public final String getName() {
         return name;
     }
 
-    public void changeSide() {
+    protected void changeSide() {
         color = color.getOppositeColor();
     }
 }
