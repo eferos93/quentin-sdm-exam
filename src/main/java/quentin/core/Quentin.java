@@ -36,12 +36,13 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         if (isOccupied(position)) {
             throw new OccupiedPositionException(position);
         }
+
         board.addStoneAt(color, position);
         Set<Position> territoriesFilled = board.fillTerritories(color);
 
         if (isIllegalMove(color, position)) {
             territoriesFilled.add(position);
-            territoriesFilled.forEach(board::revertForIntersectionIn);
+            territoriesFilled.forEach(board::revertForIntersectionAt);
             throw new IllegalMoveException(position);
         }
         lastPlay = color;

@@ -90,7 +90,7 @@ public class Board {
         return BOARD_SIZE;
     }
 
-    public void revertForIntersectionIn(Position position) {
+    public void revertForIntersectionAt(Position position) {
         Intersection intersection = intersectionAt(position);
         chainContainer.removeIntersection(intersection);
         intersection.setStone(Stone.NONE);
