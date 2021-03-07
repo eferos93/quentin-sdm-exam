@@ -6,7 +6,7 @@ public class Intersection {
     private final Position position;
     private Stone stone;
 
-    public Intersection(Position position, Stone stone) {
+    protected Intersection(Position position, Stone stone) {
         this.position = position;
         this.stone = stone;
     }
@@ -28,11 +28,11 @@ public class Intersection {
         return new Intersection(position, Stone.NONE);
     }
 
-    public Position getPosition() {
+    public final Position getPosition() {
         return this.position;
     }
 
-    public Stone getStone() {
+    public final Stone getStone() {
         return this.stone;
     }
 
