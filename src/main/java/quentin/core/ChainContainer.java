@@ -55,7 +55,7 @@ public class ChainContainer {
         return sides.stream().filter(side -> side.hasColor(color)).collect(Collectors.toList());
     }
 
-    public Stone getColorWithCompleteChain() {
+    protected Stone getColorWithCompleteChain() {
         return chains.entrySet().stream()
                 .filter(this::hasACompleteChain)
                 .map(Map.Entry::getKey)
