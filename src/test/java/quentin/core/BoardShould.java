@@ -1,6 +1,8 @@
 package quentin.core;
 
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -113,9 +115,15 @@ public class BoardShould {
         assertEquals(Stone.BLACK, customBoard.colorWithCompleteChain());
     }
 
-    @Test
-    public void provideCorrectColourAlikeDiagonallyAdjacentStones() {
+    @TestFactory
+    Collection<DynamicTest> provideCorrectColourAlikeDiagonallyAdjacentStones(){
         Board customBoard = Board.buildBoard(4);
+        customBoard.addStoneAt(Stone.BLACK, in(2, 2));
+        customBoard.addStoneAt(Stone.BLACK, in(1, 1));
+        customBoard.addStoneAt(Stone.BLACK, in(3, 3));
+        customBoard.addStoneAt(Stone.WHITE, in(1, 3));
+        customBoard.addStoneAt(Stone.WHITE, in(3, 1));
+
         List<Intersection> blackIntersections = List.of(
                 customBoard.intersectionAt(in(1, 1)),
                 customBoard.intersectionAt(in(3, 3))
@@ -126,20 +134,26 @@ public class BoardShould {
                 customBoard.intersectionAt(in(3, 1))
         );
 
-        customBoard.addStoneAt(Stone.BLACK, in(1, 1));
-        customBoard.addStoneAt(Stone.BLACK, in(3, 3));
-        customBoard.addStoneAt(Stone.WHITE, in(1, 3));
-        customBoard.addStoneAt(Stone.WHITE, in(3, 1));
-
         Set<Intersection> colourAlikeDiagonallyAdjacentIntersections =
                 customBoard.getDiagonallyAdjacentIntersectionsOfColour(customBoard.intersectionAt(in(2, 2)), Stone.BLACK);
-        assertTrue(colourAlikeDiagonallyAdjacentIntersections.containsAll(blackIntersections));
-        assertFalse(colourAlikeDiagonallyAdjacentIntersections.containsAll(whiteIntersections));
+
+        return List.of(
+                DynamicTest.dynamicTest("Black Diagonal Intersections",
+                        () -> assertTrue(colourAlikeDiagonallyAdjacentIntersections.containsAll(blackIntersections))),
+                DynamicTest.dynamicTest("White Diagonal Intersections",
+                        () -> assertFalse(colourAlikeDiagonallyAdjacentIntersections.containsAll(whiteIntersections)))
+        );
     }
 
-    @Test
-    public void provideCorrectColourAlikeOrthogonallyAdjacentStones() {
+    @TestFactory
+    Collection<DynamicTest> provideCorrectColourAlikeOrthogonallyAdjacentStones() {
         Board customBoard = Board.buildBoard(4);
+        customBoard.addStoneAt(Stone.WHITE, in(2, 2));
+        customBoard.addStoneAt(Stone.BLACK, in(1, 2));
+        customBoard.addStoneAt(Stone.BLACK, in(3, 2));
+        customBoard.addStoneAt(Stone.WHITE, in(2, 1));
+        customBoard.addStoneAt(Stone.WHITE, in (2, 3));
+
         List<Intersection> blackIntersections = List.of(
                 customBoard.intersectionAt(in(1, 2)),
                 customBoard.intersectionAt(in(3, 2))
@@ -149,17 +163,17 @@ public class BoardShould {
                 customBoard.intersectionAt(in(2, 3))
         );
 
-        customBoard.addStoneAt(Stone.BLACK, in(2, 2));
-        customBoard.addStoneAt(Stone.BLACK, in(1, 2));
-        customBoard.addStoneAt(Stone.BLACK, in(3, 2));
-        customBoard.addStoneAt(Stone.WHITE, in(2, 1));
-        customBoard.addStoneAt(Stone.WHITE, in (2, 3));
-
         Set<Intersection> colourAlikeOrthogonallyAdjacentIntersections =
                 customBoard.getOrthogonallyAdjacentIntersectionsOfColour(
-                        customBoard.intersectionAt(in(2, 2)), Stone.BLACK
+                        customBoard.intersectionAt(in(2, 2)), Stone.WHITE
                 );
-        assertTrue(colourAlikeOrthogonallyAdjacentIntersections.containsAll(blackIntersections));
-        assertFalse(colourAlikeOrthogonallyAdjacentIntersections.containsAll(whiteIntersections));
+
+        return List.of(
+                DynamicTest.dynamicTest("Black Diagonal Intersections",
+                        () -> assertFalse(colourAlikeOrthogonallyAdjacentIntersections.containsAll(blackIntersections))),
+                DynamicTest.dynamicTest("White Diagonal Intersections",
+                        () -> assertTrue(colourAlikeOrthogonallyAdjacentIntersections.containsAll(whiteIntersections)))
+        );
+
     }
 }
