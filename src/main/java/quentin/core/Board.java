@@ -82,7 +82,7 @@ public class Board {
                 .collect(Collectors.toSet());
     }
 
-    protected Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone lastPlay){
+    protected Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone lastPlay) {
         return regionsContainer.getTerritoriesAndStonesToFill(lastPlay);
     }
 

@@ -185,7 +185,7 @@ public class GUI extends Application {
     }
 
     public void fireEvents() {
-        if (guiQuentin.checkAndPerformPieRule()) {
+        if (guiQuentin.askPlayerForPieRule()) {
             getGridBoard().fireEvent(EventFactory.createPieRuleEvent());
         }
         if (guiQuentin.isCurrentPlayerNotAbleToMakeAMove()) {

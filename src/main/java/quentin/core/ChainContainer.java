@@ -15,7 +15,6 @@ public class ChainContainer {
     ChainContainer(int boardSize) {
         chains.put(Stone.BLACK, new SimpleGraph<>(DefaultEdge.class));
         chains.put(Stone.WHITE, new SimpleGraph<>(DefaultEdge.class));
-
         BoardSide.setBoardSize(boardSize);
         sides.forEach(BoardSide::initialiseSide);
     }
