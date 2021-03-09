@@ -13,7 +13,6 @@ public class ChainContainer {
     private final Set<BoardSide> sides = EnumSet.allOf(BoardSide.class);
 
     ChainContainer(int boardSize) {
-
         chains.put(Stone.BLACK, new SimpleGraph<>(DefaultEdge.class));
         chains.put(Stone.WHITE, new SimpleGraph<>(DefaultEdge.class));
 
@@ -23,11 +22,11 @@ public class ChainContainer {
 
     protected void updateChain(Intersection newIntersection) {
         Optional<Graph<Intersection, DefaultEdge>> chainsOfColor = Optional.ofNullable(chains.get(newIntersection.getStone()));
-        chainsOfColor.ifPresent(chains -> {
-            chains.addVertex(newIntersection);
-            chains.vertexSet().stream()
+        chainsOfColor.ifPresent(chainsOfSingleColor -> {
+            chainsOfSingleColor.addVertex(newIntersection);
+            chainsOfSingleColor.vertexSet().stream()
                     .filter(newIntersection::isOrthogonalTo)
-                    .forEach(orthogonalIntersection -> chains.addEdge(orthogonalIntersection, newIntersection));
+                    .forEach(orthogonalIntersection -> chainsOfSingleColor.addEdge(orthogonalIntersection, newIntersection));
         });
     }
 
