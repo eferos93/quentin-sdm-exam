@@ -19,9 +19,8 @@ To understand the game's rules go to: https://boardgamegeek.com/boardgame/124095
 - Choose board dimension, players' names and play.
 
 ## Developers
-- Eros Fabrici 
-- Pietro Morichetti 
-- Dogan Can Demirbilek
-- Ionut Alexandru Pascariu
-- Stefano Simonetto
-
+- [Eros Fabrici](https://github.com/eferos93)
+- [Pietro Morichetti](https://github.com/wilsonjefferson)
+- [Dogan Can Demirbilek](https://github.com/demirbilek95)
+- [Ionut Alexandru Pascariu](https://github.com/PascAlex)
+- [Stefano Simonetto](https://github.com/stefanosimonetto)
