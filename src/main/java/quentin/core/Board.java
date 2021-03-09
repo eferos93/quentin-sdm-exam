@@ -56,7 +56,7 @@ public class Board {
     protected Set<Intersection> getOrthogonallyAdjacentIntersectionsOfColour(Intersection intersection, Stone color) {
         return intersections.stream()
                 .filter(intersection::isOrthogonalTo)
-                .filter(diagonalIntersection -> diagonalIntersection.hasStone(color))
+                .filter(orthogonalIntersection -> orthogonalIntersection.hasStone(color))
                 .collect(Collectors.toUnmodifiableSet());
     }
 
