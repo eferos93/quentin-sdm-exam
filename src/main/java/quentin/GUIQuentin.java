@@ -50,7 +50,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         }
     }
 
-    public boolean checkAndPerformEndGameRule() {
+    public boolean isGameEnded() {
         return checkForWinner();
     }
 

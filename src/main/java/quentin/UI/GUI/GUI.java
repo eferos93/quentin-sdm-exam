@@ -185,14 +185,14 @@ public class GUI extends Application {
     }
 
     public void fireEvents() {
+        if (guiQuentin.isGameEnded()) {
+            getGridBoard().fireEvent(EventFactory.createEndGameEvent());
+        }
         if (guiQuentin.askPlayerForPieRule()) {
             getGridBoard().fireEvent(EventFactory.createPieRuleEvent());
         }
         if (guiQuentin.isCurrentPlayerNotAbleToMakeAMove()) {
             getGridBoard().fireEvent(EventFactory.createPassEvent());
-        }
-        if (guiQuentin.checkAndPerformEndGameRule()) {
-            getGridBoard().fireEvent(EventFactory.createEndGameEvent());
         }
     }
 
