@@ -184,7 +184,7 @@ public class GUI extends Application {
         boardFiller.switchLabelsCurrentPlayer(getLabelBoard());
     }
 
-    public void fireEvents() {
+    public void fireEventsIfConditionsAreMet() {
         if (guiQuentin.isGameEnded()) {
             getGridBoard().fireEvent(EventFactory.createEndGameEvent());
         }

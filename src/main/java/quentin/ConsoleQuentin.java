@@ -50,24 +50,20 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
     }
 
     private boolean askForPieRule(Player currentPlayer) {
+        boolean applyPieRule = false;
         if (isWhitePlayerFirstTurn(currentPlayer)) {
             whiteAlreadyPlayed = true;
             while (true) {
                 try {
                     outputHandler.askPie(currentPlayer.getName());
-                    if (inputHandler.askPie(currentPlayer.getName())) {
-                        applyPieRule();
-                        outputHandler.notifyPieRule(getPlayers());
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    applyPieRule = applyPieRuleIfPlayerWants(currentPlayer);
+                    break;
                 } catch (InputMismatchException exception) {
                     outputHandler.notifyException(exception);
                 }
             }
         }
-        return false;
+        return applyPieRule;
     }
 
     @Override

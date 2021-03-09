@@ -122,5 +122,15 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(this.lastPlay.getOppositeColor());
     }
 
+    protected boolean applyPieRuleIfPlayerWants(Player currentPlayer) {
+        if (inputHandler.askPie(currentPlayer.getName())) {
+            applyPieRule();
+            outputHandler.notifyPieRule(getPlayers());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public abstract void play() throws QuentinException;
 }
