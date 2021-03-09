@@ -63,59 +63,6 @@ public class BoardShould {
         assertEquals(intersection.getStone(), stone);
     }
 
-    @TestFactory
-    Stream<DynamicTest> checkOrthogonalAdjacent() throws OutsideOfBoardException {
-        Board customBoard = Board.buildBoard(13);
-        customBoard.addStoneAt(Stone.WHITE, in(7, 9));
-        customBoard.addStoneAt(Stone.WHITE, in(3, 4));
-        customBoard.addStoneAt(Stone.WHITE, in(4, 4));
-        customBoard.addStoneAt(Stone.WHITE, in(12, 5));
-        customBoard.addStoneAt(Stone.WHITE, in(13, 5));
-
-        List<Intersection> inputList = List.of(
-                customBoard.intersectionAt(in(7, 9)),
-                customBoard.intersectionAt(in(3, 4)),
-                customBoard.intersectionAt(in(12, 5))
-        );
-
-        List<Boolean> outputList = List.of(false, true, true);
-
-        return inputList.stream()
-                .map(intersection -> DynamicTest.dynamicTest("Checking Orthogonal Adjacent of " + intersection,
-                        () -> {
-                            int index = inputList.indexOf(intersection);
-                            assertEquals(outputList.get(index), customBoard.existsOrthogonallyAdjacentWithStone(intersection, Stone.WHITE));
-                        })
-                );
-    }
-
-
-    @TestFactory
-    Stream<DynamicTest> checkDiagonalAdjacent() throws OutsideOfBoardException {
-        Board customBoard = Board.buildBoard(13);
-        customBoard.addStoneAt(Stone.WHITE, in(7, 9));
-        customBoard.addStoneAt(Stone.WHITE, in(3, 4));
-        customBoard.addStoneAt(Stone.WHITE, in(2, 5));
-        customBoard.addStoneAt(Stone.WHITE, in(12, 5));
-        customBoard.addStoneAt(Stone.WHITE, in(13, 4));
-
-        List<Intersection> inputList = List.of(
-                customBoard.intersectionAt(in(7, 9)),
-                customBoard.intersectionAt(in(3, 4)),
-                customBoard.intersectionAt(in(12, 5))
-        );
-
-        List<Boolean> outputList = List.of(false, true, true);
-
-        return inputList.stream()
-                .map(intersection -> DynamicTest.dynamicTest("Checking Diagonal Adjacent of " + intersection,
-                        () -> {
-                            int index = inputList.indexOf(intersection);
-                            assertEquals(outputList.get(index), customBoard.existsDiagonallyAdjacentWithStone(intersection, Stone.WHITE));
-                        })
-                );
-    }
-
     @Test
     public void fillTerritoryWithEqualNumberOfStoneOfTheSameColor() {
         int boardSize = 13;
@@ -166,5 +113,67 @@ public class BoardShould {
         customBoard.addStoneAt(Stone.BLACK, in(2, 2));
         customBoard.addStoneAt(Stone.BLACK, in(3, 2));
         assertEquals(Stone.BLACK, customBoard.colorWithCompleteChain());
+    }
+
+    @TestFactory
+    Collection<DynamicTest> provideCorrectColourAlikeDiagonallyAdjacentStones(){
+        Board customBoard = Board.buildBoard(4);
+        customBoard.addStoneAt(Stone.BLACK, in(2, 2));
+        customBoard.addStoneAt(Stone.BLACK, in(1, 1));
+        customBoard.addStoneAt(Stone.BLACK, in(3, 3));
+        customBoard.addStoneAt(Stone.WHITE, in(1, 3));
+        customBoard.addStoneAt(Stone.WHITE, in(3, 1));
+
+        List<Intersection> blackIntersections = List.of(
+                customBoard.intersectionAt(in(1, 1)),
+                customBoard.intersectionAt(in(3, 3))
+        );
+
+        List<Intersection> whiteIntersections = List.of(
+                customBoard.intersectionAt(in(1, 3)),
+                customBoard.intersectionAt(in(3, 1))
+        );
+
+        Set<Intersection> colourAlikeDiagonallyAdjacentIntersections =
+                customBoard.getDiagonallyAdjacentIntersectionsOfColour(customBoard.intersectionAt(in(2, 2)), Stone.BLACK);
+
+        return List.of(
+                DynamicTest.dynamicTest("Black Diagonal Intersections",
+                        () -> assertTrue(colourAlikeDiagonallyAdjacentIntersections.containsAll(blackIntersections))),
+                DynamicTest.dynamicTest("White Diagonal Intersections",
+                        () -> assertFalse(colourAlikeDiagonallyAdjacentIntersections.containsAll(whiteIntersections)))
+        );
+    }
+
+    @TestFactory
+    Collection<DynamicTest> provideCorrectColourAlikeOrthogonallyAdjacentStones() {
+        Board customBoard = Board.buildBoard(4);
+        customBoard.addStoneAt(Stone.WHITE, in(2, 2));
+        customBoard.addStoneAt(Stone.BLACK, in(1, 2));
+        customBoard.addStoneAt(Stone.BLACK, in(3, 2));
+        customBoard.addStoneAt(Stone.WHITE, in(2, 1));
+        customBoard.addStoneAt(Stone.WHITE, in (2, 3));
+
+        List<Intersection> blackIntersections = List.of(
+                customBoard.intersectionAt(in(1, 2)),
+                customBoard.intersectionAt(in(3, 2))
+        );
+        List<Intersection> whiteIntersections = List.of(
+                customBoard.intersectionAt(in(2, 1)),
+                customBoard.intersectionAt(in(2, 3))
+        );
+
+        Set<Intersection> colourAlikeOrthogonallyAdjacentIntersections =
+                customBoard.getOrthogonallyAdjacentIntersectionsOfColour(
+                        customBoard.intersectionAt(in(2, 2)), Stone.WHITE
+                );
+
+        return List.of(
+                DynamicTest.dynamicTest("Black Diagonal Intersections",
+                        () -> assertFalse(colourAlikeOrthogonallyAdjacentIntersections.containsAll(blackIntersections))),
+                DynamicTest.dynamicTest("White Diagonal Intersections",
+                        () -> assertTrue(colourAlikeOrthogonallyAdjacentIntersections.containsAll(whiteIntersections)))
+        );
+
     }
 }

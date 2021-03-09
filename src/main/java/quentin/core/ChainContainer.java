@@ -13,7 +13,6 @@ public class ChainContainer {
     private final Set<BoardSide> sides = EnumSet.allOf(BoardSide.class);
 
     ChainContainer(int boardSize) {
-
         chains.put(Stone.BLACK, new SimpleGraph<>(DefaultEdge.class));
         chains.put(Stone.WHITE, new SimpleGraph<>(DefaultEdge.class));
 
@@ -22,11 +21,17 @@ public class ChainContainer {
     }
 
     protected void updateChain(Intersection newIntersection) {
-        Graph<Intersection, DefaultEdge> chainsOfColor = chains.get(newIntersection.getStone());
-        chainsOfColor.addVertex(newIntersection);
-        chainsOfColor.vertexSet().stream()
-                .filter(newIntersection::isOrthogonalTo)
-                .forEach(orthogonalIntersection -> chainsOfColor.addEdge(orthogonalIntersection, newIntersection));
+        Optional<Graph<Intersection, DefaultEdge>> chainsOfColor = Optional.ofNullable(chains.get(newIntersection.getStone()));
+        chainsOfColor.ifPresent(chainsOfSingleColor -> {
+            chainsOfSingleColor.addVertex(newIntersection);
+            chainsOfSingleColor.vertexSet().stream()
+                    .filter(newIntersection::isOrthogonalTo)
+                    .forEach(orthogonalIntersection -> chainsOfSingleColor.addEdge(orthogonalIntersection, newIntersection));
+        });
+    }
+
+    protected void removeIntersection(Intersection intersection) {
+        chains.get(intersection.getStone()).removeVertex(intersection);
     }
 
     private boolean hasACompleteChain(Map.Entry<Stone, Graph<Intersection, DefaultEdge>> chainsOfAGivenColor) {
@@ -49,7 +54,7 @@ public class ChainContainer {
         return sides.stream().filter(side -> side.hasColor(color)).collect(Collectors.toList());
     }
 
-    public Stone getColorWithCompleteChain() {
+    protected Stone getColorWithCompleteChain() {
         return chains.entrySet().stream()
                 .filter(this::hasACompleteChain)
                 .map(Map.Entry::getKey)

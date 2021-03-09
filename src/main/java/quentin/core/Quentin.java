@@ -36,10 +36,15 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         if (isOccupied(position)) {
             throw new OccupiedPositionException(position);
         }
+
+        board.addStoneAt(color, position);
+        Set<Position> territoriesFilled = board.fillTerritories(color);
+
         if (isIllegalMove(color, position)) {
+            territoriesFilled.add(position);
+            territoriesFilled.forEach(board::revertForIntersectionAt);
             throw new IllegalMoveException(position);
         }
-        board.addStoneAt(color, position);
         lastPlay = color;
     }
 
@@ -52,8 +57,13 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     }
 
     private boolean isIllegalMove(Stone playerColor, Intersection intersection) {
-        return board.existsDiagonallyAdjacentWithStone(intersection, playerColor) &&
-                !board.existsOrthogonallyAdjacentWithStone(intersection, playerColor);
+        Set<Intersection> colorAlikeOrthogonalIntersections =
+                board.getOrthogonallyAdjacentIntersectionsOfColour(intersection, playerColor);
+        return board.getDiagonallyAdjacentIntersectionsOfColour(intersection, playerColor).stream()
+                .anyMatch(diagonalIntersection ->
+                        board.getOrthogonallyAdjacentIntersectionsOfColour(diagonalIntersection, playerColor).stream()
+                            .noneMatch(colorAlikeOrthogonalIntersections::contains)
+                );
     }
 
     private boolean isARepeatedPlay(Stone playerColor) {
@@ -96,32 +106,20 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         return board.colorWithCompleteChain();
     }
 
-    public void applyPieRule() {
+    protected void applyPieRule() {
         Stream.of(playerOne, playerTwo).forEach(Player::changeSide);
-    }
-
-    public void fillTerritories() {
-        board.fillTerritories(lastPlay);
-    }
-
-    public Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone stone){
-        return board.getTerritoriesAndStones(stone);
     }
 
     protected List<Player> getPlayers() {
         return List.of(playerOne, playerTwo);
     }
 
-    protected Board getBoard() {
+    public Board getBoard() {
         return this.board;
     }
 
-    public Stone getLastPlay() {
-        return this.lastPlay;
-    }
-
     public Player getCurrentPlayer() {
-        return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(getLastPlay().getOppositeColor());
+        return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(this.lastPlay.getOppositeColor());
     }
 
     public abstract void play() throws QuentinException;

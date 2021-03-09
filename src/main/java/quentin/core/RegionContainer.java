@@ -17,7 +17,7 @@ public class RegionContainer {
     private final Graph<Intersection, DefaultEdge> graph;
     private final List<Intersection> intersections;
 
-    RegionContainer(List<Intersection> allEmptyIntersections, int boardSize) {
+    protected RegionContainer(List<Intersection> allEmptyIntersections, int boardSize) {
         this.intersections = allEmptyIntersections;
         Supplier<Intersection> vertexSupplier = new Supplier<>() {
             private int index = 0;
@@ -32,7 +32,7 @@ public class RegionContainer {
         new GridGraphGenerator<Intersection, DefaultEdge>(boardSize, boardSize).generateGraph(graph, null);
     }
 
-    void removeNonEmptyIntersection(Intersection nonEmptyIntersection) {
+    protected void removeIntersection(Intersection nonEmptyIntersection) {
         graph.removeVertex(nonEmptyIntersection);
     }
 
@@ -90,12 +90,19 @@ public class RegionContainer {
         }
     }
 
-    Map<Set<Intersection>, Stone> getTerritoriesAndStonesToFill(Stone lastPlay) {
+    protected Map<Set<Intersection>, Stone> getTerritoriesAndStonesToFill(Stone lastPlay) {
         return getTerritories().stream()
                 .map(territory -> {
                     Stone stone = getStoneToFillTerritory(territory, lastPlay);
                     return Map.entry(territory, stone);
                 })
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    protected void addIntersection(Intersection intersection) {
+        graph.addVertex(intersection);
+            graph.vertexSet().stream()
+                    .filter(intersection::isOrthogonalTo)
+                    .forEach(orthogonalIntersection -> graph.addEdge(orthogonalIntersection, intersection));
     }
 }
