@@ -31,18 +31,22 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         if (isWhitePlayerFirstTurn(currentPlayer)) {
             whiteAlreadyPlayed = true;
             try {
-                if (inputHandler.askPie(currentPlayer.getName())) {
-                    applyPieRule();
-                    outputHandler.notifyPieRule(getPlayers());
-                    return true;
-                } else {
-                    return false;
-                }
+                return playerWantsToApplyPieRule(currentPlayer);
             } catch (InputMismatchException exception) {
                 notifyException(exception);
             }
         }
         return false;
+    }
+
+    private boolean playerWantsToApplyPieRule(Player currentPlayer) {
+        if (inputHandler.askPie(currentPlayer.getName())) {
+            applyPieRule();
+            outputHandler.notifyPieRule(getPlayers());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean checkAndPerformEndGameRule() {
