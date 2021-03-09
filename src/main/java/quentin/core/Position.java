@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Position {
     private final int row, column;
 
-    public Position(int row, int column) {
+    private Position(int row, int column) {
         this.row = row;
         this.column = column;
     }
@@ -35,42 +35,42 @@ public class Position {
         return this.column;
     }
 
-    boolean isAboveWithRespectTo(Position otherIntersectionPosition) {
+    protected boolean isAboveWithRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getRow() == this.row + 1 &&
                 otherIntersectionPosition.getColumn() == this.column;
     }
 
-    boolean isBelowWithRespectTo(Position otherIntersectionPosition) {
+    protected boolean isBelowWithRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getRow() == this.row - 1 &&
                 otherIntersectionPosition.getColumn() == this.column;
     }
 
-    boolean isOnTheLeftWithRespectTo(Position otherIntersectionPosition) {
+    protected boolean isOnTheLeftWithRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getColumn() == this.column + 1 &&
                 otherIntersectionPosition.getRow() == this.row;
     }
 
-    boolean isOnTheRightWithRespectTo(Position otherIntersectionPosition) {
+    protected boolean isOnTheRightWithRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getColumn() == this.column - 1 &&
                 otherIntersectionPosition.getRow() == this.row;
     }
 
-    boolean isDownLeftRespectTo(Position otherIntersectionPosition) {
+    protected boolean isDownLeftRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getRow() == this.row - 1 &&
                 otherIntersectionPosition.getColumn() == this.column + 1;
     }
 
-    boolean isUpLeftRespectTo(Position otherIntersectionPosition) {
+    protected boolean isUpLeftRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getRow() == this.row + 1 &&
                 otherIntersectionPosition.getColumn() == this.column + 1;
     }
 
-    boolean isDownRightRespectTo(Position otherIntersectionPosition) {
+    protected boolean isDownRightRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getRow() == this.row - 1 &&
                 otherIntersectionPosition.getColumn() == this.column - 1;
     }
 
-    boolean isUpRightRespectTo(Position otherIntersectionPosition) {
+    protected boolean isUpRightRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getRow() == this.row + 1 &&
                 otherIntersectionPosition.getColumn() == this.column - 1;
     }

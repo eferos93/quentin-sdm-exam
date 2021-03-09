@@ -21,7 +21,7 @@ public class GUIBoardDisplayer {
     private final int tileSize;
     private static final EnumMap<Stone, Paint> colorPaintMap = new EnumMap<> (Stone.class);
 
-    GUIBoardDisplayer(int boardSize, int tileSize) {
+    protected GUIBoardDisplayer(int boardSize, int tileSize) {
         this.boardSize = boardSize;
         this.tileSize = tileSize;
 
@@ -29,7 +29,7 @@ public class GUIBoardDisplayer {
         colorPaintMap.put(Stone.WHITE, Color.WHITE);
     }
 
-    GridPane createEmptyBoard() {
+    protected GridPane createEmptyBoard() {
 
         GridPane gridPane = new GridPane();
         gridPane.setStyle("-fx-background-color: #3CB371");
@@ -88,7 +88,7 @@ public class GUIBoardDisplayer {
         return generatedLine;
     }
 
-    void addPiece(GridPane gridPane, int coordinateX, int coordinateY, Stone stone) {
+    protected void addPiece(GridPane gridPane, int coordinateX, int coordinateY, Stone stone) {
         Circle piece = new Circle(coordinateX * tileSize, coordinateY * tileSize, tileSize * 0.4);
         piece.setFill(colorPaintMap.get(stone));
         GridPane.setHalignment(piece, HPos.CENTER);
@@ -96,7 +96,7 @@ public class GUIBoardDisplayer {
         gridPane.add(piece, coordinateX, coordinateY);
     }
 
-    GridPane createLabelPane(String namePLayerOne, String namePlayerTwo) {
+    protected GridPane createLabelPane(String namePLayerOne, String namePlayerTwo) {
         GridPane gridLabels = new GridPane();
         gridLabels.setVgap(10);
 
@@ -115,7 +115,7 @@ public class GUIBoardDisplayer {
         return gridLabels;
     }
 
-    void switchColorPlayerLabel(GridPane labelBoard){
+    protected void switchColorPlayerLabel(GridPane labelBoard){
         switchColorLabel(labelBoard, 3, Color.BLACK);
         switchColorLabel(labelBoard, 4, Color.WHITE);
     }
@@ -125,7 +125,7 @@ public class GUIBoardDisplayer {
         currentPlayerLabel.setFill(color);
     }
 
-    void switchLabelsCurrentPlayer(GridPane labelBoard){
+    protected void switchLabelsCurrentPlayer(GridPane labelBoard){
         Circle currentPlayerLabel = (Circle) labelBoard.getChildren().get(5);
         currentPlayerLabel.setFill(currentPlayerLabel.getFill() == Color.BLACK ? Color.WHITE : Color.BLACK);
     }

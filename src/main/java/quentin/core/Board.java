@@ -37,7 +37,7 @@ public class Board {
 
     protected void addStoneAt(Stone stone, Position position) throws OutsideOfBoardException {
         Intersection intersection = intersectionAt(position);
-        regionsContainer.removeNonEmptyIntersection(intersection);
+        regionsContainer.removeIntersection(intersection);
         intersection.setStone(stone);
         chainContainer.updateChain(intersection);
     }
@@ -68,13 +68,18 @@ public class Board {
         return intersections.stream().filter(intersection -> !intersection.isOccupied());
     }
 
-    protected void fillTerritories(Stone lastPlay) {
-        getTerritoriesAndStones(lastPlay)
-                        .forEach((territory, stone) ->
+    protected Set<Position> fillTerritories(Stone lastPlay) {
+        Map<Set<Intersection>, Stone> territoriesToFill = getTerritoriesAndStones(lastPlay);
+        territoriesToFill
+                .forEach((territory, stone) ->
                                 territory.stream()
                                         .map(Intersection::getPosition)
                                         .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
-                        );
+                );
+        return territoriesToFill.entrySet().stream()
+                .flatMap(entry -> entry.getKey().stream())
+                .map(Intersection::getPosition)
+                .collect(Collectors.toSet());
     }
 
     protected Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone lastPlay){
@@ -83,5 +88,16 @@ public class Board {
 
     public int getBoardSize() {
         return BOARD_SIZE;
+    }
+
+    protected void revertForIntersectionAt(Position position) {
+        Intersection intersection = intersectionAt(position);
+        chainContainer.removeIntersection(intersection);
+        intersection.setStone(Stone.NONE);
+        regionsContainer.addIntersection(intersection);
+    }
+
+    public final List<Intersection> getIntersections() {
+        return this.intersections;
     }
 }
