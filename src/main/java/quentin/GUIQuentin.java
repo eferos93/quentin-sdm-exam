@@ -28,15 +28,16 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
 
     public boolean askPlayerForPieRule() {
         Player currentPlayer = getCurrentPlayer();
+        boolean applyPieRule = false;
         if (isWhitePlayerFirstTurn(currentPlayer)) {
             whiteAlreadyPlayed = true;
             try {
-                return playerWantsToApplyPieRule(currentPlayer);
+                applyPieRule = playerWantsToApplyPieRule(currentPlayer);
             } catch (InputMismatchException exception) {
                 notifyException(exception);
             }
         }
-        return false;
+        return applyPieRule;
     }
 
     private boolean playerWantsToApplyPieRule(Player currentPlayer) {
