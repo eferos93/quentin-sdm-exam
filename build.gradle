@@ -4,6 +4,15 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
+task(runConsole, type: JavaExec) {
+    main = 'quentin.ConsoleQuentin'
+    classpath = sourceSets.main.runtimeClasspath
+}
+task(runGUI, type: JavaExec) {
+    main = 'quentin.GUIQuentin'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 group 'org.example'
 version '1.0-SNAPSHOT'
 
