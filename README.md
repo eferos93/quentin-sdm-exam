@@ -13,10 +13,10 @@ To understand the game's rules go to: https://boardgamegeek.com/boardgame/124095
 - Custom board size
 
 ## How to play
-- Clone the repository,
-- build the project,
-- launch or "ConsoleQuentin" for the CLI version, or "GUIQuentin" for the graphical interface version,
-- Choose board dimension, players' names and play.
+Open a terminal in the project folder and run:
+- `./gradlew runConsole` for the Console version
+- `./gradlew runGUI` for the GUI version
+If you are using Windows then instead of `./gradlew`, type `gradlew.bat`
 
 ## Developers
 - [Eros Fabrici](https://github.com/eferos93)
