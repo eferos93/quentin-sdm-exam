@@ -83,9 +83,9 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
                     board.addStoneAt(getCurrentPlayer().getColor(), emptyIntersection.getPosition());
                     Set<Position> positionsFilled = board.fillTerritories(lastPlay);
                     positionsFilled.add(emptyIntersection.getPosition());
-                    boolean isIllegal = isIllegalMove(getCurrentPlayer().getColor(), emptyIntersection);
+                    boolean isIllegalMove = isIllegalMove(getCurrentPlayer().getColor(), emptyIntersection);
                     positionsFilled.forEach(board::revertForIntersectionAt);
-                    return isIllegal;
+                    return isIllegalMove;
                 });
     }
 
