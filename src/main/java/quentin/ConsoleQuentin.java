@@ -7,6 +7,7 @@ import quentin.core.*;
 import quentin.exceptions.QuentinException;
 
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 
 public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHandler> {
     public ConsoleQuentin(int boardSize, ConsoleInputHandler inputHandler, ConsoleOutputHandler outputHandler,
@@ -91,7 +92,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
                     throw new InputMismatchException("Invalid board size! It must be between 4 and 13!");
                 }
                 insertedAValidBoardSize = true;
-            } catch (InputMismatchException exception) {
+            } catch (NoSuchElementException exception) {
                 consoleOutputHandler.notifyException(exception);
             }
         }
@@ -105,8 +106,10 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         int boardSize = getBoardSize(inputHandler, outputHandler);
         outputHandler.askBlackPlayerName();
         String blackPlayerName = inputHandler.askPlayerName();
+        if (blackPlayerName.equals("")) { blackPlayerName = "Player 1"; }
         outputHandler.askWhitePlayerName();
         String whitePlayerName = inputHandler.askPlayerName();
+        if (whitePlayerName.equals("")) { whitePlayerName = "Player 2"; }
         return new ConsoleQuentin(boardSize, inputHandler, outputHandler,
                 blackPlayerName, whitePlayerName);
     }

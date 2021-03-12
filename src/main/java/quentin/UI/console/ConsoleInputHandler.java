@@ -1,12 +1,13 @@
 package quentin.UI.console;
 
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ConsoleInputHandler implements quentin.UI.InputHandler {
     private final Scanner scanner = new Scanner(System.in);
 
-    public int getInteger() throws InputMismatchException {
+    public int getInteger() throws NoSuchElementException {
         if (scanner.hasNextInt()) {
             int answer = scanner.nextInt();
             scanner.nextLine();
