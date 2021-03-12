@@ -58,7 +58,7 @@ public class GUI extends Application {
     private void addGridEvent(GridPane gridBoard) {
         gridBoard.addEventHandler(PieRuleEvent.PIE_RULE_EVENT_TYPE, new GuiPieHandler(this));
         gridBoard.addEventHandler(MouseEvent.MOUSE_CLICKED, new GuiMouseHandler(this));
-        gridBoard.addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler(this));
+        gridBoard.addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler(guiQuentin));
         gridBoard.addEventHandler(EndGameEvent.END_GAME_EVENT_TYPE, new GuiEndGameHandler(this));
     }
 
