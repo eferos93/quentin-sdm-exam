@@ -65,7 +65,11 @@ public class Board {
     }
 
     protected Stream<Intersection> getEmptyIntersections() {
-        return intersections.stream().filter(intersection -> !intersection.isOccupied());
+        return intersections.stream().filter(Intersection::isEmpty);
+    }
+
+    public Stream<Intersection> getNonEmptyIntersections() {
+        return intersections.stream().filter(Intersection::isOccupied);
     }
 
     protected Set<Position> fillTerritories(Stone lastPlay) {

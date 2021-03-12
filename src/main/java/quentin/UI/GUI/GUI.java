@@ -3,6 +3,7 @@ package quentin.UI.GUI;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -24,11 +25,8 @@ import quentin.UI.GUI.Handlers.GuiMouseHandler;
 import quentin.UI.GUI.Handlers.GuiPassHandler;
 import quentin.UI.GUI.Handlers.GuiPieHandler;
 import quentin.GUIQuentin;
-import quentin.core.Intersection;
 
 import java.util.stream.Stream;
-
-import static java.util.function.Predicate.not;
 
 public class GUI extends Application {
 
@@ -172,8 +170,7 @@ public class GUI extends Application {
     public void stop() { Platform.exit(); }
 
     public void updateGUI() {
-        guiQuentin.getBoard().getIntersections().stream()
-                .filter(not(Intersection::isEmpty))
+        guiQuentin.getNonEmptyIntersections()
                 .forEach(nonEmptyIntersection ->
                         boardFiller.addPiece(getGridBoard(),
                                 nonEmptyIntersection.getPosition().getColumn() - 1,
@@ -184,19 +181,23 @@ public class GUI extends Application {
         boardFiller.switchLabelsCurrentPlayer(getLabelBoard());
     }
 
-    public void fireEventsIfConditionsAreMet() {
-        if (guiQuentin.isGameEnded()) {
-            getGridBoard().fireEvent(EventFactory.createEndGameEvent());
-        }
+    public void firePieRuleIfConditionsAreMet() {
         if (guiQuentin.askPlayerForPieRule()) {
-            getGridBoard().fireEvent(EventFactory.createPieRuleEvent());
+            fireEvent(EventFactory.createPieRuleEvent());
         }
-        if (guiQuentin.isCurrentPlayerNotAbleToMakeAMove()) {
-            getGridBoard().fireEvent(EventFactory.createPassEvent());
+    }
+
+    public void fireEndGameEventIfConditionsAreMet() {
+        if (guiQuentin.isGameEnded()) {
+            fireEvent(EventFactory.createEndGameEvent());
         }
     }
 
     public void notifyException(Exception exception) {
         guiQuentin.notifyException(exception);
+    }
+
+    public void fireEvent(Event event) {
+        getGridBoard().fireEvent(event);
     }
 }
