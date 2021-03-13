@@ -16,14 +16,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import quentin.UI.GUI.Events.EndGameEvent;
-import quentin.UI.GUI.Events.EventFactory;
-import quentin.UI.GUI.Events.PassEvent;
-import quentin.UI.GUI.Events.PieRuleEvent;
-import quentin.UI.GUI.Handlers.GuiEndGameHandler;
-import quentin.UI.GUI.Handlers.GuiMouseHandler;
-import quentin.UI.GUI.Handlers.GuiPassHandler;
-import quentin.UI.GUI.Handlers.GuiPieHandler;
+import quentin.UI.GUI.Events.*;
+import quentin.UI.GUI.Handlers.*;
 import quentin.GUIQuentin;
 
 import java.util.stream.Stream;
@@ -173,8 +167,7 @@ public class GUI extends Application {
         guiQuentin.getNonEmptyIntersections()
                 .forEach(nonEmptyIntersection ->
                         boardFiller.addPiece(getGridBoard(),
-                                nonEmptyIntersection.getPosition().getColumn() - 1,
-                                nonEmptyIntersection.getPosition().getRow() - 1,
+                                nonEmptyIntersection.getPosition(),
                                 nonEmptyIntersection.getStone()
                         )
                 );
