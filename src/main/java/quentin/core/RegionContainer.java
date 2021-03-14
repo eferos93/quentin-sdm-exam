@@ -76,8 +76,7 @@ public class RegionContainer {
     }
 
 
-    private Stone getStoneToFillTerritory(Set<Intersection> territory,
-                                          Stone lastPlay) {
+    private Stone getStoneToFillTerritory(Set<Intersection> territory, Stone lastPlay) {
         Set<Intersection> intersectionsSurroundingTerritory =
                 getIntersectionsThatSurroundsTheTerritory(territory);
         long countOfWhiteStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.WHITE);

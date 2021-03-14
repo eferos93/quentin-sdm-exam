@@ -65,7 +65,11 @@ public class Board {
     }
 
     protected Stream<Intersection> getEmptyIntersections() {
-        return intersections.stream().filter(intersection -> !intersection.isOccupied());
+        return intersections.stream().filter(Intersection::isEmpty);
+    }
+
+    public Stream<Intersection> getNonEmptyIntersections() {
+        return intersections.stream().filter(Intersection::isOccupied);
     }
 
     protected Set<Position> fillTerritories(Stone lastPlay) {
@@ -95,9 +99,5 @@ public class Board {
         chainContainer.removeIntersection(intersection);
         intersection.setStone(Stone.NONE);
         regionsContainer.addIntersection(intersection);
-    }
-
-    public final List<Intersection> getIntersections() {
-        return this.intersections;
     }
 }

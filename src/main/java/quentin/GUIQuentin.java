@@ -7,6 +7,7 @@ import quentin.UI.GUI.GUIOutputHandler;
 import quentin.core.*;
 
 import java.util.InputMismatchException;
+import java.util.stream.Stream;
 
 public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
 
@@ -24,6 +25,10 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
 
     private boolean isWhitePlayerFirstTurn(Player currentPlayer) {
         return !whiteAlreadyPlayed && currentPlayer.getColor() == Stone.WHITE;
+    }
+
+    public Stream<Intersection> getNonEmptyIntersections() {
+        return getBoard().getNonEmptyIntersections();
     }
 
     public boolean askPlayerForPieRule() {

@@ -4,7 +4,6 @@ import quentin.UI.InputHandler;
 import quentin.UI.OutputHandler;
 import quentin.exceptions.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -26,7 +25,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         this.playerTwo = new Player(Stone.WHITE, whitePlayerName);
     }
 
-    protected void makeMove(Stone color, Position position) {
+    protected void makeMove(Stone color, Position position) throws QuentinException {
         if (isInvalidFirstPlayer(color)) {
             throw new InvalidFirstPlayerException();
         }
@@ -80,7 +79,14 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
 
     public boolean isCurrentPlayerNotAbleToMakeAMove() {
         return board.getEmptyIntersections()
-                .allMatch(emptyIntersection -> isIllegalMove(getCurrentPlayer().getColor(), emptyIntersection));
+                .allMatch(emptyIntersection -> {
+                    board.addStoneAt(getCurrentPlayer().getColor(), emptyIntersection.getPosition());
+                    Set<Position> positionsFilled = board.fillTerritories(lastPlay);
+                    positionsFilled.add(emptyIntersection.getPosition());
+                    boolean isIllegalMove = isIllegalMove(getCurrentPlayer().getColor(), emptyIntersection);
+                    positionsFilled.forEach(board::revertForIntersectionAt);
+                    return isIllegalMove;
+                });
     }
 
     protected Player getPlayerOfColor(Stone color) {

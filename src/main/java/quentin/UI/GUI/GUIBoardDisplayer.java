@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
+import quentin.core.Position;
 import quentin.core.Stone;
 
 import java.util.EnumMap;
@@ -88,12 +89,14 @@ public class GUIBoardDisplayer {
         return generatedLine;
     }
 
-    protected void addPiece(GridPane gridPane, int coordinateX, int coordinateY, Stone stone) {
-        Circle piece = new Circle(coordinateX * tileSize, coordinateY * tileSize, tileSize * 0.4);
+    // grid object starts (0,0) whereas our board implementation starts (1,1)
+    // to match those two implementation we subtract 1 from row and column
+    protected void addPiece(GridPane gridPane, Position position, Stone stone) {
+        Circle piece = new Circle((position.getColumn() - 1)  * tileSize, (position.getRow() -1)  * tileSize, tileSize * 0.4);
         piece.setFill(colorPaintMap.get(stone));
         GridPane.setHalignment(piece, HPos.CENTER);
         GridPane.setValignment(piece, VPos.CENTER);
-        gridPane.add(piece, coordinateX, coordinateY);
+        gridPane.add(piece, position.getColumn() - 1, position.getRow() - 1);
     }
 
     protected GridPane createLabelPane(String namePLayerOne, String namePlayerTwo) {

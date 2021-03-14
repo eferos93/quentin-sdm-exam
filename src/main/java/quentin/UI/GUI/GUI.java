@@ -3,6 +3,7 @@ package quentin.UI.GUI;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -15,20 +16,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import quentin.UI.GUI.Events.EndGameEvent;
-import quentin.UI.GUI.Events.EventFactory;
-import quentin.UI.GUI.Events.PassEvent;
-import quentin.UI.GUI.Events.PieRuleEvent;
-import quentin.UI.GUI.Handlers.GuiEndGameHandler;
-import quentin.UI.GUI.Handlers.GuiMouseHandler;
-import quentin.UI.GUI.Handlers.GuiPassHandler;
-import quentin.UI.GUI.Handlers.GuiPieHandler;
+import quentin.UI.GUI.Events.*;
+import quentin.UI.GUI.Handlers.*;
 import quentin.GUIQuentin;
-import quentin.core.Intersection;
 
 import java.util.stream.Stream;
-
-import static java.util.function.Predicate.not;
 
 public class GUI extends Application {
 
@@ -60,7 +52,7 @@ public class GUI extends Application {
     private void addGridEvent(GridPane gridBoard) {
         gridBoard.addEventHandler(PieRuleEvent.PIE_RULE_EVENT_TYPE, new GuiPieHandler(this));
         gridBoard.addEventHandler(MouseEvent.MOUSE_CLICKED, new GuiMouseHandler(this));
-        gridBoard.addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler(this));
+        gridBoard.addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler(guiQuentin));
         gridBoard.addEventHandler(EndGameEvent.END_GAME_EVENT_TYPE, new GuiEndGameHandler(this));
     }
 
@@ -103,7 +95,7 @@ public class GUI extends Application {
         stage.show();
     }
 
-    private Button createAndSetButton(String text, EventHandler<ActionEvent> handler) {
+    private Button createNewButton(String text, EventHandler<ActionEvent> handler) {
         Button button = new Button(text);
         button.setPrefWidth(80);
         button.setPrefHeight(35);
@@ -113,7 +105,7 @@ public class GUI extends Application {
 
     private Stream<Button> initialButtons(){
 
-        Button startButton = createAndSetButton("Start", (ActionEvent e) -> {
+        Button startButton = createNewButton("Start", (ActionEvent e) -> {
             stage.close();
             GUIInputHandler guiInputHandler = new GUIInputHandler();
             int size = guiInputHandler.askSize();
@@ -123,15 +115,15 @@ public class GUI extends Application {
             initGameInterface(size, namePlayer1, namePlayer2);
         });
 
-        Button endButton = createAndSetButton("Exit", (ActionEvent e) -> stop());
+        Button endButton = createNewButton("Exit", (ActionEvent e) -> stop());
 
-        Button rulesButton = createAndSetButton("Rules", (ActionEvent e) -> getHostServices().showDocument("https://boardgamegeek.com/boardgame/124095/quentin"));
+        Button rulesButton = createNewButton("Rules", (ActionEvent e) -> getHostServices().showDocument("https://boardgamegeek.com/boardgame/124095/quentin"));
         return Stream.of(startButton, endButton, rulesButton);
     }
 
     private Stream<Button> replayButtons(){
-        Button yesButton = createAndSetButton("Yes", (ActionEvent e) -> initUI());
-        Button noButton = createAndSetButton("No", (ActionEvent e) -> stop());
+        Button yesButton = createNewButton("Yes", (ActionEvent e) -> initUI());
+        Button noButton = createNewButton("No", (ActionEvent e) -> stop());
         return Stream.of(yesButton, noButton);
     }
 
@@ -172,31 +164,33 @@ public class GUI extends Application {
     public void stop() { Platform.exit(); }
 
     public void updateGUI() {
-        guiQuentin.getBoard().getIntersections().stream()
-                .filter(not(Intersection::isEmpty))
+        guiQuentin.getNonEmptyIntersections()
                 .forEach(nonEmptyIntersection ->
                         boardFiller.addPiece(getGridBoard(),
-                                nonEmptyIntersection.getPosition().getColumn() - 1,
-                                nonEmptyIntersection.getPosition().getRow() - 1,
+                                nonEmptyIntersection.getPosition(),
                                 nonEmptyIntersection.getStone()
                         )
                 );
         boardFiller.switchLabelsCurrentPlayer(getLabelBoard());
     }
 
-    public void fireEventsIfConditionsAreMet() {
-        if (guiQuentin.isGameEnded()) {
-            getGridBoard().fireEvent(EventFactory.createEndGameEvent());
-        }
+    public void firePieRuleIfConditionsAreMet() {
         if (guiQuentin.askPlayerForPieRule()) {
-            getGridBoard().fireEvent(EventFactory.createPieRuleEvent());
+            fireEvent(EventFactory.createPieRuleEvent());
         }
-        if (guiQuentin.isCurrentPlayerNotAbleToMakeAMove()) {
-            getGridBoard().fireEvent(EventFactory.createPassEvent());
+    }
+
+    public void fireEndGameEventIfConditionsAreMet() {
+        if (guiQuentin.isGameEnded()) {
+            fireEvent(EventFactory.createEndGameEvent());
         }
     }
 
     public void notifyException(Exception exception) {
         guiQuentin.notifyException(exception);
+    }
+
+    public void fireEvent(Event event) {
+        getGridBoard().fireEvent(event);
     }
 }

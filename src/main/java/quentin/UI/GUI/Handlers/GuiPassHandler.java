@@ -1,18 +1,18 @@
 package quentin.UI.GUI.Handlers;
 
 import javafx.event.EventHandler;
+import quentin.GUIQuentin;
 import quentin.UI.GUI.Events.PassEvent;
-import quentin.UI.GUI.GUI;
 
 public class GuiPassHandler implements EventHandler<PassEvent> {
 
-    private final GUI gui;
+    private final GUIQuentin game;
 
-    public GuiPassHandler(GUI gui) { this.gui = gui; }
+    public GuiPassHandler(GUIQuentin game) { this.game = game; }
 
     @Override
     public void handle(PassEvent event) {
-        gui.getGame().passTurn();
+        game.passTurn();
         event.consume();
     }
 }
