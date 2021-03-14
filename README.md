@@ -18,7 +18,7 @@ Open a terminal in the project folder and run:
 - `./gradlew runGUI` for the GUI version
 
 If you are using Windows then instead of `./gradlew`, type `gradlew.bat`
-#### Requirements
+### Requirements
 - jdk 15
 - Gradle
 
