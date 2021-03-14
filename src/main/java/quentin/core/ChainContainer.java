@@ -20,7 +20,7 @@ public class ChainContainer {
     }
 
     protected void updateChain(Intersection newIntersection) {
-        Optional<Graph<Intersection, DefaultEdge>> chainsOfColor = Optional.ofNullable(chains.get(newIntersection.getStone()));
+        Optional<Graph<Intersection, DefaultEdge>> chainsOfColor = Optional.ofNullable(chains.get(newIntersection.getColor().orElseThrow()));
         chainsOfColor.ifPresent(chainsOfSingleColor -> {
             chainsOfSingleColor.addVertex(newIntersection);
             chainsOfSingleColor.vertexSet().stream()
@@ -30,7 +30,7 @@ public class ChainContainer {
     }
 
     protected void removeIntersection(Intersection intersection) {
-        chains.get(intersection.getStone()).removeVertex(intersection);
+        chains.get(intersection.getColor().orElseThrow()).removeVertex(intersection);
     }
 
     private boolean hasACompleteChain(Map.Entry<Color, Graph<Intersection, DefaultEdge>> chainsOfAGivenColor) {
@@ -53,11 +53,10 @@ public class ChainContainer {
         return sides.stream().filter(side -> side.hasColor(color)).collect(Collectors.toList());
     }
 
-    protected Color getColorWithCompleteChain() {
+    protected Optional<Color> getColorWithCompleteChain() {
         return chains.entrySet().stream()
                 .filter(this::hasACompleteChain)
                 .map(Map.Entry::getKey)
-                .findFirst()
-                .orElse(Color.NONE);
+                .findFirst();
     }
 }

@@ -60,7 +60,7 @@ public class BoardShould {
         board.addStoneAt(Color.BLACK, in(5, 7));
         board.addStoneAt(Color.WHITE, in(4, 3));
         board.addStoneAt(Color.WHITE, in(9, 6));
-        assertEquals(intersection.getStone(), color);
+        assertTrue(intersection.getColor().map(intersectionColor -> intersectionColor == color).orElse(false));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class BoardShould {
         customBoard.addStoneAt(Color.BLACK, in(1, 2));
         customBoard.addStoneAt(Color.BLACK, in(2, 2));
         customBoard.addStoneAt(Color.BLACK, in(3, 2));
-        assertEquals(Color.BLACK, customBoard.colorWithCompleteChain());
+        assertTrue(customBoard.colorWithCompleteChain().map(chainColor -> chainColor == Color.BLACK).orElse(false));
     }
 
     @TestFactory

@@ -10,6 +10,8 @@ import java.util.stream.IntStream;
 
 public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
 
+    private final IntersectionConsoleRepresentation intersectionConsoleRepresentation = new IntersectionConsoleRepresentation();
+
     public void displayTitle() { System.out.println(Message.TITLE);}
 
     public void displayInstructions() { System.out.println(Message.INSTRUCTIONS);}
@@ -40,7 +42,7 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
     public void displayPlayer(Player player) {
         System.out.printf(Message.CURRENT_PLAYER,
                 player.getName(),
-                ConsoleStoneRepresentation.getStoneValue(player.getColor())
+                intersectionConsoleRepresentation.getStoneValue(player.getColor())
         );
     }
 
@@ -49,17 +51,17 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
 
     @Override
     public void notifyPieRule(List<Player> players) {
-        System.out.printf(Message.PIE, players.get(0).getName(), ConsoleStoneRepresentation.getStoneValue(players.get(0).getColor()),
-                players.get(1).getName(), ConsoleStoneRepresentation.getStoneValue(players.get(1).getColor()));
+        System.out.printf(Message.PIE, players.get(0).getName(), intersectionConsoleRepresentation.getStoneValue(players.get(0).getColor()),
+                players.get(1).getName(), intersectionConsoleRepresentation.getStoneValue(players.get(1).getColor()));
     }
 
     @Override
-    public void notifyWinner(Player player) { System.out.printf(Message.END_GAME, player.getName(), ConsoleStoneRepresentation.getStoneValue(player.getColor())); }
+    public void notifyWinner(Player player) { System.out.printf(Message.END_GAME, player.getName(), intersectionConsoleRepresentation.getStoneValue(player.getColor())); }
 
     public void askPie(String whitePlayerName) { System.out.printf(Message.QUERY_PIE, whitePlayerName); }
 
-    private void displayStone(Color color){
-        System.out.print(ConsoleStoneRepresentation.getStoneValue(color));
+    private void displayIntersection(Color color){
+        System.out.print(intersectionConsoleRepresentation.getStoneValue(color));
     }
 
     private void displayRow(Board board, int rowIndex) {
@@ -67,7 +69,7 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
         System.out.print("W");
         IntStream.rangeClosed(1, board.getBoardSize())
                 .forEach(columnIndex ->
-                        displayStone(board.intersectionAt(Position.in(rowIndex, columnIndex)).getStone())
+                        displayIntersection(board.intersectionAt(Position.in(rowIndex, columnIndex)).getColor().orElse(null))
                 );
         System.out.print("W" + System.lineSeparator());
     }

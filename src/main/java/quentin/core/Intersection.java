@@ -1,6 +1,7 @@
 package quentin.core;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class Intersection {
     private final Position position;
@@ -25,15 +26,15 @@ public class Intersection {
     }
 
     public static Intersection empty(Position position) {
-        return new Intersection(position, Color.NONE);
+        return new Intersection(position, null);
     }
 
     public final Position getPosition() {
         return this.position;
     }
 
-    public final Color getStone() {
-        return this.color;
+    public final Optional<Color> getColor() {
+        return Optional.ofNullable(this.color);
     }
 
     protected void setStone(Color color) {
@@ -57,10 +58,10 @@ public class Intersection {
     }
 
     public boolean hasStone(Color color) {
-        return this.color == color;
+        return Optional.ofNullable(this.color).map(intersectionColor -> intersectionColor == color).orElse(false);
     }
 
-    public boolean isEmpty() { return hasStone(Color.NONE); }
+    public boolean isEmpty() { return Optional.ofNullable(this.color).isEmpty(); }
 
     @Override
     public String toString() {

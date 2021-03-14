@@ -20,7 +20,7 @@ public class ChainContainerShould {
 
         ChainContainer chainContainer = new ChainContainer(3);
         intersectionStream.forEach(chainContainer::updateChain);
-        assertEquals(Color.BLACK, chainContainer.getColorWithCompleteChain());
+        assertTrue(chainContainer.getColorWithCompleteChain().map(chainColor -> chainColor == Color.BLACK).orElse(false));
     }
 
     @Test
@@ -33,7 +33,7 @@ public class ChainContainerShould {
 
         ChainContainer chainContainer = new ChainContainer(3);
         intersectionStream.forEach(chainContainer::updateChain);
-        assertEquals(Color.NONE, chainContainer.getColorWithCompleteChain());
+        assertTrue(chainContainer.getColorWithCompleteChain().isEmpty());
     }
 
 }

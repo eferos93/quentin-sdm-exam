@@ -19,7 +19,7 @@ public class GUIBoardDisplayer {
 
     private final int boardSize;
     private final int tileSize;
-    private static final EnumMap<Color, Paint> colorPaintMap = new EnumMap<> (Color.class);
+    private final EnumMap<Color, Paint> colorPaintMap = new EnumMap<> (Color.class);
 
     protected GUIBoardDisplayer(int boardSize, int tileSize) {
         this.boardSize = boardSize;

@@ -60,7 +60,7 @@ public class Board {
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    protected Color colorWithCompleteChain() {
+    protected Optional<Color> colorWithCompleteChain() {
         return chainContainer.getColorWithCompleteChain();
     }
 
@@ -73,12 +73,12 @@ public class Board {
     }
 
     protected Set<Position> fillTerritories(Color lastPlay) {
-        Map<Set<Intersection>, Color> territoriesToFill = getTerritoriesAndStones(lastPlay);
+        Map<Set<Intersection>, Optional<Color>> territoriesToFill = getTerritoriesAndStones(lastPlay);
         territoriesToFill
                 .forEach((territory, stone) ->
                                 territory.stream()
                                         .map(Intersection::getPosition)
-                                        .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
+                                        .forEach(emptyIntersectionPosition -> addStoneAt(stone.orElseThrow(), emptyIntersectionPosition))
                 );
         return territoriesToFill.entrySet().stream()
                 .flatMap(entry -> entry.getKey().stream())
@@ -86,7 +86,7 @@ public class Board {
                 .collect(Collectors.toSet());
     }
 
-    protected Map<Set<Intersection>, Color> getTerritoriesAndStones(Color lastPlay) {
+    protected Map<Set<Intersection>, Optional<Color>> getTerritoriesAndStones(Color lastPlay) {
         return regionsContainer.getTerritoriesAndStonesToFill(lastPlay);
     }
 
@@ -97,7 +97,7 @@ public class Board {
     protected void revertForIntersectionAt(Position position) {
         Intersection intersection = intersectionAt(position);
         chainContainer.removeIntersection(intersection);
-        intersection.setStone(Color.NONE);
+        intersection.setStone(null);
         regionsContainer.addIntersection(intersection);
     }
 }

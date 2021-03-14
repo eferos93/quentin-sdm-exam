@@ -9,6 +9,7 @@ import org.jgrapht.util.SupplierUtil;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -76,23 +77,23 @@ public class RegionContainer {
     }
 
 
-    private Color getStoneToFillTerritory(Set<Intersection> territory, Color lastPlay) {
+    private Optional<Color> getColorToFillTerritory(Set<Intersection> territory, Color lastPlay) {
         Set<Intersection> intersectionsSurroundingTerritory =
                 getIntersectionsThatSurroundsTheTerritory(territory);
         long countOfWhiteStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Color.WHITE);
         long countOfBlackStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Color.BLACK);
 
         if (countOfWhiteStones != countOfBlackStones) {
-            return (countOfWhiteStones < countOfBlackStones) ? Color.BLACK : Color.WHITE;
+            return Optional.of((countOfWhiteStones < countOfBlackStones) ? Color.BLACK : Color.WHITE);
         } else {
-            return lastPlay.getOppositeColor();
+            return Optional.ofNullable(lastPlay).map(Color::getOppositeColor);
         }
     }
 
-    protected Map<Set<Intersection>, Color> getTerritoriesAndStonesToFill(Color lastPlay) {
+    protected Map<Set<Intersection>, Optional<Color>> getTerritoriesAndStonesToFill(Color lastPlay) {
         return getTerritories().stream()
                 .map(territory -> {
-                    Color color = getStoneToFillTerritory(territory, lastPlay);
+                    Optional<Color> color = getColorToFillTerritory(territory, lastPlay);
                     return Map.entry(territory, color);
                 })
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

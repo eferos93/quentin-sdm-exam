@@ -4,13 +4,14 @@ import quentin.UI.InputHandler;
 import quentin.UI.OutputHandler;
 import quentin.exceptions.*;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
 public abstract class Quentin<InputHandlerImplementation extends InputHandler, OutputHandlerImplementation extends OutputHandler> {
     private final Board board;
     protected boolean whiteAlreadyPlayed = false;
-    private Color lastPlay = Color.NONE;
+    private Color lastPlay = null;
     private final Player playerOne;
     private final Player playerTwo;
     protected final InputHandlerImplementation inputHandler;
@@ -70,7 +71,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     }
 
     private boolean isFirstTurn() {
-        return lastPlay == Color.NONE;
+        return Optional.ofNullable(lastPlay).isEmpty();
     }
 
     private boolean isInvalidFirstPlayer(Color playerColor) {
@@ -100,15 +101,19 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     }
 
     protected boolean checkForWinner() {
-        Color winnerColor = getWinner();
-        if (winnerColor != Color.NONE) {
+        return getWinner().map(winnerColor -> {
             outputHandler.notifyWinner(getPlayerOfColor(winnerColor));
             return true;
-        }
-        return false;
+        }).orElse(false);
+//        Color winnerColor = getWinner();
+//        if (winnerColor != Color.NONE) {
+//            outputHandler.notifyWinner(getPlayerOfColor(winnerColor));
+//            return true;
+//        }
+//        return false;
     }
 
-    protected Color getWinner() {
+    protected Optional<Color> getWinner() {
         return board.colorWithCompleteChain();
     }
 
