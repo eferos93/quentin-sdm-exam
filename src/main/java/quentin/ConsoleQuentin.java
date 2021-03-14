@@ -47,7 +47,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
     }
 
     private boolean isWhitePlayerFirstTurn(Player currentPlayer) {
-        return !whiteAlreadyPlayed && currentPlayer.getColor() == Stone.WHITE;
+        return !whiteAlreadyPlayed && currentPlayer.getColor() == Color.WHITE;
     }
 
     private boolean askForPieRule(Player currentPlayer) {

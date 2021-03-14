@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class Intersection {
     private final Position position;
-    private Stone stone;
+    private Color color;
 
-    protected Intersection(Position position, Stone stone) {
+    protected Intersection(Position position, Color color) {
         this.position = position;
-        this.stone = stone;
+        this.color = color;
     }
 
     @Override
@@ -16,28 +16,28 @@ public class Intersection {
         if (this == anotherCell) return true;
         if (anotherCell == null || getClass() != anotherCell.getClass()) return false;
         Intersection intersection = (Intersection) anotherCell;
-        return position.equals(intersection.position) && stone == intersection.stone;
+        return position.equals(intersection.position) && color == intersection.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(position, stone);
+        return Objects.hash(position, color);
     }
 
     public static Intersection empty(Position position) {
-        return new Intersection(position, Stone.NONE);
+        return new Intersection(position, Color.NONE);
     }
 
     public final Position getPosition() {
         return this.position;
     }
 
-    public final Stone getStone() {
-        return this.stone;
+    public final Color getStone() {
+        return this.color;
     }
 
-    protected void setStone(Stone stone) {
-        this.stone = stone;
+    protected void setStone(Color color) {
+        this.color = color;
     }
 
     protected boolean isAt(Position position) {
@@ -56,17 +56,17 @@ public class Intersection {
         return position.isDiagonalTo(otherIntersection.getPosition());
     }
 
-    public boolean hasStone(Stone stone) {
-        return this.stone == stone;
+    public boolean hasStone(Color color) {
+        return this.color == color;
     }
 
-    public boolean isEmpty() { return hasStone(Stone.NONE); }
+    public boolean isEmpty() { return hasStone(Color.NONE); }
 
     @Override
     public String toString() {
         return "Intersection{" +
                 "position=" + position +
-                ", stone=" + stone +
+                ", stone=" + color +
                 '}';
     }
 }

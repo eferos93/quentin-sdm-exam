@@ -1,11 +1,11 @@
 package quentin.core;
 
-public enum Stone {
+public enum Color {
     WHITE,
     BLACK,
     NONE;
 
-    public Stone getOppositeColor() {
+    public Color getOppositeColor() {
         return switch (this) {
             case BLACK -> WHITE;
             case WHITE -> BLACK;

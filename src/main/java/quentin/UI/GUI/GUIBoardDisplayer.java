@@ -6,12 +6,11 @@ import javafx.geometry.VPos;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import quentin.core.Position;
-import quentin.core.Stone;
+import quentin.core.Color;
 
 import java.util.EnumMap;
 import java.util.stream.IntStream;
@@ -20,14 +19,14 @@ public class GUIBoardDisplayer {
 
     private final int boardSize;
     private final int tileSize;
-    private static final EnumMap<Stone, Paint> colorPaintMap = new EnumMap<> (Stone.class);
+    private static final EnumMap<Color, Paint> colorPaintMap = new EnumMap<> (Color.class);
 
     protected GUIBoardDisplayer(int boardSize, int tileSize) {
         this.boardSize = boardSize;
         this.tileSize = tileSize;
 
-        colorPaintMap.put(Stone.BLACK, Color.BLACK);
-        colorPaintMap.put(Stone.WHITE, Color.WHITE);
+        colorPaintMap.put(Color.BLACK, javafx.scene.paint.Color.BLACK);
+        colorPaintMap.put(Color.WHITE, javafx.scene.paint.Color.WHITE);
     }
 
     protected GridPane createEmptyBoard() {
@@ -84,16 +83,16 @@ public class GUIBoardDisplayer {
 
     private Line lineGenerator(int endX,int endY){
         Line generatedLine = new Line(0, 0, endX, endY);
-        generatedLine.setStroke(Color.BLACK);
+        generatedLine.setStroke(javafx.scene.paint.Color.BLACK);
         generatedLine.setStrokeWidth(2.0);
         return generatedLine;
     }
 
     // grid object starts (0,0) whereas our board implementation starts (1,1)
     // to match those two implementation we subtract 1 from row and column
-    protected void addPiece(GridPane gridPane, Position position, Stone stone) {
+    protected void addPiece(GridPane gridPane, Position position, Color color) {
         Circle piece = new Circle((position.getColumn() - 1)  * tileSize, (position.getRow() -1)  * tileSize, tileSize * 0.4);
-        piece.setFill(colorPaintMap.get(stone));
+        piece.setFill(colorPaintMap.get(color));
         GridPane.setHalignment(piece, HPos.CENTER);
         GridPane.setValignment(piece, VPos.CENTER);
         gridPane.add(piece, position.getColumn() - 1, position.getRow() - 1);
@@ -107,9 +106,9 @@ public class GUIBoardDisplayer {
         gridLabels.add(new Text(namePlayerTwo + ": "), 0, 1);
         gridLabels.add(new Text("Now playing: "), 0, 2);
 
-        Circle whitePlayerLabel = new Circle(tileSize * 0.1, Color.WHITE);
-        Circle blackPlayerLabel = new Circle(tileSize * 0.1, Color.BLACK);
-        Circle currentPlayerLabel = new Circle(tileSize * 0.1, Color.BLACK);
+        Circle whitePlayerLabel = new Circle(tileSize * 0.1, javafx.scene.paint.Color.WHITE);
+        Circle blackPlayerLabel = new Circle(tileSize * 0.1, javafx.scene.paint.Color.BLACK);
+        Circle currentPlayerLabel = new Circle(tileSize * 0.1, javafx.scene.paint.Color.BLACK);
 
         gridLabels.add(whitePlayerLabel, 1, 1);
         gridLabels.add(blackPlayerLabel, 1, 0);
@@ -119,17 +118,17 @@ public class GUIBoardDisplayer {
     }
 
     protected void switchColorPlayerLabel(GridPane labelBoard){
-        switchColorLabel(labelBoard, 3, Color.BLACK);
-        switchColorLabel(labelBoard, 4, Color.WHITE);
+        switchColorLabel(labelBoard, 3, javafx.scene.paint.Color.BLACK);
+        switchColorLabel(labelBoard, 4, javafx.scene.paint.Color.WHITE);
     }
 
-    private void switchColorLabel(GridPane labelBoard, int position, Color color){
+    private void switchColorLabel(GridPane labelBoard, int position, javafx.scene.paint.Color color){
         Circle currentPlayerLabel = (Circle) labelBoard.getChildren().get(position);
         currentPlayerLabel.setFill(color);
     }
 
     protected void switchLabelsCurrentPlayer(GridPane labelBoard){
         Circle currentPlayerLabel = (Circle) labelBoard.getChildren().get(5);
-        currentPlayerLabel.setFill(currentPlayerLabel.getFill() == Color.BLACK ? Color.WHITE : Color.BLACK);
+        currentPlayerLabel.setFill(currentPlayerLabel.getFill() == javafx.scene.paint.Color.BLACK ? javafx.scene.paint.Color.WHITE : javafx.scene.paint.Color.BLACK);
     }
 }

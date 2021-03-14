@@ -1,15 +1,15 @@
 package quentin.core;
 
 public class Player {
-    private Stone color;
+    private Color color;
     private final String name;
 
-    public Player(Stone color, String name) {
+    public Player(Color color, String name) {
         this.color = color;
         this.name = name;
     }
 
-    public final Stone getColor() {
+    public final Color getColor() {
         return color;
     }
 

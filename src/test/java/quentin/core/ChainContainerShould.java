@@ -12,28 +12,28 @@ public class ChainContainerShould {
     @Test
     public void touchSidesIfItIsACompleteChain() {
         Stream<Intersection> intersectionStream = Stream.of(
-                new Intersection(in(1, 1), Stone.BLACK),
-                new Intersection(in(1, 2), Stone.BLACK),
-                new Intersection(in(2, 2), Stone.BLACK),
-                new Intersection(in(3, 2), Stone.BLACK)
+                new Intersection(in(1, 1), Color.BLACK),
+                new Intersection(in(1, 2), Color.BLACK),
+                new Intersection(in(2, 2), Color.BLACK),
+                new Intersection(in(3, 2), Color.BLACK)
         );
 
         ChainContainer chainContainer = new ChainContainer(3);
         intersectionStream.forEach(chainContainer::updateChain);
-        assertEquals(Stone.BLACK, chainContainer.getColorWithCompleteChain());
+        assertEquals(Color.BLACK, chainContainer.getColorWithCompleteChain());
     }
 
     @Test
     public void notTouchSidesIfItIsNotACompleteChain() {
         Stream<Intersection> intersectionStream = Stream.of(
-                new Intersection(in(1, 1), Stone.BLACK),
-                new Intersection(in(1, 2), Stone.BLACK),
-                new Intersection(in(2, 2), Stone.BLACK)
+                new Intersection(in(1, 1), Color.BLACK),
+                new Intersection(in(1, 2), Color.BLACK),
+                new Intersection(in(2, 2), Color.BLACK)
         );
 
         ChainContainer chainContainer = new ChainContainer(3);
         intersectionStream.forEach(chainContainer::updateChain);
-        assertEquals(Stone.NONE, chainContainer.getColorWithCompleteChain());
+        assertEquals(Color.NONE, chainContainer.getColorWithCompleteChain());
     }
 
 }

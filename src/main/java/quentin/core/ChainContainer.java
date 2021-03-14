@@ -9,12 +9,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChainContainer {
-    private final EnumMap<Stone, Graph<Intersection, DefaultEdge>> chains = new EnumMap<>(Stone.class);
+    private final EnumMap<Color, Graph<Intersection, DefaultEdge>> chains = new EnumMap<>(Color.class);
     private final Set<BoardSide> sides = EnumSet.allOf(BoardSide.class);
 
     ChainContainer(int boardSize) {
-        chains.put(Stone.BLACK, new SimpleGraph<>(DefaultEdge.class));
-        chains.put(Stone.WHITE, new SimpleGraph<>(DefaultEdge.class));
+        chains.put(Color.BLACK, new SimpleGraph<>(DefaultEdge.class));
+        chains.put(Color.WHITE, new SimpleGraph<>(DefaultEdge.class));
         BoardSide.setBoardSize(boardSize);
         sides.forEach(BoardSide::initialiseSide);
     }
@@ -33,12 +33,12 @@ public class ChainContainer {
         chains.get(intersection.getStone()).removeVertex(intersection);
     }
 
-    private boolean hasACompleteChain(Map.Entry<Stone, Graph<Intersection, DefaultEdge>> chainsOfAGivenColor) {
+    private boolean hasACompleteChain(Map.Entry<Color, Graph<Intersection, DefaultEdge>> chainsOfAGivenColor) {
         return new ConnectivityInspector<>(chainsOfAGivenColor.getValue()).connectedSets().stream()
                 .anyMatch(chain -> isChainConnectedToSameColorSides(chainsOfAGivenColor.getKey(), chain));
     }
 
-    private boolean isChainConnectedToSameColorSides(Stone color, Set<Intersection> chain) {
+    private boolean isChainConnectedToSameColorSides(Color color, Set<Intersection> chain) {
         return
                 chain.stream()
                         .map(Intersection::getPosition)
@@ -49,15 +49,15 @@ public class ChainContainer {
                         .anyMatch(position -> getSidesOfColor(color).get(1).isAdjacentTo(position));
     }
 
-    private List<BoardSide> getSidesOfColor(Stone color) {
+    private List<BoardSide> getSidesOfColor(Color color) {
         return sides.stream().filter(side -> side.hasColor(color)).collect(Collectors.toList());
     }
 
-    protected Stone getColorWithCompleteChain() {
+    protected Color getColorWithCompleteChain() {
         return chains.entrySet().stream()
                 .filter(this::hasACompleteChain)
                 .map(Map.Entry::getKey)
                 .findFirst()
-                .orElse(Stone.NONE);
+                .orElse(Color.NONE);
     }
 }

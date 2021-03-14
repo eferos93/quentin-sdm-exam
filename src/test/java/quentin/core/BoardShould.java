@@ -48,19 +48,19 @@ public class BoardShould {
 
     private static Stream<Arguments> provideIntersectionToMarkCorrectlyAnIntersection() throws OutsideOfBoardException {
         return Stream.of(
-                Arguments.of(board.intersectionAt(in(5, 7)), Stone.BLACK),
-                Arguments.of(board.intersectionAt(in(4, 3)), Stone.WHITE),
-                Arguments.of(board.intersectionAt(in(9, 6)), Stone.WHITE)
+                Arguments.of(board.intersectionAt(in(5, 7)), Color.BLACK),
+                Arguments.of(board.intersectionAt(in(4, 3)), Color.WHITE),
+                Arguments.of(board.intersectionAt(in(9, 6)), Color.WHITE)
         );
     }
 
     @ParameterizedTest
     @MethodSource({"provideIntersectionToMarkCorrectlyAnIntersection"})
-    public void markCorrectlyAnIntersection(Intersection intersection, Stone stone) throws NoSuchElementException, OutsideOfBoardException {
-        board.addStoneAt(Stone.BLACK, in(5, 7));
-        board.addStoneAt(Stone.WHITE, in(4, 3));
-        board.addStoneAt(Stone.WHITE, in(9, 6));
-        assertEquals(intersection.getStone(), stone);
+    public void markCorrectlyAnIntersection(Intersection intersection, Color color) throws NoSuchElementException, OutsideOfBoardException {
+        board.addStoneAt(Color.BLACK, in(5, 7));
+        board.addStoneAt(Color.WHITE, in(4, 3));
+        board.addStoneAt(Color.WHITE, in(9, 6));
+        assertEquals(intersection.getStone(), color);
     }
 
     @Test
@@ -68,12 +68,12 @@ public class BoardShould {
         int boardSize = 13;
         Board customBoard = Board.buildBoard(boardSize);
         IntStream.rangeClosed(1, boardSize).forEach(column -> {
-                customBoard.addStoneAt(Stone.WHITE, in(7, column));
-                customBoard.addStoneAt(Stone.BLACK, in(9, column));
+                customBoard.addStoneAt(Color.WHITE, in(7, column));
+                customBoard.addStoneAt(Color.BLACK, in(9, column));
         });
-        customBoard.fillTerritories(Stone.BLACK);
+        customBoard.fillTerritories(Color.BLACK);
         assertTrue(IntStream.rangeClosed(1, 13)
-                .allMatch(column -> customBoard.intersectionAt(in(8, column)).hasStone(Stone.WHITE))
+                .allMatch(column -> customBoard.intersectionAt(in(8, column)).hasStone(Color.WHITE))
         );
     }
 
@@ -84,45 +84,45 @@ public class BoardShould {
         IntStream.rangeClosed(1, boardSize)
                 .forEach(column -> {
                         if (column <= 6) {
-                            customBoard.addStoneAt(Stone.WHITE, in(7, column));
+                            customBoard.addStoneAt(Color.WHITE, in(7, column));
                         } else {
-                            customBoard.addStoneAt(Stone.BLACK, in(7, column));
+                            customBoard.addStoneAt(Color.BLACK, in(7, column));
                         }
                 });
 
         IntStream.rangeClosed(1, boardSize)
                 .forEach(column -> {
                         if (column <= 4) {
-                            customBoard.addStoneAt(Stone.WHITE, in(9, column));
+                            customBoard.addStoneAt(Color.WHITE, in(9, column));
                         } else {
-                            customBoard.addStoneAt(Stone.BLACK, in(9, column));
+                            customBoard.addStoneAt(Color.BLACK, in(9, column));
                         }
                 });
 
-        customBoard.fillTerritories(Stone.BLACK);
+        customBoard.fillTerritories(Color.BLACK);
         assertTrue(IntStream.rangeClosed(1, boardSize)
-                .allMatch(column -> customBoard.intersectionAt(in(8, column)).hasStone(Stone.BLACK))
+                .allMatch(column -> customBoard.intersectionAt(in(8, column)).hasStone(Color.BLACK))
         );
     }
 
     @Test
     public void updateTheChainsCorrectly() throws OutsideOfBoardException {
         Board customBoard = Board.buildBoard(3);
-        customBoard.addStoneAt(Stone.BLACK, in(1, 1));
-        customBoard.addStoneAt(Stone.BLACK, in(1, 2));
-        customBoard.addStoneAt(Stone.BLACK, in(2, 2));
-        customBoard.addStoneAt(Stone.BLACK, in(3, 2));
-        assertEquals(Stone.BLACK, customBoard.colorWithCompleteChain());
+        customBoard.addStoneAt(Color.BLACK, in(1, 1));
+        customBoard.addStoneAt(Color.BLACK, in(1, 2));
+        customBoard.addStoneAt(Color.BLACK, in(2, 2));
+        customBoard.addStoneAt(Color.BLACK, in(3, 2));
+        assertEquals(Color.BLACK, customBoard.colorWithCompleteChain());
     }
 
     @TestFactory
     Collection<DynamicTest> provideCorrectColourAlikeDiagonallyAdjacentStones(){
         Board customBoard = Board.buildBoard(4);
-        customBoard.addStoneAt(Stone.BLACK, in(2, 2));
-        customBoard.addStoneAt(Stone.BLACK, in(1, 1));
-        customBoard.addStoneAt(Stone.BLACK, in(3, 3));
-        customBoard.addStoneAt(Stone.WHITE, in(1, 3));
-        customBoard.addStoneAt(Stone.WHITE, in(3, 1));
+        customBoard.addStoneAt(Color.BLACK, in(2, 2));
+        customBoard.addStoneAt(Color.BLACK, in(1, 1));
+        customBoard.addStoneAt(Color.BLACK, in(3, 3));
+        customBoard.addStoneAt(Color.WHITE, in(1, 3));
+        customBoard.addStoneAt(Color.WHITE, in(3, 1));
 
         List<Intersection> blackIntersections = List.of(
                 customBoard.intersectionAt(in(1, 1)),
@@ -135,7 +135,7 @@ public class BoardShould {
         );
 
         Set<Intersection> colourAlikeDiagonallyAdjacentIntersections =
-                customBoard.getDiagonallyAdjacentIntersectionsOfColour(customBoard.intersectionAt(in(2, 2)), Stone.BLACK);
+                customBoard.getDiagonallyAdjacentIntersectionsOfColour(customBoard.intersectionAt(in(2, 2)), Color.BLACK);
 
         return List.of(
                 DynamicTest.dynamicTest("Black Diagonal Intersections",
@@ -148,11 +148,11 @@ public class BoardShould {
     @TestFactory
     Collection<DynamicTest> provideCorrectColourAlikeOrthogonallyAdjacentStones() {
         Board customBoard = Board.buildBoard(4);
-        customBoard.addStoneAt(Stone.WHITE, in(2, 2));
-        customBoard.addStoneAt(Stone.BLACK, in(1, 2));
-        customBoard.addStoneAt(Stone.BLACK, in(3, 2));
-        customBoard.addStoneAt(Stone.WHITE, in(2, 1));
-        customBoard.addStoneAt(Stone.WHITE, in (2, 3));
+        customBoard.addStoneAt(Color.WHITE, in(2, 2));
+        customBoard.addStoneAt(Color.BLACK, in(1, 2));
+        customBoard.addStoneAt(Color.BLACK, in(3, 2));
+        customBoard.addStoneAt(Color.WHITE, in(2, 1));
+        customBoard.addStoneAt(Color.WHITE, in (2, 3));
 
         List<Intersection> blackIntersections = List.of(
                 customBoard.intersectionAt(in(1, 2)),
@@ -165,7 +165,7 @@ public class BoardShould {
 
         Set<Intersection> colourAlikeOrthogonallyAdjacentIntersections =
                 customBoard.getOrthogonallyAdjacentIntersectionsOfColour(
-                        customBoard.intersectionAt(in(2, 2)), Stone.WHITE
+                        customBoard.intersectionAt(in(2, 2)), Color.WHITE
                 );
 
         return List.of(

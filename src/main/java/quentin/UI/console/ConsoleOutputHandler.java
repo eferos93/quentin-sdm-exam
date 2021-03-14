@@ -3,7 +3,7 @@ package quentin.UI.console;
 import quentin.core.Board;
 import quentin.core.Player;
 import quentin.core.Position;
-import quentin.core.Stone;
+import quentin.core.Color;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -58,8 +58,8 @@ public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
 
     public void askPie(String whitePlayerName) { System.out.printf(Message.QUERY_PIE, whitePlayerName); }
 
-    private void displayStone(Stone stone){
-        System.out.print(ConsoleStoneRepresentation.getStoneValue(stone));
+    private void displayStone(Color color){
+        System.out.print(ConsoleStoneRepresentation.getStoneValue(color));
     }
 
     private void displayRow(Board board, int rowIndex) {

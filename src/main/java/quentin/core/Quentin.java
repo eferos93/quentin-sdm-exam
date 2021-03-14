@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 public abstract class Quentin<InputHandlerImplementation extends InputHandler, OutputHandlerImplementation extends OutputHandler> {
     private final Board board;
     protected boolean whiteAlreadyPlayed = false;
-    private Stone lastPlay = Stone.NONE;
+    private Color lastPlay = Color.NONE;
     private final Player playerOne;
     private final Player playerTwo;
     protected final InputHandlerImplementation inputHandler;
@@ -21,11 +21,11 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         this.board = Board.buildBoard(boardSize);
         this.inputHandler = inputHandler;
         this.outputHandler = outputHandler;
-        this.playerOne = new Player(Stone.BLACK, blackPlayerName);
-        this.playerTwo = new Player(Stone.WHITE, whitePlayerName);
+        this.playerOne = new Player(Color.BLACK, blackPlayerName);
+        this.playerTwo = new Player(Color.WHITE, whitePlayerName);
     }
 
-    protected void makeMove(Stone color, Position position) throws QuentinException {
+    protected void makeMove(Color color, Position position) throws QuentinException {
         if (isInvalidFirstPlayer(color)) {
             throw new InvalidFirstPlayerException();
         }
@@ -51,11 +51,11 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         return board.isOccupied(position);
     }
 
-    private boolean isIllegalMove(Stone playerColor, Position position) throws OutsideOfBoardException {
+    private boolean isIllegalMove(Color playerColor, Position position) throws OutsideOfBoardException {
         return isIllegalMove(playerColor, board.intersectionAt(position));
     }
 
-    private boolean isIllegalMove(Stone playerColor, Intersection intersection) {
+    private boolean isIllegalMove(Color playerColor, Intersection intersection) {
         Set<Intersection> colorAlikeOrthogonalIntersections =
                 board.getOrthogonallyAdjacentIntersectionsOfColour(intersection, playerColor);
         return board.getDiagonallyAdjacentIntersectionsOfColour(intersection, playerColor).stream()
@@ -65,16 +65,16 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
                 );
     }
 
-    private boolean isARepeatedPlay(Stone playerColor) {
+    private boolean isARepeatedPlay(Color playerColor) {
         return lastPlay == playerColor;
     }
 
     private boolean isFirstTurn() {
-        return lastPlay == Stone.NONE;
+        return lastPlay == Color.NONE;
     }
 
-    private boolean isInvalidFirstPlayer(Stone playerColor) {
-        return isFirstTurn() && playerColor == Stone.WHITE;
+    private boolean isInvalidFirstPlayer(Color playerColor) {
+        return isFirstTurn() && playerColor == Color.WHITE;
     }
 
     public boolean isCurrentPlayerNotAbleToMakeAMove() {
@@ -89,7 +89,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
                 });
     }
 
-    protected Player getPlayerOfColor(Stone color) {
+    protected Player getPlayerOfColor(Color color) {
         return getPlayers().stream().filter(player -> player.getColor() == color).findFirst().orElseThrow();
     }
 
@@ -100,15 +100,15 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     }
 
     protected boolean checkForWinner() {
-        Stone winnerColor = getWinner();
-        if (winnerColor != Stone.NONE) {
+        Color winnerColor = getWinner();
+        if (winnerColor != Color.NONE) {
             outputHandler.notifyWinner(getPlayerOfColor(winnerColor));
             return true;
         }
         return false;
     }
 
-    protected Stone getWinner() {
+    protected Color getWinner() {
         return board.colorWithCompleteChain();
     }
 
@@ -125,7 +125,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     }
 
     public Player getCurrentPlayer() {
-        return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(this.lastPlay.getOppositeColor());
+        return isFirstTurn() ? getPlayerOfColor(Color.BLACK) : getPlayerOfColor(this.lastPlay.getOppositeColor());
     }
 
     protected boolean applyPieRuleIfPlayerWants(Player currentPlayer) {

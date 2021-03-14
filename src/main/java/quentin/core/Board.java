@@ -35,10 +35,10 @@ public class Board {
         );
     }
 
-    protected void addStoneAt(Stone stone, Position position) throws OutsideOfBoardException {
+    protected void addStoneAt(Color color, Position position) throws OutsideOfBoardException {
         Intersection intersection = intersectionAt(position);
         regionsContainer.removeIntersection(intersection);
-        intersection.setStone(stone);
+        intersection.setStone(color);
         chainContainer.updateChain(intersection);
     }
 
@@ -46,21 +46,21 @@ public class Board {
         return intersectionAt(position).isOccupied();
     }
 
-    protected Set<Intersection> getDiagonallyAdjacentIntersectionsOfColour(Intersection intersection, Stone color) {
+    protected Set<Intersection> getDiagonallyAdjacentIntersectionsOfColour(Intersection intersection, Color color) {
         return intersections.stream()
                 .filter(intersection::isDiagonalTo)
                 .filter(diagonalIntersection -> diagonalIntersection.hasStone(color))
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    protected Set<Intersection> getOrthogonallyAdjacentIntersectionsOfColour(Intersection intersection, Stone color) {
+    protected Set<Intersection> getOrthogonallyAdjacentIntersectionsOfColour(Intersection intersection, Color color) {
         return intersections.stream()
                 .filter(intersection::isOrthogonalTo)
                 .filter(orthogonalIntersection -> orthogonalIntersection.hasStone(color))
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    protected Stone colorWithCompleteChain() {
+    protected Color colorWithCompleteChain() {
         return chainContainer.getColorWithCompleteChain();
     }
 
@@ -72,8 +72,8 @@ public class Board {
         return intersections.stream().filter(Intersection::isOccupied);
     }
 
-    protected Set<Position> fillTerritories(Stone lastPlay) {
-        Map<Set<Intersection>, Stone> territoriesToFill = getTerritoriesAndStones(lastPlay);
+    protected Set<Position> fillTerritories(Color lastPlay) {
+        Map<Set<Intersection>, Color> territoriesToFill = getTerritoriesAndStones(lastPlay);
         territoriesToFill
                 .forEach((territory, stone) ->
                                 territory.stream()
@@ -86,7 +86,7 @@ public class Board {
                 .collect(Collectors.toSet());
     }
 
-    protected Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone lastPlay) {
+    protected Map<Set<Intersection>, Color> getTerritoriesAndStones(Color lastPlay) {
         return regionsContainer.getTerritoriesAndStonesToFill(lastPlay);
     }
 
@@ -97,7 +97,7 @@ public class Board {
     protected void revertForIntersectionAt(Position position) {
         Intersection intersection = intersectionAt(position);
         chainContainer.removeIntersection(intersection);
-        intersection.setStone(Stone.NONE);
+        intersection.setStone(Color.NONE);
         regionsContainer.addIntersection(intersection);
     }
 }
