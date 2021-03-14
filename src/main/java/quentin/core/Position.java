@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Position {
     private final int row, column;
 
-    public Position(int row, int column) {
+    private Position(int row, int column) {
         this.row = row;
         this.column = column;
     }
@@ -27,11 +27,11 @@ public class Position {
         return Objects.hash(row, column);
     }
 
-    protected int getRow() {
+    public int getRow() {
         return this.row;
     }
 
-    protected int getColumn() {
+    public int getColumn() {
         return this.column;
     }
 
@@ -73,6 +73,20 @@ public class Position {
     protected boolean isUpRightRespectTo(Position otherIntersectionPosition) {
         return otherIntersectionPosition.getRow() == this.row + 1 &&
                 otherIntersectionPosition.getColumn() == this.column - 1;
+    }
+
+    protected boolean isDiagonalTo(Position otherPosition) {
+        return isUpLeftRespectTo(otherPosition) ||
+                isUpRightRespectTo(otherPosition) ||
+                isDownLeftRespectTo(otherPosition) ||
+                isDownRightRespectTo(otherPosition);
+    }
+
+    protected boolean isOrthogonalTo(Position otherPosition) {
+        return isBelowWithRespectTo(otherPosition) ||
+                isAboveWithRespectTo(otherPosition) ||
+                isOnTheLeftWithRespectTo(otherPosition) ||
+                isOnTheRightWithRespectTo(otherPosition);
     }
 
     @Override

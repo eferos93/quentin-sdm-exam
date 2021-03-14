@@ -9,23 +9,28 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChainContainer {
-    private final Map<Stone, Graph<Intersection, DefaultEdge>> chains = new HashMap<>() {{
-        put(Stone.BLACK, new SimpleGraph<>(DefaultEdge.class));
-        put(Stone.WHITE, new SimpleGraph<>(DefaultEdge.class));
-    }};
+    private final EnumMap<Stone, Graph<Intersection, DefaultEdge>> chains = new EnumMap<>(Stone.class);
     private final Set<BoardSide> sides = EnumSet.allOf(BoardSide.class);
 
     ChainContainer(int boardSize) {
+        chains.put(Stone.BLACK, new SimpleGraph<>(DefaultEdge.class));
+        chains.put(Stone.WHITE, new SimpleGraph<>(DefaultEdge.class));
         BoardSide.setBoardSize(boardSize);
         sides.forEach(BoardSide::initialiseSide);
     }
 
     protected void updateChain(Intersection newIntersection) {
-        Graph<Intersection, DefaultEdge> chainsOfColor = chains.get(newIntersection.getStone());
-        chainsOfColor.addVertex(newIntersection);
-        chainsOfColor.vertexSet().stream()
-                .filter(newIntersection::isOrthogonalTo)
-                .forEach(orthogonalIntersection -> chainsOfColor.addEdge(orthogonalIntersection, newIntersection));
+        Optional<Graph<Intersection, DefaultEdge>> chainsOfColor = Optional.ofNullable(chains.get(newIntersection.getStone()));
+        chainsOfColor.ifPresent(chainsOfSingleColor -> {
+            chainsOfSingleColor.addVertex(newIntersection);
+            chainsOfSingleColor.vertexSet().stream()
+                    .filter(newIntersection::isOrthogonalTo)
+                    .forEach(orthogonalIntersection -> chainsOfSingleColor.addEdge(orthogonalIntersection, newIntersection));
+        });
+    }
+
+    protected void removeIntersection(Intersection intersection) {
+        chains.get(intersection.getStone()).removeVertex(intersection);
     }
 
     private boolean hasACompleteChain(Map.Entry<Stone, Graph<Intersection, DefaultEdge>> chainsOfAGivenColor) {
@@ -48,7 +53,7 @@ public class ChainContainer {
         return sides.stream().filter(side -> side.hasColor(color)).collect(Collectors.toList());
     }
 
-    public Stone getColorWithCompleteChain() {
+    protected Stone getColorWithCompleteChain() {
         return chains.entrySet().stream()
                 .filter(this::hasACompleteChain)
                 .map(Map.Entry::getKey)

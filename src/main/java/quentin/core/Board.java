@@ -1,6 +1,9 @@
 package quentin.core;
 
+import quentin.exceptions.OutsideOfBoardException;
+
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static quentin.core.Position.in;
@@ -8,7 +11,7 @@ import static quentin.core.Position.in;
 public class Board {
     private final int BOARD_SIZE;
     private final List<Intersection> intersections = new ArrayList<>();
-    private final RegionContainer regionsContainer = new RegionContainer();
+    private final RegionContainer regionsContainer;
     private final ChainContainer chainContainer;
 
     private Board(int boardSize) {
@@ -19,40 +22,42 @@ public class Board {
                 this.intersections.add(Intersection.empty(in(row, column)));
             }
         }
-        regionsContainer.createGraph(this.intersections, this.BOARD_SIZE);
+        regionsContainer = new RegionContainer(this.intersections, this.BOARD_SIZE);
     }
 
     public static Board buildBoard(int size) {
         return new Board(size);
     }
 
-    public Intersection intersectionAt(Position position) throws NoSuchElementException {
-        return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow();
+    public Intersection intersectionAt(Position position) throws OutsideOfBoardException {
+        return intersections.stream().filter(intersection -> intersection.isAt(position)).findFirst().orElseThrow(
+                () -> new OutsideOfBoardException(position)
+        );
     }
 
-    public void addStoneAt(Stone stone, Position position) throws NoSuchElementException {
+    protected void addStoneAt(Stone stone, Position position) throws OutsideOfBoardException {
         Intersection intersection = intersectionAt(position);
-        regionsContainer.removeNonEmptyIntersection(intersection);
+        regionsContainer.removeIntersection(intersection);
         intersection.setStone(stone);
         chainContainer.updateChain(intersection);
     }
 
-    protected boolean isOccupied(Position position) throws NoSuchElementException {
+    protected boolean isOccupied(Position position) throws OutsideOfBoardException {
         return intersectionAt(position).isOccupied();
     }
 
-    protected boolean existsOrthogonallyAdjacentWithStone(Intersection intersection, Stone stone) {
+    protected Set<Intersection> getDiagonallyAdjacentIntersectionsOfColour(Intersection intersection, Stone color) {
         return intersections.stream()
-                .anyMatch(otherIntersection ->
-                        otherIntersection.isOrthogonalTo(intersection) && otherIntersection.hasStone(stone)
-                );
+                .filter(intersection::isDiagonalTo)
+                .filter(diagonalIntersection -> diagonalIntersection.hasStone(color))
+                .collect(Collectors.toUnmodifiableSet());
     }
 
-    protected boolean existsDiagonallyAdjacentWithStone(Intersection intersection, Stone stone) {
+    protected Set<Intersection> getOrthogonallyAdjacentIntersectionsOfColour(Intersection intersection, Stone color) {
         return intersections.stream()
-                .anyMatch(otherIntersection ->
-                        otherIntersection.isDiagonalTo(intersection) && otherIntersection.hasStone(stone)
-                );
+                .filter(intersection::isOrthogonalTo)
+                .filter(orthogonalIntersection -> orthogonalIntersection.hasStone(color))
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     protected Stone colorWithCompleteChain() {
@@ -60,18 +65,39 @@ public class Board {
     }
 
     protected Stream<Intersection> getEmptyIntersections() {
-        return intersections.stream().filter(intersection -> !intersection.isOccupied());
+        return intersections.stream().filter(Intersection::isEmpty);
     }
 
-    protected void fillTerritories(Stone lastPlay) {
-        regionsContainer.getTerritoriesAndStonesToFill(intersections, lastPlay)
-                .forEach((territory, stone) -> territory.stream()
-                        .map(Intersection::getPosition)
-                        .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
+    public Stream<Intersection> getNonEmptyIntersections() {
+        return intersections.stream().filter(Intersection::isOccupied);
+    }
+
+    protected Set<Position> fillTerritories(Stone lastPlay) {
+        Map<Set<Intersection>, Stone> territoriesToFill = getTerritoriesAndStones(lastPlay);
+        territoriesToFill
+                .forEach((territory, stone) ->
+                                territory.stream()
+                                        .map(Intersection::getPosition)
+                                        .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
                 );
+        return territoriesToFill.entrySet().stream()
+                .flatMap(entry -> entry.getKey().stream())
+                .map(Intersection::getPosition)
+                .collect(Collectors.toSet());
+    }
+
+    protected Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone lastPlay) {
+        return regionsContainer.getTerritoriesAndStonesToFill(lastPlay);
     }
 
     public int getBoardSize() {
         return BOARD_SIZE;
+    }
+
+    protected void revertForIntersectionAt(Position position) {
+        Intersection intersection = intersectionAt(position);
+        chainContainer.removeIntersection(intersection);
+        intersection.setStone(Stone.NONE);
+        regionsContainer.addIntersection(intersection);
     }
 }

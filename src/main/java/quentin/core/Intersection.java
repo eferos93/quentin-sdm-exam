@@ -6,7 +6,7 @@ public class Intersection {
     private final Position position;
     private Stone stone;
 
-    public Intersection(Position position, Stone stone) {
+    protected Intersection(Position position, Stone stone) {
         this.position = position;
         this.stone = stone;
     }
@@ -28,11 +28,11 @@ public class Intersection {
         return new Intersection(position, Stone.NONE);
     }
 
-    protected Position getPosition() {
+    public final Position getPosition() {
         return this.position;
     }
 
-    public Stone getStone() {
+    public final Stone getStone() {
         return this.stone;
     }
 
@@ -45,28 +45,22 @@ public class Intersection {
     }
 
     protected boolean isOccupied() {
-        return !hasStone(Stone.NONE);
+        return !this.isEmpty();
     }
 
     protected boolean isOrthogonalTo(Intersection otherIntersection) {
-        final Position otherIntersectionPosition = otherIntersection.getPosition();
-        return position.isBelowWithRespectTo(otherIntersectionPosition) ||
-                position.isAboveWithRespectTo(otherIntersectionPosition) ||
-                position.isOnTheLeftWithRespectTo(otherIntersectionPosition) ||
-                position.isOnTheRightWithRespectTo(otherIntersectionPosition);
+        return position.isOrthogonalTo(otherIntersection.getPosition());
     }
 
     protected boolean isDiagonalTo(Intersection otherIntersection) {
-        final Position otherIntersectionPosition = otherIntersection.getPosition();
-        return position.isUpLeftRespectTo(otherIntersectionPosition) ||
-                position.isUpRightRespectTo(otherIntersectionPosition) ||
-                position.isDownLeftRespectTo(otherIntersectionPosition) ||
-                position.isDownRightRespectTo(otherIntersectionPosition);
+        return position.isDiagonalTo(otherIntersection.getPosition());
     }
 
-    protected boolean hasStone(Stone stone) {
+    public boolean hasStone(Stone stone) {
         return this.stone == stone;
     }
+
+    public boolean isEmpty() { return hasStone(Stone.NONE); }
 
     @Override
     public String toString() {

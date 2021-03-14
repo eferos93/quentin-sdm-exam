@@ -1,34 +1,44 @@
 package quentin.UI.console;
 
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class ConsoleInputHandler implements quentin.UI.InputHandler {
-    private static final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
-    public static int getInteger() throws InputMismatchException {
+    public int getInteger() throws NoSuchElementException {
         if (scanner.hasNextInt()) {
-            return scanner.nextInt();
+            int answer = scanner.nextInt();
+            scanner.nextLine();
+            return answer;
         } else {
-            scanner.next();
+            scanner.nextLine();
             throw new InputMismatchException("You have not inserted a valid integer! Retry.");
         }
     }
 
-    @Override
-    public boolean askPie() throws InputMismatchException {
+    public boolean wantToReplay() throws InputMismatchException {
         String answer = scanner.next();
         if (!(answer.equalsIgnoreCase("no") || answer.equalsIgnoreCase("yes"))) {
-            throw new InputMismatchException("You should insert 'yes' or 'no");
+            throw new InputMismatchException("You should insert 'yes' or 'no'");
         }
+        scanner.nextLine();
         return answer.equalsIgnoreCase("yes");
     }
 
-    public static String askBlackPlayerName() {
-        return scanner.next();
+    @Override
+    public boolean askPie(String whitePlayerName) throws InputMismatchException {
+        String answer = scanner.next();
+        if (!(answer.equalsIgnoreCase("no") || answer.equalsIgnoreCase("yes"))) {
+            throw new InputMismatchException("You should insert 'yes' or 'no'");
+        }
+        scanner.nextLine();
+        return answer.equalsIgnoreCase("yes");
     }
-    public static String askWhitePlayerName() {
-        return scanner.next();
+
+    public String askPlayerName() {
+        return scanner.nextLine();
     }
 }
 

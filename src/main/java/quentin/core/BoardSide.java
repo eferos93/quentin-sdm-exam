@@ -54,9 +54,9 @@ public enum BoardSide {
         this.color = color;
     }
 
-    public abstract void initialiseSide();
+    protected abstract void initialiseSide();
 
-    public abstract boolean isAdjacentTo(Position position);
+    protected abstract boolean isAdjacentTo(Position position);
 
     protected int getSideIndex() {
         return this.sideIndex;
@@ -66,7 +66,7 @@ public enum BoardSide {
         this.sideIndex = edgeIndex;
     }
 
-    public static void setBoardSize(int boardSize) {
+    protected static void setBoardSize(int boardSize) {
         BoardSide.boardSize = boardSize;
     }
 
