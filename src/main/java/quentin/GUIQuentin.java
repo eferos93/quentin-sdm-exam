@@ -24,7 +24,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
     public Player getLastPlayer() { return getPlayerOfColor(getCurrentPlayer().getColor().getOppositeColor()); }
 
     private boolean isWhitePlayerFirstTurn(Player currentPlayer) {
-        return !whiteAlreadyPlayed && currentPlayer.getColor() == Color.WHITE;
+        return !whiteAlreadyPlayed && currentPlayer.getColor() == Colour.WHITE;
     }
 
     public Stream<Intersection> getNonEmptyIntersections() {

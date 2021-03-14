@@ -15,12 +15,12 @@ public class IntersectionShould {
 
     private static Stream<Arguments> provideIntersection() {
         return Stream.of(
-                Arguments.of(new Intersection(Position.in(3, 3), Color.WHITE)
-                        , new Intersection(Position.in(3, 3), Color.WHITE)),
-                Arguments.of(new Intersection(Position.in(13, 13), Color.BLACK)
-                        , new Intersection(Position.in(13, 13), Color.BLACK)),
-                Arguments.of(new Intersection(Position.in(5, 12), Color.WHITE)
-                        , new Intersection(Position.in(5, 12), Color.WHITE))
+                Arguments.of(new Intersection(Position.in(3, 3), Colour.WHITE)
+                        , new Intersection(Position.in(3, 3), Colour.WHITE)),
+                Arguments.of(new Intersection(Position.in(13, 13), Colour.BLACK)
+                        , new Intersection(Position.in(13, 13), Colour.BLACK)),
+                Arguments.of(new Intersection(Position.in(5, 12), Colour.WHITE)
+                        , new Intersection(Position.in(5, 12), Colour.WHITE))
         );
     }
 
@@ -40,15 +40,15 @@ public class IntersectionShould {
     Stream<DynamicTest> checkOrthogonalAdjacency() {
 
         List<Intersection> inputList = List.of(
-                new Intersection(Position.in(8, 5), Color.BLACK),
-                new Intersection(Position.in(7, 9), Color.BLACK),
-                new Intersection(Position.in(3, 12), Color.BLACK)
+                new Intersection(Position.in(8, 5), Colour.BLACK),
+                new Intersection(Position.in(7, 9), Colour.BLACK),
+                new Intersection(Position.in(3, 12), Colour.BLACK)
         );
 
         List<Intersection> parameterList = List.of(
-                new Intersection(Position.in(9, 5), Color.WHITE),
-                new Intersection(Position.in(7, 3), Color.WHITE),
-                new Intersection(Position.in(3, 12), Color.WHITE)
+                new Intersection(Position.in(9, 5), Colour.WHITE),
+                new Intersection(Position.in(7, 3), Colour.WHITE),
+                new Intersection(Position.in(3, 12), Colour.WHITE)
         );
 
         List<Boolean> outputList = List.of(true, false, false);
@@ -66,15 +66,15 @@ public class IntersectionShould {
     Stream<DynamicTest> checkDiagonalAdjacency() {
 
         List<Intersection> inputList = List.of(
-                new Intersection(Position.in(7, 9), Color.WHITE),
-                new Intersection(Position.in(3, 3), Color.WHITE),
-                new Intersection(Position.in(3, 12), Color.WHITE)
+                new Intersection(Position.in(7, 9), Colour.WHITE),
+                new Intersection(Position.in(3, 3), Colour.WHITE),
+                new Intersection(Position.in(3, 12), Colour.WHITE)
         );
 
         List<Intersection> parameterList = List.of(
-                new Intersection(Position.in(6, 10), Color.WHITE),
-                new Intersection(Position.in(4, 4), Color.WHITE),
-                new Intersection(Position.in(5, 1), Color.WHITE)
+                new Intersection(Position.in(6, 10), Colour.WHITE),
+                new Intersection(Position.in(4, 4), Colour.WHITE),
+                new Intersection(Position.in(5, 1), Colour.WHITE)
         );
 
         List<Boolean> outputList = List.of(true, true, false);

@@ -61,9 +61,9 @@ public class RegionContainer {
                 .collect(Collectors.toSet());
     }
 
-    private long countIntersectionsOfColor(final Set<Intersection> intersectionsSurroundingTerritory, Color color) {
+    private long countIntersectionsOfColor(final Set<Intersection> intersectionsSurroundingTerritory, Colour colour) {
         return intersectionsSurroundingTerritory.stream()
-                .filter(intersection -> intersection.hasStone(color))
+                .filter(intersection -> intersection.hasStone(colour))
                 .count();
     }
 
@@ -77,23 +77,23 @@ public class RegionContainer {
     }
 
 
-    private Optional<Color> getColorToFillTerritory(Set<Intersection> territory, Color lastPlay) {
+    private Optional<Colour> getColorToFillTerritory(Set<Intersection> territory, Colour lastPlay) {
         Set<Intersection> intersectionsSurroundingTerritory =
                 getIntersectionsThatSurroundsTheTerritory(territory);
-        long countOfWhiteStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Color.WHITE);
-        long countOfBlackStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Color.BLACK);
+        long countOfWhiteStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Colour.WHITE);
+        long countOfBlackStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Colour.BLACK);
 
         if (countOfWhiteStones != countOfBlackStones) {
-            return Optional.of((countOfWhiteStones < countOfBlackStones) ? Color.BLACK : Color.WHITE);
+            return Optional.of((countOfWhiteStones < countOfBlackStones) ? Colour.BLACK : Colour.WHITE);
         } else {
-            return Optional.ofNullable(lastPlay).map(Color::getOppositeColor);
+            return Optional.ofNullable(lastPlay).map(Colour::getOppositeColor);
         }
     }
 
-    protected Map<Set<Intersection>, Optional<Color>> getTerritoriesAndStonesToFill(Color lastPlay) {
+    protected Map<Set<Intersection>, Optional<Colour>> getTerritoriesAndStonesToFill(Colour lastPlay) {
         return getTerritories().stream()
                 .map(territory -> {
-                    Optional<Color> color = getColorToFillTerritory(territory, lastPlay);
+                    Optional<Colour> color = getColorToFillTerritory(territory, lastPlay);
                     return Map.entry(territory, color);
                 })
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

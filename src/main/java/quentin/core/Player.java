@@ -1,16 +1,16 @@
 package quentin.core;
 
 public class Player {
-    private Color color;
+    private Colour colour;
     private final String name;
 
-    public Player(Color color, String name) {
-        this.color = color;
+    public Player(Colour colour, String name) {
+        this.colour = colour;
         this.name = name;
     }
 
-    public final Color getColor() {
-        return color;
+    public final Colour getColor() {
+        return colour;
     }
 
     public final String getName() {
@@ -18,6 +18,6 @@ public class Player {
     }
 
     protected void changeSide() {
-        color = color.getOppositeColor();
+        colour = colour.getOppositeColor();
     }
 }

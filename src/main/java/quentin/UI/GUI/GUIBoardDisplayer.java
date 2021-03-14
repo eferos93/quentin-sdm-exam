@@ -9,8 +9,8 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
+import quentin.core.Colour;
 import quentin.core.Position;
-import quentin.core.Color;
 
 import java.util.EnumMap;
 import java.util.stream.IntStream;
@@ -19,14 +19,14 @@ public class GUIBoardDisplayer {
 
     private final int boardSize;
     private final int tileSize;
-    private final EnumMap<Color, Paint> colorPaintMap = new EnumMap<> (Color.class);
+    private final EnumMap<Colour, Paint> colorPaintMap = new EnumMap<> (Colour.class);
 
     protected GUIBoardDisplayer(int boardSize, int tileSize) {
         this.boardSize = boardSize;
         this.tileSize = tileSize;
 
-        colorPaintMap.put(Color.BLACK, javafx.scene.paint.Color.BLACK);
-        colorPaintMap.put(Color.WHITE, javafx.scene.paint.Color.WHITE);
+        colorPaintMap.put(Colour.BLACK, javafx.scene.paint.Color.BLACK);
+        colorPaintMap.put(Colour.WHITE, javafx.scene.paint.Color.WHITE);
     }
 
     protected GridPane createEmptyBoard() {
@@ -90,9 +90,9 @@ public class GUIBoardDisplayer {
 
     // grid object starts (0,0) whereas our board implementation starts (1,1)
     // to match those two implementation we subtract 1 from row and column
-    protected void addPiece(GridPane gridPane, Position position, Color color) {
+    protected void addPiece(GridPane gridPane, Position position, Colour colour) {
         Circle piece = new Circle((position.getColumn() - 1)  * tileSize, (position.getRow() -1)  * tileSize, tileSize * 0.4);
-        piece.setFill(colorPaintMap.get(color));
+        piece.setFill(colorPaintMap.get(colour));
         GridPane.setHalignment(piece, HPos.CENTER);
         GridPane.setValignment(piece, VPos.CENTER);
         gridPane.add(piece, position.getColumn() - 1, position.getRow() - 1);

@@ -1,18 +1,18 @@
 package quentin.UI.console;
 
-import quentin.core.Color;
+import quentin.core.Colour;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class IntersectionConsoleRepresentation {
-    private final Map<Color, String> intersectionRepresentation = new HashMap<>() {{
-        put(Color.BLACK, "[B]");
-        put(Color.WHITE, "[W]");
+    private final Map<Colour, String> intersectionRepresentation = new HashMap<>() {{
+        put(Colour.BLACK, "[B]");
+        put(Colour.WHITE, "[W]");
         put(null, "[ ]");
     }};
 
-    public String getStoneValue(Color color) {
-        return  intersectionRepresentation.get(color);
+    public String getStoneValue(Colour colour) {
+        return  intersectionRepresentation.get(colour);
     }
 }
