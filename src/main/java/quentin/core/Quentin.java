@@ -105,12 +105,6 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
             outputHandler.notifyWinner(getPlayerOfColor(winnerColor));
             return true;
         }).orElse(false);
-//        Color winnerColor = getWinner();
-//        if (winnerColor != Color.NONE) {
-//            outputHandler.notifyWinner(getPlayerOfColor(winnerColor));
-//            return true;
-//        }
-//        return false;
     }
 
     protected Optional<Color> getWinner() {
