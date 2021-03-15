@@ -22,7 +22,7 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
     public void handle(MouseEvent event) {
         int columnIndex = convertCoordinate(event.getX());
         int rowIndex = convertCoordinate(event.getY());
-        GUIQuentin game = gui.getGame();
+        GUIQuentin game = gui.getGuiQuentin();
 
         game.setNewPosition(Position.in(rowIndex, columnIndex));
 
