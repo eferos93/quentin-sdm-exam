@@ -70,14 +70,14 @@ public class QuentinShould {
         customQuentin.makeMove(Colour.BLACK, in(3, 2));
         customQuentin.makeMove(Colour.WHITE, in(2, 4));
         customQuentin.makeMove(Colour.BLACK, in(4, 2));
-        assertTrue(customQuentin.getGameState().getWinner().map(winnerColor -> winnerColor == Colour.BLACK).orElse(false));
+        assertTrue(customQuentin.gameState.getWinner().map(winnerColor -> winnerColor == Colour.BLACK).orElse(false));
     }
 
     @Test
     public void provideCorrectWinnerWithPieRule() {
         Quentin<ConsoleInputHandler, ConsoleOutputHandler> customQuentin =
                 new ConsoleQuentin(4, new ConsoleInputHandler(), new ConsoleOutputHandler());
-        GameState gameState = customQuentin.getGameState();
+        GameState gameState = customQuentin.gameState;
         customQuentin.makeMove(Colour.BLACK, in(1, 1));
         customQuentin.applyPieRule();
         customQuentin.makeMove(Colour.WHITE, in(1, 2));
@@ -102,7 +102,7 @@ public class QuentinShould {
     public void provideCorrectWinnerMergeChainsFeature() {
         Quentin<ConsoleInputHandler, ConsoleOutputHandler> customQuentin =
                 new ConsoleQuentin(4, new ConsoleInputHandler(), new ConsoleOutputHandler());
-        GameState gameState = customQuentin.getGameState();
+        GameState gameState = customQuentin.gameState;
         customQuentin.makeMove(Colour.BLACK, in(1, 1));
         customQuentin.makeMove(Colour.WHITE, in(1, 2));
         customQuentin.makeMove(Colour.BLACK, in(4, 4));
