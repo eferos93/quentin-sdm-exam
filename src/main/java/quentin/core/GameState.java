@@ -6,9 +6,9 @@ import java.util.Optional;
 import java.util.Set;
 
 public class GameState {
-    public final Board board;
-    public boolean whiteAlreadyPlayed = false;
-    public Colour lastPlay = null;
+    private final Board board;
+    private boolean whiteAlreadyPlayed = false;
+    private Colour lastPlay = null;
 
     public GameState(int boardSize) {
         this.board = Board.buildBoard(boardSize);
