@@ -50,7 +50,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
 
     @Override
     public void play() {
-        gameState.makeMove(getCurrentPlayer().getColor(), newPosition);
+        makeMove(getCurrentPlayer().getColor(), newPosition);
     }
 
     public static void main (String[] args) { new Thread(() -> Application.launch(GUI.class)).start(); }

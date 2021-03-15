@@ -38,7 +38,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         boolean arePositionCoordinatesValid = false;
         do {
             try {
-                gameState.makeMove(currentPlayer.getColor(), getPosition());
+                makeMove(currentPlayer.getColor(), getPosition());
                 arePositionCoordinatesValid = true;
             } catch (QuentinException exception) {
                 outputHandler.notifyException(exception);
@@ -69,7 +69,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
             Player currentPlayer = getCurrentPlayer();
             outputHandler.displayBoard(getBoard());
             outputHandler.displayPlayer(currentPlayer);
-            if (gameState.isCurrentPlayerNotAbleToMakeAMove(currentPlayer)) { passTurn(); continue; }
+            if (isCurrentPlayerNotAbleToMakeAMove()) { passTurn(); continue; }
             if (askForPieRule(currentPlayer)) { continue; }
             getPositionAndMakeMove(currentPlayer);
             if (checkForWinner()) { break; }
