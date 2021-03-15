@@ -58,10 +58,6 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         }).orElse(false);
     }
 
-    protected Optional<Colour> getWinner() {
-        return gameState.getWinner();
-    }
-
     protected void applyPieRule() {
         Stream.of(playerOne, playerTwo).forEach(Player::changeSide);
     }
