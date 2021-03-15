@@ -4,9 +4,7 @@ import quentin.UI.InputHandler;
 import quentin.UI.OutputHandler;
 import quentin.exceptions.*;
 
-import java.awt.*;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 public abstract class Quentin<InputHandlerImplementation extends InputHandler, OutputHandlerImplementation extends OutputHandler> {
@@ -29,10 +27,6 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         gameState.makeMove(colour, position);
     }
 
-    private boolean isFirstTurn() {
-        return gameState.isFirstTurn();
-    }
-
     public boolean isCurrentPlayerNotAbleToMakeAMove() {
         return gameState.isCurrentPlayerNotAbleToMakeAMove(getCurrentPlayer());
     }
@@ -42,7 +36,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     }
 
     public Player getCurrentPlayer() {
-        return isFirstTurn() ? getPlayerOfColor(Colour.BLACK) : getPlayerOfColor(gameState.getLastPlay().getOppositeColor());
+        return getPlayerOfColor(gameState.getCurrentPlayerColour());
     }
 
     public void passTurn() {
@@ -66,7 +60,7 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         return List.of(playerOne, playerTwo);
     }
 
-    public Board getBoard() {
+    protected Board getBoard() {
         return this.gameState.getBoard();
     }
 

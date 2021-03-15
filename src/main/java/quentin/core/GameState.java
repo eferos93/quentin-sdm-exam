@@ -14,12 +14,8 @@ public class GameState {
         this.board = Board.buildBoard(boardSize);
     }
 
-    public Board getBoard() {
+    protected Board getBoard() {
         return board;
-    }
-
-    public Colour getLastPlay() {
-        return lastPlay;
     }
 
     public void setLastPlay(Colour lastPlay) {
@@ -33,14 +29,14 @@ public class GameState {
         if (isARepeatedPlay(colour)) {
             throw new RepeatedPlayException();
         }
-        if (isOccupied(position)) {
+        if (board.isOccupied(position)) {
             throw new OccupiedPositionException(position);
         }
 
         board.addStoneAt(colour, position);
         Set<Position> territoriesFilled = board.fillTerritories(colour);
 
-        if (isIllegalMove(colour, position)) {
+        if (isIllegalMove(colour, board.intersectionAt(position))) {
             territoriesFilled.add(position);
             territoriesFilled.forEach(board::revertForIntersectionAt);
             throw new IllegalMoveException(position);
@@ -48,15 +44,7 @@ public class GameState {
         lastPlay = colour;
     }
 
-    public boolean isOccupied(Position position) throws OutsideOfBoardException {
-        return board.isOccupied(position);
-    }
-
-    public boolean isIllegalMove(Colour playerColour, Position position) throws OutsideOfBoardException {
-        return isIllegalMove(playerColour, board.intersectionAt(position));
-    }
-
-    public boolean isIllegalMove(Colour playerColour, Intersection intersection) {
+    private boolean isIllegalMove(Colour playerColour, Intersection intersection) {
         Set<Intersection> colorAlikeOrthogonalIntersections =
                 board.getOrthogonallyAdjacentIntersectionsOfColour(intersection, playerColour);
         return board.getDiagonallyAdjacentIntersectionsOfColour(intersection, playerColour).stream()
@@ -66,15 +54,15 @@ public class GameState {
                 );
     }
 
-    public boolean isARepeatedPlay(Colour currentPlayerColour) {
+    private boolean isARepeatedPlay(Colour currentPlayerColour) {
         return lastPlay == currentPlayerColour;
     }
 
-    public boolean isFirstTurn() {
+    private boolean isFirstTurn() {
         return Optional.ofNullable(lastPlay).isEmpty();
     }
 
-    public boolean isInvalidFirstPlayer(Colour playerColour) {
+    protected boolean isInvalidFirstPlayer(Colour playerColour) {
         return isFirstTurn() && playerColour == Colour.WHITE;
     }
 
@@ -82,7 +70,7 @@ public class GameState {
         return board.getEmptyIntersections()
                 .allMatch(emptyIntersection -> {
                     board.addStoneAt(currentPlayer.getColor(), emptyIntersection.getPosition());
-                    Set<Position> positionsFilled = board.fillTerritories(lastPlay);
+                    Set<Position> positionsFilled = this.board.fillTerritories(lastPlay);
                     positionsFilled.add(emptyIntersection.getPosition());
                     boolean isIllegalMove = isIllegalMove(currentPlayer.getColor(), emptyIntersection);
                     positionsFilled.forEach(board::revertForIntersectionAt);
@@ -95,10 +83,14 @@ public class GameState {
     }
 
     protected boolean doesWhitePlayerAlreadyPlayed() {
-        return whiteAlreadyPlayed;
+        return this.whiteAlreadyPlayed;
     }
 
     public void setWhiteAlreadyPlayed(boolean whiteAlreadyPlayed) {
         this.whiteAlreadyPlayed = whiteAlreadyPlayed;
+    }
+
+    protected Colour getCurrentPlayerColour() {
+        return Optional.ofNullable(lastPlay).map(Colour::getOppositeColor).orElse(Colour.BLACK);
     }
 }
