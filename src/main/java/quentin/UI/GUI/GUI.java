@@ -2,29 +2,20 @@ package quentin.UI.GUI;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import quentin.UI.GUI.Events.*;
 import quentin.UI.GUI.Handlers.*;
 import quentin.GUIQuentin;
 
-import java.util.stream.Stream;
-
 public class GUI extends Application {
 
     public static final int TILE_SIZE = 50;
+    private final GameInterface gameInterface = new GameInterface(this);
     private Stage stage;
     private GridPane gridPane;
     private GUIQuentin guiQuentin;
@@ -35,6 +26,7 @@ public class GUI extends Application {
         return (GridPane) borders.getChildren().get(0);
     }
 
+    public Stage getStage() {return stage;}
     private GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
     public GUIQuentin getGame() { return guiQuentin; }
 
@@ -46,7 +38,7 @@ public class GUI extends Application {
     public void start(Stage primaryStage) {
         stage = primaryStage;
         stage.setResizable(false);
-        initUI();
+        gameInterface.initUI();
     }
 
     private void addGridEvent(GridPane gridBoard) {
@@ -77,7 +69,7 @@ public class GUI extends Application {
         return gridBoard;
     }
 
-    private void initGameInterface(int boardSize, String namePlayer1, String namePlayer2) {
+    protected void initGameInterface(int boardSize, String namePlayer1, String namePlayer2) {
 
         guiQuentin = new GUIQuentin(boardSize,new GUIInputHandler(), new GUIOutputHandler(), namePlayer1, namePlayer2);
         boardFiller = new GUIBoardDisplayer(boardSize, TILE_SIZE);
@@ -95,69 +87,8 @@ public class GUI extends Application {
         stage.show();
     }
 
-    private Button createNewButton(String text, EventHandler<ActionEvent> handler) {
-        Button button = new Button(text);
-        button.setPrefWidth(80);
-        button.setPrefHeight(35);
-        button.setOnAction(handler);
-        return button;
-    }
-
-    private Stream<Button> initialButtons(){
-
-        Button startButton = createNewButton("Start", (ActionEvent e) -> {
-            stage.close();
-            GUIInputHandler guiInputHandler = new GUIInputHandler();
-            int size = guiInputHandler.askSize();
-            String namePlayer1 = guiInputHandler.askPlayerName("1");
-            String namePlayer2 = guiInputHandler.askPlayerName("2");
-
-            initGameInterface(size, namePlayer1, namePlayer2);
-        });
-
-        Button endButton = createNewButton("Exit", (ActionEvent e) -> stop());
-
-        Button rulesButton = createNewButton("Rules", (ActionEvent e) -> getHostServices().showDocument("https://boardgamegeek.com/boardgame/124095/quentin"));
-        return Stream.of(startButton, endButton, rulesButton);
-    }
-
-    private Stream<Button> replayButtons(){
-        Button yesButton = createNewButton("Yes", (ActionEvent e) -> initUI());
-        Button noButton = createNewButton("No", (ActionEvent e) -> stop());
-        return Stream.of(yesButton, noButton);
-    }
-
-    private void structureUI(Stream<Button> buttonStream, String content, int size, int buttonsSpacing){
-        GridPane pane = new GridPane();
-        pane.setPadding(new Insets(20, 20, 20, 20));
-        pane.setVgap(20);
-
-        Text text = new Text(content);
-        text.setFont(Font.font("Tahoma", size));
-
-        pane.add(text, 0, 0 );
-        GridPane.setHalignment(text, HPos.CENTER);
-
-        HBox hBox = new HBox();
-        buttonStream.forEach(button -> hBox.getChildren().add(button));
-
-        pane.add(hBox, 0, 1);
-        hBox.setSpacing(buttonsSpacing);
-        GridPane.setHalignment(hBox, HPos.CENTER);
-
-        Scene scene = new Scene(pane);
-
-        stage.setTitle("Quentin");
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    private void initUI() {
-        structureUI(initialButtons(), "Quentin Game", 40, 15);
-    }
-
     public void endUI() {
-        structureUI(replayButtons(), "Do you wanna play again?", 20, 100);
+        gameInterface.endUI();
     }
 
     @Override
