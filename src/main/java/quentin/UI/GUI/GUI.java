@@ -35,7 +35,7 @@ public class GUI extends Application {
         return (GridPane) borders.getChildren().get(0);
     }
 
-    public GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
+    private GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
     public GUIQuentin getGame() { return guiQuentin; }
 
     public void switchColorPlayerLabel() {
