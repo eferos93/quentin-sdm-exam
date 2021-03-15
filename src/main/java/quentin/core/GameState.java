@@ -22,7 +22,7 @@ public class GameState {
         this.lastPlay = lastPlay;
     }
 
-    public void makeMove(Colour colour, Position position) throws QuentinException {
+    protected void makeMove(Colour colour, Position position) throws QuentinException {
         if (isInvalidFirstPlayer(colour)) {
             throw new InvalidFirstPlayerException();
         }
