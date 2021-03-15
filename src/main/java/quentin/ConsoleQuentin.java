@@ -38,7 +38,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         boolean arePositionCoordinatesValid = false;
         do {
             try {
-                makeMove(currentPlayer.getColor(), getPosition());
+                gameState.makeMove(currentPlayer.getColor(), getPosition());
                 arePositionCoordinatesValid = true;
             } catch (QuentinException exception) {
                 outputHandler.notifyException(exception);
@@ -46,14 +46,10 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
         } while (!arePositionCoordinatesValid);
     }
 
-    private boolean isWhitePlayerFirstTurn(Player currentPlayer) {
-        return !whiteAlreadyPlayed && currentPlayer.getColor() == Colour.WHITE;
-    }
-
     private boolean askForPieRule(Player currentPlayer) {
         boolean applyPieRule = false;
-        if (isWhitePlayerFirstTurn(currentPlayer)) {
-            whiteAlreadyPlayed = true;
+        if (isWhitePlayerFirstTurn()) {
+            gameState.setWhiteAlreadyPlayed(true);
             while (true) {
                 try {
                     outputHandler.askPie(currentPlayer.getName());
@@ -73,7 +69,7 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
             Player currentPlayer = getCurrentPlayer();
             outputHandler.displayBoard(getBoard());
             outputHandler.displayPlayer(currentPlayer);
-            if (isCurrentPlayerNotAbleToMakeAMove()) { passTurn(); continue; }
+            if (gameState.isCurrentPlayerNotAbleToMakeAMove(currentPlayer)) { passTurn(); continue; }
             if (askForPieRule(currentPlayer)) { continue; }
             getPositionAndMakeMove(currentPlayer);
             if (checkForWinner()) { break; }

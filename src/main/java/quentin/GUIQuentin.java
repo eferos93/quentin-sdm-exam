@@ -23,21 +23,16 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
 
     public Player getLastPlayer() { return getPlayerOfColor(getCurrentPlayer().getColor().getOppositeColor()); }
 
-    private boolean isWhitePlayerFirstTurn(Player currentPlayer) {
-        return !whiteAlreadyPlayed && currentPlayer.getColor() == Colour.WHITE;
-    }
-
     public Stream<Intersection> getNonEmptyIntersections() {
         return getBoard().getNonEmptyIntersections();
     }
 
     public boolean askPlayerForPieRule() {
-        Player currentPlayer = getCurrentPlayer();
         boolean applyPieRule = false;
-        if (isWhitePlayerFirstTurn(currentPlayer)) {
-            whiteAlreadyPlayed = true;
+        if (isWhitePlayerFirstTurn()) {
+            gameState.setWhiteAlreadyPlayed(true);
             try {
-                applyPieRule = applyPieRuleIfPlayerWants(currentPlayer);
+                applyPieRule = applyPieRuleIfPlayerWants(getCurrentPlayer());
             } catch (InputMismatchException exception) {
                 notifyException(exception);
             }
@@ -55,7 +50,7 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
 
     @Override
     public void play() {
-        makeMove(getCurrentPlayer().getColor(), newPosition);
+        gameState.makeMove(getCurrentPlayer().getColor(), newPosition);
     }
 
     public static void main (String[] args) { new Thread(() -> Application.launch(GUI.class)).start(); }
