@@ -1,14 +1,15 @@
 package quentin.core;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class Intersection {
     private final Position position;
-    private Stone stone;
+    private Colour colour;
 
-    protected Intersection(Position position, Stone stone) {
+    protected Intersection(Position position, Colour colour) {
         this.position = position;
-        this.stone = stone;
+        this.colour = colour;
     }
 
     @Override
@@ -16,28 +17,28 @@ public class Intersection {
         if (this == anotherCell) return true;
         if (anotherCell == null || getClass() != anotherCell.getClass()) return false;
         Intersection intersection = (Intersection) anotherCell;
-        return position.equals(intersection.position) && stone == intersection.stone;
+        return position.equals(intersection.position) && colour == intersection.colour;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(position, stone);
+        return Objects.hash(position, colour);
     }
 
     public static Intersection empty(Position position) {
-        return new Intersection(position, Stone.NONE);
+        return new Intersection(position, null);
     }
 
     public final Position getPosition() {
         return this.position;
     }
 
-    public final Stone getStone() {
-        return this.stone;
+    public final Optional<Colour> getColor() {
+        return Optional.ofNullable(this.colour);
     }
 
-    protected void setStone(Stone stone) {
-        this.stone = stone;
+    protected void setStone(Colour colour) {
+        this.colour = colour;
     }
 
     protected boolean isAt(Position position) {
@@ -56,17 +57,17 @@ public class Intersection {
         return position.isDiagonalTo(otherIntersection.getPosition());
     }
 
-    public boolean hasStone(Stone stone) {
-        return this.stone == stone;
+    public boolean hasStone(Colour colour) {
+        return Optional.ofNullable(this.colour).map(intersectionColor -> intersectionColor == colour).orElse(false);
     }
 
-    public boolean isEmpty() { return hasStone(Stone.NONE); }
+    public boolean isEmpty() { return Optional.ofNullable(this.colour).isEmpty(); }
 
     @Override
     public String toString() {
         return "Intersection{" +
                 "position=" + position +
-                ", stone=" + stone +
+                ", stone=" + colour +
                 '}';
     }
 }

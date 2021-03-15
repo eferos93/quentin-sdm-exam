@@ -8,23 +8,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PlayerShould {
     @Test
     public void assignColorProperly() {
-        Player player = new Player(Stone.BLACK, "Eros");
-        assertEquals(Stone.BLACK, player.getColor());
+        Player player = new Player(Colour.BLACK, "Eros");
+        assertEquals(Colour.BLACK, player.getColor());
     }
 
     @Test
     public void assignColorAndNameProperly() {
-        Player player = new Player(Stone.WHITE, "Eros");
+        Player player = new Player(Colour.WHITE, "Eros");
         assertAll(
-                () -> assertEquals(Stone.WHITE, player.getColor()),
+                () -> assertEquals(Colour.WHITE, player.getColor()),
                 () -> assertEquals("Eros", player.getName())
         );
     }
 
     @Test
     public void changeSideCorrectly() {
-        Player player = new Player(Stone.WHITE, "Eros");
+        Player player = new Player(Colour.WHITE, "Eros");
         player.changeSide();
-        assertEquals(Stone.BLACK, player.getColor());
+        assertEquals(Colour.BLACK, player.getColor());
     }
 }

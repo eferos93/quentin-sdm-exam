@@ -1,7 +1,7 @@
 package quentin.core;
 
 public enum BoardSide {
-    LEFT(Stone.WHITE) {
+    LEFT(Colour.WHITE) {
         @Override
         public boolean isAdjacentTo(Position position) {
             return  getSideIndex() == position.getColumn();
@@ -12,7 +12,7 @@ public enum BoardSide {
             this.setSideIndex(1);
         }
     },
-    RIGHT(Stone.WHITE) {
+    RIGHT(Colour.WHITE) {
         @Override
         public boolean isAdjacentTo(Position position) {
             return getSideIndex() == position.getColumn();
@@ -23,7 +23,7 @@ public enum BoardSide {
             this.setSideIndex(BoardSide.boardSize);
         }
     },
-    BOTTOM(Stone.BLACK) {
+    BOTTOM(Colour.BLACK) {
         @Override
         public boolean isAdjacentTo(Position position) {
             return getSideIndex() == position.getRow();
@@ -34,7 +34,7 @@ public enum BoardSide {
             this.setSideIndex(BoardSide.boardSize);
         }
     },
-    TOP(Stone.BLACK) {
+    TOP(Colour.BLACK) {
         @Override
         public boolean isAdjacentTo(Position position) {
             return getSideIndex() == position.getRow();
@@ -46,12 +46,12 @@ public enum BoardSide {
         }
     };
 
-    private final Stone color;
+    private final Colour colour;
     private int sideIndex;
     private static int boardSize;
 
-    BoardSide(Stone color) {
-        this.color = color;
+    BoardSide(Colour colour) {
+        this.colour = colour;
     }
 
     protected abstract void initialiseSide();
@@ -70,7 +70,7 @@ public enum BoardSide {
         BoardSide.boardSize = boardSize;
     }
 
-    protected boolean hasColor(Stone color) {
-        return this.color == color;
+    protected boolean hasColor(Colour colour) {
+        return this.colour == colour;
     }
 }

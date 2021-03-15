@@ -168,7 +168,7 @@ public class GUI extends Application {
                 .forEach(nonEmptyIntersection ->
                         boardFiller.addPiece(getGridBoard(),
                                 nonEmptyIntersection.getPosition(),
-                                nonEmptyIntersection.getStone()
+                                nonEmptyIntersection.getColor().orElseThrow()
                         )
                 );
         boardFiller.switchLabelsCurrentPlayer(getLabelBoard());

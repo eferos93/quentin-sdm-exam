@@ -25,8 +25,8 @@ public interface OutputHandler {
         public static final String QUERY_PIE = "%s would you like to apply pie rule? yes/no ";
         public static final String PIE = """
             Pie rule applied.
-            %s's color: %s
-            %s's color: %s 
+            %s's colour: %s
+            %s's colour: %s 
             """;
         public static final String ASK_SIZE = "Choose the dimension of the board between 4 and 13";
         public static final String CURRENT_PLAYER = "%s's turn. %s\n";
