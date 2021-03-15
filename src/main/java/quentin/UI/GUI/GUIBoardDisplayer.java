@@ -6,6 +6,7 @@ import javafx.geometry.VPos;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
@@ -24,23 +25,18 @@ public class GUIBoardDisplayer {
     protected GUIBoardDisplayer(int boardSize, int tileSize) {
         this.boardSize = boardSize;
         this.tileSize = tileSize;
-
         colorPaintMap.put(Colour.BLACK, javafx.scene.paint.Color.BLACK);
         colorPaintMap.put(Colour.WHITE, javafx.scene.paint.Color.WHITE);
     }
 
     protected GridPane createEmptyBoard() {
-
         GridPane gridPane = new GridPane();
         gridPane.setStyle("-fx-background-color: #3CB371");
-
         for (int gridCellIndex = 0; gridCellIndex < boardSize; gridCellIndex++) {
             gridPane.getColumnConstraints().add(new ColumnConstraints(tileSize));
             gridPane.getRowConstraints().add(new RowConstraints(tileSize));
         }
-
         createLines(gridPane);
-
         return gridPane;
     }
 
@@ -133,6 +129,10 @@ public class GUIBoardDisplayer {
 
     protected void switchLabelsCurrentPlayer(GridPane labelBoard) {
         Circle currentPlayerLabel = (Circle) labelBoard.getChildren().get(5);
-        currentPlayerLabel.setFill(currentPlayerLabel.getFill() == javafx.scene.paint.Color.BLACK ? javafx.scene.paint.Color.WHITE : javafx.scene.paint.Color.BLACK);
+        currentPlayerLabel.setFill(getOppositeColor(currentPlayerLabel.getFill()));
+    }
+
+    private Color getOppositeColor(Paint currentPlayerLabel) {
+        return currentPlayerLabel == Color.BLACK ? Color.WHITE : Color.BLACK;
     }
 }
