@@ -89,4 +89,8 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
     }
 
     public abstract void play() throws QuentinException;
+
+    protected GameState getGameState() {
+        return this.gameState;
+    }
 }

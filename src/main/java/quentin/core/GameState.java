@@ -90,7 +90,7 @@ public class GameState {
                 });
     }
 
-    public Optional<Colour> getWinner() {
+    protected Optional<Colour> getWinner() {
         return board.colorWithCompleteChain();
     }
 

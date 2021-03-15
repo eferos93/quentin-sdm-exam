@@ -54,7 +54,7 @@ public class QuentinShould {
     public void provideNoWinner() {
         quentin.makeMove(Colour.BLACK, in(1, 1));
         quentin.makeMove(Colour.WHITE, in(2, 1));
-        assertTrue(quentin.getWinner().isEmpty());
+        assertFalse(quentin.checkForWinner());
     }
 
     @Test
@@ -70,53 +70,55 @@ public class QuentinShould {
         customQuentin.makeMove(Colour.BLACK, in(3, 2));
         customQuentin.makeMove(Colour.WHITE, in(2, 4));
         customQuentin.makeMove(Colour.BLACK, in(4, 2));
-        assertTrue(customQuentin.getWinner().map(winnerColor -> winnerColor == Colour.BLACK).orElse(false));
+        assertTrue(customQuentin.getGameState().getWinner().map(winnerColor -> winnerColor == Colour.BLACK).orElse(false));
     }
 
     @Test
     public void provideCorrectWinnerWithPieRule() {
         Quentin<ConsoleInputHandler, ConsoleOutputHandler> customQuentin =
                 new ConsoleQuentin(4, new ConsoleInputHandler(), new ConsoleOutputHandler());
+        GameState gameState = customQuentin.getGameState();
         customQuentin.makeMove(Colour.BLACK, in(1, 1));
         customQuentin.applyPieRule();
         customQuentin.makeMove(Colour.WHITE, in(1, 2));
         customQuentin.makeMove(Colour.BLACK, in(4, 4));
-        assertTrue(quentin.getWinner().isEmpty());
+        assertTrue(gameState.getWinner().isEmpty());
         customQuentin.makeMove(Colour.WHITE, in(1, 3));
         customQuentin.makeMove(Colour.BLACK, in(2, 1));
         customQuentin.makeMove(Colour.WHITE, in(1, 4));
         customQuentin.makeMove(Colour.BLACK, in(3, 4));
         customQuentin.makeMove(Colour.WHITE, in(2, 4));
-        assertTrue(quentin.getWinner().isEmpty());
+        assertTrue(gameState.getWinner().isEmpty());
         customQuentin.makeMove(Colour.BLACK, in(3, 1));
         customQuentin.makeMove(Colour.WHITE, in(2, 3));
         customQuentin.makeMove(Colour.BLACK, in(3, 3));
         customQuentin.makeMove(Colour.WHITE, in(2, 2));
-        assertTrue(quentin.getWinner().isEmpty());
+        assertTrue(gameState.getWinner().isEmpty());
         customQuentin.makeMove(Colour.BLACK, in(3, 2));
-        assertTrue(customQuentin.getWinner().map(winnerColor -> winnerColor == Colour.BLACK).orElse(false));
+        assertTrue(gameState.getWinner().map(winnerColor -> winnerColor == Colour.BLACK).orElse(false));
     }
 
     @Test
     public void provideCorrectWinnerMergeChainsFeature() {
         Quentin<ConsoleInputHandler, ConsoleOutputHandler> customQuentin =
                 new ConsoleQuentin(4, new ConsoleInputHandler(), new ConsoleOutputHandler());
+        GameState gameState = customQuentin.getGameState();
         customQuentin.makeMove(Colour.BLACK, in(1, 1));
         customQuentin.makeMove(Colour.WHITE, in(1, 2));
         customQuentin.makeMove(Colour.BLACK, in(4, 4));
-        assertTrue(quentin.getWinner().isEmpty());
+        assertTrue(gameState.getWinner().isEmpty());
         customQuentin.makeMove(Colour.WHITE, in(1, 3));
         customQuentin.makeMove(Colour.BLACK, in(2, 1));
         customQuentin.makeMove(Colour.WHITE, in(1, 4));
         customQuentin.makeMove(Colour.BLACK, in(3, 4));
         customQuentin.makeMove(Colour.WHITE, in(2, 4));
-        assertTrue(quentin.getWinner().isEmpty());
+        assertTrue(gameState.getWinner().isEmpty());
         customQuentin.makeMove(Colour.BLACK, in(3, 1));
         customQuentin.makeMove(Colour.WHITE, in(2, 3));
         customQuentin.makeMove(Colour.BLACK, in(3, 3));
         customQuentin.makeMove(Colour.WHITE, in(2, 2));
-        assertTrue(quentin.getWinner().isEmpty());
+        assertTrue(gameState.getWinner().isEmpty());
         customQuentin.makeMove(Colour.BLACK, in(3, 2));
-        assertTrue(customQuentin.getWinner().map(winnerColor -> winnerColor == Colour.BLACK).orElse(false));
+        assertTrue(gameState.getWinner().map(winnerColor -> winnerColor == Colour.BLACK).orElse(false));
     }
 }
