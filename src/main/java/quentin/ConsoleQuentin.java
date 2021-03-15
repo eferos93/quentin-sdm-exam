@@ -79,9 +79,9 @@ public class ConsoleQuentin extends Quentin<ConsoleInputHandler, ConsoleOutputHa
     public static void main(String... args) {
         boolean wantToReplay = false;
         boolean invalidReplayInput;
+        ConsoleOutputHandler consoleOutputHandler = new ConsoleOutputHandler();
+        ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler();
         do {
-            ConsoleOutputHandler consoleOutputHandler = new ConsoleOutputHandler();
-            ConsoleInputHandler consoleInputHandler = new ConsoleInputHandler();
             ConsoleGameInitialiser.initialise(consoleInputHandler, consoleOutputHandler).play();
             consoleOutputHandler.printWantToReplay();
             try {
