@@ -89,14 +89,17 @@ public class GUIBoardDisplayer {
         return generatedLine;
     }
 
-    // grid object starts (0,0) whereas our board implementation starts (1,1)
-    // to match those two implementation we subtract 1 from row and column
+    private int getConvertedCoordinate(int coordinate) {
+        return coordinate - 1;
+    }
+
     protected void addPiece(GridPane gridPane, Position position, Colour colour) {
-        Circle piece = new Circle((position.getColumn() - 1) * tileSize, (position.getRow() - 1) * tileSize, tileSize * 0.4);
+        Circle piece = new Circle((getConvertedCoordinate(position.getColumn())) * tileSize,
+                (getConvertedCoordinate(position.getRow())) * tileSize, tileSize * 0.4);
         piece.setFill(colorPaintMap.get(colour));
         GridPane.setHalignment(piece, HPos.CENTER);
         GridPane.setValignment(piece, VPos.CENTER);
-        gridPane.add(piece, position.getColumn() - 1, position.getRow() - 1);
+        gridPane.add(piece, getConvertedCoordinate(position.getColumn()), getConvertedCoordinate(position.getRow()));
     }
 
     protected GridPane createLabelPane(String namePLayerOne, String namePlayerTwo) {
