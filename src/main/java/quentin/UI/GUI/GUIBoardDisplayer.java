@@ -39,6 +39,12 @@ public class GUIBoardDisplayer {
             gridPane.getRowConstraints().add(new RowConstraints(tileSize));
         }
 
+        createLines(gridPane);
+
+        return gridPane;
+    }
+
+    private void createLines(GridPane gridPane) {
         IntStream.range(0, boardSize).forEach(column ->
                 IntStream.range(0, boardSize).forEach(row ->
                         {
@@ -77,8 +83,6 @@ public class GUIBoardDisplayer {
                             gridPane.add(horizontalLine, column, row);
                             gridPane.add(verticalLine, column, row);
                         }));
-
-        return gridPane;
     }
 
     private Line lineGenerator(int endX,int endY){
