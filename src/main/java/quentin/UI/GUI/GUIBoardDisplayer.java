@@ -36,7 +36,7 @@ import java.util.stream.Stream;
 
 public class GUIBoardDisplayer {
 
-    private final GridPane gridBoard = new GridPane();
+//    private final GridPane gridBoard = new GridPane();
     private Stage stage;
     private GridPane gridPanel;
     private final int tileSize = 50;
@@ -112,7 +112,7 @@ public class GUIBoardDisplayer {
         piece.setFill(colorPaintMap.get(colour));
         GridPane.setHalignment(piece, HPos.CENTER);
         GridPane.setValignment(piece, VPos.CENTER);
-        gridBoard.add(piece, getConvertedCoordinate(position.getColumn()), getConvertedCoordinate(position.getRow()));
+        getGridBoard().add(piece, getConvertedCoordinate(position.getColumn()), getConvertedCoordinate(position.getRow()));
     }
 
     protected GridPane createLabelPane(String namePLayerOne, String namePlayerTwo) {
