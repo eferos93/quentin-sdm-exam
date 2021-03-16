@@ -39,7 +39,7 @@ public class GUI extends Application {
 
     public void firePieRuleIfConditionsAreMet() {
         if (guiQuentin.askPlayerForPieRule()) {
-            fireEvent(EventFactory.createPieRuleEvent());
+            fireEvent(EventFactory.createPieRuleEvent(this.guiBoardDisplayer));
         }
     }
 

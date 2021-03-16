@@ -128,7 +128,7 @@ public class GUIBoardDisplayer {
         return gridLabels;
     }
 
-    protected void switchColorPlayerLabel() {
+    public void switchColorPlayerLabel() {
         switchColorLabel(getLabelBoard(), 3, javafx.scene.paint.Color.BLACK);
         switchColorLabel(getLabelBoard(), 4, javafx.scene.paint.Color.WHITE);
     }
@@ -207,7 +207,7 @@ public class GUIBoardDisplayer {
     }
 
     protected void addGridEvents(GUI gui, GUIQuentin quentin) {
-        getGridBoard().addEventHandler(PieRuleEvent.PIE_RULE_EVENT_TYPE, new GuiPieHandler(gui));
+        getGridBoard().addEventHandler(PieRuleEvent.PIE_RULE_EVENT_TYPE, new GuiPieHandler());
         getGridBoard().addEventHandler(MouseEvent.MOUSE_CLICKED, new GuiMouseHandler(gui));
         getGridBoard().addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler(quentin));
         getGridBoard().addEventHandler(EndGameEvent.END_GAME_EVENT_TYPE, new GuiEndGameHandler(gui));
