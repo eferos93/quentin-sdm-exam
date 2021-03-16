@@ -48,34 +48,29 @@ public class GUIBoardDisplayer {
                     Line horizontalLine = lineGenerator(tileSize, 0);
                     GridPane.setHalignment(verticalLine, HPos.CENTER);
                     GridPane.setValignment(verticalLine, VPos.CENTER);
-
-                    if (row == 0) {
-                        verticalLine.setEndY(tileSize / 2.0);
-                        GridPane.setValignment(verticalLine, VPos.BOTTOM);
-                        horizontalLine.setStrokeWidth(4);
-                    }
-
-                    if (row == boardSize - 1) {
-                        verticalLine.setEndY(tileSize / 2.0);
-                        GridPane.setValignment(verticalLine, VPos.TOP);
-                        horizontalLine.setStrokeWidth(4);
-                    }
-
-                    if (column == 0) {
-                        horizontalLine.setEndX(tileSize / 2.0);
-                        GridPane.setHalignment(horizontalLine, HPos.RIGHT);
-                        verticalLine.setStrokeWidth(4);
-                    }
-
-                    if (column == boardSize - 1) {
-                        horizontalLine.setEndX(tileSize / 2.0);
-                        GridPane.setHalignment(horizontalLine, HPos.LEFT);
-                        verticalLine.setStrokeWidth(4);
-                    }
-
+                    placeLines(column, row, verticalLine, horizontalLine);
                     gridPane.add(horizontalLine, column, row);
                     gridPane.add(verticalLine, column, row);
                 }));
+    }
+
+    private void placeLines(int column, int row, Line verticalLine, Line horizontalLine) {
+        if (row == 0) { verticalLinePlacement(verticalLine, VPos.BOTTOM); }
+        if (row == boardSize - 1) { verticalLinePlacement(verticalLine, VPos.TOP); }
+        if (column == 0) { horizontalLinePlacement(horizontalLine, HPos.RIGHT); }
+        if (column == boardSize - 1) { horizontalLinePlacement(horizontalLine, HPos.LEFT); }
+    }
+
+    private void verticalLinePlacement(Line line, VPos position){
+        line.setEndY(tileSize / 2.0);
+        GridPane.setValignment(line, position);
+        line.setStrokeWidth(2);
+    }
+
+    private void horizontalLinePlacement(Line line, HPos position){
+        line.setEndX(tileSize / 2.0);
+        GridPane.setHalignment(line, position);
+        line.setStrokeWidth(2);
     }
 
     private Line lineGenerator(int endX, int endY) {
