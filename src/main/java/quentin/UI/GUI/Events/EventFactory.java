@@ -1,6 +1,8 @@
 package quentin.UI.GUI.Events;
 
 import javafx.event.Event;
+import quentin.GUIQuentin;
+import quentin.UI.GUI.GUI;
 import quentin.UI.GUI.GUIBoardDisplayer;
 
 public class EventFactory {
@@ -11,11 +13,11 @@ public class EventFactory {
         return new PieRuleEvent(guiBoardDisplayer);
     }
 
-    public static Event createPassEvent() {
-        return new PassEvent();
+    public static Event createPassEvent(GUIQuentin guiQuentin) {
+        return new PassEvent(guiQuentin);
     }
 
-    public static Event createEndGameEvent() {
-        return new EndGameEvent();
+    public static Event createEndGameEvent(GUI gui) {
+        return new EndGameEvent(gui);
     }
 }

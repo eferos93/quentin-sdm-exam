@@ -27,7 +27,7 @@ public class GuiMouseHandler implements EventHandler<MouseEvent> {
         game.setNewPosition(Position.in(rowIndex, columnIndex));
 
         if (game.isCurrentPlayerNotAbleToMakeAMove()) {
-            gui.fireEvent(EventFactory.createPassEvent());
+            gui.fireEvent(EventFactory.createPassEvent(game));
             return;
         }
 

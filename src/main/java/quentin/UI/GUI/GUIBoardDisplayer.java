@@ -209,8 +209,8 @@ public class GUIBoardDisplayer {
     protected void addGridEvents(GUI gui, GUIQuentin quentin) {
         getGridBoard().addEventHandler(PieRuleEvent.PIE_RULE_EVENT_TYPE, new GuiPieHandler());
         getGridBoard().addEventHandler(MouseEvent.MOUSE_CLICKED, new GuiMouseHandler(gui));
-        getGridBoard().addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler(quentin));
-        getGridBoard().addEventHandler(EndGameEvent.END_GAME_EVENT_TYPE, new GuiEndGameHandler(gui));
+        getGridBoard().addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler());
+        getGridBoard().addEventHandler(EndGameEvent.END_GAME_EVENT_TYPE, new GuiEndGameHandler());
     }
 
     protected void setGameStage() {

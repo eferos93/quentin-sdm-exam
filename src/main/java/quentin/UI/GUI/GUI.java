@@ -20,10 +20,6 @@ public class GUI extends Application {
 
     public GUIQuentin getGame() { return guiQuentin; }
 
-    public void switchColorPlayerLabel() {
-        guiBoardDisplayer.switchColorPlayerLabel();
-    }
-
     @Override
     public void start(Stage primaryStage) {
         guiBoardDisplayer = new GUIBoardDisplayer();
@@ -45,7 +41,7 @@ public class GUI extends Application {
 
     public void fireEndGameEventIfConditionsAreMet() {
         if (guiQuentin.isGameEnded()) {
-            fireEvent(EventFactory.createEndGameEvent());
+            fireEvent(EventFactory.createEndGameEvent(this));
         }
     }
 
