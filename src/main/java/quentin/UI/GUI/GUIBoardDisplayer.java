@@ -1,48 +1,68 @@
 package quentin.UI.GUI;
 
 
+import javafx.event.Event;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import quentin.GUIQuentin;
+import quentin.UI.GUI.Events.EndGameEvent;
+import quentin.UI.GUI.Events.PassEvent;
+import quentin.UI.GUI.Events.PieRuleEvent;
+import quentin.UI.GUI.Handlers.GuiEndGameHandler;
+import quentin.UI.GUI.Handlers.GuiMouseHandler;
+import quentin.UI.GUI.Handlers.GuiPassHandler;
+import quentin.UI.GUI.Handlers.GuiPieHandler;
 import quentin.core.Colour;
+import quentin.core.Intersection;
 import quentin.core.Position;
 
 import java.util.EnumMap;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class GUIBoardDisplayer {
 
     private final GridPane gridBoard = new GridPane();
-    private final int boardSize;
-    private final int tileSize;
+    private Stage stage;
+    private GridPane gridPanel;
+    private final int tileSize = 50;
     private final EnumMap<Colour, Paint> colorPaintMap = new EnumMap<>(Colour.class);
 
-    protected GUIBoardDisplayer(int boardSize, int tileSize) {
-        this.boardSize = boardSize;
-        this.tileSize = tileSize;
+    protected GUIBoardDisplayer() {
         colorPaintMap.put(Colour.BLACK, Color.BLACK);
         colorPaintMap.put(Colour.WHITE, Color.WHITE);
-        gridBoard.setStyle("-fx-background-color: #3CB371");
+        gridPanel = new GridPane();
+//        gridBoard.setStyle("-fx-background-color: #3CB371");
     }
 
-    protected void createEmptyBoard() {
-
+    protected GridPane createEmptyBoard(int boardSize) {
+        GridPane gridBoard = new GridPane();
         for (int gridCellIndex = 0; gridCellIndex < boardSize; gridCellIndex++) {
             gridBoard.getColumnConstraints().add(new ColumnConstraints(tileSize));
             gridBoard.getRowConstraints().add(new RowConstraints(tileSize));
         }
-        createLines();
+        createLines(gridBoard, boardSize);
+        gridBoard.setStyle("-fx-background-color: #3CB371");
+        return gridBoard;
     }
 
-    protected GridPane getGridBoard(){return this.gridBoard;}
+//    protected GridPane getGridBoard(){return this.gridBoard;}
 
-    private void createLines() {
+    private void createLines(GridPane gridBoard, int boardSize) {
         IntStream.range(0, boardSize).forEach(column ->
                 IntStream.range(0, boardSize).forEach(row ->
                 {
@@ -50,13 +70,13 @@ public class GUIBoardDisplayer {
                     Line horizontalLine = lineGenerator(tileSize, 0);
                     GridPane.setHalignment(verticalLine, HPos.CENTER);
                     GridPane.setValignment(verticalLine, VPos.CENTER);
-                    placeLines(column, row, verticalLine, horizontalLine);
+                    placeLines(column, row, verticalLine, horizontalLine, boardSize);
                     gridBoard.add(horizontalLine, column, row);
                     gridBoard.add(verticalLine, column, row);
                 }));
     }
 
-    private void placeLines(int column, int row, Line verticalLine, Line horizontalLine) {
+    private void placeLines(int column, int row, Line verticalLine, Line horizontalLine, int boardSize) {
         if (row == 0) { verticalLinePlacement(verticalLine, VPos.BOTTOM); }
         if (row == boardSize - 1) { verticalLinePlacement(verticalLine, VPos.TOP); }
         if (column == 0) { horizontalLinePlacement(horizontalLine, HPos.RIGHT); }
@@ -114,9 +134,9 @@ public class GUIBoardDisplayer {
         return gridLabels;
     }
 
-    protected void switchColorPlayerLabel(GridPane labelBoard) {
-        switchColorLabel(labelBoard, 3, javafx.scene.paint.Color.BLACK);
-        switchColorLabel(labelBoard, 4, javafx.scene.paint.Color.WHITE);
+    protected void switchColorPlayerLabel() {
+        switchColorLabel(getLabelBoard(), 3, javafx.scene.paint.Color.BLACK);
+        switchColorLabel(getLabelBoard(), 4, javafx.scene.paint.Color.WHITE);
     }
 
     private void switchColorLabel(GridPane labelBoard, int position, javafx.scene.paint.Color color) {
@@ -131,5 +151,101 @@ public class GUIBoardDisplayer {
 
     private Color getOppositeColor(Paint currentPlayerLabel) {
         return currentPlayerLabel == Color.BLACK ? Color.WHITE : Color.BLACK;
+    }
+
+    private void structureUI(Stream<Button> buttonStream, String content, int size, int buttonsSpacing){
+        GridPane pane = new GridPane();
+        pane.setPadding(new Insets(20, 20, 20, 20));
+        pane.setVgap(20);
+
+        Text text = new Text(content);
+        text.setFont(Font.font("Tahoma", size));
+
+        pane.add(text, 0, 0 );
+        GridPane.setHalignment(text, HPos.CENTER);
+
+        HBox hBox = new HBox();
+        buttonStream.forEach(button -> hBox.getChildren().add(button));
+
+        pane.add(hBox, 0, 1);
+        hBox.setSpacing(buttonsSpacing);
+        GridPane.setHalignment(hBox, HPos.CENTER);
+
+        Scene scene = new Scene(pane);
+
+        stage.close();
+        stage.setTitle("Quentin");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    protected void initUI(Stream<Button> buttons) {
+        structureUI(buttons, "Quentin Game", 40, 15);
+    }
+
+    public void replay(Stream<Button> buttons) {
+        structureUI(buttons, "Do you wanna play again?", 20, 100);
+    }
+
+
+
+    private GridPane getGridBoard() {
+        GridPane borders = (GridPane) gridPanel.getChildrenUnmodifiable().get(0);
+        return (GridPane) borders.getChildren().get(0);
+    }
+
+    protected void initialiseGridPanel(String blackPlayerName, String whitePlayerName, int boardSize){
+        gridPanel = new GridPane();
+        gridPanel.setVgap(20);
+
+        GridPane boardPane = createEmptyBoard(boardSize);
+        GridPane borders = new GridPane();
+        borders.getStyleClass().add("borders");
+        borders.add(boardPane, 0, 0);
+
+        GridPane labelBoard = createLabelPane(blackPlayerName, whitePlayerName);
+        labelBoard.getStyleClass().add("label-board");
+
+        gridPanel.add(borders, 0, 0);
+        gridPanel.add(labelBoard, 0, 1);
+        gridPanel.getStyleClass().add("grid-pane");
+    }
+
+    protected void addGridEvents(GUI gui, GUIQuentin quentin) {
+        getGridBoard().addEventHandler(PieRuleEvent.PIE_RULE_EVENT_TYPE, new GuiPieHandler(gui));
+        getGridBoard().addEventHandler(MouseEvent.MOUSE_CLICKED, new GuiMouseHandler(gui));
+        getGridBoard().addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler(quentin));
+        getGridBoard().addEventHandler(EndGameEvent.END_GAME_EVENT_TYPE, new GuiEndGameHandler(gui));
+    }
+
+    protected void setGameStage() {
+        Scene scene = new Scene(gridPanel, Color.WHITESMOKE);
+        String path = getClass().getResource("/GUI.css").toExternalForm();
+        scene.getStylesheets().add(path);
+        stage.setTitle("Board");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private GridPane getLabelBoard() { return (GridPane) gridPanel.getChildren().get(1); }
+
+    public void initialiseGUI(Stream<Button> buttons, Stage primaryStage) {
+        stage = primaryStage;
+        stage.setResizable(false);
+        initUI(buttons);
+    }
+
+    public void fireEvent(Event event) {
+        getGridBoard().fireEvent(event);
+    }
+
+    public void updateIntersections(Stream<Intersection> nonEmptyIntersections) {
+        nonEmptyIntersections.forEach(nonEmptyIntersection ->
+                        addPiece(
+                                nonEmptyIntersection.getPosition(),
+                                nonEmptyIntersection.getColor().orElseThrow()
+                        )
+                );
+        switchLabelsCurrentPlayer(getLabelBoard());
     }
 }
