@@ -26,16 +26,16 @@ public class GUI extends Application {
 
     public static final int TILE_SIZE = 50;
     private Stage stage;
-    private GridPane gridPane;
+    private GridPane gridPanel;
     private GUIQuentin guiQuentin;
     private GUIBoardDisplayer boardFiller;
 
     private GridPane getGridBoard() {
-        GridPane borders = (GridPane) gridPane.getChildrenUnmodifiable().get(0);
+        GridPane borders = (GridPane) gridPanel.getChildrenUnmodifiable().get(0);
         return (GridPane) borders.getChildren().get(0);
     }
 
-    private GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
+    private GridPane getLabelBoard() { return (GridPane) gridPanel.getChildren().get(1); }
     public GUIQuentin getGame() { return guiQuentin; }
 
     public void switchColorPlayerLabel() {
@@ -56,40 +56,38 @@ public class GUI extends Application {
         gridBoard.addEventHandler(EndGameEvent.END_GAME_EVENT_TYPE, new GuiEndGameHandler(this));
     }
 
-    private GridPane createGridBoard(){
-        gridPane = new GridPane();
-        gridPane.setVgap(20);
+    private void initGridPanel(String blackPlayerName, String whitePlayerName){
+        gridPanel = new GridPane();
+        gridPanel.setVgap(20);
 
-        GridPane gridBoard = boardFiller.createEmptyBoard();
+        boardFiller.createEmptyBoard();
         GridPane borders = new GridPane();
         borders.getStyleClass().add("borders");
-        borders.add(gridBoard, 0, 0);
+        borders.add(boardFiller.getGridBoard(), 0, 0);
 
-        GridPane labelBoard = boardFiller.createLabelPane(
-                guiQuentin.getCurrentPlayer().getName(),
-                guiQuentin.getLastPlayer().getName());
+        GridPane labelBoard = boardFiller.createLabelPane(blackPlayerName, whitePlayerName);
         labelBoard.getStyleClass().add("label-board");
 
-        gridPane.add(borders, 0, 0);
-        gridPane.add(labelBoard, 0, 1);
-        gridPane.getStyleClass().add("grid-pane");
-
-        return gridBoard;
+        gridPanel.add(borders, 0, 0);
+        gridPanel.add(labelBoard, 0, 1);
+        gridPanel.getStyleClass().add("grid-pane");
     }
 
-    private void initGameInterface(int boardSize, String namePlayer1, String namePlayer2) {
+    private void initGame(int boardSize, String blackPlayerName, String whitePlayerName, GUIInputHandler guiInputHandler) {
 
-        guiQuentin = new GUIQuentin(boardSize,new GUIInputHandler(), new GUIOutputHandler(), namePlayer1, namePlayer2);
+        guiQuentin = new GUIQuentin(boardSize, guiInputHandler, new GUIOutputHandler(), blackPlayerName, whitePlayerName);
         boardFiller = new GUIBoardDisplayer(boardSize, TILE_SIZE);
 
-        GridPane gridBoard = createGridBoard();
-        addGridEvent(gridBoard);
+        initGridPanel(blackPlayerName, whitePlayerName);
+        addGridEvent(boardFiller.getGridBoard());
 
-        Scene scene = new Scene(gridPane, Color.WHITESMOKE);
+        setGameStage();
+    }
 
+    private void setGameStage() {
+        Scene scene = new Scene(gridPanel, Color.WHITESMOKE);
         String path = getClass().getResource("/GUI.css").toExternalForm();
         scene.getStylesheets().add(path);
-
         stage.setTitle("Board");
         stage.setScene(scene);
         stage.show();
@@ -112,7 +110,7 @@ public class GUI extends Application {
             String namePlayer1 = guiInputHandler.askPlayerName("1");
             String namePlayer2 = guiInputHandler.askPlayerName("2");
 
-            initGameInterface(size, namePlayer1, namePlayer2);
+            initGame(size, namePlayer1, namePlayer2, guiInputHandler);
         });
 
         Button endButton = createNewButton("Exit", (ActionEvent e) -> stop());
@@ -166,7 +164,7 @@ public class GUI extends Application {
     public void updateGUI() {
         guiQuentin.getNonEmptyIntersections()
                 .forEach(nonEmptyIntersection ->
-                        boardFiller.addPiece(getGridBoard(),
+                        boardFiller.addPiece(
                                 nonEmptyIntersection.getPosition(),
                                 nonEmptyIntersection.getColor().orElseThrow()
                         )

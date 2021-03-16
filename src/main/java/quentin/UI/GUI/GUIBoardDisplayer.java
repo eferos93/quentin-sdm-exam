@@ -18,6 +18,7 @@ import java.util.stream.IntStream;
 
 public class GUIBoardDisplayer {
 
+    private final GridPane gridBoard = new GridPane();
     private final int boardSize;
     private final int tileSize;
     private final EnumMap<Colour, Paint> colorPaintMap = new EnumMap<>(Colour.class);
@@ -25,22 +26,23 @@ public class GUIBoardDisplayer {
     protected GUIBoardDisplayer(int boardSize, int tileSize) {
         this.boardSize = boardSize;
         this.tileSize = tileSize;
-        colorPaintMap.put(Colour.BLACK, javafx.scene.paint.Color.BLACK);
-        colorPaintMap.put(Colour.WHITE, javafx.scene.paint.Color.WHITE);
+        colorPaintMap.put(Colour.BLACK, Color.BLACK);
+        colorPaintMap.put(Colour.WHITE, Color.WHITE);
+        gridBoard.setStyle("-fx-background-color: #3CB371");
     }
 
-    protected GridPane createEmptyBoard() {
-        GridPane gridPane = new GridPane();
-        gridPane.setStyle("-fx-background-color: #3CB371");
+    protected void createEmptyBoard() {
+
         for (int gridCellIndex = 0; gridCellIndex < boardSize; gridCellIndex++) {
-            gridPane.getColumnConstraints().add(new ColumnConstraints(tileSize));
-            gridPane.getRowConstraints().add(new RowConstraints(tileSize));
+            gridBoard.getColumnConstraints().add(new ColumnConstraints(tileSize));
+            gridBoard.getRowConstraints().add(new RowConstraints(tileSize));
         }
-        createLines(gridPane);
-        return gridPane;
+        createLines();
     }
 
-    private void createLines(GridPane gridPane) {
+    protected GridPane getGridBoard(){return this.gridBoard;}
+
+    private void createLines() {
         IntStream.range(0, boardSize).forEach(column ->
                 IntStream.range(0, boardSize).forEach(row ->
                 {
@@ -49,8 +51,8 @@ public class GUIBoardDisplayer {
                     GridPane.setHalignment(verticalLine, HPos.CENTER);
                     GridPane.setValignment(verticalLine, VPos.CENTER);
                     placeLines(column, row, verticalLine, horizontalLine);
-                    gridPane.add(horizontalLine, column, row);
-                    gridPane.add(verticalLine, column, row);
+                    gridBoard.add(horizontalLine, column, row);
+                    gridBoard.add(verticalLine, column, row);
                 }));
     }
 
@@ -84,13 +86,13 @@ public class GUIBoardDisplayer {
         return coordinate - 1;
     }
 
-    protected void addPiece(GridPane gridPane, Position position, Colour colour) {
+    protected void addPiece(Position position, Colour colour) {
         Circle piece = new Circle((getConvertedCoordinate(position.getColumn())) * tileSize,
                 (getConvertedCoordinate(position.getRow())) * tileSize, tileSize * 0.4);
         piece.setFill(colorPaintMap.get(colour));
         GridPane.setHalignment(piece, HPos.CENTER);
         GridPane.setValignment(piece, VPos.CENTER);
-        gridPane.add(piece, getConvertedCoordinate(position.getColumn()), getConvertedCoordinate(position.getRow()));
+        gridBoard.add(piece, getConvertedCoordinate(position.getColumn()), getConvertedCoordinate(position.getRow()));
     }
 
     protected GridPane createLabelPane(String namePLayerOne, String namePlayerTwo) {
