@@ -35,8 +35,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class GUIBoardDisplayer {
-
-//    private final GridPane gridBoard = new GridPane();
     private Stage stage;
     private GridPane gridPanel;
     private final int tileSize = 50;
@@ -46,7 +44,6 @@ public class GUIBoardDisplayer {
         colorPaintMap.put(Colour.BLACK, Color.BLACK);
         colorPaintMap.put(Colour.WHITE, Color.WHITE);
         gridPanel = new GridPane();
-//        gridBoard.setStyle("-fx-background-color: #3CB371");
     }
 
     protected GridPane createEmptyBoard(int boardSize) {
@@ -56,11 +53,8 @@ public class GUIBoardDisplayer {
             gridBoard.getRowConstraints().add(new RowConstraints(tileSize));
         }
         createLines(gridBoard, boardSize);
-        gridBoard.setStyle("-fx-background-color: #3CB371");
         return gridBoard;
     }
-
-//    protected GridPane getGridBoard(){return this.gridBoard;}
 
     private void createLines(GridPane gridBoard, int boardSize) {
         IntStream.range(0, boardSize).forEach(column ->
@@ -199,6 +193,7 @@ public class GUIBoardDisplayer {
         gridPanel.setVgap(20);
 
         GridPane boardPane = createEmptyBoard(boardSize);
+        boardPane.getStyleClass().add("background");
         GridPane borders = new GridPane();
         borders.getStyleClass().add("borders");
         borders.add(boardPane, 0, 0);

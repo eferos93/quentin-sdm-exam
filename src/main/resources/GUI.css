@@ -24,3 +24,7 @@
     -fx-background-color: wheat;
     -fx-border-color: black;
 }
+
+.background {
+    -fx-background-color: #3CB371
+}
