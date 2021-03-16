@@ -48,16 +48,17 @@ public class GUIBoardDisplayer {
                     Line horizontalLine = lineGenerator(tileSize, 0);
                     GridPane.setHalignment(verticalLine, HPos.CENTER);
                     GridPane.setValignment(verticalLine, VPos.CENTER);
-
-                    if (row == 0) { verticalLinePlacement(verticalLine, VPos.BOTTOM); }
-                    if (row == boardSize - 1) { verticalLinePlacement(verticalLine, VPos.TOP); }
-
-                    if (column == 0) { horizontalLinePlacement(horizontalLine, HPos.RIGHT); }
-                    if (column == boardSize - 1) { horizontalLinePlacement(horizontalLine, HPos.LEFT); }
-
+                    placeLines(column, row, verticalLine, horizontalLine);
                     gridPane.add(horizontalLine, column, row);
                     gridPane.add(verticalLine, column, row);
                 }));
+    }
+
+    private void placeLines(int column, int row, Line verticalLine, Line horizontalLine) {
+        if (row == 0) { verticalLinePlacement(verticalLine, VPos.BOTTOM); }
+        if (row == boardSize - 1) { verticalLinePlacement(verticalLine, VPos.TOP); }
+        if (column == 0) { horizontalLinePlacement(horizontalLine, HPos.RIGHT); }
+        if (column == boardSize - 1) { horizontalLinePlacement(horizontalLine, HPos.LEFT); }
     }
 
     private void verticalLinePlacement(Line line, VPos position){
