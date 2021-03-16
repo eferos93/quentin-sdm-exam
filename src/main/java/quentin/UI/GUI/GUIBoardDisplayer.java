@@ -18,7 +18,6 @@ import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import quentin.GUIQuentin;
 import quentin.UI.GUI.Events.EndGameEvent;
 import quentin.UI.GUI.Events.PassEvent;
 import quentin.UI.GUI.Events.PieRuleEvent;
@@ -206,7 +205,7 @@ public class GUIBoardDisplayer {
         gridPanel.getStyleClass().add("grid-pane");
     }
 
-    protected void addGridEvents(GUI gui, GUIQuentin quentin) {
+    protected void addGridEvents(GUI gui) {
         getGridBoard().addEventHandler(PieRuleEvent.PIE_RULE_EVENT_TYPE, new GuiPieHandler());
         getGridBoard().addEventHandler(MouseEvent.MOUSE_CLICKED, new GuiMouseHandler(gui));
         getGridBoard().addEventHandler(PassEvent.PASS_EVENT_TYPE, new GuiPassHandler());

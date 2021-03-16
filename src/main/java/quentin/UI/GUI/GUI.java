@@ -79,7 +79,7 @@ public class GUI extends Application {
     private void initGame(int boardSize, String blackPlayerName, String whitePlayerName, GUIInputHandler guiInputHandler) {
         guiQuentin = new GUIQuentin(boardSize, guiInputHandler, new GUIOutputHandler(), blackPlayerName, whitePlayerName);
         guiBoardDisplayer.initialiseGridPanel(blackPlayerName, whitePlayerName, boardSize);
-        guiBoardDisplayer.addGridEvents(this, guiQuentin);
+        guiBoardDisplayer.addGridEvents(this);
         guiBoardDisplayer.setGameStage();
     }
 
