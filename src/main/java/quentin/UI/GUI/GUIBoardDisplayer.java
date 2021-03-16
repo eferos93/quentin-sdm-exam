@@ -6,10 +6,8 @@ import javafx.geometry.VPos;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.*;
-import javafx.scene.text.Text;
 import quentin.core.Colour;
 import quentin.core.Position;
 
@@ -21,6 +19,7 @@ public class GUIBoardDisplayer {
     private final int boardSize;
     private final int tileSize;
     private final EnumMap<Colour, Paint> colorPaintMap = new EnumMap<>(Colour.class);
+    private final LabelHandler labelHandler = new LabelHandler();
 
     protected GUIBoardDisplayer(int boardSize, int tileSize) {
         this.boardSize = boardSize;
@@ -99,40 +98,15 @@ public class GUIBoardDisplayer {
     }
 
     protected GridPane createLabelPane(String namePLayerOne, String namePlayerTwo) {
-        GridPane gridLabels = new GridPane();
-        gridLabels.setVgap(10);
 
-        gridLabels.add(new Text(namePLayerOne + ": "), 0, 0);
-        gridLabels.add(new Text(namePlayerTwo + ": "), 0, 1);
-        gridLabels.add(new Text("Now playing: "), 0, 2);
-
-        Circle whitePlayerLabel = new Circle(tileSize * 0.1, javafx.scene.paint.Color.WHITE);
-        Circle blackPlayerLabel = new Circle(tileSize * 0.1, javafx.scene.paint.Color.BLACK);
-        Circle currentPlayerLabel = new Circle(tileSize * 0.1, javafx.scene.paint.Color.BLACK);
-
-        gridLabels.add(whitePlayerLabel, 1, 1);
-        gridLabels.add(blackPlayerLabel, 1, 0);
-        gridLabels.add(currentPlayerLabel, 1, 2);
-
-        return gridLabels;
+        return labelHandler.createLabelPane(namePLayerOne, namePlayerTwo, tileSize);
     }
 
     protected void switchColorPlayerLabel(GridPane labelBoard) {
-        switchColorLabel(labelBoard, 3, javafx.scene.paint.Color.BLACK);
-        switchColorLabel(labelBoard, 4, javafx.scene.paint.Color.WHITE);
-    }
-
-    private void switchColorLabel(GridPane labelBoard, int position, javafx.scene.paint.Color color) {
-        Circle currentPlayerLabel = (Circle) labelBoard.getChildren().get(position);
-        currentPlayerLabel.setFill(color);
+        labelHandler.switchColorPlayerLabel(labelBoard);
     }
 
     protected void switchLabelsCurrentPlayer(GridPane labelBoard) {
-        Circle currentPlayerLabel = (Circle) labelBoard.getChildren().get(5);
-        currentPlayerLabel.setFill(getOppositeColor(currentPlayerLabel.getFill()));
-    }
-
-    private Color getOppositeColor(Paint currentPlayerLabel) {
-        return currentPlayerLabel == Color.BLACK ? Color.WHITE : Color.BLACK;
+        labelHandler.switchLabelsCurrentPlayer(labelBoard);
     }
 }
