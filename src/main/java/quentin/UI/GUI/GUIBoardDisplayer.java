@@ -187,7 +187,7 @@ public class GUIBoardDisplayer {
         return (GridPane) borders.getChildren().get(0);
     }
 
-    protected void initialiseGridPanel(String blackPlayerName, String whitePlayerName, int boardSize){
+    protected void initialiseGridPane(String blackPlayerName, String whitePlayerName, int boardSize){
         gridPanel = new GridPane();
         gridPanel.setVgap(20);
 
