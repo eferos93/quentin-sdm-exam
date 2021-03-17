@@ -9,6 +9,7 @@ import org.jgrapht.util.SupplierUtil;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -60,9 +61,9 @@ public class RegionContainer {
                 .collect(Collectors.toSet());
     }
 
-    private long countIntersectionsOfColor(final Set<Intersection> intersectionsSurroundingTerritory, Stone color) {
+    private long countIntersectionsOfColor(final Set<Intersection> intersectionsSurroundingTerritory, Colour colour) {
         return intersectionsSurroundingTerritory.stream()
-                .filter(intersection -> intersection.hasStone(color))
+                .filter(intersection -> intersection.hasStone(colour))
                 .count();
     }
 
@@ -76,24 +77,24 @@ public class RegionContainer {
     }
 
 
-    private Stone getStoneToFillTerritory(Set<Intersection> territory, Stone lastPlay) {
+    private Optional<Colour> getColorToFillTerritory(Set<Intersection> territory, Colour lastPlay) {
         Set<Intersection> intersectionsSurroundingTerritory =
                 getIntersectionsThatSurroundsTheTerritory(territory);
-        long countOfWhiteStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.WHITE);
-        long countOfBlackStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Stone.BLACK);
+        long countOfWhiteStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Colour.WHITE);
+        long countOfBlackStones = countIntersectionsOfColor(intersectionsSurroundingTerritory, Colour.BLACK);
 
         if (countOfWhiteStones != countOfBlackStones) {
-            return (countOfWhiteStones < countOfBlackStones) ? Stone.BLACK : Stone.WHITE;
+            return Optional.of((countOfWhiteStones < countOfBlackStones) ? Colour.BLACK : Colour.WHITE);
         } else {
-            return lastPlay.getOppositeColor();
+            return Optional.ofNullable(lastPlay).map(Colour::getOppositeColor);
         }
     }
 
-    protected Map<Set<Intersection>, Stone> getTerritoriesAndStonesToFill(Stone lastPlay) {
+    protected Map<Set<Intersection>, Optional<Colour>> getTerritoriesAndStonesToFill(Colour lastPlay) {
         return getTerritories().stream()
                 .map(territory -> {
-                    Stone stone = getStoneToFillTerritory(territory, lastPlay);
-                    return Map.entry(territory, stone);
+                    Optional<Colour> color = getColorToFillTerritory(territory, lastPlay);
+                    return Map.entry(territory, color);
                 })
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }

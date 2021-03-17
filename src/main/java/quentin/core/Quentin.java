@@ -3,14 +3,12 @@ package quentin.core;
 import quentin.UI.InputHandler;
 import quentin.UI.OutputHandler;
 import quentin.exceptions.*;
+
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Stream;
 
 public abstract class Quentin<InputHandlerImplementation extends InputHandler, OutputHandlerImplementation extends OutputHandler> {
-    private final Board board;
-    protected boolean whiteAlreadyPlayed = false;
-    private Stone lastPlay = Stone.NONE;
+    protected final GameState gameState;
     private final Player playerOne;
     private final Player playerTwo;
     protected final InputHandlerImplementation inputHandler;
@@ -18,98 +16,40 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
 
     protected Quentin(int boardSize, InputHandlerImplementation inputHandler, OutputHandlerImplementation outputHandler,
                    String blackPlayerName, String whitePlayerName) {
-        this.board = Board.buildBoard(boardSize);
+        this.gameState = new GameState(boardSize);
         this.inputHandler = inputHandler;
         this.outputHandler = outputHandler;
-        this.playerOne = new Player(Stone.BLACK, blackPlayerName);
-        this.playerTwo = new Player(Stone.WHITE, whitePlayerName);
+        this.playerOne = new Player(Colour.BLACK, blackPlayerName);
+        this.playerTwo = new Player(Colour.WHITE, whitePlayerName);
     }
 
-    protected void makeMove(Stone color, Position position) throws QuentinException {
-        if (isInvalidFirstPlayer(color)) {
-            throw new InvalidFirstPlayerException();
-        }
-        if (isARepeatedPlay(color)) {
-            throw new RepeatedPlayException();
-        }
-        if (isOccupied(position)) {
-            throw new OccupiedPositionException(position);
-        }
-
-        board.addStoneAt(color, position);
-        Set<Position> territoriesFilled = board.fillTerritories(color);
-
-        if (isIllegalMove(color, position)) {
-            territoriesFilled.add(position);
-            territoriesFilled.forEach(board::revertForIntersectionAt);
-            throw new IllegalMoveException(position);
-        }
-        lastPlay = color;
-    }
-
-    private boolean isOccupied(Position position) throws OutsideOfBoardException {
-        return board.isOccupied(position);
-    }
-
-    private boolean isIllegalMove(Stone playerColor, Position position) throws OutsideOfBoardException {
-        return isIllegalMove(playerColor, board.intersectionAt(position));
-    }
-
-    private boolean isIllegalMove(Stone playerColor, Intersection intersection) {
-        Set<Intersection> colorAlikeOrthogonalIntersections =
-                board.getOrthogonallyAdjacentIntersectionsOfColour(intersection, playerColor);
-        return board.getDiagonallyAdjacentIntersectionsOfColour(intersection, playerColor).stream()
-                .anyMatch(diagonalIntersection ->
-                        board.getOrthogonallyAdjacentIntersectionsOfColour(diagonalIntersection, playerColor).stream()
-                            .noneMatch(colorAlikeOrthogonalIntersections::contains)
-                );
-    }
-
-    private boolean isARepeatedPlay(Stone playerColor) {
-        return lastPlay == playerColor;
-    }
-
-    private boolean isFirstTurn() {
-        return lastPlay == Stone.NONE;
-    }
-
-    private boolean isInvalidFirstPlayer(Stone playerColor) {
-        return isFirstTurn() && playerColor == Stone.WHITE;
+    protected void makeMove(Colour colour, Position position) throws QuentinException {
+        gameState.makeMove(colour, position);
     }
 
     public boolean isCurrentPlayerNotAbleToMakeAMove() {
-        return board.getEmptyIntersections()
-                .allMatch(emptyIntersection -> {
-                    board.addStoneAt(getCurrentPlayer().getColor(), emptyIntersection.getPosition());
-                    Set<Position> positionsFilled = board.fillTerritories(lastPlay);
-                    positionsFilled.add(emptyIntersection.getPosition());
-                    boolean isIllegalMove = isIllegalMove(getCurrentPlayer().getColor(), emptyIntersection);
-                    positionsFilled.forEach(board::revertForIntersectionAt);
-                    return isIllegalMove;
-                });
+        return gameState.isCurrentPlayerNotAbleToMakeAMove(getCurrentPlayer());
     }
 
-    protected Player getPlayerOfColor(Stone color) {
-        return getPlayers().stream().filter(player -> player.getColor() == color).findFirst().orElseThrow();
+    protected Player getPlayerOfColor(Colour colour) {
+        return getPlayers().stream().filter(player -> player.getColor() == colour).findFirst().orElseThrow();
+    }
+
+    public Player getCurrentPlayer() {
+        return getPlayerOfColor(gameState.getCurrentPlayerColour());
     }
 
     public void passTurn() {
         Player currentPlayer = getCurrentPlayer();
-        this.lastPlay = currentPlayer.getColor();
+        this.gameState.setLastPlay(currentPlayer.getColor());
         outputHandler.notifyPass(currentPlayer);
     }
 
     protected boolean checkForWinner() {
-        Stone winnerColor = getWinner();
-        if (winnerColor != Stone.NONE) {
+        return gameState.getWinner().map(winnerColor -> {
             outputHandler.notifyWinner(getPlayerOfColor(winnerColor));
             return true;
-        }
-        return false;
-    }
-
-    protected Stone getWinner() {
-        return board.colorWithCompleteChain();
+        }).orElse(false);
     }
 
     protected void applyPieRule() {
@@ -120,12 +60,8 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         return List.of(playerOne, playerTwo);
     }
 
-    public Board getBoard() {
-        return this.board;
-    }
-
-    public Player getCurrentPlayer() {
-        return isFirstTurn() ? getPlayerOfColor(Stone.BLACK) : getPlayerOfColor(this.lastPlay.getOppositeColor());
+    protected Board getBoard() {
+        return this.gameState.getBoard();
     }
 
     protected boolean applyPieRuleIfPlayerWants(Player currentPlayer) {
@@ -136,6 +72,10 @@ public abstract class Quentin<InputHandlerImplementation extends InputHandler, O
         } else {
             return false;
         }
+    }
+
+    protected boolean isWhitePlayerFirstTurn() {
+        return !gameState.doesWhitePlayerAlreadyPlayed() && getCurrentPlayer().getColor() == Colour.WHITE;
     }
 
     public abstract void play() throws QuentinException;

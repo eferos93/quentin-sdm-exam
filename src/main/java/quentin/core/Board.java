@@ -35,10 +35,10 @@ public class Board {
         );
     }
 
-    protected void addStoneAt(Stone stone, Position position) throws OutsideOfBoardException {
+    protected void addStoneAt(Colour colour, Position position) throws OutsideOfBoardException {
         Intersection intersection = intersectionAt(position);
         regionsContainer.removeIntersection(intersection);
-        intersection.setStone(stone);
+        intersection.setStone(colour);
         chainContainer.updateChain(intersection);
     }
 
@@ -46,21 +46,21 @@ public class Board {
         return intersectionAt(position).isOccupied();
     }
 
-    protected Set<Intersection> getDiagonallyAdjacentIntersectionsOfColour(Intersection intersection, Stone color) {
+    protected Set<Intersection> getDiagonallyAdjacentIntersectionsOfColour(Intersection intersection, Colour colour) {
         return intersections.stream()
                 .filter(intersection::isDiagonalTo)
-                .filter(diagonalIntersection -> diagonalIntersection.hasStone(color))
+                .filter(diagonalIntersection -> diagonalIntersection.hasStone(colour))
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    protected Set<Intersection> getOrthogonallyAdjacentIntersectionsOfColour(Intersection intersection, Stone color) {
+    protected Set<Intersection> getOrthogonallyAdjacentIntersectionsOfColour(Intersection intersection, Colour colour) {
         return intersections.stream()
                 .filter(intersection::isOrthogonalTo)
-                .filter(orthogonalIntersection -> orthogonalIntersection.hasStone(color))
+                .filter(orthogonalIntersection -> orthogonalIntersection.hasStone(colour))
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    protected Stone colorWithCompleteChain() {
+    protected Optional<Colour> colorWithCompleteChain() {
         return chainContainer.getColorWithCompleteChain();
     }
 
@@ -72,13 +72,13 @@ public class Board {
         return intersections.stream().filter(Intersection::isOccupied);
     }
 
-    protected Set<Position> fillTerritories(Stone lastPlay) {
-        Map<Set<Intersection>, Stone> territoriesToFill = getTerritoriesAndStones(lastPlay);
+    protected Set<Position> fillTerritories(Colour lastPlay) {
+        Map<Set<Intersection>, Optional<Colour>> territoriesToFill = getTerritoriesAndStones(lastPlay);
         territoriesToFill
                 .forEach((territory, stone) ->
                                 territory.stream()
                                         .map(Intersection::getPosition)
-                                        .forEach(emptyIntersectionPosition -> addStoneAt(stone, emptyIntersectionPosition))
+                                        .forEach(emptyIntersectionPosition -> addStoneAt(stone.orElseThrow(), emptyIntersectionPosition))
                 );
         return territoriesToFill.entrySet().stream()
                 .flatMap(entry -> entry.getKey().stream())
@@ -86,7 +86,7 @@ public class Board {
                 .collect(Collectors.toSet());
     }
 
-    protected Map<Set<Intersection>, Stone> getTerritoriesAndStones(Stone lastPlay) {
+    protected Map<Set<Intersection>, Optional<Colour>> getTerritoriesAndStones(Colour lastPlay) {
         return regionsContainer.getTerritoriesAndStonesToFill(lastPlay);
     }
 
@@ -97,7 +97,7 @@ public class Board {
     protected void revertForIntersectionAt(Position position) {
         Intersection intersection = intersectionAt(position);
         chainContainer.removeIntersection(intersection);
-        intersection.setStone(Stone.NONE);
+        intersection.setStone(null);
         regionsContainer.addIntersection(intersection);
     }
 }

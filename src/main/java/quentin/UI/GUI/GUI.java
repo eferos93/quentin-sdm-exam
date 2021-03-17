@@ -35,7 +35,7 @@ public class GUI extends Application {
         return (GridPane) borders.getChildren().get(0);
     }
 
-    public GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
+    private GridPane getLabelBoard() { return (GridPane) gridPane.getChildren().get(1); }
     public GUIQuentin getGame() { return guiQuentin; }
 
     public void switchColorPlayerLabel() {
@@ -168,7 +168,7 @@ public class GUI extends Application {
                 .forEach(nonEmptyIntersection ->
                         boardFiller.addPiece(getGridBoard(),
                                 nonEmptyIntersection.getPosition(),
-                                nonEmptyIntersection.getStone()
+                                nonEmptyIntersection.getColor().orElseThrow()
                         )
                 );
         boardFiller.switchLabelsCurrentPlayer(getLabelBoard());
