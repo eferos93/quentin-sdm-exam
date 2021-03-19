@@ -21,8 +21,6 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
         this.newPosition = position;
     }
 
-    public Player getLastPlayer() { return getPlayerOfColor(getCurrentPlayer().getColor().getOppositeColor()); }
-
     public Stream<Intersection> getNonEmptyIntersections() {
         return getBoard().getNonEmptyIntersections();
     }
