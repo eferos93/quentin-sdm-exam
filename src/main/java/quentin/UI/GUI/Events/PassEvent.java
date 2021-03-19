@@ -7,7 +7,7 @@ import quentin.GUIQuentin;
 
 public class PassEvent extends Event {
     public static final EventType<PassEvent> PASS_EVENT_TYPE = new EventType<>(Event.ANY, "PASS");
-    private GUIQuentin guiQuentin;
+    private final GUIQuentin guiQuentin;
     PassEvent(GUIQuentin guiQuentin) {
         super(PASS_EVENT_TYPE);
         this.guiQuentin = guiQuentin;

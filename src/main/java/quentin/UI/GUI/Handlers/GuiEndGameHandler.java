@@ -2,7 +2,6 @@ package quentin.UI.GUI.Handlers;
 
 import javafx.event.EventHandler;
 import quentin.UI.GUI.Events.EndGameEvent;
-import quentin.UI.GUI.GUI;
 
 public class GuiEndGameHandler implements EventHandler<EndGameEvent> {
     @Override
