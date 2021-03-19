@@ -62,7 +62,7 @@ public class GUI extends Application {
     }
 
     private Stream<Button> initialButtons(){
-        Button startButton = createNewButton("Start", (ActionEvent e) -> {
+        Button startButton = createNewButton("Start", actionEvent -> {
             GUIInputHandler guiInputHandler = new GUIInputHandler();
             int size = guiInputHandler.askSize();
             String namePlayer1 = guiInputHandler.askPlayerName("1");
@@ -70,9 +70,9 @@ public class GUI extends Application {
             initGame(size, namePlayer1, namePlayer2, guiInputHandler);
         });
 
-        Button endButton = createNewButton("Exit", (ActionEvent e) -> stop());
+        Button endButton = createNewButton("Exit", actionEvent -> stop());
 
-        Button rulesButton = createNewButton("Rules", (ActionEvent e) -> getHostServices().showDocument("https://boardgamegeek.com/boardgame/124095/quentin"));
+        Button rulesButton = createNewButton("Rules", actionEvent -> getHostServices().showDocument("https://boardgamegeek.com/boardgame/124095/quentin"));
         return Stream.of(startButton, endButton, rulesButton);
     }
 
@@ -84,8 +84,8 @@ public class GUI extends Application {
     }
 
     private Stream<Button> replayButtons(){
-        Button yesButton = createNewButton("Yes", (ActionEvent e) -> guiBoardDisplayer.initUI(initialButtons()));
-        Button noButton = createNewButton("No", (ActionEvent e) -> stop());
+        Button yesButton = createNewButton("Yes", actionEvent -> guiBoardDisplayer.initUI(initialButtons()));
+        Button noButton = createNewButton("No", actionEvent -> stop());
         return Stream.of(yesButton, noButton);
     }
 
