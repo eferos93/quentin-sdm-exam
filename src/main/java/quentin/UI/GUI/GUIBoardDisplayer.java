@@ -150,22 +150,16 @@ public class GUIBoardDisplayer {
         GridPane pane = new GridPane();
         pane.setPadding(new Insets(20, 20, 20, 20));
         pane.setVgap(20);
-
         Text text = new Text(content);
         text.setFont(Font.font("Tahoma", size));
-
         pane.add(text, 0, 0 );
         GridPane.setHalignment(text, HPos.CENTER);
-
         HBox hBox = new HBox();
         buttonStream.forEach(button -> hBox.getChildren().add(button));
-
         pane.add(hBox, 0, 1);
         hBox.setSpacing(buttonsSpacing);
         GridPane.setHalignment(hBox, HPos.CENTER);
-
         Scene scene = new Scene(pane);
-
         stage.close();
         stage.setTitle("Quentin");
         stage.setScene(scene);
