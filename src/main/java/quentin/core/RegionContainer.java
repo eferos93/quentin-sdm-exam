@@ -101,8 +101,8 @@ public class RegionContainer {
 
     protected void addIntersection(Intersection intersection) {
         graph.addVertex(intersection);
-            graph.vertexSet().stream()
-                    .filter(intersection::isOrthogonalTo)
-                    .forEach(orthogonalIntersection -> graph.addEdge(orthogonalIntersection, intersection));
+        graph.vertexSet().stream()
+                .filter(intersection::isOrthogonalTo)
+                .forEach(orthogonalIntersection -> graph.addEdge(orthogonalIntersection, intersection));
     }
 }
