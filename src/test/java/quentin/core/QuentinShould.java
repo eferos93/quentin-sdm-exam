@@ -2,8 +2,8 @@ package quentin.core;
 
 import org.junit.jupiter.api.Test;
 import quentin.ConsoleQuentin;
-import quentin.UI.console.ConsoleInputHandler;
-import quentin.UI.console.ConsoleOutputHandler;
+import quentin.ui.console.ConsoleInputHandler;
+import quentin.ui.console.ConsoleOutputHandler;
 
 import static quentin.core.Position.in;
 import static org.junit.jupiter.api.Assertions.*;

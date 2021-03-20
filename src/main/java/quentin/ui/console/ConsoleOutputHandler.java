@@ -1,4 +1,4 @@
-package quentin.UI.console;
+package quentin.ui.console;
 
 import quentin.core.Board;
 import quentin.core.Player;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-public class ConsoleOutputHandler implements quentin.UI.OutputHandler {
+public class ConsoleOutputHandler implements quentin.ui.OutputHandler {
 
     private final Map<Colour, String> intersectionConsoleRepresentation = new HashMap<>() {{
         put(Colour.BLACK, "[B]");

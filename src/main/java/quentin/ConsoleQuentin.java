@@ -1,9 +1,9 @@
 package quentin;
 
 
-import quentin.UI.console.ConsoleGameInitialiser;
-import quentin.UI.console.ConsoleInputHandler;
-import quentin.UI.console.ConsoleOutputHandler;
+import quentin.ui.console.ConsoleGameInitialiser;
+import quentin.ui.console.ConsoleInputHandler;
+import quentin.ui.console.ConsoleOutputHandler;
 import quentin.core.*;
 import quentin.exceptions.QuentinException;
 

@@ -1,8 +1,8 @@
-package quentin.UI.GUI;
+package quentin.ui.gui;
 
 import javafx.scene.control.*;
-import quentin.UI.InputHandler;
-import quentin.UI.OutputHandler;
+import quentin.ui.InputHandler;
+import quentin.ui.OutputHandler;
 import java.util.List;
 import java.util.Optional;
 

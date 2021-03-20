@@ -1,4 +1,4 @@
-package quentin.UI.GUI;
+package quentin.ui.gui;
 
 
 import javafx.event.Event;
@@ -18,13 +18,13 @@ import javafx.scene.shape.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import quentin.UI.GUI.Events.EndGameEvent;
-import quentin.UI.GUI.Events.PassEvent;
-import quentin.UI.GUI.Events.PieRuleEvent;
-import quentin.UI.GUI.Handlers.GuiEndGameHandler;
-import quentin.UI.GUI.Handlers.GuiMouseHandler;
-import quentin.UI.GUI.Handlers.GuiPassHandler;
-import quentin.UI.GUI.Handlers.GuiPieHandler;
+import quentin.ui.gui.Events.EndGameEvent;
+import quentin.ui.gui.Events.PassEvent;
+import quentin.ui.gui.Events.PieRuleEvent;
+import quentin.ui.gui.Handlers.GuiEndGameHandler;
+import quentin.ui.gui.Handlers.GuiMouseHandler;
+import quentin.ui.gui.Handlers.GuiPassHandler;
+import quentin.ui.gui.Handlers.GuiPieHandler;
 import quentin.core.Colour;
 import quentin.core.Intersection;
 import quentin.core.Position;
@@ -36,7 +36,7 @@ import java.util.stream.Stream;
 public class GUIBoardDisplayer {
     private Stage stage;
     private GridPane gridPanel;
-    private static final int tileSize = 50;
+    private static final int TILE_SIZE = 50;
     private final EnumMap<Colour, Paint> colorPaintMap = new EnumMap<>(Colour.class);
 
     protected GUIBoardDisplayer() {
@@ -48,8 +48,8 @@ public class GUIBoardDisplayer {
     protected GridPane createEmptyBoard(int boardSize) {
         GridPane gridBoard = new GridPane();
         for (int gridCellIndex = 0; gridCellIndex < boardSize; gridCellIndex++) {
-            gridBoard.getColumnConstraints().add(new ColumnConstraints(tileSize));
-            gridBoard.getRowConstraints().add(new RowConstraints(tileSize));
+            gridBoard.getColumnConstraints().add(new ColumnConstraints(TILE_SIZE));
+            gridBoard.getRowConstraints().add(new RowConstraints(TILE_SIZE));
         }
         createLines(gridBoard, boardSize);
         return gridBoard;
@@ -59,8 +59,8 @@ public class GUIBoardDisplayer {
         IntStream.range(0, boardSize).forEach(column ->
                 IntStream.range(0, boardSize).forEach(row ->
                 {
-                    Line verticalLine = lineGenerator(0, tileSize);
-                    Line horizontalLine = lineGenerator(tileSize, 0);
+                    Line verticalLine = lineGenerator(0, TILE_SIZE);
+                    Line horizontalLine = lineGenerator(TILE_SIZE, 0);
                     GridPane.setHalignment(verticalLine, HPos.CENTER);
                     GridPane.setValignment(verticalLine, VPos.CENTER);
                     placeLines(column, row, verticalLine, horizontalLine, boardSize);
@@ -77,13 +77,13 @@ public class GUIBoardDisplayer {
     }
 
     private void verticalLinePlacement(Line line, VPos position){
-        line.setEndY(tileSize / 2.0);
+        line.setEndY(TILE_SIZE / 2.0);
         GridPane.setValignment(line, position);
         line.setStrokeWidth(2);
     }
 
     private void horizontalLinePlacement(Line line, HPos position){
-        line.setEndX(tileSize / 2.0);
+        line.setEndX(TILE_SIZE / 2.0);
         GridPane.setHalignment(line, position);
         line.setStrokeWidth(2);
     }
@@ -100,8 +100,8 @@ public class GUIBoardDisplayer {
     }
 
     protected void addPiece(Position position, Colour colour) {
-        Circle piece = new Circle((getConvertedCoordinate(position.getColumn())) * tileSize,
-                (getConvertedCoordinate(position.getRow())) * tileSize, tileSize * 0.4);
+        Circle piece = new Circle((getConvertedCoordinate(position.getColumn())) * TILE_SIZE,
+                (getConvertedCoordinate(position.getRow())) * TILE_SIZE, TILE_SIZE * 0.4);
         piece.setFill(colorPaintMap.get(colour));
         GridPane.setHalignment(piece, HPos.CENTER);
         GridPane.setValignment(piece, VPos.CENTER);
@@ -116,9 +116,9 @@ public class GUIBoardDisplayer {
         gridLabels.add(new Text(namePlayerTwo + ": "), 0, 1);
         gridLabels.add(new Text("Now playing: "), 0, 2);
 
-        Circle whitePlayerLabel = new Circle(tileSize * 0.1, javafx.scene.paint.Color.WHITE);
-        Circle blackPlayerLabel = new Circle(tileSize * 0.1, javafx.scene.paint.Color.BLACK);
-        Circle currentPlayerLabel = new Circle(tileSize * 0.1, javafx.scene.paint.Color.BLACK);
+        Circle whitePlayerLabel = new Circle(TILE_SIZE * 0.1, javafx.scene.paint.Color.WHITE);
+        Circle blackPlayerLabel = new Circle(TILE_SIZE * 0.1, javafx.scene.paint.Color.BLACK);
+        Circle currentPlayerLabel = new Circle(TILE_SIZE * 0.1, javafx.scene.paint.Color.BLACK);
 
         gridLabels.add(whitePlayerLabel, 1, 1);
         gridLabels.add(blackPlayerLabel, 1, 0);

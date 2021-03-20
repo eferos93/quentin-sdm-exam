@@ -1,10 +1,10 @@
-package quentin.UI.console;
+package quentin.ui.console;
 
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class ConsoleInputHandler implements quentin.UI.InputHandler {
+public class ConsoleInputHandler implements quentin.ui.InputHandler {
     private final Scanner scanner = new Scanner(System.in);
 
     public int getInteger() throws NoSuchElementException {

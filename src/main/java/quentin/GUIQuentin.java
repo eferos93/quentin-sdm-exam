@@ -1,9 +1,9 @@
 package quentin;
 
 import javafx.application.Application;
-import quentin.UI.GUI.GUI;
-import quentin.UI.GUI.GUIInputHandler;
-import quentin.UI.GUI.GUIOutputHandler;
+import quentin.ui.gui.GUI;
+import quentin.ui.gui.GUIInputHandler;
+import quentin.ui.gui.GUIOutputHandler;
 import quentin.core.*;
 
 import java.util.InputMismatchException;

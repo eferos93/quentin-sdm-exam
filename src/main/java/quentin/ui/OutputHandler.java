@@ -1,4 +1,4 @@
-package quentin.UI;
+package quentin.ui;
 
 import quentin.core.Player;
 

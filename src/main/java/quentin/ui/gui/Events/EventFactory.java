@@ -1,9 +1,9 @@
-package quentin.UI.GUI.Events;
+package quentin.ui.gui.Events;
 
 import javafx.event.Event;
 import quentin.GUIQuentin;
-import quentin.UI.GUI.GUI;
-import quentin.UI.GUI.GUIBoardDisplayer;
+import quentin.ui.gui.GUI;
+import quentin.ui.gui.GUIBoardDisplayer;
 
 public class EventFactory {
 

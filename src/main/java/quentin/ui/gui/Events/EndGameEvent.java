@@ -1,8 +1,8 @@
-package quentin.UI.GUI.Events;
+package quentin.ui.gui.Events;
 
 import javafx.event.Event;
 import javafx.event.EventType;
-import quentin.UI.GUI.GUI;
+import quentin.ui.gui.GUI;
 
 public class EndGameEvent extends Event {
     public static final EventType<EndGameEvent> END_GAME_EVENT_TYPE = new EventType<>(Event.ANY, "END_GAME");
