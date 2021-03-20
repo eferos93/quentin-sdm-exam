@@ -1,7 +1,7 @@
-package quentin.ui.gui.Handlers;
+package quentin.ui.gui.handler;
 
 import javafx.event.EventHandler;
-import quentin.ui.gui.Events.PieRuleEvent;
+import quentin.ui.gui.events.PieRuleEvent;
 
 public class GuiPieHandler implements EventHandler<PieRuleEvent> {
     @Override

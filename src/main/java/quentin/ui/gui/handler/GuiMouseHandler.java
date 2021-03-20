@@ -1,9 +1,9 @@
-package quentin.ui.gui.Handlers;
+package quentin.ui.gui.handler;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import quentin.GUIQuentin;
-import quentin.ui.gui.Events.EventFactory;
+import quentin.ui.gui.events.EventFactory;
 import quentin.ui.gui.GUI;
 import quentin.core.Position;
 import quentin.exceptions.QuentinException;

@@ -1,4 +1,4 @@
-package quentin.ui.gui.Events;
+package quentin.ui.gui.events;
 
 import javafx.event.Event;
 import javafx.event.EventType;

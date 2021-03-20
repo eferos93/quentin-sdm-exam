@@ -7,7 +7,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import quentin.ui.gui.Events.*;
+import quentin.ui.gui.events.*;
 import quentin.GUIQuentin;
 
 import java.util.stream.Stream;

@@ -1,7 +1,7 @@
-package quentin.ui.gui.Handlers;
+package quentin.ui.gui.handler;
 
 import javafx.event.EventHandler;
-import quentin.ui.gui.Events.PassEvent;
+import quentin.ui.gui.events.PassEvent;
 
 public class GuiPassHandler implements EventHandler<PassEvent> {
     @Override
