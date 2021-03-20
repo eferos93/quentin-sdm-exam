@@ -36,7 +36,7 @@ import java.util.stream.Stream;
 public class GUIBoardDisplayer {
     private Stage stage;
     private GridPane gridPanel;
-    private final int tileSize = 50;
+    private static final int tileSize = 50;
     private final EnumMap<Colour, Paint> colorPaintMap = new EnumMap<>(Colour.class);
 
     protected GUIBoardDisplayer() {
@@ -231,7 +231,7 @@ public class GUIBoardDisplayer {
         nonEmptyIntersections.forEach(nonEmptyIntersection ->
                         addPiece(
                                 nonEmptyIntersection.getPosition(),
-                                nonEmptyIntersection.getColor().orElseThrow()
+                                nonEmptyIntersection.getColour().orElseThrow()
                         )
                 );
         switchLabelsCurrentPlayer(getLabelBoard());

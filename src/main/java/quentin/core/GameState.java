@@ -36,7 +36,7 @@ public class GameState {
         board.addStoneAt(colour, position);
         Set<Position> territoriesFilled = board.fillTerritories(colour);
 
-        if (isIllegalMove(colour, board.intersectionAt(position))) {
+        if (isIllegalMove(board.intersectionAt(position))) {
             territoriesFilled.add(position);
             territoriesFilled.forEach(board::revertForIntersectionAt);
             throw new IllegalMoveException(position);
@@ -44,12 +44,12 @@ public class GameState {
         lastPlay = colour;
     }
 
-    private boolean isIllegalMove(Colour playerColour, Intersection intersection) {
+    private boolean isIllegalMove(Intersection intersection) {
         Set<Intersection> colorAlikeOrthogonalIntersections =
-                board.getOrthogonallyAdjacentIntersectionsOfColour(intersection, playerColour);
-        return board.getDiagonallyAdjacentIntersectionsOfColour(intersection, playerColour).stream()
+                board.getOrthogonallyAdjacentIntersectionsOfColour(intersection);
+        return board.getDiagonallyAdjacentIntersectionsOfColour(intersection).stream()
                 .anyMatch(diagonalIntersection ->
-                        board.getOrthogonallyAdjacentIntersectionsOfColour(diagonalIntersection, playerColour).stream()
+                        board.getOrthogonallyAdjacentIntersectionsOfColour(diagonalIntersection).stream()
                                 .noneMatch(colorAlikeOrthogonalIntersections::contains)
                 );
     }
@@ -72,7 +72,7 @@ public class GameState {
                     board.addStoneAt(currentPlayer.getColor(), emptyIntersection.getPosition());
                     Set<Position> positionsFilled = this.board.fillTerritories(lastPlay);
                     positionsFilled.add(emptyIntersection.getPosition());
-                    boolean isIllegalMove = isIllegalMove(currentPlayer.getColor(), emptyIntersection);
+                    boolean isIllegalMove = isIllegalMove(emptyIntersection);
                     positionsFilled.forEach(board::revertForIntersectionAt);
                     return isIllegalMove;
                 });
