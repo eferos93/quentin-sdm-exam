@@ -73,7 +73,8 @@ public class Board {
     }
 
     protected Set<Position> fillTerritories(Colour lastPlay) {
-        Map<Set<Intersection>, Optional<Colour>> territoriesToFill = getTerritoriesAndStones(lastPlay);
+        Map<Set<Intersection>, Optional<Colour>> territoriesToFill =
+                regionsContainer.getTerritoriesAndStonesToFill(lastPlay);
         territoriesToFill
                 .forEach((territory, stone) ->
                                 territory.stream()
@@ -84,10 +85,6 @@ public class Board {
                 .flatMap(entry -> entry.getKey().stream())
                 .map(Intersection::getPosition)
                 .collect(Collectors.toSet());
-    }
-
-    protected Map<Set<Intersection>, Optional<Colour>> getTerritoriesAndStones(Colour lastPlay) {
-        return regionsContainer.getTerritoriesAndStonesToFill(lastPlay);
     }
 
     public int getBoardSize() {
