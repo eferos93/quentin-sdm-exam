@@ -1,4 +1,4 @@
-package quentin.UI;
+package quentin.ui;
 
 import quentin.core.Player;
 
@@ -16,7 +16,7 @@ public interface OutputHandler {
 
     class Message {
         public static final String TITLE =  "QUENTIN GAME";
-        public final static String INSTRUCTIONS = """
+        public static final String INSTRUCTIONS = """
             The Black player B should connect the black board sides (top and bottom)
             The White player W should connect the white board sides (left and right)
             For more info visit: https://boardgamegeek.com/boardgame/124095/quentin""";

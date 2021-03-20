@@ -1,9 +1,9 @@
-package quentin.UI.GUI;
+package quentin.ui.gui;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Region;
-import quentin.UI.OutputHandler;
+import quentin.ui.OutputHandler;
 import quentin.core.Player;
 
 import java.util.List;

@@ -46,17 +46,17 @@ public class Board {
         return intersectionAt(position).isOccupied();
     }
 
-    protected Set<Intersection> getDiagonallyAdjacentIntersectionsOfColour(Intersection intersection, Colour colour) {
+    protected Set<Intersection> getDiagonallyAdjacentIntersectionsOfColour(Intersection intersection) {
         return intersections.stream()
                 .filter(intersection::isDiagonalTo)
-                .filter(diagonalIntersection -> diagonalIntersection.hasStone(colour))
+                .filter(diagonalIntersection -> diagonalIntersection.hasStone(intersection.getColour().orElseThrow()))
                 .collect(Collectors.toUnmodifiableSet());
     }
 
-    protected Set<Intersection> getOrthogonallyAdjacentIntersectionsOfColour(Intersection intersection, Colour colour) {
+    protected Set<Intersection> getOrthogonallyAdjacentIntersectionsOfColour(Intersection intersection) {
         return intersections.stream()
                 .filter(intersection::isOrthogonalTo)
-                .filter(orthogonalIntersection -> orthogonalIntersection.hasStone(colour))
+                .filter(orthogonalIntersection -> orthogonalIntersection.hasStone(intersection.getColour().orElseThrow()))
                 .collect(Collectors.toUnmodifiableSet());
     }
 

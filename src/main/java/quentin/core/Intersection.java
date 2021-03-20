@@ -33,7 +33,7 @@ public class Intersection {
         return this.position;
     }
 
-    public final Optional<Colour> getColor() {
+    public final Optional<Colour> getColour() {
         return Optional.ofNullable(this.colour);
     }
 

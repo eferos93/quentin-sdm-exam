@@ -1,4 +1,4 @@
-package quentin.UI.console;
+package quentin.ui.console;
 
 import quentin.ConsoleQuentin;
 import quentin.core.Quentin;

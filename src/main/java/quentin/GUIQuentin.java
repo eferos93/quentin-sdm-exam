@@ -1,9 +1,9 @@
 package quentin;
 
 import javafx.application.Application;
-import quentin.UI.GUI.GUI;
-import quentin.UI.GUI.GUIInputHandler;
-import quentin.UI.GUI.GUIOutputHandler;
+import quentin.ui.gui.GUI;
+import quentin.ui.gui.GUIInputHandler;
+import quentin.ui.gui.GUIOutputHandler;
 import quentin.core.*;
 
 import java.util.InputMismatchException;
@@ -20,8 +20,6 @@ public class GUIQuentin extends Quentin<GUIInputHandler, GUIOutputHandler> {
     public void setNewPosition(Position position){
         this.newPosition = position;
     }
-
-    public Player getLastPlayer() { return getPlayerOfColor(getCurrentPlayer().getColor().getOppositeColor()); }
 
     public Stream<Intersection> getNonEmptyIntersections() {
         return getBoard().getNonEmptyIntersections();

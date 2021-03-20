@@ -1,7 +1,7 @@
 package quentin.core;
 
-import quentin.UI.InputHandler;
-import quentin.UI.OutputHandler;
+import quentin.ui.InputHandler;
+import quentin.ui.OutputHandler;
 import quentin.exceptions.*;
 
 import java.util.List;

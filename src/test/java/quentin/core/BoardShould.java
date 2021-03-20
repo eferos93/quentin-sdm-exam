@@ -60,7 +60,7 @@ public class BoardShould {
         board.addStoneAt(Colour.BLACK, in(5, 7));
         board.addStoneAt(Colour.WHITE, in(4, 3));
         board.addStoneAt(Colour.WHITE, in(9, 6));
-        assertTrue(intersection.getColor().map(intersectionColor -> intersectionColor == colour).orElse(false));
+        assertTrue(intersection.getColour().map(intersectionColor -> intersectionColor == colour).orElse(false));
     }
 
     @Test
@@ -135,7 +135,7 @@ public class BoardShould {
         );
 
         Set<Intersection> colourAlikeDiagonallyAdjacentIntersections =
-                customBoard.getDiagonallyAdjacentIntersectionsOfColour(customBoard.intersectionAt(in(2, 2)), Colour.BLACK);
+                customBoard.getDiagonallyAdjacentIntersectionsOfColour(customBoard.intersectionAt(in(2, 2)));
 
         return List.of(
                 DynamicTest.dynamicTest("Black Diagonal Intersections",
@@ -165,7 +165,7 @@ public class BoardShould {
 
         Set<Intersection> colourAlikeOrthogonallyAdjacentIntersections =
                 customBoard.getOrthogonallyAdjacentIntersectionsOfColour(
-                        customBoard.intersectionAt(in(2, 2)), Colour.WHITE
+                        customBoard.intersectionAt(in(2, 2))
                 );
 
         return List.of(

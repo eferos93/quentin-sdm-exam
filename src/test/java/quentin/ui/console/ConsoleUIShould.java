@@ -1,4 +1,4 @@
-package quentin.UI.console;
+package quentin.ui.console;
 
 import org.junit.jupiter.api.Test;
 import quentin.core.Board;
