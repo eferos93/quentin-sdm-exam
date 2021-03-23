@@ -17,19 +17,13 @@ public class ConsoleUIShould {
         ConsoleOutputHandler outputHandler = new ConsoleOutputHandler();
         ByteArrayOutputStream fakeStandardOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeStandardOutput));
-        String expectedOutput = String.format("      B  B  B  B%s" +
-                        "1   W[ ][ ][ ][ ]W%s" +
-                        "2   W[ ][ ][ ][ ]W%s" +
-                        "3   W[ ][ ][ ][ ]W%s" +
-                        "4   W[ ][ ][ ][ ]W%s" +
-                        "      B  B  B  B%s" +
-                        "      1  2  3  4%s",
-                System.lineSeparator(),
-                System.lineSeparator(),
-                System.lineSeparator(),
-                System.lineSeparator(),
-                System.lineSeparator(),
-                System.lineSeparator(),
+        String expectedOutput = String.format("      B  B  B  B%1$s" +
+                        "1   W[ ][ ][ ][ ]W%1$s" +
+                        "2   W[ ][ ][ ][ ]W%1$s" +
+                        "3   W[ ][ ][ ][ ]W%1$s" +
+                        "4   W[ ][ ][ ][ ]W%1$s" +
+                        "      B  B  B  B%1$s" +
+                        "      1  2  3  4%1$s",
                 System.lineSeparator());
         outputHandler.displayBoard(board);
         assertEquals(expectedOutput, fakeStandardOutput.toString());
